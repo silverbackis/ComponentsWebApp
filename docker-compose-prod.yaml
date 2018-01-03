@@ -12,7 +12,6 @@ services:
             LETSENCRYPT_HOST: api.starter.b-w.uk
             LETSENCRYPT_EMAIL: info@silverbackhosting.com
         volumes:
-            - ./api/_docker/varnish/conf:/etc/varnish:ro
             - ./:/usr/share/nginx/html:rw
         expose:
             - 80
@@ -22,7 +21,6 @@ services:
             LETSENCRYPT_HOST: starter.b-w.uk
             LETSENCRYPT_EMAIL: info@silverbackhosting.com
         volumes:
-            - ./app:/usr/src/app:rw
             - ./:/usr/share/nginx/html:rw
         expose:
             - 3000
