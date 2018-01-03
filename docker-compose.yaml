@@ -47,3 +47,6 @@ services:
             - nginx
         volumes:
             - ./api/_docker/varnish/conf:/etc/varnish:ro
+        logging:
+            options:
+                max-size: 20m
