@@ -28,6 +28,7 @@ services:
         volumes:
             - ./app:/usr/src/app:rw
             - /usr/src/app/node_modules
+            - /usr/src/app/build
 
     nginx:
         build:
