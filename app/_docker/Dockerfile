@@ -5,13 +5,15 @@ FROM node:alpine
 # ENV NODE_ENV "development"
 RUN echo $PATH
 
-ADD . /usr/src/app/
-
 COPY _docker/run.sh /usr/local/bin/run
 RUN chmod +x /usr/local/bin/run
 
 WORKDIR /usr/src/app
 
+COPY package.json yarn.lock ./
+
 RUN yarn install
+
+COPY . ./
 
 CMD ["run"]
