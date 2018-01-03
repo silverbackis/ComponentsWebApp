@@ -17,9 +17,4 @@ WORKDIR /usr/src/app
 
 RUN yarn install
 
-ENTRYPOINT ["build"]
-
-# Expose port 3000 which the app runs on
-EXPOSE 3000
-
 CMD ["run"]
