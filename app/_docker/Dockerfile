@@ -17,11 +17,13 @@ COPY package.json yarn.lock ./
 # Install all dependencies
 RUN yarn install
 
+# Application files needed for build (pages/layout etc.) - Copy the application
+COPY . ./
+
 # Build the app
 RUN if [ "${APP_ENV}" = "production" ]; then yarn run build; fi
 
-COPY . ./
-
+# Expose port 3000 which the app runs on
 EXPOSE 3000
 
 # Serve the app
