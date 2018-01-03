@@ -17,7 +17,7 @@ services:
           - proxy
           - default
         volumes:
-            - ./api:/usr/share/nginx/html
+            - ./:/usr/share/nginx/html
     app:
         environment:
             VIRTUAL_HOST: starter.b-w.uk
@@ -31,7 +31,7 @@ services:
         networks:
           - proxy
         volumes:
-            - ./app:/usr/share/nginx/html
+            - ./:/usr/share/nginx/html
 
 networks:
   proxy:
