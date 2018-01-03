@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+    mysql:
+        image: mysql
+        env_file:
+            - ./api/.env
+        environment:
+            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+
+    php:
+        build:
+            context: ./api
+            dockerfile: ./_docker/php/Dockerfile
+        depends_on:
+            - mysql
+        env_file:
+            - ./api/.env
+        volumes:
+            - ./api:/srv/api:rw
+
+    app:
+        build:
+            context: ./app
+            dockerfile: ./_docker/Dockerfile
+        env_file:
+            - ./app/.env
+        volumes:
+            - ./app:/usr/src/app:rw
+            - /usr/src/app/node_modules
+
+    nginx:
+        build:
+            context: ./api
+            dockerfile: ./_docker/nginx/Dockerfile
+        depends_on:
+            - php
+        volumes:
+            - ./api/public:/srv/api/public:ro
+
+    varnish:
+        build:
+            context: ./api
+            dockerfile: ./_docker/varnish/Dockerfile
+        depends_on:
+            - nginx
+        volumes:
+            - ./api/_docker/varnish/conf:/etc/varnish:ro

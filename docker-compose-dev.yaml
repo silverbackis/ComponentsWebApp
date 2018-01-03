@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+    mysql:
+        volumes:
+            - db-mysql:/var/lib/mysql:rw
+        ports:
+            - "4306:3306"
+    php:
+        volumes:
+            # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
+            - /srv/api/var/
+            - /srv/api/var/cache/
+            - /srv/api/var/logs/
+            - /srv/api/var/sessions/
+    nginx:
+        ports:
+            - "8080:80"
+    varnish:
+        ports:
+            - "8081:80"
+    app:
+        ports:
+            - "80:3000"
+        build:
+            args:
+                app_env: development
+
+volumes:
+    db-mysql: {}

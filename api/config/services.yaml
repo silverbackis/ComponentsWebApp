@@ -1,0 +1,30 @@
+parameters:
+    locale: 'en'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations,Tests}'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\EntityListener\PageListener:
+        tags:
+            - { name: doctrine.orm.entity_listener }
+
+    App\DataProvider\:
+        resource: '../src/DataProvider/*'
+        autoconfigure: false
+        tags:
+            - { name: 'api_platform.item_data_provider', priority: 1 }
+
+    # Allow for auto-wiring
+    Cocur\Slugify\SlugifyInterface:
+        alias: 'slugify'

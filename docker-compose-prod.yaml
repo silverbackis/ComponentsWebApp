@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+    mysql:
+        env_file:
+            - ./api/.env
+        volumes:
+            - ./docker/db/data:/var/lib/mysql:rw
+    varnish:
+        environment:
+            VIRTUAL_HOST: api.starter.b-w.uk
+            LETSENCRYPT_HOST: api.starter.b-w.uk
+            LETSENCRYPT_EMAIL: info@silverbackhosting.com
+        volumes:
+            - ./:/usr/share/nginx/html
+        expose:
+            - 80
+    app:
+        environment:
+            VIRTUAL_HOST: starter.b-w.uk
+            LETSENCRYPT_HOST: starter.b-w.uk
+            LETSENCRYPT_EMAIL: info@silverbackhosting.com
+        volumes:
+            - ./:/usr/share/nginx/html
+        expose:
+            - 3000
+        build:
+            args:
+                app_env: production
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
