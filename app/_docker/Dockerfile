@@ -8,7 +8,7 @@ RUN echo "App Dockerfile Environment ${APP_ENV}"
 RUN mkdir -p /usr/src/app
 
 # Change directory so that our commands run inside this new directory
-WORKDIR /usr/app
+WORKDIR /usr/src/app
 
 # Get all the code needed to run the app
 COPY package.json yarn.lock /usr/src/app/
