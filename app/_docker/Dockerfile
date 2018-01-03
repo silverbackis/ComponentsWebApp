@@ -17,7 +17,7 @@ COPY package.json yarn.lock /usr/src/app/
 RUN yarn install
 
 # Application files needed for build (pages/layout etc.) - Copy the application
-COPY . /usr/src/app
+COPY . /usr/src/app/
 
 # Build the app
 RUN if [ "${APP_ENV}" = "production" ]; then yarn run build; fi
