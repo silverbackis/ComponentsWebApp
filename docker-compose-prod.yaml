@@ -9,7 +9,7 @@ services:
     varnish:
         environment:
             VIRTUAL_HOST: api.starter.b-w.uk
-            LETSENCRYPT_HOST: api.starter.b-w.uk, starter.b-w.uk
+            LETSENCRYPT_HOST: api.starter.b-w.uk
             LETSENCRYPT_EMAIL: info@silverbackhosting.com
         volumes:
             - ./:/usr/share/nginx/html
@@ -18,7 +18,7 @@ services:
     app:
         environment:
             VIRTUAL_HOST: starter.b-w.uk
-            LETSENCRYPT_HOST: starter.b-w.uk, api.starter.b-w.uk
+            LETSENCRYPT_HOST: starter.b-w.uk
             LETSENCRYPT_EMAIL: info@silverbackhosting.com
         volumes:
             - ./:/usr/share/nginx/html
