@@ -2,6 +2,7 @@ FROM node:alpine
 
 ARG app_env
 ENV APP_ENV $app_env
+ENV NODE_ENV $app_env
 
 RUN echo "App Dockerfile Environment ${APP_ENV}"
 
