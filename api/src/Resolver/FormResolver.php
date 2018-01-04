@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Transformer;
+namespace App\Resolver;
 
-use App\Entity\Component\Form\Form;
 use App\Entity\Component\Form\FormView;
 use Symfony\Component\Form\FormFactoryInterface;
 
-class FormTransformer
+class FormResolver
 {
     /**
      * @var FormFactoryInterface
@@ -24,7 +23,7 @@ class FormTransformer
         $this->formFactory = $formFactory;
     }
 
-    public function transform (string $className) {
+    public function findByClassName (string $className) {
         $form = $this->formFactory->create(
             $className,
             null,
