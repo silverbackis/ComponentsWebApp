@@ -4,6 +4,7 @@
              :to="toRoute"
              :active-class="activeClass"
              :exact="toRoute === '/'"
+             @click.native="navClick"
   >
     {{ item.label }}
   </nuxt-link>
@@ -12,11 +13,16 @@
                :to="toRoute"
                :active-class="activeClass"
                :exact="toRoute === '/'"
+               @click.native="navClick"
     >
       {{ item.label }}
     </nuxt-link>
     <div class="navbar-dropdown">
-      <bulma-navbar-item v-for="(childItem, childIndex) in childItems" :key="childIndex" :item="childItem" />
+      <bulma-navbar-item v-for="(childItem, childIndex) in childItems"
+                         :key="childIndex"
+                         :item="childItem"
+                         @navClick="$emit('navClick')"
+      />
     </div>
   </div>
 </template>
@@ -26,6 +32,13 @@
 
   export default {
     name: 'BulmaNavbarItem',
-    mixins: [NavItemMixin]
+    mixins: [NavItemMixin],
+    methods: {
+      navClick (event) {
+        if (event.target.href !== '#') {
+          this.$emit('navClick')
+        }
+      }
+    }
   }
 </script>

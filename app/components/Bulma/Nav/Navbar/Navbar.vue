@@ -16,7 +16,11 @@
 
     <div class="navbar-menu" :class="{ 'is-active': isActive }">
       <div class="navbar-start">
-        <bulma-navbar-item v-for="(item, index) in navItems" :key="index" :item="item" />
+        <bulma-navbar-item v-for="(item, index) in navItems"
+                           :key="index"
+                           :item="item"
+                           @navClick="navClicked"
+        />
       </div>
 
       <div class="navbar-end">
@@ -84,6 +88,9 @@
         }
 
         this.navY = this.isActive ? 0 : Math.min(Math.max(this.navY - diff, this.$refs.nav.clientHeight * -1), 0)
+      },
+      navClicked () {
+        this.isActive = false
       }
     },
     computed: {
