@@ -12,7 +12,7 @@ services:
             LETSENCRYPT_HOST: api.starter.b-w.uk
             LETSENCRYPT_EMAIL: info@silverbackhosting.com
         volumes:
-            - ./:/usr/share/nginx/html
+            - ./api:/usr/share/nginx/html
         expose:
             - 80
     app:
@@ -21,7 +21,7 @@ services:
             LETSENCRYPT_HOST: starter.b-w.uk
             LETSENCRYPT_EMAIL: info@silverbackhosting.com
         volumes:
-            - ./:/usr/share/nginx/html
+            - ./app:/usr/share/nginx/html
         expose:
             - 3000
         build:
