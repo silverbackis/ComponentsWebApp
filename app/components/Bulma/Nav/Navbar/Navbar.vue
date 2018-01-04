@@ -19,7 +19,6 @@
         <bulma-navbar-item v-for="(item, index) in navItems"
                            :key="index"
                            :item="item"
-                           @navClick="navClicked"
         />
       </div>
 
@@ -64,6 +63,9 @@
         if (isActive) {
           this.navY = 0
         }
+      },
+      $route () {
+        this.isActive = false
       }
     },
     methods: {
@@ -88,9 +90,6 @@
         }
 
         this.navY = this.isActive ? 0 : Math.min(Math.max(this.navY - diff, this.$refs.nav.clientHeight * -1), 0)
-      },
-      navClicked () {
-        this.isActive = false
       }
     },
     computed: {
