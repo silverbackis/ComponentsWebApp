@@ -43,8 +43,7 @@ module.exports = {
    * Plugins
    */
   plugins: [
-    { src: '~/plugins/quill.js', ssr: false },
-    { src: '~/plugins/apiPage.js', ssr: true }
+    { src: '~/plugins/quill.js', ssr: false }
   ],
   /**
    * Modules
@@ -93,6 +92,6 @@ module.exports = {
    * Router
    */
   router: {
-    middleware: ['initErrorHandler']
+    middleware: ['initErrorHandler', 'page']
   }
 }

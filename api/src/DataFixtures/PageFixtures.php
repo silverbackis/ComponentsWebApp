@@ -35,7 +35,7 @@ class PageFixtures extends Fixture
         $page['home'] = $this->addPage(
             'British Websites',
             'Welcome to the BW Starter Website built with the best and latest frameworks. Front-end uses NuxtJS (VueJS) and Bulma. The API uses API Platform (Symfony 4).',
-            '/'
+            new Route('/')
         );
         $hero['home'] = $this->addHero($page['home'], 'British Websites', 'Some subtitle here');
         $this->addContent($page['home'], '
@@ -98,6 +98,7 @@ class PageFixtures extends Fixture
             $page['websites']
         );
         $this->addNavItem($nav['websites_hero'], 'The User Experience', null, $page['websites/ux']);
+        $page['websites']->getRoutes()->first()->setRedirect($page['websites/ux']->getRoutes()->first());
 
         $nav['websites/ux/side'] = $this->addNav($page['websites/ux'], null, new Menu());
         $this->addNavItem($nav['websites/ux/side'], 'The User Experience', null, $page['websites/ux'], 'the-user-experience');
@@ -138,6 +139,8 @@ class PageFixtures extends Fixture
             null,
             $page['websites/behind_scenes']
         );
+        $page['websites/behind_scenes']->getRoutes()->first()->setRedirect($page['websites/behind_scenes/security']->getRoutes()->first());
+
         $this->addNavItem($nav['websites_hero'], 'Behind The Scenes', null, $page['websites/behind_scenes']);
         $this->addNavItem($nav['websites/behind_scenes/tabs'], 'Security', null, $page['websites/behind_scenes/security']);
 
@@ -293,16 +296,13 @@ class PageFixtures extends Fixture
         return $layout;
     }
 
-    private function addPage(string $title, string $description, string $route = null, Page $parent = null)
+    private function addPage(string $title, string $description, Route $route = null, Page $parent = null)
     {
         $page = new Page();
         $page->setTitle($title);
         $page->setMetaDescription($description);
         if (null !== $route) {
-            $route = new Route(
-                $route,
-                $page
-            );
+            $route->setPage($page);
             $this->manager->persist($route);
             $page->addRoute($route);
         }

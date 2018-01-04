@@ -27,7 +27,7 @@ class Route
     /**
      * @ORM\Id
      * @ORM\Column(type="string")
-     * @Groups({"layout", "page"})
+     * @Groups({"layout", "page", "route"})
      * @var string
      */
     private $route;
@@ -40,13 +40,25 @@ class Route
      */
     private $page;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Route")
+     * @ORM\JoinColumn(name="redirect", referencedColumnName="route")
+     * @Groups({"route"})
+     * @var null|Route
+     */
+    private $redirect;
+
     public function __construct(
         string $route = null,
-        Page $page = null
+        Page $page = null,
+        Route $redirect = null
     )
     {
         $this->setRoute($route);
         $this->setPage($page);
+        if ($redirect) {
+            $this->setRedirect($redirect);
+        }
     }
 
     /**
@@ -84,5 +96,21 @@ class Route
     public function __toString()
     {
         return $this->getRoute();
+    }
+
+    /**
+     * @return null|Route
+     */
+    public function getRedirect(): ?Route
+    {
+        return $this->redirect;
+    }
+
+    /**
+     * @param null|Route $redirect
+     */
+    public function setRedirect(?Route $redirect): void
+    {
+        $this->redirect = $redirect;
     }
 }
