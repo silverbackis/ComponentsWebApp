@@ -13,11 +13,6 @@ services:
             LETSENCRYPT_EMAIL: info@silverbackhosting.com
         expose:
             - 80
-        networks:
-          - proxy
-          - default
-        volumes:
-            - ./:/usr/share/nginx/html
     app:
         environment:
             VIRTUAL_HOST: starter.b-w.uk
@@ -28,12 +23,8 @@ services:
         build:
             args:
                 app_env: production
-        networks:
-          - proxy
-        volumes:
-            - ./:/usr/share/nginx/html
 
 networks:
-  proxy:
+  default:
     external:
       name: proxy
