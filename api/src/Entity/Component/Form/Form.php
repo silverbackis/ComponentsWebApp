@@ -16,6 +16,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     attributes={
  *          "normalization_context"={"groups"={"page"}}
+ *     },
+ *     itemOperations={
+ *     "patch"={
+ *         "method"="PATCH",
+ *         "route_name"="api_forms_patch_item"
+ *     },
+ *     "get"={"method"="GET"},
+ *     "put"={"method"="PUT"},
+ *     "delete"={"method"="DELETE"}
  *     }
  * )
  */

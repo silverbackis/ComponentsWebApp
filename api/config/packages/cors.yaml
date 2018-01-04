@@ -3,7 +3,7 @@ nelmio_cors:
         allow_credentials: true
         origin_regex: true
         allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
-        allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
+        allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS', 'PATCH']
         allow_headers: ['Content-Type', 'Authorization']
         expose_headers: ['Link']
         max_age: 3600
