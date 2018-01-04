@@ -34,6 +34,20 @@ class FormView
     public function __construct(\Symfony\Component\Form\FormView $formViews)
     {
         $this->vars = $formViews->vars;
+
+        $varsToArray = ['choices', 'preferred_choices', 'label_attr', 'errors', 'is_selected'];
+        foreach($varsToArray as $varToArray)
+        {
+            if (isset($this->vars[$varToArray])) {
+                $choices = $this->vars[$varToArray];
+                $this->vars[$varToArray] = [];
+                foreach ($choices as $choice)
+                {
+                    $this->vars[$varToArray][] = (array) $choice;
+                }
+            }
+        }
+
         $this->children = new ArrayCollection();
         foreach ($formViews as $formView) {
             $this->addChild($formView);
