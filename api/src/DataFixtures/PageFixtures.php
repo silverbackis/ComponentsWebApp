@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Component\ComponentGroup;
+use App\Entity\Component\Form\Form;
 use App\Entity\Component\Hero;
 use App\Entity\Component\Nav\Menu\Menu;
 use App\Entity\Component\Nav\Navbar\Navbar;
@@ -12,6 +13,7 @@ use App\Entity\Component\Nav\Tabs\Tabs;
 use App\Entity\Layout;
 use App\Entity\Page;
 use App\Entity\Route;
+use App\Form\ContactType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -76,6 +78,7 @@ class PageFixtures extends Fixture
         $this->addContent($page['contact'], '
         <p>Form work to be completed</p>
         ');
+        $this->addForm($page['contact'], ContactType::class);
 
         /**
          * WEBSITES HERO TOP
@@ -372,5 +375,19 @@ class PageFixtures extends Fixture
         $textBlock->setContent($content);
         $this->manager->persist($textBlock);
         return $textBlock;
+    }
+
+    private function addForm(Page $page = null, string $className, ComponentGroup $componentGroup = null)
+    {
+        $form = new Form();
+        if ($page) {
+            $form->setPage($page);
+        }
+        if ($componentGroup) {
+            $form->setGroup($componentGroup);
+        }
+        $form->setClassName($className);
+        $this->manager->persist($form);
+        return $form;
     }
 }

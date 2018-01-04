@@ -1,0 +1,4 @@
+Symfony\Component\Form\FormView:
+    attributes:
+        vars:
+            groups: ['page']

@@ -15,7 +15,8 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    App\EntityListener\PageListener:
+    App\EntityListener\:
+        resource: '../src/EntityListener/*'
         tags:
             - { name: doctrine.orm.entity_listener }
 
