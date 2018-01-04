@@ -28,6 +28,7 @@ services:
         volumes:
             - ./app:/usr/src/app:rw
             - /usr/src/app/node_modules
+            - /usr/src/app/build
 
     nginx:
         build:
@@ -46,3 +47,6 @@ services:
             - nginx
         volumes:
             - ./api/_docker/varnish/conf:/etc/varnish:ro
+        logging:
+            options:
+                max-size: 20m

@@ -27,4 +27,4 @@ services:
                 app_env: development
 
 volumes:
-    db-mysql: {}
+    db-mysql:
