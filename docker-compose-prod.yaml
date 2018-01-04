@@ -14,6 +14,9 @@ services:
             LETSENCRYPT_EMAIL: info@silverbackhosting.com
         expose:
             - 80
+        networks:
+            - default
+            - proxy
     app:
         environment:
             HTTPS_METHOD: noredirect
@@ -25,8 +28,11 @@ services:
         build:
             args:
                 app_env: production
+        networks:
+            - default
+            - proxy
 
 networks:
-  default:
+  proxy:
     external:
       name: proxy
