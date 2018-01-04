@@ -32,7 +32,7 @@ final class RouteDataProvider implements ItemDataProviderInterface
      * @param string|null $operationName
      * @param array       $context
      *
-     * @return array|null
+     * @return null|Route|array
      * @throws ResourceClassNotSupportedException
      */
     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
@@ -55,10 +55,15 @@ final class RouteDataProvider implements ItemDataProviderInterface
          * @var null|Route $route
          */
         $route = $repository->find($id);
+        // Route not found check
         if (!$route) {
             return null;
         }
-
+        // Route redirect
+        if ($route->getRedirect()) {
+            return $route;
+        }
+        // Route pages
         $page = $route->getPage();
         $collection = [$page];
         while($parent = $page->getParent()) {

@@ -56,5 +56,5 @@
 
   aside.menu
     padding: .75rem
-    border-right: 2px solid $grey-lighter
+    border: 1px solid $grey-lighter
 </style>

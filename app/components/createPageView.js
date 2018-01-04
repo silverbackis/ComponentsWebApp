@@ -4,8 +4,7 @@ export default function createPageView (depth) {
   return {
     name: `page-${depth}`,
 
-    async asyncData ({ store, route }) {
-      await store.dispatch('page/FETCH_DEPTH_DATA', { depth, route })
+    async asyncData ({ store }) {
       return {
         pageData: await store.getters['page/getPageByDepth'](depth)
       }

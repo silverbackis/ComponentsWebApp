@@ -1,60 +1,55 @@
 import Vue from 'vue'
 import { compile } from '~/.nuxt/utils'
+import { fetchRoute, fetchPageIds } from '../api'
 
 export const state = () => ({
-  depthIds: [],
+  routePages: [],
   pages: {}
 })
 
 export const getters = {
   getPageByDepth: (state) => (depth) => {
-    return state.pages[state.depthIds[depth]]
+    return state.pages[state.routePages[depth]]
   }
 }
 
 export const mutations = {
-  SET_DEPTH_IDS: (state, { data }) => {
+  SET_ROUTE_PAGES: (state, { data }) => {
     if (Array.isArray(data)) {
-      state.depthIds = []
+      state.routePages = []
       data.forEach((val) => {
-        state.depthIds.push(val['@id'])
+        state.routePages.push(val['id'])
       })
     }
   },
-  SET_PAGE: (state, { path, data }) => {
-    Vue.set(state.pages, path, data)
+  SET_PAGE: (state, { id, data }) => {
+    Vue.set(state.pages, id, data)
   }
 }
 
 export const actions = {
-  async FETCH_DEPTH_DATA ({ state, commit, dispatch, getters }, { depth, route }) {
+  async FETCH_ROUTE ({ commit }, { route }) {
     let path = compile(route.path)(route.params) || '/'
-    await this.$getRoutePages({ path: path })
+    return fetchRoute({ path, $axios: this.$axios })
   },
 
-  async FETCH_PAGES ({ state, dispatch }, { ids }) {
-    // on the client, the store itself serves as a cache.
-    // only fetch items that we do not already have, or has expired (15 seconds)
+  async FETCH_PAGES ({ state, commit }) {
+    // Filter to only load pages that haven't been loaded within last 15 seconds
     const now = Date.now()
-    ids = ids.filter(id => {
+    let ids = state.routePages.filter(id => {
       const item = state.pages[id]
       if (!item) {
         return true
       }
       return (now - item.__lastUpdated) > (1000 * 15)
     })
+
+    // If we still need to reload/load pages now we can do it
     if (ids.length) {
-      await dispatch('FETCH_ITEMS', ids)
+      let data = await fetchPageIds({ ids, $axios: this.$axios })
+      data.forEach((pageData) => {
+        return commit('SET_PAGE', { id: pageData.id, data: pageData })
+      })
     }
-  },
-
-  FETCH_ITEMS: ({ dispatch }, ids) => {
-    return Promise.all(ids.map(id => dispatch('FETCH_PAGE', id)))
-  },
-
-  async FETCH_PAGE ({ commit }, path) {
-    let data = await this.$getPage({ path })
-    data.__lastUpdated = Date.now()
-    return commit('SET_PAGE', { path, data })
   }
 }
