@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Component\Form\Form;
 use App\Entity\Component\Form\FormView;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,23 +38,27 @@ class FormPut extends AbstractController
      * @Method("PATCH")
      * @param Request $request
      * @param Form $data
-     * @param string $key
-     * @return Form
+     * @return Form|Form[]
      */
-    public function __invoke(Request $request, Form $data) {
-
+    public function __invoke(Request $request, Form $data)
+    {
         $form = $this->createForm($data->getClassName(),null, [
             'method' => 'POST'
         ]);
-        $content = \GuzzleHttp\json_decode($request->getContent());
-
-        if (!$form->has($content->key)) {
-            throw new NotAcceptableHttpException("No such key exists in this form");
+        $content = \GuzzleHttp\json_decode($request->getContent(), true);
+        $formData = $content[$form->getName()];
+        $form->submit($formData, false);
+        if (count($formData) > 1) {
+            $datum = [];
+            foreach ($formData as $key => $value) {
+                $dataItem = clone $data;
+                $dataItem->setForm(new FormView($form->get($key)->createView()));
+                $datum[] = $dataItem;
+            }
+            return $datum;
         }
 
-        $form->submit([$content->key => $content->value], false);
-        $data->setForm(new FormView($form->get($content->key)->createView()));
-
+        $data->setForm(new FormView($form->get(key($formData))->createView()));
         return $data;
     }
 }
