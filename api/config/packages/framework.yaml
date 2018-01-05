@@ -15,5 +15,3 @@ framework:
         log: true
     serializer:
         enabled: true
-        mapping:
-            paths: ['%kernel.project_dir%/config/serializer/']
