@@ -1,6 +1,5 @@
 import { mapMutations, mapGetters } from 'vuex'
 import _ from 'lodash'
-import axios from 'axios'
 
 export default {
   data () {
@@ -41,7 +40,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getApiUrl: 'getApiUrl',
       getFormAxiosCancelToken: 'forms/getFormAxiosCancelToken',
       getFormAction: 'forms/getFormAction',
       getFormAxiosCancelFn: 'forms/getFormAxiosCancelFn',
@@ -164,9 +162,15 @@ export default {
     validate () {
       if (!this.disableValidation) {
         if (this.lastValidationValue !== this.modelValue) {
-          let obj = this.getInputSubmitData(this.formId, this.inputName)
+          console.log(this.vars)
+          let obj = this.getInputSubmitData(this.formId, this.vars.full_name)
           this.lastValidationValue = this.modelValue
-          this.$patch(this.getFormAction(this.formId), obj, {
+          console.log(obj)
+          this.$axios.request({
+            url: '/form_input_values/' + 1,
+            data: obj
+          })
+          /* this.$patch(this.getFormAction(this.formId), obj, {
             cancelToken: this.getFormAxiosCancelToken(this.formId)
           })
             .then((res) => {
@@ -183,9 +187,7 @@ export default {
               } else {
                 console.warn(error)
               }
-            })
-        } else {
-          this.validating = false
+            }) */
         }
       }
     }

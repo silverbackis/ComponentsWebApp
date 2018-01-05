@@ -7,15 +7,19 @@
 <script>
   import { mapMutations, mapGetters } from 'vuex'
   import _FormId from './_FormId'
-  import axios from 'axios'
+  // import axios from 'axios'
 
   export default {
     mixins: [_FormId],
     props: {
       form: Object,
-      successFn: {
-        type: Function,
+      action: {
+        type: String,
         required: true
+      },
+      successFn: {
+        type: Function // ,
+        // required: true
       },
       failFn: {
         type: Function,
@@ -36,7 +40,7 @@
         setFormSubmitting: 'forms/setFormSubmitting'
       }),
       submit () {
-        this.setFormSubmitting({ formId: this.formId, submitting: true })
+        /* this.setFormSubmitting({ formId: this.formId, submitting: true })
         let submitObj = this.getFormSubmitData(this.formId)
         this.$axios.post(this.getFormAction(this.formId), submitObj, {
           cancelToken: this.getFormAxiosCancelToken(this.formId),
@@ -55,20 +59,17 @@
                 console.warn('post form exception: ', error)
               }
             }
-          })
+          }) */
+        console.log('SUBMIT from _FormTag.vue')
       }
     },
     computed: {
       ...mapGetters({
         getFormValid: 'forms/getFormValid',
-        getApiUrl: 'getApiUrl',
         getFormAction: 'forms/getFormAction',
         getFormSubmitData: 'forms/getFormSubmitData',
         getFormAxiosCancelToken: 'forms/getFormAxiosCancelToken'
-      }),
-      action () {
-        return this.apiUrl ? this.getApiUrl(this.form.vars.action) : this.form.vars.action
-      }
+      })
     },
     mounted () {
       this.initForm({

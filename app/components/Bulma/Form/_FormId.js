@@ -1,7 +1,7 @@
 export default {
   computed: {
     formId () {
-      return this.form.vars.id || this.form.vars.attr.id
+      return 'form_' + this.form.vars.id || this.form.vars.attr.id
     }
   }
 }

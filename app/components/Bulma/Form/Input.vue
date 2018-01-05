@@ -93,3 +93,52 @@
     }
   }
 </script>
+
+<style lang="sass">
+    @import "~assets/css/vars"
+
+    .checkbox,
+    .radio
+        + .radio,
+        + .checkbox
+            margin-left: 1rem
+        &.custom
+            position: relative
+            padding-left: 1.25rem
+        .custom
+            position: absolute
+            top: 0
+            left: 0
+            z-index: -1
+            opacity: 0
+            ~ .indicator
+                position: absolute
+                width: 1rem
+                height: 1rem
+                top: .1rem
+                left: 0
+                pointer-events: none
+                user-select: none
+                background: 50% 50% no-repeat $grey-light
+                background-size: 50% 50%
+                ~ .input-label
+                    display: block
+                    position: relative
+                    user-select: none
+                &::after
+                    position: absolute
+                    content: ''
+                    width: 100%
+                    height: 100%
+                    top: 0
+                    left: 0
+                    background-color: $white
+                    transition: background-color .4s, transform .4s, opacity .4s
+                    opacity: 0
+            &:checked
+                ~ .indicator
+                    background-color: $primary
+                    &::after
+                        transform: scale(.4)
+                        opacity: 1
+</style>

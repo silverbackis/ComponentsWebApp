@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class FormController extends AbstractController
+class FormPut extends AbstractController
 {
     /**
      * @var EntityManagerInterface
@@ -25,14 +25,13 @@ class FormController extends AbstractController
 
     /**
      * @Route(
-     *     name="api_forms_patch_item",
-     *     path="/forms/validate/{id}.{_format}",
+     *     name="api_forms_validate_item",
+     *     path="/forms/submit/{id}.{_format}",
      *     requirements={"id"="\d+"},
      *     defaults={
      *         "_api_resource_class"=Form::class,
      *         "_api_item_operation_name"="validate_item",
-     *         "_format"="jsonld",
-     *         "value"=""
+     *         "_format"="jsonld"
      *     }
      * )
      * @Method("PATCH")
@@ -49,7 +48,7 @@ class FormController extends AbstractController
         $content = \GuzzleHttp\json_decode($request->getContent());
 
         if (!$form->has($content->key)) {
-            throw new NotAcceptableHttpException("The field submitted does not exist in this form");
+            throw new NotAcceptableHttpException("No such key exists in this form");
         }
 
         $form->submit([$content->key => $content->value], false);

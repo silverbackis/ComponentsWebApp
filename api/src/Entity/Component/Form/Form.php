@@ -15,12 +15,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity()
  * @ORM\EntityListeners({"\App\EntityListener\FormListener"})
  * @ApiResource(
+ *     collectionOperations={
+ *         "get"={"method"="GET", "normalization_context"={"groups"={"page"}}},
+ *         "post"={"method"="POST", "denormalization_context"={"groups"={"form_write"}}},
+ *     },
  *     itemOperations={
  *         "get"={"method"="GET", "normalization_context"={"groups"={"page"}}},
  *         "delete"={"method"="DELETE", "normalization_context"={"groups"={"page"}}},
  *         "put"={"method"="PUT", "denormalization_context"={"groups"={"form_write"}}},
- *         "validate_item"={"method"="PATCH", "route_name"="api_forms_patch_item", "denormalization_context"={"groups"={"none"}}},
- *         "validate_form"={"method"="PUT", "path"="/forms/{id}/validate", "denormalization_context"={"groups"={"none"}}}
+ *         "validate_item"={"method"="PATCH", "route_name"="api_forms_validate_item", "denormalization_context"={"groups"={"none"}}},
+ *         "validate_form"={"method"="POST", "route_name"="api_forms_validate", "denormalization_context"={"groups"={"none"}}}
  *     }
  * )
  */
