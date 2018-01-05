@@ -1,5 +1,6 @@
 import { mapMutations, mapGetters } from 'vuex'
 import _ from 'lodash'
+import axios from 'axios'
 
 export default {
   data () {
@@ -159,35 +160,35 @@ export default {
         this.validate()
       }
     },
-    validate () {
+    async validate () {
       if (!this.disableValidation) {
         if (this.lastValidationValue !== this.modelValue) {
-          console.log(this.vars)
           let obj = this.getInputSubmitData(this.formId, this.vars.full_name)
           this.lastValidationValue = this.modelValue
-          console.log(obj)
-          this.$axios.request({
-            url: '/form_input_values/' + 1,
-            data: obj
-          })
-          /* this.$patch(this.getFormAction(this.formId), obj, {
-            cancelToken: this.getFormAxiosCancelToken(this.formId)
-          })
-            .then((res) => {
+          try {
+            let { data } = await this.$axios.request({
+              url: '/forms/submit/9',
+              data: obj,
+              method: 'PATCH',
+              cancelToken: this.getFormAxiosCancelToken(this.formId)
+            })
+            this.setInputValid(this.extendModelIds({
+              valid: data.form.vars.valid,
+              errors: data.form.vars.errors
+            }))
+            this.validating = false
+          } catch (error) {
+            if (!axios.isCancel(error)) {
+              console.warn('validateField request error: ', error.response)
               this.setInputValid(this.extendModelIds({
-                valid: res.data.valid,
-                errors: res.data.errors.errors
+                valid: false,
+                errors: ['<b>' + error.response.status + ' ' + error.response.statusText + ':</b> ' + error.response.data['hydra:description']]
               }))
               this.validating = false
-            })
-            .catch((error) => {
-              if (!axios.isCancel(error)) {
-                console.warn('validateField request error: ', error)
-                this.validating = false
-              } else {
-                console.warn(error)
-              }
-            }) */
+            } else {
+              console.warn(error)
+            }
+          }
         }
       }
     }
