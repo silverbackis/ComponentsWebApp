@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Component\Form\Form;
-use App\Entity\Component\Form\FormInputValue;
 use App\Entity\Component\Form\FormView;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -27,35 +26,35 @@ class FormController extends AbstractController
     /**
      * @Route(
      *     name="api_forms_patch_item",
-     *     path="/form_input_values/{id}.{_format}",
+     *     path="/forms/validate/{id}.{_format}",
      *     requirements={"id"="\d+"},
      *     defaults={
-     *         "_api_resource_class"=FormInputValue::class,
-     *         "_api_item_operation_name"="put",
-     *         "_format"="jsonld"
+     *         "_api_resource_class"=Form::class,
+     *         "_api_item_operation_name"="validate_item",
+     *         "_format"="jsonld",
+     *         "value"=""
      *     }
      * )
-     * @Method("PUT")
-     * @param $data
+     * @Method("PATCH")
+     * @param Request $request
+     * @param Form $data
+     * @param string $key
+     * @return Form
      */
-    public function __invoke(Request $request, FormInputValue $data) {
-        /**
-         * @var $form Form|null
-         */
-        $formEntity = $this->entityManager->getRepository(Form::class)->find($data->getId());
-        if (!$formEntity) {
-            return null;
-        }
+    public function __invoke(Request $request, Form $data) {
 
-        $form = $this->createForm($formEntity->getClassName(),null, [
+        $form = $this->createForm($data->getClassName(),null, [
             'method' => 'POST'
         ]);
-        if (!$form->has($data->getKey())) {
-            return new NotAcceptableHttpException("The field submitted does not exist in this form");
+        $content = \GuzzleHttp\json_decode($request->getContent());
+
+        if (!$form->has($content->key)) {
+            throw new NotAcceptableHttpException("The field submitted does not exist in this form");
         }
 
-        $form->submit([$data->getKey() => $data->getValue()], false);
-        $data->setFormView(new FormView($form->get($data->getKey())->createView()));
+        $form->submit([$content->key => $content->value], false);
+        $data->setForm(new FormView($form->get($content->key)->createView()));
+
         return $data;
     }
 }

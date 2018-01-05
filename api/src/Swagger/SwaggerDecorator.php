@@ -16,6 +16,40 @@ final class SwaggerDecorator implements NormalizerInterface
     public function normalize($object, $format = null, array $context = [])
     {
         $docs = $this->decorated->normalize($object, $format, $context);
+
+        $patchOpPath = '/forms/validate/{id}';
+        $patchOp = $docs['paths'][$patchOpPath]['patch'];
+        $patchOp['parameters'] = $docs['paths']['/forms/{id}']['get']['parameters'];
+        $patchOp['parameters'][] = [
+            'name' => 'field payload',
+            'in' => 'body',
+            'required' => false,
+            'schema' => [
+                'type' => 'object',
+                'properties' => [
+                    'key' => [
+                        'type' => 'string'
+                    ],
+                    'value' => [
+                        'type' => 'string'
+                    ]
+                ]
+            ]
+        ];
+        $patchOp['responses'] = $docs['paths']['/forms/{id}']['get']['responses'];
+        $patchOp['responses']['200']['description'] = "Validation passed successfully";
+        $patchOp['responses']['401'] = [
+            'description' => "Validation failed",
+            'schema' => [
+                '$ref' => '#/definitions/Form-page'
+            ]
+        ];
+        $patchOp['responses']['406']['description'] = "Invalid field name for the form ID";
+        $patchOp['consumes'] = $docs['paths']['/forms/{id}']['put']['consumes'];
+        $patchOp['produces'] = $docs['paths']['/forms/{id}']['put']['produces'];
+
+        $docs['paths'][$patchOpPath]['patch'] = $patchOp;
+
 /*
         $patchOp = $docs['paths']['/form_input_values/{id}']['patch'];
         // $copyFrom = $docs['paths']['/form_input_values/{id}']['put'];
@@ -34,8 +68,7 @@ final class SwaggerDecorator implements NormalizerInterface
                     '$ref' => '#/definitions/FormInputValue-form_write'
                 ]
             ]
-        ];
-        $docs['paths']['/form_input_values/{id}']['patch'] = $patchOp;*/
+        ];*/
 /*
         $copyFrom = $docs['paths']['/form_input_values/{id}']['put'];
 
