@@ -1,32 +1,34 @@
 export default {
   mounted () {
+    let vars = Object.assign({}, this.vars)
     if (this.storeInput.displayErrors === null) {
       this.initInput(this.extendModelIds({
         label: this.inputLabel,
         displayErrors: this.displayErrors,
         validating: this.validating
       }))
+
       if (this.lastBlockPrefix === 'checkbox') {
         this.setInputValue(this.extendModelIds({
-          value: this.vars.checked
+          value: vars.checked
         }))
-      } else if (!this.isCheckRadio || this.vars.checked) {
+      } else if (!this.isCheckRadio || vars.checked) {
         this.setInputValue(this.extendModelIds({
           value: this.inputValue
         }))
       }
       // Initial inputs come through from api as valid (incorrectly)
-      this.vars.valid = null
+      vars.valid = null
     } else {
-      this.validating = this.storeInput.validating
       this.displayErrors = this.storeInput.displayErrors
-      this.vars.valid = this.storeInput.valid
-      this.vars.errors = this.storeInput.errors
+      vars.valid = this.storeInput.valid
+      vars.errors = this.storeInput.errors
       // Checkbox and radios have their own value which should not be changed
       if (!this.isCheckRadio) {
-        this.vars.value = this.storeInput.value
+        vars.value = this.storeInput.value
       }
     }
+    this.vars = vars
   },
   created () {
     // Non reactive
@@ -41,6 +43,9 @@ export default {
       if (this.debounce[dbK]) {
         this.debounce[dbK].cancel()
       }
+    }
+    if (this.cancelToken) {
+      this.cancelToken.cancel('input destroyed')
     }
   }
 }

@@ -15,8 +15,16 @@ export default {
       getFormSubmitting: 'forms/getFormSubmitting',
       getInputValidating: 'forms/getInputValidating'
     }),
-    vars () {
-      return this.input.vars
+    vars: {
+      get () {
+        if (!this.localVars) {
+          this.localVars = this.input.vars
+        }
+        return this.localVars
+      },
+      set (value) {
+        this.localVars = value
+      }
     },
     inputName () {
       return this.vars.full_name

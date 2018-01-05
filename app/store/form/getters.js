@@ -68,7 +68,7 @@ export const getters = {
   },
   getInputAxiosCancelToken: (state, getters) => (formId, inputName) => {
     let model = getters.getInput(formId, inputName)
-    return !model ? null : model.cancelTokenSource
+    return !model ? null : model.cancelToken
   },
 
   /*

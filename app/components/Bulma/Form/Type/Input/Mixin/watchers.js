@@ -8,6 +8,9 @@ export default {
           displayErrors: this.displayErrors
         })
       )
+    },
+    input () {
+      this.vars = this.input.vars
     }
   }
 }

@@ -16,8 +16,8 @@ export const mutations = {
         action: action,
         submitting: false
       })
-      Vue.set(state.forms[formId], 'axiosCancelToken', new AxiosCancelToken((c) => {
-        state.forms[formId].axiosCancel = c
+      Vue.set(state.forms[formId], 'cancelToken', new AxiosCancelToken((c) => {
+        state.forms[formId].cancelToken = c
       }))
       for (let inputName of Object.keys(models)) {
         Vue.set(state.forms[formId].models, models[inputName].vars.full_name, {
@@ -53,7 +53,7 @@ export const mutations = {
       return false
     }
     state.forms[formId].axiosCancel()
-    Vue.set(state.forms[formId], 'axiosCancelToken', new AxiosCancelToken((c) => {
+    Vue.set(state.forms[formId], 'cancelToken', new AxiosCancelToken((c) => {
       state.forms[formId].axiosCancel = c
     }))
     return true

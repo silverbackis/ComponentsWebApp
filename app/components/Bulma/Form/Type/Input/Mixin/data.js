@@ -3,7 +3,8 @@ export default {
     return {
       displayErrors: this.instantUpdate || false,
       lastValidationValue: null,
-      destroying: false
+      destroying: false,
+      localVars: null
     }
   }
 }
