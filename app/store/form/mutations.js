@@ -30,7 +30,6 @@ export const mutations = {
           displayErrors: null,
           cancelTokenSource: null
         })
-        state.forms[formId].models[models[inputName].vars.full_name].cancelTokenSource = AxiosCancelToken.source()
       }
     }
   },
@@ -91,5 +90,8 @@ export const mutations = {
   },
   setInputDisplayErrors (state, {formId, inputName, displayErrors}) {
     state.forms[formId].models[inputName].displayErrors = displayErrors
+  },
+  refreshToken (state, {formId, inputName}) {
+    state.forms[formId].models[inputName].cancelTokenSource = AxiosCancelToken.source()
   }
 }

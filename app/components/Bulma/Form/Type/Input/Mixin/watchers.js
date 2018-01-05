@@ -8,13 +8,6 @@ export default {
           displayErrors: this.displayErrors
         })
       )
-    },
-    validating () {
-      this.setInputValidating(
-        this.extendModelIds({
-          validating: this.validating
-        })
-      )
     }
   }
 }

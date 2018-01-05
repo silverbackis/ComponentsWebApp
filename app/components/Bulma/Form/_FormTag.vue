@@ -7,7 +7,6 @@
 <script>
   import { mapMutations, mapGetters } from 'vuex'
   import _FormId from './_FormId'
-  // import axios from 'axios'
 
   export default {
     mixins: [_FormId],

@@ -52,7 +52,7 @@ export const getters = {
   },
   getInputValidating: (state, getters) => (formId, inputName) => {
     let model = getters.getInput(formId, inputName)
-    return !model ? null : model.validating
+    return !model ? null : !!model.validating
   },
   getInputErrors: (state, getters) => (formId, inputName) => {
     let model = getters.getInput(formId, inputName)
@@ -65,6 +65,10 @@ export const getters = {
   getInputCurrentErrors: (store, getters) => (formId, inputName) => {
     let model = getters.getInput(formId, inputName)
     return !model ? null : (model.displayErrors && !model.valid) ? model.errors : null
+  },
+  getInputAxiosCancelToken: (state, getters) => (formId, inputName) => {
+    let model = getters.getInput(formId, inputName)
+    return !model ? null : model.cancelTokenSource
   },
 
   /*

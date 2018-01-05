@@ -4,7 +4,7 @@ import _ from 'lodash'
 export default {
   computed: {
     ...mapGetters({
-      getFormAxiosCancelToken: 'forms/getFormAxiosCancelToken',
+      getInputAxiosCancelToken: 'forms/getInputAxiosCancelToken',
       getFormAction: 'forms/getFormAction',
       getFormAxiosCancelFn: 'forms/getFormAxiosCancelFn',
       getInput: 'forms/getInput',
@@ -12,7 +12,8 @@ export default {
       getInputValid: 'forms/getInputValid',
       getInputCurrentErrors: 'forms/getInputCurrentErrors',
       getInputSubmitData: 'forms/getInputSubmitData',
-      getFormSubmitting: 'forms/getFormSubmitting'
+      getFormSubmitting: 'forms/getFormSubmitting',
+      getInputValidating: 'forms/getInputValidating'
     }),
     vars () {
       return this.input.vars
@@ -29,6 +30,9 @@ export default {
     storeInput () {
       return this.getInput(this.formId, this.inputName)
     },
+    cancelToken () {
+      return this.getInputAxiosCancelToken(this.formId, this.inputName)
+    },
     modelValue: {
       get () {
         if (this.isCheckRadio || this.instantUpdate) {
@@ -41,7 +45,8 @@ export default {
       },
       set (value) {
         this.vars.value = value
-        this.validating = !this.disableValidation
+        this.setValidating(!this.disableValidation)
+
         if (this.isCheckRadio || this.instantUpdate) {
           return this.setStoreValue(value)
         } else {
@@ -57,6 +62,9 @@ export default {
     },
     isCheckRadio () {
       return this.vars.checked !== undefined
+    },
+    isRadio () {
+      return this.vars.block_prefixes[2] === 'radio'
     },
     isCustom () {
       return this.attr.class.indexOf('custom') !== -1
