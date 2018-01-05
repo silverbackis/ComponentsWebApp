@@ -66,6 +66,9 @@ export default {
     storeInput () {
       return this.getInput(this.formId, this.inputName)
     },
+    inputLastValidation () {
+      return this.storeInput.lastValidationValue
+    },
     modelValue: {
       get () {
         if (this.isCheckRadio || this.instantUpdate) {
@@ -164,6 +167,7 @@ export default {
       if (!this.disableValidation) {
         if (this.lastValidationValue !== this.modelValue) {
           let obj = this.getInputSubmitData(this.formId, this.vars.full_name)
+          // lastValidationValue needs to be shared
           this.lastValidationValue = this.modelValue
           try {
             let { data } = await this.$axios.request({
@@ -176,18 +180,27 @@ export default {
               valid: data.form.vars.valid,
               errors: data.form.vars.errors
             }))
+            console.log('resolve successful validation')
             this.validating = false
           } catch (error) {
             if (!axios.isCancel(error)) {
-              console.warn('validateField request error: ', error.response)
-              this.setInputValid(this.extendModelIds({
-                valid: false,
-                errors: ['<b>' + error.response.status + ' ' + error.response.statusText + ':</b> ' + error.response.data['hydra:description']]
-              }))
-              this.validating = false
+              if (error.response.status === 406) {
+                // Invalid
+                this.setInputValid(this.extendModelIds({
+                  valid: error.response.data.form.vars.valid,
+                  errors: error.response.data.form.vars.errors
+                }))
+              } else {
+                console.warn('validateField request error: ', error.response)
+                this.setInputValid(this.extendModelIds({
+                  valid: false,
+                  errors: ['<b>' + error.response.status + ' ' + error.response.statusText + ':</b> ' + error.response.data['hydra:description']]
+                }))
+              }
             } else {
               console.warn(error)
             }
+            this.validating = false
           }
         }
       }
