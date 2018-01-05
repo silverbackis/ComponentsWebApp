@@ -45,20 +45,23 @@ class FormPut extends AbstractController
         $form = $this->createForm($data->getClassName(),null, [
             'method' => 'POST'
         ]);
+
         $content = \GuzzleHttp\json_decode($request->getContent(), true);
+
         $formData = $content[$form->getName()];
         $form->submit($formData, false);
-        if (count($formData) > 1) {
-            $datum = [];
-            foreach ($formData as $key => $value) {
-                $dataItem = clone $data;
-                $dataItem->setForm(new FormView($form->get($key)->createView()));
-                $datum[] = $dataItem;
-            }
-            return $datum;
+
+        if (count($formData) === 1) {
+            $data->setForm(new FormView($form->get(key($formData))->createView()));
+            return $data;
         }
 
-        $data->setForm(new FormView($form->get(key($formData))->createView()));
-        return $data;
+        $datum = [];
+        foreach ($formData as $key => $value) {
+            $dataItem = clone $data;
+            $dataItem->setForm(new FormView($form->get($key)->createView()));
+            $datum[] = $dataItem;
+        }
+        return $datum;
     }
 }

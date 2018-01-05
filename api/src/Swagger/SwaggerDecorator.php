@@ -28,11 +28,13 @@ final class SwaggerDecorator implements NormalizerInterface
             'schema' => [
                 'type' => 'object',
                 'properties' => [
-                    'key' => [
-                        'type' => 'string'
-                    ],
-                    'value' => [
-                        'type' => 'string'
+                    'form_name' => [
+                        'type' => 'object',
+                        'properties' => [
+                            'input_name' => [
+                                'type' => 'string'
+                            ]
+                        ]
                     ]
                 ]
             ]
