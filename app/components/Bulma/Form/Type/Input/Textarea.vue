@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import InputMixin from './_Mixin'
+  import InputMixin from './Mixin'
 
   export default {
     mixins: [InputMixin]

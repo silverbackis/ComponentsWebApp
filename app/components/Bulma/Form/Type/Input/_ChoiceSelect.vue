@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import InputMixin from './_Mixin'
+  import InputMixin from './Mixin'
   import SelectOption from './_ChoiceSelectOption'
 
   export default {

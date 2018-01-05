@@ -57,7 +57,7 @@
       iconClass () {
         return [
           'fa',
-          this.getInputCurrentErrors(this.formId, this.inputName) ? 'fa-warning' : this.getInputValid(this.formId, this.inputName) ? 'fa-check' : ''
+          this.getInputCurrentErrors(this.formId, this.inputName) ? 'fa-warning has-text-danger' : this.getInputValid(this.formId, this.inputName) ? 'fa-check has-text-success' : ''
         ]
       },
       errors () {
