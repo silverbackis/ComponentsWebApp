@@ -30,7 +30,8 @@
       BulmaHero: () => import('~/components/Bulma/Hero/Hero.vue'),
       BulmaContent: () => import('~/components/Bulma/Content/Content.vue'),
       BulmaTabs: () => import('~/components/Bulma/Nav/Tabs/Tabs.vue'),
-      BulmaMenu: () => import('~/components/Bulma/Nav/Menu/Menu.vue')
+      BulmaMenu: () => import('~/components/Bulma/Nav/Menu/Menu.vue'),
+      BulmaForm: () => import('~/components/Bulma/Form/Form.vue')
     },
     methods: {
       name (component) {

@@ -2,6 +2,7 @@
 
 namespace App\Entity\Component\Form;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Component\Component;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,8 +15,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity()
  * @ORM\EntityListeners({"\App\EntityListener\FormListener"})
  * @ApiResource(
- *     attributes={
- *          "normalization_context"={"groups"={"page"}}
+ *     collectionOperations={
+ *         "get"={"method"="GET", "normalization_context"={"groups"={"page"}}},
+ *         "post"={"method"="POST", "denormalization_context"={"groups"={"form_write"}}},
+ *     },
+ *     itemOperations={
+ *         "get"={"method"="GET", "normalization_context"={"groups"={"page"}}},
+ *         "delete"={"method"="DELETE", "normalization_context"={"groups"={"page"}}},
+ *         "put"={"method"="PUT", "denormalization_context"={"groups"={"form_write"}}},
+ *         "validate_item"={"method"="PATCH", "route_name"="api_forms_validate_item", "denormalization_context"={"groups"={"none"}}},
+ *         "validate_form"={"method"="POST", "route_name"="api_forms_validate", "denormalization_context"={"groups"={"none"}}}
  *     }
  * )
  */
@@ -23,13 +32,13 @@ class Form extends Component
 {
     /**
      * @ORM\Column(type="string")
-     * @Groups({"page"})
+     * @Groups({"page", "form_write"})
      * @var string
      */
     private $className;
 
     /**
-     * @Groups({"page"})
+     * @Groups({"page", "validate"})
      * @var null|FormView
      */
     private $form;

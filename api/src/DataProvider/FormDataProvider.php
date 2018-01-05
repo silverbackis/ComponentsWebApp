@@ -8,7 +8,6 @@ use ApiPlatform\Core\Exception\RuntimeException;
 use App\Entity\Component\Form\Form;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectRepository;
-use Limenius\Liform\Liform;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class FormDataProvider implements ItemDataProviderInterface
@@ -24,25 +23,17 @@ class FormDataProvider implements ItemDataProviderInterface
     private $managerRegistry;
 
     /**
-     * @var Liform
-     */
-    private $liform;
-
-    /**
      * FormDataProvider constructor.
      * @param FormFactoryInterface $formFactory
      * @param ManagerRegistry $managerRegistry
-     * @param Liform $liform
      */
     public function __construct(
         FormFactoryInterface $formFactory,
-        ManagerRegistry $managerRegistry,
-        Liform $liform
+        ManagerRegistry $managerRegistry
     )
     {
         $this->formFactory = $formFactory;
         $this->managerRegistry = $managerRegistry;
-        $this->liform = $liform;
     }
 
     /**
