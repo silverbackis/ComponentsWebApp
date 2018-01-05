@@ -16,29 +16,52 @@ final class SwaggerDecorator implements NormalizerInterface
     public function normalize($object, $format = null, array $context = [])
     {
         $docs = $this->decorated->normalize($object, $format, $context);
+/*
+        $patchOp = $docs['paths']['/form_input_values/{id}']['patch'];
+        // $copyFrom = $docs['paths']['/form_input_values/{id}']['put'];
+        $patchOp['parameters'] = [
+            [
+                'name' => 'id',
+                'in' => 'path',
+                'type' => 'string',
+                'required' => true
+            ],
+            [
+                'name' => 'formInputValue',
+                'in' => 'body',
+                'description' => 'The updated FormInputValue resource',
+                'scehma' => [
+                    '$ref' => '#/definitions/FormInputValue-form_write'
+                ]
+            ]
+        ];
+        $docs['paths']['/form_input_values/{id}']['patch'] = $patchOp;*/
+/*
+        $copyFrom = $docs['paths']['/form_input_values/{id}']['put'];
 
-        $customDefinition = [
-            'name' => 'id',
-            'definition' => 'Form ID',
-            'default' => '9',
-            'in' => 'path',
-            'required' => true,
-            'type' => 'string'
+        $newOp = [];
+        // Group with other 'Form'
+        // $newOp['tags'] = $copyFrom['tags'];
+        $newOp['parameters'][] = $copyFrom['parameters'][0];
+        //var_dump($copyFrom['parameters'][1]);
+        $newOp['parameters'][] = [
+          'schema' => [
+              '$ref' => '#/definitions/FormInputValues'
+          ]
+        ];
+        $newOp['consumes'] = $copyFrom['consumes'];
+        $newOp['produces'] = $copyFrom['produces'];
+
+        $newOp['responses'] = $copyFrom['responses'];
+
+        $newOp['summary'] = 'Tests a form field against validation';
+
+        $newOp['responses']['400'] = [
+            'description' => 'Invalid user input',
+            'schema' => $newOp['responses']['200']['schema']
         ];
 
-        // e.g. add a custom parameter
-        $docs['paths']['/forms/{id}']['patch']['parameters'][] = $customDefinition;
-        $docs['paths']['/forms/{id}']['patch']['summary'] = 'Tests a form field against validation';
-        $docs['paths']['/forms/{id}']['patch']['consumes'] = ["application/json", "text/html"];
-        $docs['paths']['/forms/{id}']['patch']['produces'] = ["application/json"];
-        $docs['paths']['/forms/{id}']['patch']['responses'] = $docs['paths']['/forms/{id}']['get']['responses'];
-
-        $docs['paths']['/forms/{id}']['patch']['responses']['201'] = $docs['paths']['/forms/{id}']['patch']['responses']['200'];
-        unset($docs['paths']['/forms/{id}']['patch']['responses']['200']);
-
-        $docs['paths']['/forms/{id}']['patch']['responses']['400'] = [
-          'description' => 'Invalid user input'
-        ];
+*/
         return $docs;
     }
 

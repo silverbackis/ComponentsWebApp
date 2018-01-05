@@ -15,16 +15,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\EntityListeners({"\App\EntityListener\FormListener"})
  * @ApiResource(
  *     attributes={
- *          "normalization_context"={"groups"={"page"}}
+ *         "normalization_context"={"groups"={"page"}},
+ *         "denormalization_context"={"groups"={"form_write"}}
  *     },
  *     itemOperations={
- *     "patch"={
- *         "method"="PATCH",
- *         "route_name"="api_forms_patch_item"
- *     },
- *     "get"={"method"="GET"},
- *     "put"={"method"="PUT"},
- *     "delete"={"method"="DELETE"}
+ *         "get"={"method"="GET"},
+ *         "delete"={"method"="DELETE"}
  *     }
  * )
  */
@@ -32,7 +28,7 @@ class Form extends Component
 {
     /**
      * @ORM\Column(type="string")
-     * @Groups({"page"})
+     * @Groups({"page", "form_write"})
      * @var string
      */
     private $className;
