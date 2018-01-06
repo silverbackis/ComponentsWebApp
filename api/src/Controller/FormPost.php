@@ -4,25 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Component\Form\Form;
 use App\Entity\Component\Form\FormView;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class FormPost extends AbstractController
+class FormPost extends AbstractForm
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
     /**
      * @Route(
      *     name="api_forms_validate",
@@ -37,21 +26,20 @@ class FormPost extends AbstractController
      * @Method("POST")
      * @param Request $request
      * @param Form $data
-     * @param string $key
-     * @return Form
+     * @param string $_format
+     * @return Response
      */
-    public function __invoke(Request $request, Form $data) {
-
-        $form = $this->createForm($data->getClassName(),null);
-        $content = \GuzzleHttp\json_decode($request->getContent());
-
-        if (!$form->has($content->key)) {
-            throw new NotAcceptableHttpException("No such key exists in this form");
+    public function __invoke(Request $request, Form $data, string $_format)
+    {
+        $form = $this->formResolver->createForm($data->getClassName());
+        $formData = $this->formResolver->deserializeFormData($form, $request->getContent());
+        $form->submit($formData);
+        if (!$form->isSubmitted()) {
+            throw new BadRequestHttpException(
+                "The form was not submitted"
+            );
         }
-
-        $form->submit([$content->key => $content->value], false);
-        $data->setForm(new FormView($form->get($content->key)->createView()));
-
-        return $data;
+        $data->setForm(new FormView($form->createView()));
+        return $this->getResponse($data, $_format, $form->isValid());
     }
 }

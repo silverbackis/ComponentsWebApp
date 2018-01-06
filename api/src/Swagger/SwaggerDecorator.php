@@ -22,7 +22,7 @@ final class SwaggerDecorator implements NormalizerInterface
         $patchOp['summary'] = 'Submit a single input for validation';
         $patchOp['parameters'] = $docs['paths']['/forms/{id}']['get']['parameters'];
         $patchOp['parameters'][] = [
-            'name' => 'field payload',
+            'name' => 'fields',
             'in' => 'body',
             'required' => false,
             'schema' => [
@@ -53,6 +53,8 @@ final class SwaggerDecorator implements NormalizerInterface
 
         $docs['paths'][$patchOpPath]['patch'] = $patchOp;
         $docs['paths'][$patchOpPath]['post']['summary'] = 'Submit and validate the entire form';
+        $docs['paths'][$patchOpPath]['post']['parameters'] = $patchOp['parameters'];
+        $docs['paths'][$patchOpPath]['post']['responses']['201']['description'] = "Form successfully submitted and valid";
 /*
         $patchOp = $docs['paths']['/form_input_values/{id}']['patch'];
         // $copyFrom = $docs['paths']['/form_input_values/{id}']['put'];
