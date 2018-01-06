@@ -4,7 +4,7 @@ export default {
     if (this.storeInput.displayErrors === null) {
       this.initInput(this.extendModelIds({
         label: this.inputLabel,
-        displayErrors: this.displayErrors,
+        displayErrors: this.isCheckRadio || this.displayErrors,
         validating: this.validating
       }))
 
@@ -20,7 +20,7 @@ export default {
       // Initial inputs come through from api as valid (incorrectly)
       vars.valid = null
     } else {
-      this.displayErrors = this.storeInput.displayErrors
+      this.displayErrors = this.isCheckRadio || this.storeInput.displayErrors
       vars.valid = this.storeInput.valid
       vars.errors = this.storeInput.errors
       // Checkbox and radios have their own value which should not be changed
@@ -45,7 +45,7 @@ export default {
       }
     }
     if (this.cancelToken) {
-      this.cancelToken.cancel('input destroyed')
+      this.cancelToken.cancel('input destroy called - token cancelled')
     }
   }
 }

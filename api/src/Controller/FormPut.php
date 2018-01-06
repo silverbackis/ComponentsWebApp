@@ -61,13 +61,14 @@ class FormPut extends AbstractController
 
         $content = \GuzzleHttp\json_decode($request->getContent(), true);
 
-        $formData = $content[$form->getName()];
-        $dataCount = count($formData);
-        if (!$dataCount) {
+        if (!isset($content[$form->getName()])) {
             throw new BadRequestHttpException(
                 "Form object key could not be found. Expected: <b>" . $form->getName() . "</b>: { \"input_name\": \"input_value\" }"
             );
         }
+
+        $formData = $content[$form->getName()];
+        $dataCount = count($formData);
 
         $form->submit($formData, false);
 

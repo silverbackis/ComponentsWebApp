@@ -68,7 +68,7 @@ export const getters = {
   },
   getInputAxiosCancelToken: (state, getters) => (formId, inputName) => {
     let model = getters.getInput(formId, inputName)
-    return !model ? null : model.cancelToken
+    return !model ? null : model.cancelTokenSource
   },
 
   /*
@@ -83,7 +83,7 @@ export const getters = {
     }
     return submitObj
   },
-  getInputSubmitData: (state, getters) => (formId, inputName) => {
+  getInputSubmitData: (state, getters) => ({ formId, inputName }) => {
     let model = getters.getInput(formId, inputName)
     if (!model) {
       return {}

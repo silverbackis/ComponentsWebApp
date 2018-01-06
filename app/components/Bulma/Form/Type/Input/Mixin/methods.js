@@ -44,20 +44,19 @@ export default {
     async validate () {
       if (!this.disableValidation) {
         if (this.isRadio || this.lastValidationValue !== this.modelValue) {
-          let obj = this.getInputSubmitData(this.formId, this.vars.full_name)
+          let obj = this.getInputSubmitData(this.extendModelIds({}))
           this.lastValidationValue = this.modelValue
           if (this.cancelToken) {
             await this.cancelToken.cancel(DUPLICATE_CANCEL_MESSAGE)
           }
-          await this.$store.dispatch('forms/refreshToken', { formId: this.formId, inputName: this.vars.full_name })
-
+          await this.$store.commit('forms/refreshToken', this.extendModelIds({}))
           this.setValidating(true)
           try {
             let { data } = await this.$axios.request({
               url: '/forms/submit/9',
               data: obj,
               method: 'PATCH',
-              validateStatus: function (status) {
+              validateStatus (status) {
                 return [ 406, 200 ].indexOf(status) !== -1 // default
               },
               cancelToken: this.cancelToken.token
@@ -74,12 +73,14 @@ export default {
             } else {
               if (axios.isCancel(error)) {
                 console.warn(error)
-              } else {
+              } else if (error.response) {
                 console.warn('validateField request error: ', error.response)
                 this.setInputValid(this.extendModelIds({
                   valid: false,
                   errors: ['<b>' + error.response.status + ' ' + error.response.statusText + ':</b> ' + error.response.data['hydra:description']]
                 }))
+              } else {
+                console.warn('validateField unknown error: ', error)
               }
               // turn off validating because may be a radio and the new request may not be assigned to this component
               this.setValidating(false)
