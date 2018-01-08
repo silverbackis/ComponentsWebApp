@@ -5,7 +5,7 @@
            v-bind="commonProps"
            :id="child.vars.id"
            :class="child.vars.attr.class"
-           v-bind:value="child.vars.value"
+           :value="child.vars.value"
     />
     <div class="indicator" v-if="isCustom"></div>
     <span class="input-label" v-html="child.vars.label"></span>
