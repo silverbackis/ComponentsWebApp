@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 import axios from 'axios'
 const AxiosCancelToken = axios.CancelToken
 
@@ -12,7 +12,13 @@ export default {
       setInputValidating: 'forms/setInputValidating',
       setInputValidationResult: 'forms/setInputValidationResult'
     }),
+    ...mapActions({
+      inputSubmitData: 'forms/inputSubmitData'
+    }),
     extendInputId (data) {
+      if (!data) {
+        data = {}
+      }
       return Object.assign(
         {
           formId: this.formId,
@@ -40,28 +46,32 @@ export default {
       }
     },
     async validate () {
-      if (this.cancelToken) {
-        this.cancelToken.cancel(DUPLICATE_CANCEL_MESSAGE)
-      }
-      this.cancelToken = AxiosCancelToken.source()
-      try {
-        let { data } = await this.$axios.request({
-          url: this.action,
-          data: {},
-          method: 'PATCH',
-          validateStatus (status) {
-            return [ 406, 200 ].indexOf(status) !== -1
-          },
-          cancelToken: this.cancelToken.token
-        })
-        const VARS = data.form.vars
-        this.setInputValidationResult(this.extendInputId({
-          valid: VARS.valid,
-          errors: VARS.errors
-        }))
-        this.validating = false
-      } catch (error) {
-        this.validateError(error)
+      if (this.lastValidationValue !== this.inputModel) {
+        this.lastValidationValue = this.inputModel
+        if (this.cancelToken) {
+          this.cancelToken.cancel(DUPLICATE_CANCEL_MESSAGE)
+        }
+        this.cancelToken = AxiosCancelToken.source()
+        let postObj = await this.inputSubmitData(this.extendInputId())
+        try {
+          let { data } = await this.$axios.request({
+            url: this.action,
+            data: postObj,
+            method: 'PATCH',
+            validateStatus (status) {
+              return [ 406, 200 ].indexOf(status) !== -1
+            },
+            cancelToken: this.cancelToken.token
+          })
+          const VARS = data.form.vars
+          this.setInputValidationResult(this.extendInputId({
+            valid: VARS.valid,
+            errors: VARS.errors
+          }))
+          this.validating = false
+        } catch (error) {
+          this.validateError(error)
+        }
       }
     },
     validateError (error) {

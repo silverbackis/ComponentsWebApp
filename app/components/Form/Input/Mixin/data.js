@@ -4,7 +4,8 @@ export default {
       debounce: {
         validate: null
       },
-      cancelToken: null
+      cancelToken: null,
+      lastValidationValue: null
     }
   }
 }
