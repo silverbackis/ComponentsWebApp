@@ -10,7 +10,7 @@ export const actions = {
     }
   },
   initInput ({ commit, state }, { formId, inputVars }) {
-    if (!state.forms[formId][inputVars.full_name]) {
+    if (!state.forms[formId].children[inputVars.full_name]) {
       commit('setInput', {
         formId,
         inputData: {
