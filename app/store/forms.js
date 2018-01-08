@@ -1,6 +1,6 @@
-import { mutations } from './form/mutations'
-import { getters } from './form/getters'
-import { actions } from './form/actions'
+import { mutations } from './forms/mutations'
+import { getters } from './forms/getters'
+import { actions } from './forms/actions'
 
 export const state = () => ({
   forms: {}
