@@ -8,6 +8,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
     props: {
       input: {
@@ -44,6 +46,9 @@
       }
     },
     methods: {
+      ...mapActions({
+        initInput: 'forms/initInput'
+      }),
       isInputType (InputType) {
         return this.availableComponents.indexOf(InputType) !== -1
       },
@@ -68,6 +73,7 @@
       }
     },
     created () {
+      this.initInput({formId: this.formId, inputVars: this.input.vars})
       this.resolveInputComponent()
     }
   }

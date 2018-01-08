@@ -2,10 +2,12 @@
 
 namespace App\Util;
 
+use App\Entity\Component\Form\Form;
 use App\Entity\Component\Form\FormView;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Routing\RouterInterface;
 
 class FormUtils
 {
@@ -15,28 +17,38 @@ class FormUtils
     private $formFactory;
 
     /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
      * FormDataProvider constructor.
      * @param FormFactoryInterface $formFactory
+     * @param RouterInterface $router
      */
     public function __construct(
-        FormFactoryInterface $formFactory
+        FormFactoryInterface $formFactory,
+        RouterInterface $router
     )
     {
         $this->formFactory = $formFactory;
+        $this->router = $router;
     }
 
     /**
      * @param string $className
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm (string $className): FormInterface
+    public function createForm (Form $component): FormInterface
     {
         return $this->formFactory->create(
-            $className,
+            $component->getClassName(),
             null,
             [
                 'method' => 'POST',
-                // 'action' => $this->generateUrl('form_contact')
+                'action' => $this->router->generate('api_forms_validate', [
+                    'id' => $component->getId()
+                ])
             ]
         );
     }
@@ -58,8 +70,8 @@ class FormUtils
         return $content[$form->getName()];
     }
 
-    public function findByClassName (string $className) {
-        $form = $this->createForm($className);
+    public function findByClassName (Form $component) {
+        $form = $this->createForm($component);
         return new FormView($form->createView());
     }
 }

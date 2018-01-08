@@ -5,19 +5,19 @@ export const actions = {
     const formData = form.vars
     const formId = getFormId(formData)
     if (!state.forms[formId]) {
-      // Init all form models
-      let models = {}
-      // Fastest loop
-      let index = form.children.length
-      while (index--) {
-        let inputVars = form.children[index].vars
-        models[inputVars.full_name] = {
+      commit('setForm', { formData })
+    }
+  },
+  initInput ({ commit, state }, { formId, inputVars }) {
+    if (!state.forms[formId][inputVars.full_name]) {
+      commit('setInput', {
+        formId,
+        inputData: {
           validating: false,
-          vars: Object.assign(inputVars, { valid: false })
+          displayErrors: false,
+          vars: Object.assign(inputVars, {valid: false})
         }
-      }
-      // Commit the data
-      commit('setForm', { formData, models })
+      })
     }
   }
 }

@@ -7,7 +7,7 @@
         <i :class="iconClass"></i>
       </span>
     </div>
-    <div v-if="errors.length"
+    <div v-if="displayErrors && errors.length"
        class="help is-danger">
       <ul>
         <li v-for="(error, errorIndex) in errors" :key="errorIndex" v-html="error"></li>
@@ -19,7 +19,7 @@
 <script>
   export default {
     props: {
-      inputName: {
+      inputId: {
         type: String,
         required: true
       },
@@ -43,12 +43,13 @@
         type: Boolean,
         required: false,
         default: false
+      },
+      displayErrors: {
+        type: Boolean,
+        required: true
       }
     },
     computed: {
-      inputId () {
-        return false
-      },
       controlClass () {
         return [
           'control',
@@ -59,7 +60,7 @@
       iconClass () {
         return {
           fa: true,
-          'fa-warning has-text-danger': !!this.errors.length,
+          'fa-warning has-text-danger': this.displayErrors && !!this.errors.length,
           'fa-check has-text-success': this.valid
         }
       }

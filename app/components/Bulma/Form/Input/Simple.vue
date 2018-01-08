@@ -1,20 +1,28 @@
 <template>
   <wrapper v-if="inputType !== 'hidden'"
-           :inputName="inputName"
+           :inputId="inputId"
            :label="label"
            :validating="validating"
            :valid="valid"
            :errors="errors"
+           :displayErrors="displayErrors"
            :useIcons="true"
   >
-    <div>Bulma Simple</div>
+    <form-input :formId="formId"
+                :inputName="inputName"
+                :inputType="inputType"
+    />
   </wrapper>
 </template>
 
 <script>
   import InputMixin from './_Mixin'
+  import FormInput from '~/components/Form/Input/Simple'
 
   export default {
-    mixins: [InputMixin]
+    mixins: [InputMixin],
+    components: {
+      FormInput
+    }
   }
 </script>

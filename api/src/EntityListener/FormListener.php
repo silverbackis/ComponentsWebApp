@@ -29,7 +29,7 @@ class FormListener
      */
     public function preUpdate (Form $form, PreUpdateEventArgs $event): void
     {
-        $form->setForm($this->formResolver->findByClassName($form->getClassName()));
+        $form->setForm($this->formResolver->findByClassName($form));
     }
 
     /**
@@ -39,6 +39,6 @@ class FormListener
      */
     public function postLoad (Form $form, LifecycleEventArgs $event): void
     {
-        $form->setForm($this->formResolver->findByClassName($form->getClassName()));
+        $form->setForm($this->formResolver->findByClassName($form));
     }
 }

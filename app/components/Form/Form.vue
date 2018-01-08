@@ -34,7 +34,7 @@
         console.log('Submit the form')
       }
     },
-    mounted () {
+    created () {
       this.init(this.form)
     }
   }
