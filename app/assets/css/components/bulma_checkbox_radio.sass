@@ -42,8 +42,13 @@
       ~ .indicator
         background-color: $primary
         &::after
-          transform: scale(.4)
           opacity: 1
+
+.radio .custom:checked ~ .indicator::after
+  transform: scale(.4)
+
+.checkbox .custom:checked ~ .indicator::after
+  transform: scale(.6)
 
 .is-success
   .checkbox,
@@ -52,10 +57,9 @@
       &:checked
         ~ .indicator
           background-color: $success
+
 .is-danger
-  .checkbox,
-  .radio
-    .custom
-      &:checked
-        ~ .indicator
-          background-color: $danger
+  .radio .custom:checked ~ .indicator
+    background-color: $danger
+  .checkbox .custom ~ .indicator
+    background-color: $danger

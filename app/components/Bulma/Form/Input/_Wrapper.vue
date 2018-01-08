@@ -57,7 +57,7 @@
     },
     computed: {
       hasErrors () {
-        return !this.valid && this.displayErrors && !!this.errors.length
+        return !this.valid && this.displayErrors && !!this.errors.length && !this.validating
       },
       controlClass () {
         return [

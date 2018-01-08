@@ -30,11 +30,7 @@ export const mutations = {
     Vue.set(state.forms[formId].children[inputName].vars, 'errors', errors)
   },
   setInputDisplayErrors (state, { formId, inputName, displayErrors }) {
-    if (typeof displayErrors === typeof true) {
-      Vue.set(state.forms[formId].children[inputName], 'displayErrors', displayErrors)
-    } else {
-      console.warn('Failed to set displayErrors - not a boolean', displayErrors, formId, inputName)
-    }
+    Vue.set(state.forms[formId].children[inputName], 'displayErrors', displayErrors)
   },
   setInputValidating (state, {formId, inputName, validating}) {
     Vue.set(state.forms[formId].children[inputName], 'validating', validating)
