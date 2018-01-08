@@ -9,14 +9,18 @@ export const actions = {
       commit('setForm', { formData })
     }
   },
-  initInput ({ commit, state }, { formId, inputVars }) {
+  initInput ({ commit, state }, { formId, inputVars, children }) {
     if (!state.forms[formId].children[inputVars.full_name]) {
       commit('setInput', {
         formId,
         inputData: {
           validating: false,
           displayErrors: false,
-          vars: Object.assign({}, inputVars, {valid: false})
+          debounceValidate: null,
+          cancelToken: null,
+          lastValidationValue: '',
+          vars: Object.assign({}, inputVars, {valid: false}),
+          children
         }
       })
     }

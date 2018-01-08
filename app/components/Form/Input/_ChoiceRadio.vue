@@ -1,9 +1,11 @@
 <template>
   <div>
-    <radio-option v-for="(choice, choiceIndex) in input.vars.choices"
+    <radio-option v-for="(choice, choiceIndex) in input.children"
                   :key="choiceIndex"
-                  :choice="choice"
+                  :index="choiceIndex"
+                  :inputName="choice.vars.full_name"
                   :formId="formId"
+                  inputClass=""
     />
   </div>
 </template>

@@ -39,5 +39,14 @@ export const mutations = {
   },
   setInputValidating (state, {formId, inputName, validating}) {
     Vue.set(state.forms[formId].children[inputName], 'validating', validating)
+  },
+  setInputDebounceValidate (state, { formId, inputName, debounce }) {
+    Vue.set(state.forms[formId].children[inputName], 'debounceValidate', debounce)
+  },
+  setInputCancelToken (state, { formId, inputName, token }) {
+    Vue.set(state.forms[formId].children[inputName], 'cancelToken', token)
+  },
+  setInputLastValidationValue (state, { formId, inputName, value }) {
+    Vue.set(state.forms[formId].children[inputName], 'lastValidationValue', value)
   }
 }

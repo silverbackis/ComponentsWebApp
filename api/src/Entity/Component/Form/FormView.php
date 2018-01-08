@@ -57,7 +57,9 @@ class FormView
             'submitted',
             'placeholder',
             'is_selected',
-            'placeholder_in_choices'
+            'placeholder_in_choices',
+            'checked',
+            'action'
         ]);
         foreach ($outputVars as $var) {
             if (isset($formViews->vars[$var])) {

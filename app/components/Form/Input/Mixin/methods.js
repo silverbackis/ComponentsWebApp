@@ -10,7 +10,10 @@ export default {
     ...mapMutations({
       setInputValue: 'forms/setInputValue',
       setInputValidating: 'forms/setInputValidating',
-      setInputValidationResult: 'forms/setInputValidationResult'
+      setInputValidationResult: 'forms/setInputValidationResult',
+      setInputDebounceValidate: 'forms/setInputDebounceValidate',
+      setInputCancelToken: 'forms/setInputCancelToken',
+      setInputLastValidationValue: 'forms/setInputLastValidationValue'
     }),
     ...mapActions({
       inputSubmitData: 'forms/inputSubmitData'
@@ -20,19 +23,20 @@ export default {
       this.beginValidation()
     },
     beginValidation () {
-      if (this.lastValidationValue !== this.inputModel) {
+      const localValue = this.child ? this.child.vars.value : this.inputModel
+      if (this.lastValidationValue !== localValue) {
         this.lastValidationValue = this.inputModel
         this.validating = true
         if (this.isCheckRadio) {
           this.validate()
         } else {
-          if (this.debounce.validate) {
-            this.debounce.validate.cancel()
+          if (this.debounceValidate) {
+            this.debounceValidate.cancel()
           }
-          this.debounce.validate = _.debounce(() => {
+          this.debounceValidate = _.debounce(() => {
             this.validate()
           }, 350)
-          return this.debounce.validate()
+          return this.debounceValidate()
         }
       }
     },

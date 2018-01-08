@@ -5,6 +5,7 @@
     <form-input :formId="formId"
                 :inputName="inputName"
                 :inputType="inputType"
+                inputClass="textarea"
     />
   </wrapper>
 </template>

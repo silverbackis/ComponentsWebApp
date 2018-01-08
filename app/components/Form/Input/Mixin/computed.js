@@ -33,7 +33,7 @@ export default {
       return classes
     },
     isCheckRadio () {
-      return this.input.vars.checked !== undefined
+      return this.input.vars.checked !== undefined || this.child
     },
     isRadio () {
       return this.input.vars.block_prefixes[2] === 'radio'
@@ -65,6 +65,40 @@ export default {
         name: this.inputName,
         class: this.classes
       })
+    },
+    /**
+     * These need to be in the store because individual radios should share the debounce/cancel tokens and
+     * last validation values but are outputted as child inputs/components
+     */
+    debounceValidate: {
+      get () {
+        return this.input.debounceValidate
+      },
+      set (debounce) {
+        this.setInputDebounceValidate(
+          this.extendInputId({ debounce })
+        )
+      }
+    },
+    cancelToken: {
+      get () {
+        return this.input.cancelToken
+      },
+      set (token) {
+        this.setInputCancelToken(
+          this.extendInputId({ token })
+        )
+      }
+    },
+    lastValidationValue: {
+      get () {
+        return this.input.lastValidationValue
+      },
+      set (value) {
+        this.setInputLastValidationValue(
+          this.extendInputId({ value })
+        )
+      }
     }
   }
 }

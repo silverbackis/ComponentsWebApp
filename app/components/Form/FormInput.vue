@@ -73,7 +73,7 @@
       }
     },
     created () {
-      this.initInput({formId: this.formId, inputVars: this.input.vars})
+      this.initInput({formId: this.formId, inputVars: this.input.vars, children: this.input.children})
       this.resolveInputComponent()
     }
   }
