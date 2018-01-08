@@ -3,9 +3,10 @@
                  :formId="formId"
                  :inputName="inputName"
   />
-  <div v-else>
-    Radios
-  </div>
+  <choice-radio v-else
+                :formId="formId"
+                :inputName="inputName"
+  />
 </template>
 
 <script>

@@ -1,27 +1,14 @@
 <template>
-  <label :class="labelClass" :for="vars.id">
-    <input type="radio"
-           v-model="modelValue"
-           v-bind="attr"
-           v-bind:value="inputValue"
-    >
-    <div class="indicator" v-if="isCustom"></div>
-    <span class="input-label" v-html="input.vars.label"></span>
+  <label :for="choice.id">
+    <input type="radio">
+    <div class="indicator"></div>
+    <span class="input-label" v-html="choice.label"></span>
   </label>
 </template>
 
 <script>
-  import InputMixin from './Mixin'
   export default {
-    mixins: [InputMixin],
-    computed: {
-      labelClass () {
-        return [
-          'radio',
-          this.isCustom ? 'custom' : ''
-        ]
-      }
-    }
+    props: ['choice']
   }
 </script>
 

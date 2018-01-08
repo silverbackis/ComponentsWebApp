@@ -1,18 +1,19 @@
 <template>
   <div>
-    <radio-option v-for="(choice, choiceIndex) in input.children"
+    <radio-option v-for="(choice, choiceIndex) in input.vars.choices"
                   :key="choiceIndex"
-                  :input="choice"
+                  :choice="choice"
                   :formId="formId"
     />
   </div>
 </template>
 
 <script>
+  import InputCommonMixin from './_CommonMixin'
   import RadioOption from './_ChoiceRadioOption'
 
   export default {
-    props: ['input', 'formId'],
+    mixins: [InputCommonMixin],
     components: {
       RadioOption
     }
