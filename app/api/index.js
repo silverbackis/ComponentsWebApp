@@ -35,3 +35,7 @@ export function fetchRoute ({ path, $axios }) {
 export function fetchPageIds ({ ids, $axios }) {
   return Promise.all(ids.map(id => fetchPage({ path: id, $axios })))
 }
+
+export function validateInput () {
+  console.log('validate')
+}

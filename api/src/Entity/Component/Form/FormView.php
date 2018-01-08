@@ -38,24 +38,48 @@ class FormView
 
     public function __construct(\Symfony\Component\Form\FormView $formViews, bool $children = true)
     {
-        $this->vars = $formViews->vars;
+        $varsToArray = ['choices', 'errors', 'is_selected'];
 
-        $varsToArray = ['choices', 'preferred_choices', 'label_attr', 'errors', 'is_selected'];
-        foreach($varsToArray as $varToArray)
-        {
-            if (isset($this->vars[$varToArray])) {
-                $choices = $this->vars[$varToArray];
-                $this->vars[$varToArray] = [];
-                foreach ($choices as $choice)
-                {
-                    if (method_exists($choice, 'getMessage')) {
-                        $this->vars[$varToArray][] = $choice->getMessage();
-                    } else {
-                        $this->vars[$varToArray][] = (array) $choice;
+        $outputVars = array_merge($varsToArray, [
+            'value',
+            'attr',
+            'id',
+            'name',
+            'full_name',
+            'disabled',
+            'label',
+            'block_prefixes',
+            'unique_block_prefix',
+            'valid',
+            'required',
+            'label_attr',
+            'expanded',
+            'submitted',
+            'placeholder',
+            'is_selected',
+            'placeholder_in_choices',
+            'checked',
+            'action'
+        ]);
+        foreach ($outputVars as $var) {
+            if (isset($formViews->vars[$var])) {
+                $this->vars[$var] = $formViews->vars[$var];
+
+                if (in_array($var, $varsToArray)) {
+                    $choices = $this->vars[$var];
+                    $this->vars[$var] = [];
+                    foreach ($choices as $choice)
+                    {
+                        if (method_exists($choice, 'getMessage')) {
+                            $this->vars[$var][] = $choice->getMessage();
+                        } else {
+                            $this->vars[$var][] = (array) $choice;
+                        }
                     }
                 }
             }
         }
+
         if ($children) {
             $this->children = new ArrayCollection();
             foreach ($formViews as $formView) {

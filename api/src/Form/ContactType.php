@@ -30,7 +30,7 @@ class ContactType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Your name'
                 ],
-                'label' => 'Your name',
+                'label' => 'Your Name',
                 'constraints' => [
                     new NotBlank([
                         "message" => "Please provide your name"
