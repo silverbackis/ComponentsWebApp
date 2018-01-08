@@ -32,46 +32,46 @@ export default {
       this.beginValidation()
     },
     beginValidation () {
-      this.validating = true
-      if (this.isCheckRadio) {
-        this.validate()
-      } else {
-        if (this.debounce.validate) {
-          this.debounce.validate.cancel()
-        }
-        this.debounce.validate = _.debounce(() => {
+      if (this.lastValidationValue !== this.inputModel) {
+        this.lastValidationValue = this.inputModel
+        this.validating = true
+        if (this.isCheckRadio) {
           this.validate()
-        }, 350)
-        return this.debounce.validate()
+        } else {
+          if (this.debounce.validate) {
+            this.debounce.validate.cancel()
+          }
+          this.debounce.validate = _.debounce(() => {
+            this.validate()
+          }, 350)
+          return this.debounce.validate()
+        }
       }
     },
     async validate () {
-      if (this.lastValidationValue !== this.inputModel) {
-        this.lastValidationValue = this.inputModel
-        if (this.cancelToken) {
-          this.cancelToken.cancel(DUPLICATE_CANCEL_MESSAGE)
-        }
-        this.cancelToken = AxiosCancelToken.source()
-        let postObj = await this.inputSubmitData(this.extendInputId())
-        try {
-          let { data } = await this.$axios.request({
-            url: this.action,
-            data: postObj,
-            method: 'PATCH',
-            validateStatus (status) {
-              return [ 406, 200 ].indexOf(status) !== -1
-            },
-            cancelToken: this.cancelToken.token
-          })
-          const VARS = data.form.vars
-          this.setInputValidationResult(this.extendInputId({
-            valid: VARS.valid,
-            errors: VARS.errors
-          }))
-          this.validating = false
-        } catch (error) {
-          this.validateError(error)
-        }
+      if (this.cancelToken) {
+        this.cancelToken.cancel(DUPLICATE_CANCEL_MESSAGE)
+      }
+      this.cancelToken = AxiosCancelToken.source()
+      let postObj = await this.inputSubmitData(this.extendInputId())
+      try {
+        let { data } = await this.$axios.request({
+          url: this.action,
+          data: postObj,
+          method: 'PATCH',
+          validateStatus (status) {
+            return [ 406, 200 ].indexOf(status) !== -1
+          },
+          cancelToken: this.cancelToken.token
+        })
+        const VARS = data.form.vars
+        this.setInputValidationResult(this.extendInputId({
+          valid: VARS.valid,
+          errors: VARS.errors
+        }))
+        this.validating = false
+      } catch (error) {
+        this.validateError(error)
       }
     },
     validateError (error) {
