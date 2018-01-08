@@ -57,6 +57,9 @@
       }
     },
     computed: {
+      hasErrors () {
+        return !this.valid && this.displayErrors && !!this.errors.length
+      },
       controlClass () {
         return [
           'control',
@@ -67,7 +70,7 @@
       iconClass () {
         return {
           fa: true,
-          'fa-warning has-text-danger': this.displayErrors && !!this.errors.length,
+          'fa-warning has-text-danger': this.hasErrors,
           'fa-check has-text-success': this.valid
         }
       },
@@ -75,7 +78,7 @@
         return {
           select: true,
           'is-success': this.valid,
-          'is-danger': !this.valid
+          'is-danger': this.hasErrors
         }
       }
     }

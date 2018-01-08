@@ -15,18 +15,6 @@ export default {
     ...mapActions({
       inputSubmitData: 'forms/inputSubmitData'
     }),
-    extendInputId (data) {
-      if (!data) {
-        data = {}
-      }
-      return Object.assign(
-        {
-          formId: this.formId,
-          inputName: this.inputName
-        },
-        data
-      )
-    },
     inputBlur () {
       this.displayErrors = true
       this.beginValidation()

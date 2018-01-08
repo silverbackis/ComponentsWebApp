@@ -18,6 +18,9 @@
     components: {
       ChoiceSelect,
       ChoiceRadio
+    },
+    created () {
+      this.displayErrors = true
     }
   }
 </script>

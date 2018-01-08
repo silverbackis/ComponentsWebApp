@@ -18,7 +18,19 @@ export default {
   methods: {
     ...mapMutations({
       setInputDisplayErrors: 'forms/setInputDisplayErrors'
-    })
+    }),
+    extendInputId (data) {
+      if (!data) {
+        data = {}
+      }
+      return Object.assign(
+        {
+          formId: this.formId,
+          inputName: this.inputName
+        },
+        data
+      )
+    }
   },
   computed: {
     ...mapGetters({
