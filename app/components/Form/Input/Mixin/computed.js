@@ -58,6 +58,13 @@ export default {
           this.extendInputId({ validating })
         )
       }
+    },
+    commonProps () {
+      return Object.assign(this.attr, {
+        id: this.inputId,
+        name: this.inputName,
+        class: this.classes
+      })
     }
   }
 }

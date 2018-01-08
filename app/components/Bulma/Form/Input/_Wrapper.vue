@@ -2,7 +2,10 @@
   <div :class="['field', errors ? 'invalid' : '']">
     <label class="label" v-html="label" v-if="label && label !== ''" :for="inputId"></label>
     <div :class="controlClass">
-      <slot></slot>
+      <div :class="selectClass" v-if="isSelect">
+        <slot></slot>
+      </div>
+      <slot v-else></slot>
       <span class="icon is-right is-small" v-if="useIcons && !validating">
         <i :class="iconClass"></i>
       </span>
@@ -47,6 +50,10 @@
       displayErrors: {
         type: Boolean,
         required: true
+      },
+      isSelect: {
+        type: Boolean,
+        default: false
       }
     },
     computed: {
@@ -62,6 +69,13 @@
           fa: true,
           'fa-warning has-text-danger': this.displayErrors && !!this.errors.length,
           'fa-check has-text-success': this.valid
+        }
+      },
+      selectClass () {
+        return {
+          select: true,
+          'is-success': this.valid,
+          'is-danger': !this.valid
         }
       }
     }
