@@ -1,5 +1,6 @@
 <template>
   <wrapper v-bind="wrapperData"
+           :label="false"
            :useIcons="false"
   >
     <form-input :formId="formId"
