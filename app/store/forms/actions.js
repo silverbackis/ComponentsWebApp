@@ -20,6 +20,7 @@ export const actions = {
           cancelToken: null,
           lastValidationValue: '',
           vars: Object.assign({}, inputVars, {valid: false}),
+          valid: false,
           children
         }
       })

@@ -1,11 +1,10 @@
 <template>
-  <div :class="['field', errors ? 'invalid' : '']">
+  <div class="field">
     <label class="label" v-html="label" v-if="label && label !== ''" :for="inputId"></label>
     <div :class="controlClass">
-      <div :class="selectClass" v-if="isSelect">
+      <div :class="wrapperClass">
         <slot></slot>
       </div>
-      <slot v-else></slot>
       <span class="icon is-right is-small" v-if="useIcons && !validating">
         <i :class="iconClass"></i>
       </span>
@@ -71,13 +70,25 @@
         return {
           fa: true,
           'fa-warning has-text-danger': this.hasErrors,
-          'fa-check has-text-success': this.valid
+          'fa-check has-text-success': this.valid && !this.validating
         }
       },
+      wrapperClass () {
+        return this.isSelect ? this.selectClass : this.fieldClass
+      },
+      fieldClass () {
+        return Object.assign(this.validClass, {
+          field: true
+        })
+      },
       selectClass () {
+        return Object.assign(this.validClass, {
+          select: true
+        })
+      },
+      validClass () {
         return {
-          select: true,
-          'is-success': this.valid,
+          'is-success': this.valid && !this.validating,
           'is-danger': this.hasErrors
         }
       }

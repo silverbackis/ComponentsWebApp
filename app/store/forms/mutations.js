@@ -26,9 +26,8 @@ export const mutations = {
     Vue.set(state.forms[formId].children[inputName].vars, 'value', value)
   },
   setInputValidationResult (state, {formId, inputName, valid, errors}) {
-    let inputVars = state.forms[formId].children[inputName].vars
-    inputVars.valid = valid
-    inputVars.errors = errors
+    Vue.set(state.forms[formId].children[inputName].vars, 'valid', valid)
+    Vue.set(state.forms[formId].children[inputName].vars, 'errors', errors)
   },
   setInputDisplayErrors (state, { formId, inputName, displayErrors }) {
     if (typeof displayErrors === typeof true) {

@@ -44,3 +44,18 @@
         &::after
           transform: scale(.4)
           opacity: 1
+
+.is-success
+  .checkbox,
+  .radio
+    .custom
+      &:checked
+        ~ .indicator
+          background-color: $success
+.is-danger
+  .checkbox,
+  .radio
+    .custom
+      &:checked
+        ~ .indicator
+          background-color: $danger
