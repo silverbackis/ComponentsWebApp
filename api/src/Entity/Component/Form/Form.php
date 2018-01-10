@@ -4,6 +4,7 @@ namespace App\Entity\Component\Form;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Component\Component;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -38,10 +39,18 @@ class Form extends Component
     private $className;
 
     /**
+     * @ApiProperty(writable=false)
      * @Groups({"page", "validate"})
      * @var null|FormView
      */
     private $form;
+
+    /**
+     * @ApiProperty(writable=false)
+     * @Groups({"page", "validate"})
+     * @var null|\DateTime
+     */
+    private $lastModified;
 
     /**
      * @return string
@@ -73,5 +82,21 @@ class Form extends Component
     public function setForm(?FormView $form): void
     {
         $this->form = $form;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getLastModified(): ?\DateTime
+    {
+        return $this->lastModified;
+    }
+
+    /**
+     * @param \DateTime|null $lastModified
+     */
+    public function setLastModified(?\DateTime $lastModified): void
+    {
+        $this->lastModified = $lastModified;
     }
 }

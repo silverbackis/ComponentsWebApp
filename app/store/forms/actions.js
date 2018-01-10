@@ -11,7 +11,7 @@ export const actions = {
   },
   initInput ({ commit, state }, { formId, inputVars, children }) {
     if (!state.forms[formId].children[inputVars.full_name]) {
-      let value = inputVars.multiple ? [] : (inputVars.block_prefixes[1] === 'checkbox' ? false : inputVars.value)
+      let value = inputVars.multiple ? [] : (inputVars.block_prefixes[1] === 'checkbox' ? inputVars.checked : inputVars.value)
 
       commit('setInput', {
         formId,
@@ -20,7 +20,7 @@ export const actions = {
           displayErrors: false,
           debounceValidate: null,
           cancelToken: null,
-          lastValidationValue: '',
+          lastValidationValue: null,
           vars: Object.assign({}, inputVars, {
             valid: false,
             value

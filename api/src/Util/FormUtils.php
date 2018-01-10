@@ -70,7 +70,7 @@ class FormUtils
         return $content[$form->getName()];
     }
 
-    public function findByClassName (Form $component) {
+    public function createFormView (Form $component) {
         $form = $this->createForm($component);
         return new FormView($form->createView());
     }

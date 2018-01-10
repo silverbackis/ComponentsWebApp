@@ -15,7 +15,7 @@ class FormPost extends AbstractForm
     /**
      * @Route(
      *     name="api_forms_validate",
-     *     path="/forms/submit/{id}.{_format}",
+     *     path="/forms/{id}/submit.{_format}",
      *     requirements={"id"="\d+"},
      *     defaults={
      *         "_api_resource_class"=Form::class,

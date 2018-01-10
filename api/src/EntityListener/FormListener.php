@@ -29,7 +29,7 @@ class FormListener
      */
     public function preUpdate (Form $form, PreUpdateEventArgs $event): void
     {
-        $form->setForm($this->formResolver->findByClassName($form));
+        $this->setForm($form);
     }
 
     /**
@@ -39,6 +39,15 @@ class FormListener
      */
     public function postLoad (Form $form, LifecycleEventArgs $event): void
     {
-        $form->setForm($this->formResolver->findByClassName($form));
+        $this->setForm($form);
+    }
+
+    private function setForm (Form $form)
+    {
+        $form->setForm($this->formResolver->createFormView($form));
+        $reflector = new \ReflectionClass($form->getClassName());
+        $dateTime = new \DateTime();
+        $dateTime->setTimestamp(filemtime($reflector->getFileName()));
+        $form->setLastModified($dateTime);
     }
 }

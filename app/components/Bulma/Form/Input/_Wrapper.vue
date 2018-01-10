@@ -81,7 +81,7 @@
       },
       fieldClass () {
         return Object.assign(this.validClass, {
-          field: true
+          field: false
         })
       },
       selectClass () {

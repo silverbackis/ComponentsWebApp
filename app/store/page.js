@@ -47,6 +47,7 @@ export const actions = {
     if (ids.length) {
       let data = await fetchPageIds({ ids, $axios: this.$axios })
       data.forEach((pageData) => {
+        pageData.__lastUpdated = now
         return commit('SET_PAGE', { id: pageData.id, data: pageData })
       })
     }
