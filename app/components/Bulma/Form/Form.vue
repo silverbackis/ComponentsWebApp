@@ -11,13 +11,6 @@
                           :formId="formId"
                           :wrapped="true"
               />
-              <div class="field">
-                <div class="control">
-                  <button type="submit" id="contact_submit" name="contact[submit]" class="button is-large is-primary is-fullwidth">
-                    Send
-                  </button>
-                </div>
-              </div>
             </slot>
           </form-tag>
         </div>
