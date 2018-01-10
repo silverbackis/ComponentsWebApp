@@ -45,9 +45,5 @@ class FormListener
     private function setForm (Form $form)
     {
         $form->setForm($this->formResolver->createFormView($form));
-        $reflector = new \ReflectionClass($form->getClassName());
-        $dateTime = new \DateTime();
-        $dateTime->setTimestamp(filemtime($reflector->getFileName()));
-        $form->setLastModified($dateTime);
     }
 }

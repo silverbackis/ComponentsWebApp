@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *         "post"={"method"="POST", "denormalization_context"={"groups"={"form_write"}}},
  *     },
  *     itemOperations={
- *         "get"={"method"="GET", "route_name"="api_forms_get", "normalization_context"={"groups"={"page"}}},
+ *         "get"={"method"="GET", "normalization_context"={"groups"={"page"}}},
  *         "delete"={"method"="DELETE", "normalization_context"={"groups"={"page"}}},
  *         "put"={"method"="PUT", "denormalization_context"={"groups"={"form_write"}}},
  *         "validate_item"={"method"="PATCH", "route_name"="api_forms_validate_item", "denormalization_context"={"groups"={"none"}}},
@@ -46,6 +46,7 @@ class Form extends Component
     private $form;
 
     /**
+     * @ORM\Column(type="datetime")
      * @ApiProperty(writable=false)
      * @Groups({"page", "validate"})
      * @var null|\DateTime

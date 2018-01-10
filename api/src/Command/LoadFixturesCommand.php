@@ -36,5 +36,10 @@ class LoadFixturesCommand extends Command
         $input = new ArrayInput($arguments);
         $input->setInteractive(false);
         $command->run($input, $output);
+
+        $command = $this->getApplication()->find('app:form:cache:clear');
+        $arguments = [];
+        $input = new ArrayInput($arguments);
+        $command->run($input, $output);
     }
 }
