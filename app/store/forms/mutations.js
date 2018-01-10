@@ -10,6 +10,10 @@ export const mutations = {
       formData
     )
   },
+  setFormValidationResult (state, {formId, valid, errors}) {
+    Vue.set(state.forms[formId].vars, 'valid', valid)
+    Vue.set(state.forms[formId].vars, 'errors', errors)
+  },
   setInput (state, { formId, inputData }) {
     Vue.set(
       state.forms[formId].children,

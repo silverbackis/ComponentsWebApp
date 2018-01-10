@@ -14,6 +14,7 @@
 <script>
   import { mapActions, mapMutations, mapGetters } from 'vuex'
   import FormMixin from './_Mixin'
+  import axios from 'axios'
 
   const DUPLICATE_CANCEL_MESSAGE = 'duplicate'
 
@@ -49,6 +50,8 @@
       }),
       ...mapMutations({
         setFormSubmitting: 'forms/setFormSubmitting',
+        setFormValidationResult: 'forms/setFormValidationResult',
+        setInputValidationResult: 'forms/setInputValidationResult',
         setFormCancelToken: 'forms/setFormCancelToken'
       }),
       async submit () {
@@ -62,7 +65,7 @@
         }
         this.refreshCancelToken({ formId: this.formId })
         try {
-          let { data } = await this.$axios.request(
+          let response = await this.$axios.request(
             {
               url: this.form.vars.action,
               data: this.submitData,
@@ -73,15 +76,51 @@
               }
             }
           )
-          console.log(data)
+          const VARS = response.data.form.vars
+          this.setFormValidationResult({
+            formId: this.formId,
+            valid: response.status === 200,
+            errors: VARS.errors
+          })
+
+          let x = response.data.form.children.length
+          while (x--) {
+            this.setInputValidationResult({
+              formId: this.formId,
+              inputName: response.data.form.children[x].vars.full_name,
+              valid: response.data.form.children[x].vars.valid,
+              errors: response.data.form.children[x].vars.errors
+            })
+          }
         } catch (error) {
-          console.log(error)
+          this.submitError(error)
         }
 
         this.setFormSubmitting({
           formId: this.formId,
           submitting: false
         })
+      },
+      submitError (error) {
+        if (error.message === DUPLICATE_CANCEL_MESSAGE) {
+          console.log('previous form submission cancelled')
+        } else {
+          if (axios.isCancel(error)) {
+            console.warn(error)
+          } else if (error.response) {
+            console.warn('validate request error: ', error.response)
+            this.setFormValidationResult({
+              formId: this.formId,
+              valid: false,
+              errors: [
+                '<b>' + error.response.status + ' ' + error.response.statusText + ':</b> ' +
+                error.response.data['hydra:description']
+              ]
+            })
+          } else {
+            console.warn('validate unknown error: ', error)
+          }
+        }
       }
     },
     created () {

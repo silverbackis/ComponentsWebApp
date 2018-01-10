@@ -7,6 +7,7 @@ export const actions = {
     const formData = form.vars
     const formId = getFormId(formData)
     if (!state.forms[formId]) {
+      formData.valid = false
       commit('setForm', {
         formData: {
           vars: formData,
@@ -33,7 +34,6 @@ export const actions = {
             valid: false,
             value
           }),
-          valid: false,
           children
         }
       })

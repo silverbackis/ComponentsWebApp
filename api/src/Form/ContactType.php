@@ -140,7 +140,7 @@ class ContactType extends AbstractType
                     'constraints' => [
                         new NotBlank(
                             [
-                                "message" => "Please select if you area a developer"
+                                "message" => "Please select if you are a developer"
                             ]
                         )
                     ]
