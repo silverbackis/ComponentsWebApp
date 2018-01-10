@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { getFormId } from '~/components/Form/_FormId'
 
 export const actions = {
@@ -37,17 +36,5 @@ export const actions = {
         }
       })
     }
-  },
-  inputSubmitData ({ state }, { formId, inputName }) {
-    let model = state.forms[formId].children[inputName]
-    let value = model.vars.value
-    if (value === undefined) {
-      return {}
-    }
-    // Split name into parts when using square brackets - e.g. contact[name] = ["contact", "name"]
-    let searchResult = inputName.replace(/\[\]$/, '').split(/\[(.+)\]/).filter(String)
-    let submitObj = {}
-    _.set(submitObj, searchResult, value)
-    return submitObj
   }
 }

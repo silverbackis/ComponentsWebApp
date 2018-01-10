@@ -38,5 +38,8 @@ export const mutations = {
   },
   setInputLastValidationValue (state, { formId, inputName, value }) {
     Vue.set(state.forms[formId].children[inputName], 'lastValidationValue', value)
+  },
+  setFormSubmitting (state, { formId, submitting }) {
+    Vue.set(state.forms[formId], 'submitting', submitting)
   }
 }

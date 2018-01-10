@@ -3,8 +3,12 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      getForm: 'forms/getForm'
+      getForm: 'forms/getForm',
+      getInputSubmitData: 'forms/getInputSubmitData'
     }),
+    inputSubmitData () {
+      return this.getInputSubmitData(this.extendInputId())
+    },
     form () {
       return this.getForm(this.formId)
     },

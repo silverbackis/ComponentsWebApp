@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
 import axios from 'axios'
 const AxiosCancelToken = axios.CancelToken
 
@@ -14,9 +14,6 @@ export default {
       setInputDebounceValidate: 'forms/setInputDebounceValidate',
       setInputCancelToken: 'forms/setInputCancelToken',
       setInputLastValidationValue: 'forms/setInputLastValidationValue'
-    }),
-    ...mapActions({
-      inputSubmitData: 'forms/inputSubmitData'
     }),
     inputBlur () {
       this.displayErrors = true
@@ -45,7 +42,7 @@ export default {
         this.cancelToken.cancel(DUPLICATE_CANCEL_MESSAGE)
       }
       this.cancelToken = AxiosCancelToken.source()
-      let postObj = await this.inputSubmitData(this.extendInputId())
+      let postObj = await this.inputSubmitData
       try {
         let { data } = await this.$axios.request({
           url: this.action,

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapMutations, mapGetters } from 'vuex'
   import { getFormId } from './_FormId'
 
   export default {
@@ -23,16 +23,35 @@
       }
     },
     computed: {
+      ...mapGetters({
+        getFormSubmitData: 'forms/getFormSubmitData'
+      }),
       formId () {
         return getFormId(this.form.vars)
+      },
+      submitData () {
+        return this.getFormSubmitData(this.formId)
       }
     },
     methods: {
       ...mapActions({
         init: 'forms/init'
       }),
+      ...mapMutations({
+        setFormSubmitting: 'forms/setFormSubmitting'
+      }),
       submit () {
-        console.log('Submit the form')
+        this.setFormSubmitting({
+          formId: this.formId,
+          submitting: true
+        })
+        console.log(this.submitData)
+        setTimeout(() => {
+          this.setFormSubmitting({
+            formId: this.formId,
+            submitting: false
+          })
+        }, 1000)
       }
     },
     created () {
