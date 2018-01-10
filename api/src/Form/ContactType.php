@@ -164,12 +164,11 @@ class ContactType extends AbstractType
                 'interests',
                 ChoiceType::class,
                 [
-                    'label' => 'Select anything you like below',
+                    'label' => 'Select at least one food',
                     'choices' => [
-                        'Dogs' => 'dogs',
-                        'Cats' => 'cats',
-                        'Sugar' => 'sugar',
-                        'World domination' => 'world domination'
+                        'Pizza' => 'pizza',
+                        'Chips' => 'chips',
+                        'Vegetables' => 'vegie'
                     ],
                     'choice_attr' => function () {
                         return ['class' => 'custom'];
@@ -190,7 +189,7 @@ class ContactType extends AbstractType
                 'other_interests',
                 ChoiceType::class,
                 [
-                    'label' => 'Select anything you like below',
+                    'label' => 'Select at least one',
                     'choices' => [
                         'Trump' => 'trump',
                         'Obama' => 'obama',
@@ -206,7 +205,7 @@ class ContactType extends AbstractType
                     'constraints' => [
                         new NotBlank(
                             [
-                                "message" => "Please select at least 1 other interest"
+                                "message" => "Please select at least one"
                             ]
                         )
                     ]
