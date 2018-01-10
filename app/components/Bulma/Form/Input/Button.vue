@@ -3,6 +3,7 @@
            v-bind="wrapperData"
            :useIcons="false"
            label=""
+           :errors="[]"
   >
     <form-input :formId="formId"
                 :inputName="inputName"
