@@ -43,9 +43,14 @@ abstract class AbstractForm extends AbstractController
      * @param $valid
      * @return Response
      */
-    protected function getResponse ($data, $_format, $valid)
+    protected function getResponse ($data, $_format, $valid, Response $response = null)
     {
-        return new Response($this->serializer->serialize($data, $_format, ['groups' => ['page']]), $valid ? Response::HTTP_OK : Response::HTTP_NOT_ACCEPTABLE);
+        if (!$response) {
+            $response = new Response();
+        }
+        $response->setStatusCode($valid ? Response::HTTP_OK : Response::HTTP_NOT_ACCEPTABLE);
+        $response->setContent($this->serializer->serialize($data, $_format, ['groups' => ['page']]));
+        return $response;
     }
 
     /**

@@ -17,7 +17,7 @@ class FormGet extends AbstractForm
      *     requirements={"id"="\d+"},
      *     defaults={
      *         "_api_resource_class"=Form::class,
-     *         "_api_item_operation_name"="get_form",
+     *         "_api_item_operation_name"="get",
      *         "_format"="jsonld"
      *     }
      * )
@@ -29,12 +29,16 @@ class FormGet extends AbstractForm
      */
     public function __invoke(Request $request, Form $data, string $_format)
     {
-        $response = $this->getResponse($data, $_format, true);
+        $response = new Response();
         $response->setCache(
             [
-                'last_modified' => $data->getLastModified()
+                'last_modified' => $data->getLastModified(),
+                'etag' => md5($data->getClassName())
             ]
         );
+        if(!$response->isNotModified($request)) {
+            $response = $this->getResponse($data, $_format, true, $response);
+        }
         return $response;
     }
 }
