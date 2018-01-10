@@ -16,3 +16,13 @@ docker-compose up
 ```
 
 The API will run on port 8080 and the front-end simply on your localhost port 80. The docker-compose.yaml and Dockerfile files have only been configured to run without SSL. You should learn Docker and change the config if you plan to use Docker in your development environment. I have only just begun using Docker when I started using API Platform - PRs are welcome.
+
+
+## Commands
+```bash
+# Drops schema, recreates and loads fixtures
+bin/console app:fixtures:load
+
+# Updates timestamps in database to file last modified
+bin/console app:form:cache:clear
+```
