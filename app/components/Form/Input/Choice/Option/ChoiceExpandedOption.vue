@@ -11,7 +11,8 @@
            :class="child.vars.attr.class"
            :value="child.vars.value"
     />
-    <input type="checkbox"
+    <input v-else
+           type="checkbox"
            v-model="inputModel"
            v-bind="commonProps"
            :id="child.vars.id"
