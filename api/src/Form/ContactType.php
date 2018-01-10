@@ -19,9 +19,12 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'csrf_protection' => false
-            )
+            [
+                'csrf_protection' => false,
+                'attr' => [
+                    'novalidate' => 'novalidate'
+                ]
+            ]
         );
     }
 
@@ -168,14 +171,13 @@ class ContactType extends AbstractType
                     'choices' => [
                         'Pizza' => 'pizza',
                         'Chips' => 'chips',
-                        'Vegetables' => 'vegie'
+                        'Vegetables' => 'veggie'
                     ],
                     'choice_attr' => function () {
                         return ['class' => 'custom'];
                     },
                     'expanded' => true,
                     'multiple' => true,
-                    'required' => true,
                     'constraints' => [
                         new NotBlank(
                             [
@@ -211,14 +213,5 @@ class ContactType extends AbstractType
                     ]
                 ]
             );
-    }
-
-    public function setDefaultOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'error_bubbling' => true
-            )
-        );
     }
 }

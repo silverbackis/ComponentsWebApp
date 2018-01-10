@@ -14,7 +14,7 @@ export default {
     attr () {
       return Object.assign({}, this.input.vars.attr, {
         required: this.input.vars.required,
-        disabled: this.input.vars.disabled
+        disabled: this.input.vars.disabled || this.form.submitting
       })
     },
     classes () {
@@ -34,9 +34,6 @@ export default {
     },
     isCheckRadio () {
       return this.input.vars.checked !== undefined || this.child
-    },
-    isRadio () {
-      return this.input.vars.block_prefixes[2] === 'radio'
     },
     inputModel: {
       get () {

@@ -4,6 +4,7 @@
         :required="form.vars.required"
         :method="form.vars.method"
         :enctype="form.vars.multipart"
+        v-bind="form.vars.attr"
         @submit.prevent="submit"
   >
     <slot></slot>

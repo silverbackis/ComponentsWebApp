@@ -6,7 +6,14 @@ export const actions = {
     const formData = form.vars
     const formId = getFormId(formData)
     if (!state.forms[formId]) {
-      commit('setForm', { formData })
+      commit('setForm', {
+        formData: {
+          vars: formData,
+          children: {},
+          cancelToken: null,
+          submitting: false
+        }
+      })
     }
   },
   initInput ({ commit, state }, { formId, inputVars, children }) {

@@ -3,16 +3,11 @@ import { getFormId } from '~/components/Form/_FormId'
 
 export const mutations = {
   setForm (state, { formData }) {
-    let formId = getFormId(formData)
+    let formId = getFormId(formData.vars)
     Vue.set(
       state.forms,
       formId,
-      {
-        vars: formData,
-        children: {},
-        cancelToken: null,
-        submitting: false
-      }
+      formData
     )
   },
   setInput (state, { formId, inputData }) {
