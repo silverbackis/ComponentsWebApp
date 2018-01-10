@@ -1,7 +1,7 @@
 const logRequests = !!process.env.DEBUG_API
 let requests = {}
 
-export function fetch ({ path, $axios, method, data, cancelToken, validateStatus }) {
+function fetch ({ path, $axios, method, data, cancelToken, validateStatus }) {
   if (!method) {
     method = 'GET'
   }

@@ -5,7 +5,9 @@ import lifecycle from './lifecycle'
 export default {
   mixins: [ computed, methods, lifecycle ],
   data () {
-    return {}
+    return {
+      validationCalls: 0
+    }
   },
   props: {
     inputClass: {

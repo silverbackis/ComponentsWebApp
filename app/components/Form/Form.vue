@@ -12,11 +12,9 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import { mapActions, mapMutations, mapGetters } from 'vuex'
   import FormMixin from './_Mixin'
 
-  const AXIOS_CANCEL = axios.CancelToken
   const DUPLICATE_CANCEL_MESSAGE = 'duplicate'
 
   export default {
@@ -46,7 +44,8 @@
     methods: {
       ...mapActions({
         init: 'forms/init',
-        submitForm: 'forms/submit'
+        submitForm: 'forms/submit',
+        refreshCancelToken: 'forms/refreshCancelToken'
       }),
       ...mapMutations({
         setFormSubmitting: 'forms/setFormSubmitting',
@@ -61,14 +60,19 @@
         if (this.cancelToken) {
           this.cancelToken.cancel(DUPLICATE_CANCEL_MESSAGE)
         }
-        this.cancelToken = AXIOS_CANCEL.source()
+        this.refreshCancelToken({ formId: this.formId })
         try {
-          let data = await this.submitForm({
-            path: this.form.vars.action,
-            data: this.submitData,
-            method: 'POST',
-            cancelToken: this.cancelToken.token
-          })
+          let { data } = await this.$axios.request(
+            {
+              url: this.form.vars.action,
+              data: this.submitData,
+              method: 'POST',
+              cancelToken: this.cancelToken.token,
+              validateStatus (status) {
+                return [ 400, 200, 201 ].indexOf(status) !== -1
+              }
+            }
+          )
           console.log(data)
         } catch (error) {
           console.log(error)

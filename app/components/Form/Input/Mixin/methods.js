@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import { mapMutations, mapActions } from 'vuex'
 import axios from 'axios'
-const AxiosCancelToken = axios.CancelToken
 
 const DUPLICATE_CANCEL_MESSAGE = 'duplicate'
 
@@ -16,43 +15,49 @@ export default {
       setInputLastValidationValue: 'forms/setInputLastValidationValue'
     }),
     ...mapActions({
-      submit: 'forms/submit'
+      submit: 'forms/submit',
+      refreshCancelToken: 'forms/refreshCancelToken'
     }),
-    inputBlur () {
+    async inputBlur () {
       this.displayErrors = true
-      this.beginValidation()
+      await this.beginValidation()
     },
     beginValidation () {
       const localValue = this.child ? this.child.vars.value : this.inputModel
       if (this.lastValidationValue !== localValue) {
         this.lastValidationValue = this.inputModel
         this.validating = true
+        if (this.cancelToken) {
+          this.cancelToken.cancel(DUPLICATE_CANCEL_MESSAGE)
+        }
         if (this.isCheckRadio) {
-          this.validate()
+          return this.validate()
         } else {
           if (this.debounceValidate) {
             this.debounceValidate.cancel()
           }
           this.debounceValidate = _.debounce(() => {
-            this.validate()
+            return this.validate()
           }, 350)
           return this.debounceValidate()
         }
       }
     },
     async validate () {
-      if (this.cancelToken) {
-        this.cancelToken.cancel(DUPLICATE_CANCEL_MESSAGE)
-      }
-      this.cancelToken = AxiosCancelToken.source()
-      let postObj = await this.inputSubmitData
+      this.refreshCancelToken({ formId: this.formId, inputName: this.inputName })
+      let postObj = this.inputSubmitData
       try {
-        let data = await this.submit({
-          path: this.action,
-          data: postObj,
-          method: 'PATCH',
-          cancelToken: this.cancelToken.token
-        })
+        let { data } = await this.$axios.request(
+          {
+            url: this.action,
+            data: postObj,
+            method: 'PATCH',
+            cancelToken: this.cancelToken.token,
+            validateStatus (status) {
+              return [ 400, 200, 201 ].indexOf(status) !== -1
+            }
+          }
+        )
         const VARS = data.form.vars
         this.setInputValidationResult(this.extendInputId({
           valid: VARS.valid,

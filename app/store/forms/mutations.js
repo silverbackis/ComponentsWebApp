@@ -33,8 +33,8 @@ export const mutations = {
   setInputDebounceValidate (state, { formId, inputName, debounce }) {
     Vue.set(state.forms[formId].children[inputName], 'debounceValidate', debounce)
   },
-  setInputCancelToken (state, { formId, inputName, token }) {
-    Vue.set(state.forms[formId].children[inputName], 'cancelToken', token)
+  setInputCancelToken (state, { formId, inputName, cancelToken }) {
+    Vue.set(state.forms[formId].children[inputName], 'cancelToken', cancelToken)
   },
   setInputLastValidationValue (state, { formId, inputName, value }) {
     Vue.set(state.forms[formId].children[inputName], 'lastValidationValue', value)
@@ -42,7 +42,7 @@ export const mutations = {
   setFormSubmitting (state, { formId, submitting }) {
     Vue.set(state.forms[formId], 'submitting', submitting)
   },
-  setFormCancelToken (state, { formId, token }) {
-    Vue.set(state.forms[formId], 'cancelToken', token)
+  setFormCancelToken (state, { formId, cancelToken }) {
+    Vue.set(state.forms[formId], 'cancelToken', cancelToken)
   }
 }

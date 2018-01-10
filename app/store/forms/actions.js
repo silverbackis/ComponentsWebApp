@@ -1,5 +1,6 @@
 import { getFormId } from '~/components/Form/_FormId'
-import { fetch } from '~/api'
+import axios from 'axios'
+const AxiosCancelToken = axios.CancelToken
 
 export const actions = {
   init ({ commit, state }, form) {
@@ -38,16 +39,12 @@ export const actions = {
       })
     }
   },
-  submit (ctx, { path, data, cancelToken, method }) {
-    return fetch({
-      $axios: this.$axios,
-      path,
-      data,
-      cancelToken,
-      method,
-      validateStatus (status) {
-        return [ 400, 200, 201 ].indexOf(status) !== -1
-      }
-    })
+  refreshCancelToken ({ commit }, { formId, inputName }) {
+    let cancelToken = AxiosCancelToken.source()
+    if (inputName) {
+      commit('setInputCancelToken', { formId, inputName, cancelToken })
+    } else {
+      commit('setFormCancelToken', { formId, cancelToken })
+    }
   }
 }
