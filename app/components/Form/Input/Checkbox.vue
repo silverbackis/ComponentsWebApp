@@ -1,10 +1,13 @@
 <template>
   <label :class="labelClass" :for="input.vars.id">
+    {{checked}}
+    {{inputModel}}
     <input type="checkbox"
-           v-model="inputModel"
+           v-model="checked"
            v-bind="commonProps"
+           :value="input.vars.value"
     >
-    <div class="indicator" if="isCustom"></div>
+    <div class="indicator" v-if="isCustom"></div>
     <span class="input-label" v-html="input.vars.label"></span>
   </label>
 </template>
@@ -15,6 +18,11 @@
 
   export default {
     mixins: [InputCommonMixin, InputMixin],
+    data () {
+      return {
+        checked: []
+      }
+    },
     computed: {
       isCustom () {
         return this.input.vars.attr.class && this.input.vars.attr.class.indexOf('custom') !== -1

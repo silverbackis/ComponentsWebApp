@@ -7,6 +7,10 @@
                 :formId="formId"
                 :inputName="inputName"
   />
+  <choice-check v-else
+                :formId="formId"
+                :inputName="inputName"
+  />
 </template>
 
 <script>
