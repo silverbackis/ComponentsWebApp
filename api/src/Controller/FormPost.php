@@ -31,15 +31,13 @@ class FormPost extends AbstractForm
      */
     public function __invoke(Request $request, Form $data, string $_format)
     {
-        $form = $this->formResolver->createForm($data->getClassName());
+        $form = $this->formResolver->createForm($data);
         $formData = $this->formResolver->deserializeFormData($form, $request->getContent());
         $form->submit($formData);
+
         if (!$form->isSubmitted()) {
-            throw new BadRequestHttpException(
-                "The form was not submitted"
-            );
+            return $this->getResponse($data, $_format, false);
         }
-        $data->setForm(new FormView($form->createView()));
         return $this->getResponse($data, $_format, $form->isValid());
     }
 }
