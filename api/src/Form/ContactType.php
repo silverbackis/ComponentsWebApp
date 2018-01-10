@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,9 +20,12 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'csrf_protection' => false
-            )
+            [
+                'csrf_protection' => false,
+                'attr' => [
+                    'novalidate' => 'novalidate'
+                ]
+            ]
         );
     }
 
@@ -136,7 +140,7 @@ class ContactType extends AbstractType
                     'constraints' => [
                         new NotBlank(
                             [
-                                "message" => "Please select if you area a developer"
+                                "message" => "Please select if you are a developer"
                             ]
                         )
                     ]
@@ -168,14 +172,13 @@ class ContactType extends AbstractType
                     'choices' => [
                         'Pizza' => 'pizza',
                         'Chips' => 'chips',
-                        'Vegetables' => 'vegie'
+                        'Vegetables' => 'veggie'
                     ],
                     'choice_attr' => function () {
                         return ['class' => 'custom'];
                     },
                     'expanded' => true,
                     'multiple' => true,
-                    'required' => true,
                     'constraints' => [
                         new NotBlank(
                             [
@@ -210,15 +213,12 @@ class ContactType extends AbstractType
                         )
                     ]
                 ]
-            );
-    }
-
-    public function setDefaultOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            array(
-                'error_bubbling' => true
             )
-        );
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    'class' => 'is-large is-primary is-fullwidth'
+                ],
+                'label' => 'Send'
+            ]);
     }
 }

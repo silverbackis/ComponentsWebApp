@@ -7,7 +7,6 @@ use App\Entity\Component\Form\FormView;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FormPost extends AbstractForm
@@ -31,15 +30,15 @@ class FormPost extends AbstractForm
      */
     public function __invoke(Request $request, Form $data, string $_format)
     {
-        $form = $this->formResolver->createForm($data->getClassName());
+        $form = $this->formResolver->createForm($data);
         $formData = $this->formResolver->deserializeFormData($form, $request->getContent());
-        $form->submit($formData);
+        $form->submit($formData, true);
+
         if (!$form->isSubmitted()) {
-            throw new BadRequestHttpException(
-                "The form was not submitted"
-            );
+            return $this->getResponse($data, $_format, false);
         }
+        $valid = $form->isValid();
         $data->setForm(new FormView($form->createView()));
-        return $this->getResponse($data, $_format, $form->isValid());
+        return $this->getResponse($data, $_format, $valid);
     }
 }

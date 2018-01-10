@@ -3,17 +3,16 @@ import { getFormId } from '~/components/Form/_FormId'
 
 export const mutations = {
   setForm (state, { formData }) {
-    let formId = getFormId(formData)
+    let formId = getFormId(formData.vars)
     Vue.set(
       state.forms,
       formId,
-      {
-        vars: formData,
-        children: {},
-        cancelToken: null,
-        submitting: false
-      }
+      formData
     )
+  },
+  setFormValidationResult (state, {formId, valid, errors}) {
+    Vue.set(state.forms[formId].vars, 'valid', valid)
+    Vue.set(state.forms[formId].vars, 'errors', errors)
   },
   setInput (state, { formId, inputData }) {
     Vue.set(
@@ -38,10 +37,16 @@ export const mutations = {
   setInputDebounceValidate (state, { formId, inputName, debounce }) {
     Vue.set(state.forms[formId].children[inputName], 'debounceValidate', debounce)
   },
-  setInputCancelToken (state, { formId, inputName, token }) {
-    Vue.set(state.forms[formId].children[inputName], 'cancelToken', token)
+  setInputCancelToken (state, { formId, inputName, cancelToken }) {
+    Vue.set(state.forms[formId].children[inputName], 'cancelToken', cancelToken)
   },
   setInputLastValidationValue (state, { formId, inputName, value }) {
     Vue.set(state.forms[formId].children[inputName], 'lastValidationValue', value)
+  },
+  setFormSubmitting (state, { formId, submitting }) {
+    Vue.set(state.forms[formId], 'submitting', submitting)
+  },
+  setFormCancelToken (state, { formId, cancelToken }) {
+    Vue.set(state.forms[formId], 'cancelToken', cancelToken)
   }
 }

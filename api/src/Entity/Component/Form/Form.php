@@ -46,6 +46,7 @@ class Form extends Component
     private $form;
 
     /**
+     * @ORM\Column(type="datetime")
      * @ApiProperty(writable=false)
      * @Groups({"page", "validate"})
      * @var null|\DateTime

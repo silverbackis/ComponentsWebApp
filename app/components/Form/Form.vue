@@ -4,6 +4,7 @@
         :required="form.vars.required"
         :method="form.vars.method"
         :enctype="form.vars.multipart"
+        v-bind="form.vars.attr"
         @submit.prevent="submit"
   >
     <slot></slot>
@@ -11,10 +12,14 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
-  import { getFormId } from './_FormId'
+  import { mapActions, mapMutations, mapGetters } from 'vuex'
+  import FormMixin from './_Mixin'
+  import axios from 'axios'
+
+  const DUPLICATE_CANCEL_MESSAGE = 'duplicate'
 
   export default {
+    mixins: [FormMixin],
     props: {
       form: {
         type: Object,
@@ -22,16 +27,100 @@
       }
     },
     computed: {
-      formId () {
-        return getFormId(this.form.vars)
+      ...mapGetters({
+        getFormSubmitData: 'forms/getFormSubmitData'
+      }),
+      submitData () {
+        return this.getFormSubmitData(this.formId)
+      },
+      cancelToken: {
+        get () {
+          return this.storeForm.cancelToken
+        },
+        set (token) {
+          this.setFormCancelToken({ formId: this.formId, token })
+        }
       }
     },
     methods: {
       ...mapActions({
-        init: 'forms/init'
+        init: 'forms/init',
+        submitForm: 'forms/submit',
+        refreshCancelToken: 'forms/refreshCancelToken'
       }),
-      submit () {
-        console.log('Submit the form')
+      ...mapMutations({
+        setFormSubmitting: 'forms/setFormSubmitting',
+        setFormValidationResult: 'forms/setFormValidationResult',
+        setInputValidationResult: 'forms/setInputValidationResult',
+        setFormCancelToken: 'forms/setFormCancelToken'
+      }),
+      async submit () {
+        this.setFormSubmitting({
+          formId: this.formId,
+          submitting: true
+        })
+
+        if (this.cancelToken) {
+          this.cancelToken.cancel(DUPLICATE_CANCEL_MESSAGE)
+        }
+        this.refreshCancelToken({ formId: this.formId })
+        try {
+          let response = await this.$axios.request(
+            {
+              url: this.form.vars.action,
+              data: this.submitData,
+              method: 'POST',
+              cancelToken: this.cancelToken.token,
+              validateStatus (status) {
+                return [ 400, 200, 201 ].indexOf(status) !== -1
+              }
+            }
+          )
+          const VARS = response.data.form.vars
+          this.setFormValidationResult({
+            formId: this.formId,
+            valid: response.status === 200,
+            errors: VARS.errors
+          })
+
+          let x = response.data.form.children.length
+          while (x--) {
+            this.setInputValidationResult({
+              formId: this.formId,
+              inputName: response.data.form.children[x].vars.full_name,
+              valid: response.data.form.children[x].vars.valid,
+              errors: response.data.form.children[x].vars.errors
+            })
+          }
+        } catch (error) {
+          this.submitError(error)
+        }
+
+        this.setFormSubmitting({
+          formId: this.formId,
+          submitting: false
+        })
+      },
+      submitError (error) {
+        if (error.message === DUPLICATE_CANCEL_MESSAGE) {
+          console.log('previous form submission cancelled')
+        } else {
+          if (axios.isCancel(error)) {
+            console.warn(error)
+          } else if (error.response) {
+            console.warn('validate request error: ', error.response)
+            this.setFormValidationResult({
+              formId: this.formId,
+              valid: false,
+              errors: [
+                '<b>' + error.response.status + ' ' + error.response.statusText + ':</b> ' +
+                error.response.data['hydra:description']
+              ]
+            })
+          } else {
+            console.warn('validate unknown error: ', error)
+          }
+        }
       }
     },
     created () {

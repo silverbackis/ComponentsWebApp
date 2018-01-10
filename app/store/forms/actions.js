@@ -1,12 +1,21 @@
-import _ from 'lodash'
 import { getFormId } from '~/components/Form/_FormId'
+import axios from 'axios'
+const AxiosCancelToken = axios.CancelToken
 
 export const actions = {
   init ({ commit, state }, form) {
     const formData = form.vars
     const formId = getFormId(formData)
     if (!state.forms[formId]) {
-      commit('setForm', { formData })
+      formData.valid = false
+      commit('setForm', {
+        formData: {
+          vars: formData,
+          children: {},
+          cancelToken: null,
+          submitting: false
+        }
+      })
     }
   },
   initInput ({ commit, state }, { formId, inputVars, children }) {
@@ -25,22 +34,17 @@ export const actions = {
             valid: false,
             value
           }),
-          valid: false,
           children
         }
       })
     }
   },
-  inputSubmitData ({ state }, { formId, inputName }) {
-    let model = state.forms[formId].children[inputName]
-    let value = model.vars.value
-    if (value === undefined) {
-      return {}
+  refreshCancelToken ({ commit }, { formId, inputName }) {
+    let cancelToken = AxiosCancelToken.source()
+    if (inputName) {
+      commit('setInputCancelToken', { formId, inputName, cancelToken })
+    } else {
+      commit('setFormCancelToken', { formId, cancelToken })
     }
-    // Split name into parts when using square brackets - e.g. contact[name] = ["contact", "name"]
-    let searchResult = inputName.replace(/\[\]$/, '').split(/\[(.+)\]/).filter(String)
-    let submitObj = {}
-    _.set(submitObj, searchResult, value)
-    return submitObj
   }
 }
