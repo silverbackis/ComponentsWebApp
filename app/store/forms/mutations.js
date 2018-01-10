@@ -41,5 +41,8 @@ export const mutations = {
   },
   setFormSubmitting (state, { formId, submitting }) {
     Vue.set(state.forms[formId], 'submitting', submitting)
+  },
+  setFormCancelToken (state, { formId, token }) {
+    Vue.set(state.forms[formId], 'cancelToken', token)
   }
 }

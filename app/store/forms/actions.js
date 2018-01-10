@@ -1,4 +1,5 @@
 import { getFormId } from '~/components/Form/_FormId'
+import { fetch } from '~/api'
 
 export const actions = {
   init ({ commit, state }, form) {
@@ -36,5 +37,17 @@ export const actions = {
         }
       })
     }
+  },
+  submit (ctx, { path, data, cancelToken, method }) {
+    return fetch({
+      $axios: this.$axios,
+      path,
+      data,
+      cancelToken,
+      method,
+      validateStatus (status) {
+        return [ 400, 200, 201 ].indexOf(status) !== -1
+      }
+    })
   }
 }
