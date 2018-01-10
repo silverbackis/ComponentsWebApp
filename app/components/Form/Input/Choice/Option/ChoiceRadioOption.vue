@@ -1,5 +1,5 @@
 <template>
-  <label :class="labelClass" :for="child.vars.id">
+  <label v-if="input" :class="labelClass" :for="child.vars.id">
     <input type="radio"
            v-model="inputModel"
            v-bind="commonProps"
@@ -13,8 +13,8 @@
 </template>
 
 <script>
-  import InputCommonMixin from './_CommonMixin'
-  import InputMixin from './Mixin'
+  import InputCommonMixin from '../../_CommonMixin'
+  import InputMixin from '../../Mixin/index'
 
   export default {
     mixins: [InputCommonMixin, InputMixin],
@@ -41,17 +41,4 @@
   }
 </script>
 
-<style lang="sass">
-  @import '~assets/css/components/bulma_checkbox_radio'
-
-  .radio
-    .custom
-      ~ .indicator
-        border-radius: 50%
-        &::after
-          border-radius: 50%
-      &:checked
-        ~ .indicator
-          &::after
-            border-radius: 50%
-</style>
+<style lang="sass" src="~/assets/css/components/bulma_checkbox_radio.sass" />

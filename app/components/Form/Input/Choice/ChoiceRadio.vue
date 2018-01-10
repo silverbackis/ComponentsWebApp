@@ -11,8 +11,8 @@
 </template>
 
 <script>
-  import InputCommonMixin from './_CommonMixin'
-  import RadioOption from './_ChoiceRadioOption'
+  import InputCommonMixin from '../_CommonMixin'
+  import RadioOption from './Option/ChoiceRadioOption'
 
   export default {
     mixins: [InputCommonMixin],

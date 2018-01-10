@@ -50,9 +50,12 @@
         type: Boolean,
         required: true
       },
-      isSelect: {
-        type: Boolean,
-        default: false
+      select: {
+        type: [Boolean, String],
+        default: false,
+        validator (value) {
+          return value === false || ['single', 'multiple'].indexOf(value) !== -1
+        }
       }
     },
     computed: {
@@ -74,7 +77,7 @@
         }
       },
       wrapperClass () {
-        return this.isSelect ? this.selectClass : this.fieldClass
+        return this.select ? this.selectClass : this.fieldClass
       },
       fieldClass () {
         return Object.assign(this.validClass, {
@@ -83,7 +86,8 @@
       },
       selectClass () {
         return Object.assign(this.validClass, {
-          select: true
+          select: true,
+          'is-multiple': this.select === 'multiple'
         })
       },
       validClass () {

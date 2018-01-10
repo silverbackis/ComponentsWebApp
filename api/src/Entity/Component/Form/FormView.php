@@ -38,7 +38,7 @@ class FormView
 
     public function __construct(\Symfony\Component\Form\FormView $formViews, bool $children = true)
     {
-        $varsToArray = ['choices', 'errors', 'is_selected'];
+        $varsToArray = ['choices', 'preferred_choices', 'errors', 'is_selected'];
 
         $outputVars = array_merge($varsToArray, [
             'value',
@@ -59,7 +59,8 @@ class FormView
             'is_selected',
             'placeholder_in_choices',
             'checked',
-            'action'
+            'action',
+            'multiple'
         ]);
         foreach ($outputVars as $var) {
             if (isset($formViews->vars[$var])) {

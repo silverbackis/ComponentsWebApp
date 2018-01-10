@@ -43,7 +43,6 @@ export const actions = {
       }
       return (now - item.__lastUpdated) > (1000 * 15)
     })
-
     // If we still need to reload/load pages now we can do it
     if (ids.length) {
       let data = await fetchPageIds({ ids, $axios: this.$axios })

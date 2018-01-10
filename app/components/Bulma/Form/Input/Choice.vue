@@ -1,6 +1,5 @@
 <template>
   <wrapper v-bind="wrapperData"
-           :isSelect="inputType === 'choice' && !input.vars.expanded"
            :useIcons="false"
   >
     <form-input :formId="formId"

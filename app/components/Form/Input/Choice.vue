@@ -1,28 +1,26 @@
 <template>
-  <choice-select v-if="!input.vars.expanded"
-                 :formId="formId"
-                 :inputName="inputName"
-  />
-  <choice-radio v-else
-                :formId="formId"
-                :inputName="inputName"
-  />
-  <choice-check v-else
-                :formId="formId"
-                :inputName="inputName"
-  />
+  <div>
+    <choice-select v-if="!input.vars.expanded"
+                   :formId="formId"
+                   :inputName="inputName"
+    />
+    <choice-expanded v-else
+                  :formId="formId"
+                  :inputName="inputName"
+    />
+  </div>
 </template>
 
 <script>
   import InputCommonMixin from './_CommonMixin'
-  import ChoiceSelect from './_ChoiceSelect'
-  import ChoiceRadio from './_ChoiceRadio'
+  import ChoiceSelect from './Choice/ChoiceSelect'
+  import ChoiceExpanded from './Choice/ChoiceExpanded'
 
   export default {
     mixins: [InputCommonMixin],
     components: {
       ChoiceSelect,
-      ChoiceRadio
+      ChoiceExpanded
     },
     created () {
       this.displayErrors = true

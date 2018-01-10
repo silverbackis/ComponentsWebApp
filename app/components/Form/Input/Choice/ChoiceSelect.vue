@@ -1,5 +1,6 @@
 <template>
   <select v-bind="commonProps"
+          :multiple="input.vars.multiple"
           v-model="inputModel"
   >
     <select-option v-for="(choice, choiceIndex) in input.vars.choices"
@@ -9,9 +10,9 @@
 </template>
 
 <script>
-  import InputCommonMixin from './_CommonMixin'
-  import InputMixin from './Mixin'
-  import SelectOption from './_ChoiceSelectOption'
+  import InputCommonMixin from '../_CommonMixin'
+  import InputMixin from '../Mixin/index'
+  import SelectOption from './Option/ChoiceSelectOption'
 
   export default {
     mixins: [InputCommonMixin, InputMixin],
