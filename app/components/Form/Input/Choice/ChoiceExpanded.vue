@@ -1,11 +1,10 @@
 <template>
   <div v-if="input">
-    {{ input.children }}
-    <component  :is="is"
+    <choice-expanded-option
                 v-for="(choice, choiceIndex) in input.children"
                 :key="choiceIndex"
                 :index="choiceIndex"
-                :inputName="choice.vars.full_name"
+                :inputName="inputName"
                 :formId="formId"
                 inputClass=""
     />
@@ -14,8 +13,7 @@
 
 <script>
   import InputCommonMixin from '../_CommonMixin'
-  import Checkbox from '~/components/Form/Input/Checkbox'
-  import Radio from '~/components/Form/Input/Radio'
+  import ChoiceExpandedOption from './Option/ChoiceExpandedOption'
 
   export default {
     mixins: [InputCommonMixin],
@@ -25,8 +23,7 @@
       }
     },
     components: {
-      Checkbox,
-      Radio
+      ChoiceExpandedOption
     }
   }
 </script>

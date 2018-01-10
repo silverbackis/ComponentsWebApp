@@ -33,7 +33,7 @@ export const actions = {
       return {}
     }
     // Split name into parts when using square brackets - e.g. contact[name] = ["contact", "name"]
-    let searchResult = inputName.split(/\[(.+)\]/).filter(String)
+    let searchResult = inputName.replace(/\[\]$/, '').split(/\[(.+)\]/).filter(String)
     let submitObj = {}
     _.set(submitObj, searchResult, value)
     return submitObj

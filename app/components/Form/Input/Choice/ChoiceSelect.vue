@@ -1,5 +1,6 @@
 <template>
-  <select v-bind="commonProps"
+  <select v-if="input"
+          v-bind="commonProps"
           :multiple="input.vars.multiple"
           v-model="inputModel"
   >

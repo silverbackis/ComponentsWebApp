@@ -1,6 +1,17 @@
 <template>
-  <label v-if="input" :class="labelClass" :for="child.vars.id">
-    <input type="radio"
+  <label v-if="input"
+         :class="labelClass"
+         :for="child.vars.id"
+  >
+    <input v-if="!input.vars.multiple"
+           type="radio"
+           v-model="inputModel"
+           v-bind="commonProps"
+           :id="child.vars.id"
+           :class="child.vars.attr.class"
+           :value="child.vars.value"
+    />
+    <input type="checkbox"
            v-model="inputModel"
            v-bind="commonProps"
            :id="child.vars.id"
@@ -33,7 +44,8 @@
       },
       labelClass () {
         return {
-          radio: true,
+          radio: !this.input.vars.multiple,
+          checkbox: this.input.vars.multiple,
           custom: this.isCustom
         }
       }
