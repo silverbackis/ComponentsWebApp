@@ -1,17 +1,19 @@
 <template>
-  <div v-show="pageData || componentGroups.length">
-    <bulma-components v-if="pageData"
-                      :pageData="pageData"
-                      :depth="depth"
-                      :wrap="wrap"
-    />
-    <bulma-components v-else
-                      v-for="(pageData, index) in componentGroups"
-                      :key="index"
-                      :pageData="pageData"
-                      :depth="depth"
-                      :wrap="wrap"
-    />
+  <div>
+    <div v-if="pageData || (componentGroups && componentGroups.length)">
+      <bulma-components v-if="pageData"
+                        :pageData="pageData"
+                        :depth="depth"
+                        :wrap="wrap"
+      />
+      <bulma-components v-else
+                        v-for="(pageData, index) in componentGroups"
+                        :key="index"
+                        :pageData="pageData"
+                        :depth="depth"
+                        :wrap="wrap"
+      />
+    </div>
   </div>
 </template>
 

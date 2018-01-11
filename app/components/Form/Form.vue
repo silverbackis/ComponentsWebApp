@@ -83,7 +83,7 @@
             errors: VARS.errors
           })
 
-          let x = response.data.form.children ? response.data.form.children.length : 0
+          let x = response.data.form.children.length
           while (x--) {
             this.setInputValidationResult({
               formId: this.formId,
