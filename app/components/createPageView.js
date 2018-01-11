@@ -4,9 +4,11 @@ export default function createPageView (depth) {
   return {
     name: `page-${depth}`,
 
-    async asyncData ({ store }) {
+    asyncData ({ store }) {
+      let pageData = store.getters['page/getPageByDepth'](depth)
+      console.log('page data in asyncData function for depth ', depth, pageData)
       return {
-        pageData: await store.getters['page/getPageByDepth'](depth)
+        pageData
       }
     },
 
@@ -42,6 +44,7 @@ export default function createPageView (depth) {
     },
 
     render (h) {
+      console.log('render page ', depth)
       return h(Page, {
         props: {
           depth,

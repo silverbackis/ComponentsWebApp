@@ -7,10 +7,9 @@ export const actions = {
     const formData = form.vars
     const formId = getFormId(formData)
     if (!state.forms[formId]) {
-      formData.valid = false
       commit('setForm', {
         formData: {
-          vars: formData,
+          vars: Object.assign({}, formData, { valid: false }),
           children: {},
           cancelToken: null,
           submitting: false

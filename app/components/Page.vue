@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="pageData || (componentGroups && componentGroups.length)">
+    <div v-if="pageData || componentGroups.length">
       <bulma-components v-if="pageData"
                         :pageData="pageData"
                         :depth="depth"
@@ -35,7 +35,10 @@
       },
       componentGroups: {
         type: Array,
-        required: false
+        required: false,
+        default () {
+          return []
+        }
       },
       noContainer: {
         type: Boolean,
@@ -49,12 +52,16 @@
       }
     },
 
-    async beforeMount () {
+    created () {
+      console.log('page component created ', this.depth)
+    }
+
+    /* async beforeMount () {
       if (this.$root._isMounted) {
         // console.log('before mount, root is mounted')
       } else {
         // console.log('before mount, root is not mounted')
       }
-    }
+    } */
   }
 </script>
