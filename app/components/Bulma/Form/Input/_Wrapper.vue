@@ -33,9 +33,10 @@
         type: Boolean,
         required: true
       },
+      // not required for a button
       valid: {
         type: Boolean,
-        required: true
+        required: false
       },
       errors: {
         type: Array,

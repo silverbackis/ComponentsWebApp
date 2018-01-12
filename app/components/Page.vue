@@ -50,10 +50,6 @@
       wrap () {
         return this.noContainer
       }
-    },
-
-    created () {
-      console.log('page component created ', this.depth)
     }
 
     /* async beforeMount () {

@@ -31,6 +31,7 @@ export const actions = {
           lastValidationValue: null,
           vars: Object.assign({}, inputVars, {
             valid: false,
+            errors: [],
             value
           }),
           children

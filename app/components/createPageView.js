@@ -44,7 +44,6 @@ export default function createPageView (depth) {
     },
 
     render (h) {
-      console.log('render page ', depth)
       return h(Page, {
         props: {
           depth,

@@ -24,14 +24,14 @@ export const mutations = {
   setInputValue (state, { formId, inputName, value }) {
     Vue.set(state.forms[formId].children[inputName].vars, 'value', value)
   },
-  setInputValidationResult (state, {formId, inputName, valid, errors}) {
+  setInputValidationResult (state, { formId, inputName, valid, errors }) {
     Vue.set(state.forms[formId].children[inputName].vars, 'valid', valid)
     Vue.set(state.forms[formId].children[inputName].vars, 'errors', errors)
   },
   setInputDisplayErrors (state, { formId, inputName, displayErrors }) {
     Vue.set(state.forms[formId].children[inputName], 'displayErrors', displayErrors)
   },
-  setInputValidating (state, {formId, inputName, validating}) {
+  setInputValidating (state, { formId, inputName, validating }) {
     Vue.set(state.forms[formId].children[inputName], 'validating', validating)
   },
   setInputDebounceValidate (state, { formId, inputName, debounce }) {

@@ -52,6 +52,7 @@
         setFormSubmitting: 'forms/setFormSubmitting',
         setFormValidationResult: 'forms/setFormValidationResult',
         setInputValidationResult: 'forms/setInputValidationResult',
+        setInputDisplayErrors: 'forms/setInputDisplayErrors',
         setFormCancelToken: 'forms/setFormCancelToken'
       }),
       async submit () {
@@ -84,12 +85,23 @@
           })
 
           let x = response.data.form.children.length
+          let child
           while (x--) {
+            child = response.data.form.children[x]
+            // E.g. buttons which are not valid/invalid
+            if (child.vars.valid === undefined) {
+              continue
+            }
             this.setInputValidationResult({
               formId: this.formId,
-              inputName: response.data.form.children[x].vars.full_name,
-              valid: response.data.form.children[x].vars.valid,
-              errors: response.data.form.children[x].vars.errors
+              inputName: child.vars.full_name,
+              valid: child.vars.valid,
+              errors: child.vars.errors
+            })
+            this.setInputDisplayErrors({
+              formId: this.formId,
+              inputName: child.vars.full_name,
+              displayErrors: true
             })
           }
         } catch (error) {
