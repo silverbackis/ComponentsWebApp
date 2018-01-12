@@ -21,7 +21,6 @@ export const mutations = {
         state.routePages.push(val['id'])
       })
     }
-    console.log('route pages set')
   },
   SET_PAGE: (state, { id, data }) => {
     Vue.set(state.pages, id, data)
@@ -35,7 +34,6 @@ export const actions = {
   },
 
   async FETCH_PAGES ({ state, commit }) {
-    console.log('checking pages to fetch from pages for route', state.routePages)
     // Filter to only load pages that haven't been loaded within last 15 seconds
     const now = Date.now()
     let ids = state.routePages.filter(id => {
@@ -45,11 +43,9 @@ export const actions = {
       }
       return (now - item.__lastUpdated) > (1000 * 15)
     })
-    console.log('fetching ids', ids)
     // If we still need to reload/load pages now we can do it
     if (ids.length) {
       let data = await fetchPageIds({ ids, $axios: this.$axios })
-      console.log('pages fetched')
       data.forEach((pageData) => {
         pageData.__lastUpdated = now
         commit('SET_PAGE', { id: pageData.id, data: pageData })
