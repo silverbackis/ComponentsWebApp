@@ -221,6 +221,9 @@
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
         }
     },
+    "silverbackis/api-component-bundle": {
+        "version": "dev-master"
+    },
     "symfony/apache-pack": {
         "version": "1.0",
         "recipe": {
@@ -304,9 +307,6 @@
     },
     "symfony/intl": {
         "version": "v4.0.2"
-    },
-    "symfony/lts": {
-        "version": "4-dev"
     },
     "symfony/maker-bundle": {
         "version": "1.0",

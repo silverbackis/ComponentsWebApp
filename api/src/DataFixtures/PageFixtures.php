@@ -2,19 +2,18 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Component\ComponentGroup;
-use App\Entity\Component\Form\Form;
-use App\Entity\Component\Hero;
-use App\Entity\Component\Nav\Menu\Menu;
-use App\Entity\Component\Nav\Navbar\Navbar;
-use App\Entity\Component\Content;
-use App\Entity\Component\Nav\NavInterface;
-use App\Entity\Component\Nav\Tabs\Tabs;
-use App\Entity\Layout;
-use App\Entity\Page;
-use App\Entity\Route;
+use Silverback\ApiComponentBundle\Entity\Component\ComponentGroup;
+use Silverback\ApiComponentBundle\Entity\Component\Form\Form;
+use Silverback\ApiComponentBundle\Entity\Component\Hero;
+use Silverback\ApiComponentBundle\Entity\Component\Nav\Menu\Menu;
+use Silverback\ApiComponentBundle\Entity\Component\Nav\Navbar\Navbar;
+use Silverback\ApiComponentBundle\Entity\Component\Content;
+use Silverback\ApiComponentBundle\Entity\Component\Nav\NavInterface;
+use Silverback\ApiComponentBundle\Entity\Component\Nav\Tabs\Tabs;
+use Silverback\ApiComponentBundle\Entity\Layout;
+use Silverback\ApiComponentBundle\Entity\Page;
+use Silverback\ApiComponentBundle\Entity\Route;
 use App\Form\Handler\ContactHandler;
-use App\Form\Handler\FormHandlerInterface;
 use App\Form\Type\ContactType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;

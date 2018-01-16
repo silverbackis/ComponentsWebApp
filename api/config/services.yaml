@@ -15,34 +15,14 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    App\EntityListener\:
-        resource: '../src/EntityListener/*'
-        tags:
-            - { name: doctrine.orm.entity_listener }
+    #App\Form\Handler\:
+    #    resource: '../src/Form/Handler/*'
+    #    public: true
 
-    App\DataProvider\:
-        resource: '../src/DataProvider/*'
-        autoconfigure: false
-        tags:
-            - { name: 'api_platform.item_data_provider', priority: 1 }
-
-    # Allow for auto-wiring
-    Cocur\Slugify\SlugifyInterface:
-        alias: 'slugify'
-
-    App\Swagger\SwaggerDecorator:
-        decorates: 'api_platform.swagger.normalizer.documentation'
-        arguments: [ '@App\Swagger\SwaggerDecorator.inner' ]
-        autoconfigure: false
-
-    App\Form\Handler\:
-        resource: '../src/Form/Handler/*'
-        public: true
-
-    app.form_handler_service_locator:
-        class: Symfony\Component\DependencyInjection\ServiceLocator
-        tags: ['container.service_locator']
-        arguments:
-            -
-                App\FooCommand: '@app.command_handler.foo'
-                App\BarCommand: '@app.command_handler.bar'
+    #app.form_handler_service_locator:
+    #    class: Symfony\Component\DependencyInjection\ServiceLocator
+    #    tags: ['container.service_locator']
+    #    arguments:
+    #        -
+    #            App\FooCommand: '@app.command_handler.foo'
+    #            App\BarCommand: '@app.command_handler.bar'

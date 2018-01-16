@@ -2,8 +2,9 @@
 
 namespace App\Form\Handler;
 
-use App\Entity\Component\Form\Form;
 use Psr\Log\LoggerInterface;
+use Silverback\ApiComponentBundle\Entity\Component\Form\Form;
+use Silverback\ApiComponentBundle\Form\Handler\FormHandlerInterface;
 
 class ContactHandler implements FormHandlerInterface
 {
