@@ -12,11 +12,16 @@ I've chosen to use NuxtJS (VueJS) and API Platform (build on Symfony) for many r
 ## Installation
 Simply clone or download this repository. Using Docker and Docker Compose simply run:
 ```bash
-docker-compose up
+./docker-dev.sh
+```
+Or in production
+```bash
+./docker-prod.sh
 ```
 
-The API will run on port 8080 and the front-end simply on your localhost port 80. The docker-compose.yaml and Dockerfile files have only been configured to run without SSL. You should learn Docker and change the config if you plan to use Docker in your development environment. I have only just begun using Docker when I started using API Platform - PRs are welcome.
+The production environment should also be running nginx as a proxy and you can configure the domain names and more in `./docker-compose-prod.yaml`. The bash scripts just provide an easy command to combine the 2 require configuration files for the environment you're running.
 
+In development, the API will run on port 8080 and the front-end simply on your localhost port 80.
 
 ## Commands
 ```bash

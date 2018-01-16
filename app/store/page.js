@@ -23,7 +23,9 @@ export const mutations = {
     }
   },
   SET_PAGE: (state, { id, data }) => {
+    const now = Date.now()
     Vue.set(state.pages, id, data)
+    Vue.set(state.pages[id], '__lastUpdated', now)
   }
 }
 
@@ -47,7 +49,6 @@ export const actions = {
     if (ids.length) {
       let data = await fetchPageIds({ ids, $axios: this.$axios })
       data.forEach((pageData) => {
-        pageData.__lastUpdated = now
         commit('SET_PAGE', { id: pageData.id, data: pageData })
         console.log('set page data', pageData)
       })

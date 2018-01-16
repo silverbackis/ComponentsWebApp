@@ -18,7 +18,6 @@ function fetch ({ path, $axios, method, data, cancelToken, validateStatus }) {
         })
         .then(({ data }) => {
           requests[path] = undefined
-          console.log(`fetched ${path}...`)
           resolve(data)
         })
         .catch((err) => {

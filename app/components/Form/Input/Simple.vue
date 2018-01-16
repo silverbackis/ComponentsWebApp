@@ -42,6 +42,12 @@
            v-on="events"
            v-model="inputModel"
     />
+    <input v-else-if="inputType === 'email'"
+           type="email"
+           v-bind="commonProps"
+           v-on="events"
+           v-model="inputModel"
+    />
     <input v-else-if="inputType === 'number'"
            type="number"
            v-bind="commonProps"
