@@ -54,6 +54,12 @@ class Form extends Component
     private $lastModified;
 
     /**
+     * @ORM\Column(type="string")
+     * @var null|string
+     */
+    private $successHandler;
+
+    /**
      * @return string
      */
     public function getClassName(): string
@@ -99,5 +105,21 @@ class Form extends Component
     public function setLastModified(?\DateTime $lastModified): void
     {
         $this->lastModified = $lastModified;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSuccessHandler(): ?string
+    {
+        return $this->successHandler;
+    }
+
+    /**
+     * @param null|string $successHandler
+     */
+    public function setSuccessHandler(?string $successHandler): void
+    {
+        $this->successHandler = $successHandler;
     }
 }

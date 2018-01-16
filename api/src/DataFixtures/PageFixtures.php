@@ -13,6 +13,8 @@ use App\Entity\Component\Nav\Tabs\Tabs;
 use App\Entity\Layout;
 use App\Entity\Page;
 use App\Entity\Route;
+use App\Form\Handler\ContactHandler;
+use App\Form\Handler\FormHandlerInterface;
 use App\Form\Type\ContactType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -78,7 +80,7 @@ class PageFixtures extends Fixture
         $this->addContent($page['contact'], '
         <p>Form work to be completed</p>
         ');
-        $this->addForm($page['contact'], ContactType::class);
+        $this->addForm($page['contact'], ContactType::class, ContactHandler::class);
 
         /**
          * WEBSITES HERO TOP
@@ -341,7 +343,6 @@ class PageFixtures extends Fixture
                 $order = $lastItem->getSortOrder() + 1;
             }
         }
-
         $navItem = $nav->createNavItem();
         $navItem->setLabel($navLabel);
         $navItem->setSortOrder($order);
@@ -349,7 +350,6 @@ class PageFixtures extends Fixture
         $navItem->setFragment($fragment);
         $nav->addItem($navItem);
         $this->manager->persist($navItem);
-
         return $navItem;
     }
 
@@ -377,7 +377,7 @@ class PageFixtures extends Fixture
         return $textBlock;
     }
 
-    private function addForm(Page $page = null, string $className, ComponentGroup $componentGroup = null)
+    private function addForm(Page $page = null, string $className, string $successHandler, ComponentGroup $componentGroup = null)
     {
         $form = new Form();
         if ($page) {
@@ -387,6 +387,9 @@ class PageFixtures extends Fixture
             $form->setGroup($componentGroup);
         }
         $form->setClassName($className);
+        if ($successHandler) {
+            $form->setSuccessHandler($successHandler);
+        }
         $this->manager->persist($form);
         return $form;
     }

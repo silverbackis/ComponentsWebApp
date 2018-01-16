@@ -34,3 +34,15 @@ services:
         decorates: 'api_platform.swagger.normalizer.documentation'
         arguments: [ '@App\Swagger\SwaggerDecorator.inner' ]
         autoconfigure: false
+
+    App\Form\Handler\:
+        resource: '../src/Form/Handler/*'
+        public: true
+
+    app.form_handler_service_locator:
+        class: Symfony\Component\DependencyInjection\ServiceLocator
+        tags: ['container.service_locator']
+        arguments:
+            -
+                App\FooCommand: '@app.command_handler.foo'
+                App\BarCommand: '@app.command_handler.bar'

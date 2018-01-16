@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Component\Form\Form;
 use App\Entity\Component\Form\FormView;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,18 +29,28 @@ class FormPost extends AbstractForm
      * @param Form $data
      * @param string $_format
      * @return Response
+     * @throws \Exception
      */
     public function __invoke(Request $request, Form $data, string $_format)
     {
         $form = $this->formFactory->createForm($data);
         $formData = $this->deserializeFormData($form, $request->getContent());
         $form->submit($formData, true);
-
         if (!$form->isSubmitted()) {
             return $this->getResponse($data, $_format, false);
         }
         $valid = $form->isValid();
         $data->setForm(new FormView($form->createView()));
+        if ($valid && $data->getSuccessHandler()) {
+            try {
+                $handler = $this->container->get($data->getSuccessHandler());
+                $handler->success($data);
+            } catch (NotFoundExceptionInterface $error) {
+                throw new \Exception("NotFoundExceptionInterface: " . $error->getMessage());
+            } catch (ContainerExceptionInterface $error) {
+                throw new \Exception("ContainerExceptionInterface: " . $error->getMessage());
+            }
+        }
         return $this->getResponse($data, $_format, $valid);
     }
 }
