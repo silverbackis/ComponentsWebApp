@@ -8,7 +8,7 @@
       </div>
     </div>
     <slot v-else></slot>
-    <nuxt-child v-if="depth" :key="childKey" :componentGroups="childComponentGroups" />
+    <nuxt-child v-if="!noChild" :key="childKey" :componentGroups="childComponentGroups" />
   </div>
 </template>
 
@@ -18,18 +18,16 @@
   export default {
     mixins: [NuxtChildMixin],
     props: {
+      noChild: {
+        type: Boolean,
+        default: false
+      },
       wrap: {
         type: Boolean,
         default: false
       },
       depth: {
         required: false
-      }
-    },
-    computed: {
-      parentName () {
-        console.log(this.$parent)
-        return this.$parent.$options.name
       }
     }
   }

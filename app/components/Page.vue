@@ -1,19 +1,19 @@
 <template>
   <div>
-    <div v-if="pageData || componentGroups.length">
-      <bulma-components v-if="pageData"
-                        :pageData="pageData"
-                        :depth="depth"
-                        :wrap="wrap"
-      />
-      <bulma-components v-else
-                        v-for="(pageData, index) in componentGroups"
-                        :key="index"
-                        :pageData="pageData"
-                        :depth="depth"
-                        :wrap="wrap"
-      />
-    </div>
+    <bulma-components v-if="pageData && pageData.components.length"
+                      :pageData="pageData"
+                      :depth="depth"
+                      :wrap="wrap"
+    />
+    <bulma-components v-else-if="componentGroups.length"
+                      v-for="(pageData, index) in componentGroups"
+                      :key="index"
+                      :pageData="pageData"
+                      :depth="depth"
+                      :wrap="wrap"
+    />
+    <nuxt-child v-else-if="childKey" :key="childKey" />
+    <h1 v-else>No components or children configured for this page</h1>
   </div>
 </template>
 
@@ -24,7 +24,6 @@
     components: {
       BulmaComponents
     },
-
     props: {
       depth: {
         type: Number,
@@ -49,6 +48,9 @@
     computed: {
       wrap () {
         return this.noContainer
+      },
+      childKey () {
+        return this.$route.params['page' + (this.depth + 2)]
       }
     }
 

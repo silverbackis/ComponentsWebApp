@@ -1,6 +1,6 @@
 <template>
   <section :class="sectionClass">
-    <div class="container">
+    <div :class="containerClass">
       <div class="content" v-html="data.content"></div>
     </div>
   </section>
@@ -13,6 +13,9 @@
     computed: {
       sectionClass () {
         return this.wrap ? 'section' : ''
+      },
+      containerClass () {
+        return this.wrap ? 'container' : ''
       }
     }
   }

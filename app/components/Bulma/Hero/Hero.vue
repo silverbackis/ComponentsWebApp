@@ -17,6 +17,7 @@
           <bulma-tabs _style="boxed"
                       :items="data.nav.items"
                       :data="data.nav"
+                      :noChild="true"
           />
         </div>
       </div>

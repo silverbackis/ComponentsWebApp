@@ -1,11 +1,18 @@
 {
-    "name": "symfony/skeleton",
+    "name": "silverbackis/bw-starter-website",
     "type": "project",
     "license": "MIT",
     "description": "BW Starter Website API using API Platform",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/silverbackis/ApiComponentBundle"
+        }
+    ],
     "require": {
         "silverbackis/api-component-bundle": "dev-master@dev",
-        "symfony/flex": "^1.0"
+        "symfony/flex": "^1.0",
+        "doctrine/data-fixtures": "dev-master@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",

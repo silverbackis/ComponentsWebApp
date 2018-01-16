@@ -50,7 +50,6 @@ export const actions = {
       let data = await fetchPageIds({ ids, $axios: this.$axios })
       data.forEach((pageData) => {
         commit('SET_PAGE', { id: pageData.id, data: pageData })
-        console.log('set page data', pageData)
       })
     }
   }

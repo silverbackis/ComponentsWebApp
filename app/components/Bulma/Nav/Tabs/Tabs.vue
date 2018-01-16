@@ -4,6 +4,7 @@
                   :depth="depth"
                   :childComponentGroups="childComponentGroups"
                   :data="data"
+                  :noChild="noChild"
     >
       <nav class="tabs" :class="this.classModifiers">
         <ul>
@@ -27,6 +28,10 @@
       PageWrapper
     },
     props: {
+      noChild: {
+        type: Boolean,
+        default: false
+      },
       depth: {
         type: Number,
         required: false
