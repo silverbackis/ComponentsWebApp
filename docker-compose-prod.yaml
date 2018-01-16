@@ -8,7 +8,7 @@ services:
             - ./docker/db/data:/var/lib/mysql:rw
     varnish:
         environment:
-            HTTPS_METHOD: noredirect
+            # HTTPS_METHOD: noredirect
             VIRTUAL_HOST: api.starter.b-w.uk
             LETSENCRYPT_HOST: api.starter.b-w.uk
             LETSENCRYPT_EMAIL: info@silverbackhosting.com
@@ -19,7 +19,7 @@ services:
             - proxy
     app:
         environment:
-            HTTPS_METHOD: noredirect
+            # HTTPS_METHOD: noredirect
             VIRTUAL_HOST: starter.b-w.uk
             LETSENCRYPT_HOST: starter.b-w.uk
             LETSENCRYPT_EMAIL: info@silverbackhosting.com
