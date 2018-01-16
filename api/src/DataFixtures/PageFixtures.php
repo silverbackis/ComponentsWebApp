@@ -13,7 +13,7 @@ use App\Entity\Component\Nav\Tabs\Tabs;
 use App\Entity\Layout;
 use App\Entity\Page;
 use App\Entity\Route;
-use App\Form\ContactType;
+use App\Form\Type\ContactType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 

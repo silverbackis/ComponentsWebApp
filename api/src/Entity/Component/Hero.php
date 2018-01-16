@@ -34,6 +34,13 @@ class Hero extends Component
     private $subtitle;
 
     /**
+     * @ORM\Column(type="string")
+     * @Groups({"page"})
+     * @var null|string
+     */
+    private $className;
+
+    /**
      * @return Navbar|null
      */
     public function getNav(): ?Navbar
@@ -79,5 +86,21 @@ class Hero extends Component
     public function setSubtitle(?string $subtitle): void
     {
         $this->subtitle = $subtitle;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getClassName(): ?string
+    {
+        return $this->className;
+    }
+
+    /**
+     * @param null|string $className
+     */
+    public function setClassName(?string $className): void
+    {
+        $this->className = $className;
     }
 }

@@ -3,7 +3,7 @@
 namespace App\EntityListener;
 
 use App\Entity\Component\Form\Form;
-use App\Util\FormUtils;
+use App\Factory\FormFactory;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,15 +11,15 @@ use Doctrine\ORM\Mapping as ORM;
 class FormListener
 {
     /**
-     * @var FormUtils
+     * @var FormFactory
      */
-    private $formResolver;
+    private $formFactory;
 
     public function __construct(
-        FormUtils $formResolver
+        FormFactory $formFactory
     )
     {
-        $this->formResolver = $formResolver;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -44,6 +44,6 @@ class FormListener
 
     private function setForm (Form $form)
     {
-        $form->setForm($this->formResolver->createFormView($form));
+        $form->setForm($this->formFactory->createFormView($form));
     }
 }

@@ -30,8 +30,8 @@ class FormPatch extends AbstractForm
      */
     public function __invoke(Request $request, Form $data, string $_format)
     {
-        $form = $this->formResolver->createForm($data);
-        $formData = $this->formResolver->deserializeFormData($form, $request->getContent());
+        $form = $this->formFactory->createForm($data);
+        $formData = $this->deserializeFormData($form, $request->getContent());
         $form->submit($formData, false);
         $dataCount = count($formData);
 

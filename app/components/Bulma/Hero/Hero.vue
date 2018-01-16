@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="hero is-primary is-bold">
+    <section :class="['hero', className]">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
@@ -31,6 +31,11 @@
   export default {
     name: 'Hero',
     mixins: [NuxtChildMixin],
+    computed: {
+      className () {
+        return this.data.className || 'is-primary is-bold'
+      }
+    },
     components: {
       BulmaTabs: () => import('~/components/Bulma/Nav/Tabs/Tabs.vue')
     }

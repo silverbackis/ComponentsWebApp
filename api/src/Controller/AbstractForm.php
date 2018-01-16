@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Component\Form\FormView;
-use App\Util\FormUtils;
+use App\Factory\FormFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 abstract class AbstractForm extends AbstractController
 {
@@ -22,25 +24,32 @@ abstract class AbstractForm extends AbstractController
     protected $serializer;
 
     /**
-     * @var FormUtils
+     * @var FormFactory
      */
-    protected $formResolver;
+    protected $formFactory;
 
+    /**
+     * AbstractForm constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param FormFactory $formFactory
+     */
     public function __construct(
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
-        FormUtils $formResolver
+        FormFactory $formFactory
     )
     {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
-        $this->formResolver = $formResolver;
+        $this->formFactory = $formFactory;
     }
 
     /**
      * @param $data
      * @param $_format
      * @param $valid
+     * @param Response|null $response
      * @return Response
      */
     protected function getResponse ($data, $_format, $valid, Response $response = null)
@@ -60,5 +69,22 @@ abstract class AbstractForm extends AbstractController
     protected function getFormValid (FormView $formView)
     {
         return $formView->getVars()['valid'];
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param $content
+     * @return array
+     * @throws BadRequestHttpException
+     */
+    public function deserializeFormData (FormInterface $form, $content): array
+    {
+        $content = \GuzzleHttp\json_decode($content, true);
+        if (!isset($content[$form->getName()])) {
+            throw new BadRequestHttpException(
+                "Form object key could not be found. Expected: <b>" . $form->getName() . "</b>: { \"input_name\": \"input_value\" }"
+            );
+        }
+        return $content[$form->getName()];
     }
 }

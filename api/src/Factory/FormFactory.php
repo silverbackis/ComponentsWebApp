@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Util;
+namespace App\Factory;
 
 use App\Entity\Component\Form\Form;
 use App\Entity\Component\Form\FormView;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\RouterInterface;
 
-class FormUtils
-{
+class FormFactory {
     /**
      * @var FormFactoryInterface
      */
@@ -36,7 +34,7 @@ class FormUtils
     }
 
     /**
-     * @param string $className
+     * @param Form $component
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createForm (Form $component): FormInterface
@@ -54,22 +52,9 @@ class FormUtils
     }
 
     /**
-     * @param FormInterface $form
-     * @param $content
-     * @return array
-     * @throws BadRequestHttpException
+     * @param Form $component
+     * @return FormView
      */
-    public function deserializeFormData (FormInterface $form, $content): array
-    {
-        $content = \GuzzleHttp\json_decode($content, true);
-        if (!isset($content[$form->getName()])) {
-            throw new BadRequestHttpException(
-                "Form object key could not be found. Expected: <b>" . $form->getName() . "</b>: { \"input_name\": \"input_value\" }"
-            );
-        }
-        return $content[$form->getName()];
-    }
-
     public function createFormView (Form $component) {
         $form = $this->createForm($component);
         return new FormView($form->createView());

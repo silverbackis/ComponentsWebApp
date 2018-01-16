@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Util;
+namespace App\Factory;
 
 use App\Entity\Page;
 use App\Entity\Route;
 use Cocur\Slugify\SlugifyInterface;
 
-class RouteGenerator
-{
+class RouteFactory {
     /**
      * @var SlugifyInterface
      */
@@ -20,15 +19,14 @@ class RouteGenerator
         $this->slugify = $slugify;
     }
 
-    public function createPageRoute(Page $page): ?Route
-    {
+    public function create(Page $page) {
         $pageRoute = $this->slugify->slugify($page->getTitle());
         $routePrefix = '/';
         $parent = $page->getParent();
         if ($parent) {
             $parentRoute = $parent->getRoutes()->first();
             if (!$parentRoute) {
-                $parentRoute = $this->createPageRoute($parent);
+                $parentRoute = $this->create($parent);
             }
             $routePrefix = $parentRoute->getRoute() . '/';
         }

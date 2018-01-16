@@ -3,7 +3,7 @@
 namespace App\EntityListener;
 
 use App\Entity\Page;
-use App\Util\RouteGenerator;
+use App\Factory\RouteFactory;
 use Doctrine\Common\EventArgs;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
@@ -13,15 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class PageListener
 {
     /**
-     * @var RouteGenerator
+     * @var RouteFactory
      */
-    private $routeGenerator;
+    private $routeFactory;
 
     public function __construct(
-        RouteGenerator $routeGenerator
+        RouteFactory $routeFactory
     )
     {
-        $this->routeGenerator = $routeGenerator;
+        $this->routeFactory = $routeFactory;
     }
 
     /**
@@ -61,7 +61,7 @@ class PageListener
     private function createPageRoute(Page $page, EventArgs $event): bool
     {
         if (0 === $page->getRoutes()->count()) {
-            $this->routeGenerator->createPageRoute($page);
+            $this->routeFactory->create($page);
             return true;
         }
         return false;
