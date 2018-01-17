@@ -1,6 +1,6 @@
 <template>
   <div>
-    Feature Horizontal
+    Feature List
   </div>
 </template>
 

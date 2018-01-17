@@ -1,6 +1,6 @@
 <template>
   <div>
-    Feature List
+    Feature Media
   </div>
 </template>
 

@@ -1,3 +1,12 @@
 export default {
-  props: ['data', 'wrap']
+  props: {
+    data: {
+      type: Object,
+      required: true
+    },
+    wrap: {
+      type: Boolean,
+      required: true
+    }
+  }
 }

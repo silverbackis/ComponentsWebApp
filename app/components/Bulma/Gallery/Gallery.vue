@@ -1,6 +1,6 @@
 <template>
   <div>
-    Feature Media
+    Gallery
   </div>
 </template>
 

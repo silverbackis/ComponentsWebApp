@@ -7,9 +7,11 @@
 </template>
 
 <script>
+  import ComponentMixin from '~/components/componentMixin'
+
   export default {
     name: 'Content',
-    props: ['data', 'wrap'],
+    mixins: [ComponentMixin],
     computed: {
       sectionClass () {
         return this.wrap ? 'section' : ''
