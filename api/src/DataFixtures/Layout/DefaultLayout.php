@@ -3,6 +3,7 @@
 namespace App\DataFixtures\Layout;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\Layout\AbstractLayout;
 
 class DefaultLayout extends AbstractLayout
 {

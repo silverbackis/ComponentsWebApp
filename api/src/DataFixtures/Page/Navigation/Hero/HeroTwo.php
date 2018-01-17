@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures\Page\Navigation\Hero;
 
-use App\DataFixtures\Page\AbstractPage;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
 
 class HeroTwo extends AbstractPage implements DependentFixtureInterface
 {

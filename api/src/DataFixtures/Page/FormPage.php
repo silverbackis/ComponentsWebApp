@@ -5,6 +5,7 @@ namespace App\DataFixtures\Page;
 use App\Form\Handler\ContactHandler;
 use App\Form\Type\ContactType;
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
 
 class FormPage extends AbstractPage
 {

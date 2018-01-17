@@ -7,6 +7,7 @@ use App\DataFixtures\Page\HomePage;
 use App\DataFixtures\Page\Navigation\Hero\HeroNavbarPage;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\Nav\AbstractNav;
 
 class LayoutNav extends AbstractNav implements DependentFixtureInterface
 {

@@ -2,10 +2,11 @@
 
 namespace App\DataFixtures\Nav;
 
-use App\DataFixtures\CustomEntityInterface;
 use App\DataFixtures\Page\Navigation\SideMenu\SideMenuPage;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\CustomEntityInterface;
+use Silverback\ApiComponentBundle\DataFixtures\Nav\AbstractNav;
 use Silverback\ApiComponentBundle\Entity\Component\Nav\Menu\Menu;
 
 class SideMenuNav extends AbstractNav implements DependentFixtureInterface, CustomEntityInterface

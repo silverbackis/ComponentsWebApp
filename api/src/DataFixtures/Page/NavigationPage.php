@@ -3,6 +3,7 @@
 namespace App\DataFixtures\Page;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
 
 class NavigationPage extends AbstractPage
 {

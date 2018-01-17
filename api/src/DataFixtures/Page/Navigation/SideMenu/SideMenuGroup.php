@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures\Page\Navigation\SideMenu;
 
-use App\DataFixtures\CustomEntityInterface;
-use App\DataFixtures\Page\AbstractPage;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\CustomEntityInterface;
+use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
 use Silverback\ApiComponentBundle\Entity\Component\ComponentGroup;
 
 class SideMenuGroup extends AbstractPage implements CustomEntityInterface, DependentFixtureInterface

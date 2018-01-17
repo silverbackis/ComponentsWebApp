@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures\Page\Navigation\Hero;
 
-use App\DataFixtures\Page\AbstractPage;
 use App\DataFixtures\Page\NavigationPage;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
 
 class HeroNavbarPage extends AbstractPage implements DependentFixtureInterface
 {

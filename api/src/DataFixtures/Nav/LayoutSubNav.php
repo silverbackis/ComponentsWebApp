@@ -7,6 +7,7 @@ use App\DataFixtures\Page\Navigation\SideMenu\SideMenuPage;
 use App\DataFixtures\Page\Navigation\Tabs\TabsNavbarPage;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\Nav\AbstractNav;
 
 class LayoutSubNav extends AbstractNav implements DependentFixtureInterface
 {
