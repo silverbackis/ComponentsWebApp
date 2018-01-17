@@ -9,6 +9,17 @@ use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
 
 class FormPage extends AbstractPage
 {
+    private $formType;
+    private $handler;
+    public function __construct(
+        ContactType $formType,
+        ContactHandler $handler
+    )
+    {
+        $this->formType = $formType;
+        $this->handler = $handler;
+    }
+
     /**
      * @param ObjectManager $manager
      * @throws \BadMethodCallException
@@ -19,9 +30,10 @@ class FormPage extends AbstractPage
 
         $this->entity->setTitle('Forms');
         $this->entity->setMetaDescription('Forms can be handles by the BW Starter Website API including validation');
-        $this->addHero('Forms', 'An example of a Symfony form served and handled by the API with validation');
+        $hero = $this->addHero('Forms', 'An example of a Symfony form served and handled by the API with validation');
+        $hero->setClassName('is-success is-bold');
         $this->addContent(['2', 'short', 'decorate']);
-        $this->addForm(ContactType::class, ContactHandler::class);
+        $this->addForm($this->formType, $this->handler);
 
         $this->flush();
         $this->addReference('page.forms', $this->entity);

@@ -10,9 +10,10 @@
         }
     ],
     "require": {
-        "silverbackis/api-component-bundle": "dev-master@dev",
+        "doctrine/data-fixtures": "dev-master@dev",
+        "silverbackis/api-component-bundle": "dev-develop@dev",
         "symfony/flex": "^1.0",
-        "doctrine/data-fixtures": "dev-master@dev"
+        "symfony/proxy-manager-bridge": "^4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",

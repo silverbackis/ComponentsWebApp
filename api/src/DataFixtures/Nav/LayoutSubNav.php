@@ -11,6 +11,9 @@ use Silverback\ApiComponentBundle\DataFixtures\Nav\AbstractNav;
 
 class LayoutSubNav extends AbstractNav implements DependentFixtureInterface
 {
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         parent::load($manager);

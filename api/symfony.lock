@@ -350,6 +350,9 @@
     "symfony/property-info": {
         "version": "v4.0.1"
     },
+    "symfony/proxy-manager-bridge": {
+        "version": "v4.0.3"
+    },
     "symfony/routing": {
         "version": "3.3",
         "recipe": {

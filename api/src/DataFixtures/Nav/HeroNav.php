@@ -11,6 +11,10 @@ use Silverback\ApiComponentBundle\DataFixtures\Nav\AbstractNav;
 
 class HeroNav extends AbstractNav implements DependentFixtureInterface
 {
+    /**
+     * @param ObjectManager $manager
+     * @throws \BadMethodCallException
+     */
     public function load(ObjectManager $manager)
     {
         parent::load($manager);

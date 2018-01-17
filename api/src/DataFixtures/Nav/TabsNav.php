@@ -13,10 +13,17 @@ use Silverback\ApiComponentBundle\Entity\Component\Nav\Tabs\Tabs;
 
 class TabsNav extends AbstractNav implements DependentFixtureInterface, CustomEntityInterface
 {
+    /**
+     * @return Tabs
+     */
     public function getEntity () {
         return new Tabs();
     }
 
+    /**
+     * @param ObjectManager $manager
+     * @throws \BadMethodCallException
+     */
     public function load(ObjectManager $manager)
     {
         parent::load($manager);

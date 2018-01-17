@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f491267f78bb56cefa4811baedc1e4c",
+    "content-hash": "0635f21ce3c0fa2dec6ffdadb9a3ff36",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -2379,16 +2379,16 @@
         },
         {
             "name": "silverbackis/api-component-bundle",
-            "version": "dev-master",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silverbackis/ApiComponentBundle.git",
-                "reference": "72186964258930bc02432693e0f16a927c01af46"
+                "reference": "b660b2cf4d6b5be6737b733d74cf1133103ff54f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/72186964258930bc02432693e0f16a927c01af46",
-                "reference": "72186964258930bc02432693e0f16a927c01af46",
+                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/b660b2cf4d6b5be6737b733d74cf1133103ff54f",
+                "reference": "b660b2cf4d6b5be6737b733d74cf1133103ff54f",
                 "shasum": ""
             },
             "require": {
@@ -2408,6 +2408,7 @@
                 "symfony/framework-bundle": "^4.0",
                 "symfony/orm-pack": "^1.0",
                 "symfony/profiler-pack": "^1.0",
+                "symfony/proxy-manager-bridge": "^4.0",
                 "symfony/yaml": "^4.0",
                 "webonyx/graphql-php": "^0.11.5"
             },
@@ -2433,10 +2434,10 @@
             ],
             "description": "Built on API Platform, this bundle provides components, form handling and more for a BW Starter website.",
             "support": {
-                "source": "https://github.com/silverbackis/ApiComponentBundle/tree/master",
+                "source": "https://github.com/silverbackis/ApiComponentBundle/tree/develop",
                 "issues": "https://github.com/silverbackis/ApiComponentBundle/issues"
             },
-            "time": "2018-01-16T23:56:13+00:00"
+            "time": "2018-01-17T18:47:39+00:00"
         },
         {
             "name": "symfony/apache-pack",
@@ -3245,16 +3246,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.61",
+            "version": "v1.0.62",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "f872f8faccf5ff95678e1e428f460a333ba1e5d0"
+                "reference": "c233143ef550f6acbe033fe63d15dad15ca8566a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/f872f8faccf5ff95678e1e428f460a333ba1e5d0",
-                "reference": "f872f8faccf5ff95678e1e428f460a333ba1e5d0",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/c233143ef550f6acbe033fe63d15dad15ca8566a",
+                "reference": "c233143ef550f6acbe033fe63d15dad15ca8566a",
                 "shasum": ""
             },
             "require": {
@@ -3287,7 +3288,7 @@
                     "email": "fabien.potencier@gmail.com"
                 }
             ],
-            "time": "2018-01-12T13:09:44+00:00"
+            "time": "2018-01-17T07:28:24+00:00"
         },
         {
             "name": "symfony/form",
@@ -4178,6 +4179,60 @@
                 "validator"
             ],
             "time": "2018-01-03T17:15:19+00:00"
+        },
+        {
+            "name": "symfony/proxy-manager-bridge",
+            "version": "v4.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/proxy-manager-bridge.git",
+                "reference": "1d9c0a3ff02182148388aa4795df065d075b8b30"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/proxy-manager-bridge/zipball/1d9c0a3ff02182148388aa4795df065d075b8b30",
+                "reference": "1d9c0a3ff02182148388aa4795df065d075b8b30",
+                "shasum": ""
+            },
+            "require": {
+                "ocramius/proxy-manager": "~0.4|~1.0|~2.0",
+                "php": "^7.1.3",
+                "symfony/dependency-injection": "~3.4|~4.0"
+            },
+            "require-dev": {
+                "symfony/config": "~3.4|~4.0"
+            },
+            "type": "symfony-bridge",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bridge\\ProxyManager\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony ProxyManager Bridge",
+            "homepage": "https://symfony.com",
+            "time": "2018-01-03T07:38:00+00:00"
         },
         {
             "name": "symfony/routing",
@@ -6758,8 +6813,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "silverbackis/api-component-bundle": 20,
-        "doctrine/data-fixtures": 20
+        "doctrine/data-fixtures": 20,
+        "silverbackis/api-component-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

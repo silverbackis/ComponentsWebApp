@@ -11,10 +11,17 @@ use Silverback\ApiComponentBundle\Entity\Component\Nav\Menu\Menu;
 
 class SideMenuNav extends AbstractNav implements DependentFixtureInterface, CustomEntityInterface
 {
+    /**
+     * @return Menu
+     */
     public function getEntity () {
         return new Menu();
     }
 
+    /**
+     * @param ObjectManager $manager
+     * @throws \BadMethodCallException
+     */
     public function load(ObjectManager $manager)
     {
         parent::load($manager);
