@@ -30,6 +30,10 @@ export default function createPageView (depth) {
       noContainer: {
         type: Boolean,
         default: true
+      },
+      nested: {
+        type: Boolean,
+        default: true
       }
     },
 

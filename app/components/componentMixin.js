@@ -1,3 +1,5 @@
+import componentWrapper from './Bulma/componentWrapper'
+
 export default {
   props: {
     data: {
@@ -7,6 +9,13 @@ export default {
     wrap: {
       type: Boolean,
       required: true
+    },
+    depth: {
+      type: Number,
+      required: true
     }
+  },
+  components: {
+    componentWrapper
   }
 }

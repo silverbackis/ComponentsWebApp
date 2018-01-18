@@ -3,14 +3,14 @@
     <bulma-components v-if="pageData && pageData.components.length"
                       :pageData="pageData"
                       :depth="depth"
-                      :wrap="wrap"
+                      :nested="nested"
     />
     <bulma-components v-else-if="componentGroups.length"
                       v-for="(pageData, index) in componentGroups"
                       :key="index"
                       :pageData="pageData"
                       :depth="depth"
-                      :wrap="wrap"
+                      :nested="nested"
     />
     <nuxt-child v-else-if="childKey" :key="childKey" />
     <h1 v-else>No components or children configured for this page</h1>
@@ -29,6 +29,10 @@
         type: Number,
         required: true
       },
+      nested: {
+        type: Boolean,
+        default: false
+      },
       pageData: {
         type: Object
       },
@@ -46,20 +50,9 @@
     },
 
     computed: {
-      wrap () {
-        return this.noContainer
-      },
       childKey () {
         return this.$route.params['page' + (this.depth + 2)]
       }
     }
-
-    /* async beforeMount () {
-      if (this.$root._isMounted) {
-        // console.log('before mount, root is mounted')
-      } else {
-        // console.log('before mount, root is not mounted')
-      }
-    } */
   }
 </script>

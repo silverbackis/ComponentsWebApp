@@ -4,7 +4,7 @@
                :is="name(component)"
                :key="component.id"
                :data="component"
-               :wrap="wrap"
+               :nested="nested"
                :depth="depth"
     ></component>
   </div>
@@ -21,7 +21,7 @@
         type: Number,
         required: true
       },
-      wrap: {
+      nested: {
         type: Boolean,
         required: true
       }

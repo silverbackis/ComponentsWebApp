@@ -1,21 +1,20 @@
 <template>
-  <section :class="sectionClass">
+  <component-wrapper :depth="depth">
     <div :class="containerClass">
       <div class="content" v-html="data.content"></div>
     </div>
-  </section>
+  </component-wrapper>
 </template>
 
 <script>
   import ComponentMixin from '~/components/componentMixin'
+  import ComponentWrapper from '../componentWrapper'
 
   export default {
+    components: {ComponentWrapper},
     name: 'Content',
     mixins: [ComponentMixin],
     computed: {
-      sectionClass () {
-        return this.wrap ? 'section' : ''
-      },
       containerClass () {
         return this.wrap ? 'container' : ''
       }

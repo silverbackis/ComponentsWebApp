@@ -5,6 +5,11 @@ function fetch ({ path, $axios, method, data, cancelToken, validateStatus }) {
   if (!method) {
     method = 'GET'
   }
+  if (!validateStatus) {
+    validateStatus = (status) => {
+      return status >= 200 && status < 300
+    }
+  }
   logRequests && console.log(`fetching ${path}...`)
   if (!requests[path]) {
     requests[path] = new Promise((resolve, reject) => {
