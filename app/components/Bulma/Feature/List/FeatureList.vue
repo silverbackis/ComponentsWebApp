@@ -12,18 +12,18 @@
                  class="column is-narrow">
               <ul class="fa-ul">
                 <li v-for="(feature) in features">
-              <span class="fa-li">
-                <font-awesome-layers class="fa-lg">
-                  <font-awesome-icon icon="circle" class="has-text-success" />
-                  <font-awesome-icon icon="check" class="has-text-white" transform="shrink-6" />
-                </font-awesome-layers>
-              </span>
+                  <span class="fa-li">
+                    <font-awesome-layers class="fa-lg">
+                      <font-awesome-icon icon="circle" class="has-text-success" />
+                      <font-awesome-icon icon="check" class="has-text-white" transform="shrink-6" />
+                    </font-awesome-layers>
+                  </span>
                   <app-link v-if="feature.link" :to="feature.link">
                     <strong>{{ feature.text }}</strong>
                   </app-link>
                   <span v-else>
-                {{ feature.text }}
-              </span>
+                    {{ feature.text }}
+                  </span>
                 </li>
               </ul>
             </div>
