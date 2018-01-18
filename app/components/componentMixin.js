@@ -1,4 +1,4 @@
-import componentWrapper from './Bulma/componentWrapper'
+import ComponentWrapper from './Bulma/ComponentWrapper'
 
 export default {
   props: {
@@ -6,16 +6,17 @@ export default {
       type: Object,
       required: true
     },
-    wrap: {
+    nested: {
       type: Boolean,
-      required: true
-    },
-    depth: {
-      type: Number,
       required: true
     }
   },
   components: {
-    componentWrapper
+    ComponentWrapper
+  },
+  computed: {
+    containerClass () {
+      return !this.nested ? ['container'] : []
+    }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <component-wrapper :nested="nested">
     <div class="container">
       <div class="columns">
         <div class="column is-narrow">
@@ -10,19 +10,21 @@
           </aside>
         </div>
         <div class="column">
-          <nuxt-child :key="childKey" :componentGroups="childComponentGroups" :noContainer="false" />
+          <nuxt-child :key="childKey"
+                      :componentGroups="childComponentGroups"
+                      :nested="true"
+          />
         </div>
       </div>
     </div>
-  </section>
+</component-wrapper>
 </template>
 
 <script>
+  import NuxtChildMixin from '~/components/nuxtChildMixin'
   import BulmaMenuItemGroup from './MenuItemGroup'
-  import NuxtChildMixin from '../NuxtChildMixin'
 
   export default {
-    name: 'Menu',
     mixins: [NuxtChildMixin],
     components: {
       BulmaMenuItemGroup
@@ -57,4 +59,5 @@
   aside.menu
     padding: .75rem
     border: 1px solid $grey-lighter
+    min-width: 250px
 </style>

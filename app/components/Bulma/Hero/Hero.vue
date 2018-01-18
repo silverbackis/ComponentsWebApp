@@ -1,6 +1,9 @@
 <template>
   <div>
-    <section :class="['hero', className]">
+    <component-wrapper :className="['hero', className]"
+                       :extendClass="false"
+                       :nested="nested"
+    >
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
@@ -17,20 +20,25 @@
           <bulma-tabs _style="boxed"
                       :items="data.nav.items"
                       :data="data.nav"
-                      :noChild="true"
+                      :nuxtChild="false"
+                      :nested="true"
+                      :depth="depth"
           />
         </div>
       </div>
-    </section>
-    <nuxt-child v-if="data.nav" :key="childKey" :componentGroups="childComponentGroups" />
+    </component-wrapper>
+    <nuxt-child v-if="data.nav"
+                :key="childKey"
+                :componentGroups="childComponentGroups"
+                :nested="false"
+    />
   </div>
 </template>
 
 <script>
-  import NuxtChildMixin from '~/components/Bulma/Nav/NuxtChildMixin'
+  import NuxtChildMixin from '~/components/nuxtChildMixin'
 
   export default {
-    name: 'Hero',
     mixins: [NuxtChildMixin],
     computed: {
       className () {

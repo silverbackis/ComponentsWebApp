@@ -27,13 +27,9 @@ export default function createPageView (depth) {
       componentGroups: {
         type: Array
       },
-      noContainer: {
-        type: Boolean,
-        default: true
-      },
       nested: {
         type: Boolean,
-        default: true
+        default: false
       }
     },
 
@@ -52,7 +48,7 @@ export default function createPageView (depth) {
           depth,
           pageData: this.pageData,
           componentGroups: this.componentGroups,
-          noContainer: this.noContainer
+          nested: this.nested
         }
       })
     },

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import BulmaComponents from '~/components/Bulma/components.vue'
+  import BulmaComponents from '~/components/Bulma/Components'
 
   export default {
     components: {
@@ -42,10 +42,6 @@
         default () {
           return []
         }
-      },
-      noContainer: {
-        type: Boolean,
-        required: true
       }
     },
 

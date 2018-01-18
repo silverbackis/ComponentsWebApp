@@ -6,7 +6,6 @@ export default async function ({ store, route, redirect, error }, cb) {
     if (err.response && err.response.status) {
       error({ statusCode: err.response.status, message: err.response.statusText })
     } else {
-      console.warn(err)
       error({ statusCode: err.statusCode || 500, message: 'Error fetching from API' })
     }
     cb()

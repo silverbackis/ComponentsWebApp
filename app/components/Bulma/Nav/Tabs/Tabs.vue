@@ -1,51 +1,36 @@
 <template>
-  <div>
-    <page-wrapper :wrap="wrap"
-                  :depth="depth"
-                  :childComponentGroups="childComponentGroups"
-                  :data="data"
-                  :noChild="noChild"
-    >
-      <nav class="tabs" :class="this.classModifiers">
-        <ul>
-          <bulma-tab-item v-for="(item, index) in _items"
-                          :key="index"
-                          :item="item"
-          />
-        </ul>
-      </nav>
-    </page-wrapper>
-  </div>
+  <page-wrapper :nested="nested"
+                :childComponentGroups="childComponentGroups"
+                :data="data"
+                :nuxtChild="nuxtChild"
+                :depth="depth"
+  >
+    <nav class="tabs" :class="this.classModifiers">
+      <ul>
+        <bulma-tab-item v-for="(item, index) in _items"
+                        :key="index"
+                        :item="item"
+        />
+      </ul>
+    </nav>
+  </page-wrapper>
 </template>
 
 <script>
+  import NuxtChildMixin from '~/components/nuxtChildMixin'
   import BulmaTabItem from './TabItem'
   import PageWrapper from './TabPageWrapper'
 
   export default {
+    mixins: [NuxtChildMixin],
     components: {
       BulmaTabItem,
       PageWrapper
     },
     props: {
-      noChild: {
+      nuxtChild: {
         type: Boolean,
-        default: false
-      },
-      depth: {
-        type: Number,
-        required: false
-      },
-      data: {
-        type: Object,
-        required: false
-      },
-      items: {
-        type: Array,
-        required: false
-      },
-      childComponentGroups: {
-        type: Array
+        default: true
       },
       align: {
         type: String,
@@ -71,9 +56,6 @@
       fullwidth: {
         type: Boolean,
         default: false
-      },
-      wrap: {
-        type: Boolean
       }
     },
     computed: {
@@ -86,8 +68,10 @@
         ]
       },
       _items () {
-        let items = this.data ? this.data.items : this.items
-        return items || []
+        return this.data.items || []
+      },
+      wrapperClassName () {
+        return this.nested ? [] : ['navbar', 'has-shadow']
       }
     },
     methods: {

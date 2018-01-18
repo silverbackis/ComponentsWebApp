@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import NavItemMixin from '../NavItemMixin'
+  import NavItemMixin from '../navItemMixin'
 
   export default {
     name: 'BulmaNavbarItem',

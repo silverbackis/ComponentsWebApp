@@ -1,5 +1,5 @@
 <template>
-  <component-wrapper :depth="depth">
+  <component-wrapper :nested="nested">
     <div :class="containerClass">
       <div class="content" v-html="data.content"></div>
     </div>
@@ -8,16 +8,8 @@
 
 <script>
   import ComponentMixin from '~/components/componentMixin'
-  import ComponentWrapper from '../componentWrapper'
 
   export default {
-    components: {ComponentWrapper},
-    name: 'Content',
-    mixins: [ComponentMixin],
-    computed: {
-      containerClass () {
-        return this.wrap ? 'container' : ''
-      }
-    }
+    mixins: [ComponentMixin]
   }
 </script>
