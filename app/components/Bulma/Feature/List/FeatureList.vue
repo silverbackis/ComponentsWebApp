@@ -1,7 +1,9 @@
 <template>
-  <div>
-    Feature List
-  </div>
+  <component-wrapper :nested="nested">
+    <div :class="containerClass">
+      Feature List
+    </div>
+  </component-wrapper>
 </template>
 
 <script>

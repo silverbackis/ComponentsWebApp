@@ -1,0 +1,10 @@
+<svg viewBox="0 0 993 704" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .st3{fill:#41B883;} .st4{fill:#328170;} .st5{fill:#35495E;}
+  </style>
+  <g id="nuxt">
+    <path class="st3" d="M314.2 704H0L408 0l408.2 704H504"/>
+    <path class="st4" d="M776 704h216.6l-354-608.5-351 608.5H504"/>
+    <path class="st5" d="M647.5 704H807L546.2 255.8 287.6 704H447"/>
+  </g>
+</svg>

@@ -1,7 +1,9 @@
 <template>
-  <div>
-    Feature Media
-  </div>
+  <component-wrapper :nested="nested">
+    <div :class="containerClass">
+      Feature Media
+    </div>
+  </component-wrapper>
 </template>
 
 <script>

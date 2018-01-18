@@ -1,7 +1,9 @@
 <template>
-  <div>
-    News
-  </div>
+  <component-wrapper :nested="nested">
+    <div :class="containerClass">
+      News
+    </div>
+  </component-wrapper>
 </template>
 
 <script>

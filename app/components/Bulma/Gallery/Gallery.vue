@@ -1,7 +1,9 @@
 <template>
-  <div>
-    Gallery
-  </div>
+  <component-wrapper :nested="nested">
+    <div :class="containerClass">
+      Gallery
+    </div>
+  </component-wrapper>
 </template>
 
 <script>

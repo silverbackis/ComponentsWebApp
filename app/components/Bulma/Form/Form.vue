@@ -1,10 +1,11 @@
 <template>
-  <component-wrapper :nested="nested">
+  <component-wrapper :nested="nested"
+                     :className="['form-section']"
+  >
     <div :class="[...containerClass, 'form-container']">
       <div class="card">
         <div class="card-content">
           <form-tag :form="form">
-
             <slot name="errors" v-if="formErrors.length">
               <div>
                 <ul class="content">
@@ -66,6 +67,9 @@
 </script>
 
 <style>
+  .section ~ .form-section {
+    padding-top: 1.5rem;
+  }
   .form-container {
     max-width: 800px;
   }
