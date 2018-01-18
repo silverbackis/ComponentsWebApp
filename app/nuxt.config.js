@@ -43,6 +43,7 @@ module.exports = {
    * Plugins
    */
   plugins: [
+    {src: '~/plugins/fontawesome', ssr: true},
     { src: '~/plugins/quill.js', ssr: false }
   ],
   /**
@@ -50,7 +51,6 @@ module.exports = {
    */
   modules: [
     '@nuxtjs/component-cache',
-    '@nuxtjs/font-awesome',
     [
       '@nuxtjs/pwa',
       {

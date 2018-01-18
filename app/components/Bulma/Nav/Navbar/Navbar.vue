@@ -28,7 +28,7 @@
             <p class="control">
               <a class="button is-outlined is-dark" href="https://github.com/silverbackis/BwStarterWebsite" rel="noopener">
                 <span class="icon">
-                  <i class="fa fa-lg fa-github"></i>
+                  <font-awesome-icon :icon="['fab', 'github']" size="lg" />
                 </span>
                 <span>GitHub</span>
               </a>
@@ -98,8 +98,6 @@
       })
     },
     mounted () {
-      // Not using font awesome immediately in this website, so no need to include it in the head of page
-      require('font-awesome/css/font-awesome.css')
       window.addEventListener('scroll', this.updateWindowY)
     },
     beforeDestroy () {

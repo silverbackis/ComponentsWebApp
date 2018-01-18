@@ -1,38 +1,48 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
   <component-wrapper :className="['hero', 'feature-horizontal', className]"
                      :extendClass="false"
                      :nested="nested"
   >
     <div class="hero-body">
-      <div :class="containerClass">
-        <nav class="columns has-text-centered">
-          <component v-bind="linkProps('https://nuxtjs.org/')" class="column">
-            <image-loader
-              :class="imageClass"
-              :src="getApiUrl('images/nuxt.svg')"
-              alt="Nuxt Framework Logo"
-            />
+      <div class="container has-text-centered">
+        <h3 class="title features-title">What's being used?...</h3>
+        <nav class="columns">
+          <app-link :to="'https://nuxtjs.org/'" class="column">
+            <div>
+              <image-loader
+                :class="imageClass"
+                :src="getApiUrl('images/nuxt.svg')"
+                alt="Nuxt Framework Logo"
+              />
+            </div>
             <h4 class="title is-4">Nuxt</h4>
-            <h5 class="subtitle">Server-side rendering for <component v-bind="linkProps('https://vuejs.org/')">VueJS</component></h5>
-          </component>
-          <component v-bind="linkProps('https://api-platform.com/')" class="column">
-            <image-loader
-              :class="imageClass"
-              :src="getApiUrl('images/api-platform-spider.svg')"
-              alt="API Platform Logo"
-            />
+            <h5 class="subtitle is-size-6-touch">Server-side rendering for <app-link :to="'https://vuejs.org/'">VueJS</app-link></h5>
+          </app-link>
+          <app-link :to="'https://api-platform.com/'"
+                class="column">
+            <div>
+              <image-loader
+                :class="imageClass"
+                :src="getApiUrl('images/api-platform-spider.svg')"
+                alt="API Platform Logo"
+              />
+            </div>
             <h4 class="title is-4">API Platform</h4>
-            <h5 class="subtitle">Comprehensive API bundle built on <component v-bind="linkProps('https://symfony.com/')">Symfony</component></h5>
-          </component>
-          <component v-bind="linkProps('http://bulma.io/')" class="column">
-            <image-loader
-              :class="imageClass"
-              :src="getApiUrl('images/bulma.svg')"
-              alt="Bulma CSS Framework Logo"
-            />
+            <h5 class="subtitle is-size-6-touch">API Framework built on <app-link :to="'https://symfony.com/'">Symfony</app-link></h5>
+          </app-link>
+          <app-link :to="'http://bulma.io/'"
+                class="column"
+          >
+            <div>
+              <image-loader
+                :class="imageClass"
+                :src="getApiUrl('images/bulma.svg')"
+                alt="Bulma CSS Framework Logo"
+              />
+            </div>
             <h4 class="title is-4">Bulma</h4>
-            <h5 class="subtitle">Light-weight CSS Framework</h5>
-          </component>
+            <h5 class="subtitle is-size-6-touch">Light-weight CSS Framework</h5>
+          </app-link>
         </nav>
       </div>
     </div>
@@ -43,11 +53,13 @@
   import ComponentMixin from '~/components/componentMixin'
   import { mapGetters } from 'vuex'
   import ImageLoader from '~/components/Utils/ImageLoader'
+  import AppLink from '~/components/Utils/AppLink'
 
   export default {
     mixins: [ComponentMixin],
     components: {
-      ImageLoader
+      ImageLoader,
+      AppLink
     },
     data () {
       return {
@@ -79,10 +91,13 @@
   }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
   @import ~bulma/sass/utilities/mixins
 
-  .feature-horizontal .column
+  .features-title
+    margin-bottom: 1.5rem
+
+  .column
     margin-top: auto
 
   .feature-horizontal-item
@@ -91,6 +106,7 @@
     height: 55px
     margin: auto auto 1rem
     min-width: 155px
+    width: 100%
     +desktop
       height: 110px
 
