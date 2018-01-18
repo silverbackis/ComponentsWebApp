@@ -17,7 +17,8 @@ class NewsPage extends AbstractPage
 
         $this->entity->setTitle('News / Blog');
         $this->entity->setMetaDescription('News or blog components');
-        $this->addHero('News / Blog', 'An example of a news/blog component');
+        $hero = $this->addHero('News / Blog', 'An example of a news/blog component');
+        $hero->setClassName('is-light is-bold');
         $this->addNews();
 
         $this->flush();

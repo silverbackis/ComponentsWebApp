@@ -17,7 +17,8 @@ class FeaturesPage extends AbstractPage
 
         $this->entity->setTitle('Feature Components');
         $this->entity->setMetaDescription('We have 3 ways of listing features to choose from');
-        $this->addHero('Feature Components', 'We have 3 ways of listing features to choose from');
+        $hero = $this->addHero('Feature Components', 'We have 3 ways of listing features to choose from');
+        $hero->setClassName('is-warning is-bold');
         $this->addFeatureHorizontal();
         $this->addFeatureList();
         $this->addFeatureMedia();

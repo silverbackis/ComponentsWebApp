@@ -17,7 +17,8 @@ class GalleryPage extends AbstractPage
 
         $this->entity->setTitle('Gallery');
         $this->entity->setMetaDescription('Image gallery component');
-        $this->addHero('Gallery', 'Here you can see an image gallery');
+        $hero = $this->addHero('Gallery', 'Here you can see an image gallery');
+        $hero->setClassName('is-danger is-bold');
         $this->addGallery();
 
         $this->flush();
