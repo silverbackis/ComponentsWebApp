@@ -8,6 +8,7 @@
             <image-loader
               :class="imageClass"
               :src="getApiUrl('images/nuxt.svg')"
+              :smallSrc="getApiUrl('images/api-platform-spider.svg')"
               alt="Nuxt Framework Logo"
             />
           </app-link>

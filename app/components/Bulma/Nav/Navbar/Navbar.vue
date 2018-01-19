@@ -94,8 +94,11 @@
     },
     computed: {
       ...mapState({
-        navItems: state => state.layout.data.nav.items
-      })
+        layoutData: state => state.layout.data
+      }),
+      navItems () {
+        return this.layoutData ? this.layoutData.nav.items : []
+      }
     },
     mounted () {
       window.addEventListener('scroll', this.updateWindowY)

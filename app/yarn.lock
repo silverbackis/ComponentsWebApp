@@ -4689,7 +4689,7 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
-nuxt@^1.1.0:
+nuxt@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-1.1.1.tgz#a4fbeafb243b8431c317834c013a8b7d0d7b74f1"
   dependencies:
@@ -5079,6 +5079,10 @@ performance-now@^0.2.0:
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
+
+photoswipe@^4.1:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/photoswipe/-/photoswipe-4.1.2.tgz#95c20a75cea23b70d6299641cad82e03cae7f797"
 
 pify@^2.0.0, pify@^2.3.0:
   version "2.3.0"

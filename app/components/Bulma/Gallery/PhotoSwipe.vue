@@ -57,7 +57,7 @@
 
   export default {
     methods: {
-      open (index, items, options) {
+      open (index, items, $el, options) {
         if (!options) {
           options = {
             fullscreenEl: true,
@@ -68,28 +68,31 @@
         }
         let baseOps = {
           index: index,
-          getThumbBoundsFn (index) {
-            const thumbnail = document.querySelectorAll('.image')[index]
-            const pageYScroll = window.pageYOffset ||
-              document.documentElement.scrollTop ||
-              document.body.scrollTop ||
-              0
+          getThumbBoundsFn () {
+            const thumbnail = $el.getElementsByTagName('img')[0]
+            const pageYScroll = window.pageYOffset || document.documentElement.scrollTop
             const rect = thumbnail.getBoundingClientRect()
             return {
               x: rect.left,
               y: rect.top + pageYScroll,
               w: rect.width
             }
-          }
+          },
+          showHideOpacity: true,
+          bgOpacity: 0.9
         }
         const ops = Object.assign(baseOps, options)
         this.photoswipe = new PhotoSwipe(this.$el, PhotoSwipeDefaultUI, items, ops)
         this.photoswipe.init()
       },
-
       close () {
         this.photoswipe.close()
       }
     }
   }
 </script>
+
+<style lang="sass">
+  .pswp__caption__center
+    text-align: center
+</style>

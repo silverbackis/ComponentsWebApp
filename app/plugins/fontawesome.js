@@ -1,17 +1,16 @@
-import fontawesome from '@fortawesome/fontawesome'
-import brands from '@fortawesome/fontawesome-free-brands'
-import solid from '@fortawesome/fontawesome-free-solid'
-import regular from '@fortawesome/fontawesome-free-regular'
-import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 import Vue from 'vue'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
+import fontawesome from '@fortawesome/fontawesome'
+// import regular from '@fortawesome/fontawesome-free-regular'
+import faGithub from '@fortawesome/fontawesome-free-brands/faGithub'
+import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle'
 
 fontawesome.library.add(
-  brands, solid, regular
+  faGithub, faCheckCircle
 )
 
 Vue.use(FontAwesomeIcon)
-
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.component('font-awesome-layers', FontAwesomeLayers)
 
 export default fontawesome

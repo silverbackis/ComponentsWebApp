@@ -33,6 +33,7 @@
     "lru-cache": "^4.1.1",
     "node-sass": "^4.7.2",
     "nuxt": "^1.1.1",
+    "photoswipe": "^4.1",
     "sass-loader": "^6.0.6",
     "source-map-support": "^0.5.0",
     "vue-quill-editor": "^3.0.4",

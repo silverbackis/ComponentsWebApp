@@ -30,7 +30,10 @@ module.exports = {
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
+          exclude: /(node_modules)/,
+          options : {
+            fix : true
+          }
         })
       }
     }
@@ -43,8 +46,9 @@ module.exports = {
    * Plugins
    */
   plugins: [
-    {src: '~/plugins/fontawesome', ssr: true},
-    { src: '~/plugins/quill.js', ssr: false }
+    { src: '~/plugins/quill', ssr: false },
+    // Without ssr we get a warning ssr and browser rendering do not match as of 19 Jan 18
+    { src: '~/plugins/fontawesome', ssr: true }
   ],
   /**
    * Modules

@@ -71,46 +71,30 @@
       className () {
         return this.data.className || 'is-dark'
       }
-    },
-    methods: {
-      linkProps (url) {
-        if (url.match(/^(http(s)?|ftp):\/\//)) {
-          return {
-            is: 'a',
-            href: url,
-            target: '_blank',
-            rel: 'noopener'
-          }
-        }
-        return {
-          is: 'router-link',
-          to: url
-        }
-      }
     }
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
   @import ~bulma/sass/utilities/mixins
+  .feature-horizontal
+    .features-title
+      margin-bottom: 1.5rem
 
-  .features-title
-    margin-bottom: 1.5rem
+    .column
+      margin-top: auto
 
-  .column
-    margin-top: auto
+    .feature-horizontal-item
+      display: block
+      position: relative
+      height: 55px
+      margin: auto auto 1rem
+      min-width: 155px
+      width: 100%
+      +desktop
+        height: 110px
 
-  .feature-horizontal-item
-    display: block
-    position: relative
-    height: 55px
-    margin: auto auto 1rem
-    min-width: 155px
-    width: 100%
-    +desktop
-      height: 110px
-
-  .hero.is-dark .subtitle a:not(.button)
-    color: $grey-lighter
-    font-weight: bold
+    .hero.is-dark .subtitle a:not(.button)
+      color: $grey-lighter
+      font-weight: bold
 </style>
