@@ -2383,12 +2383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silverbackis/ApiComponentBundle.git",
-                "reference": "b660b2cf4d6b5be6737b733d74cf1133103ff54f"
+                "reference": "537eb5856855c62a138b9e94cdcb72799ad6d31c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/b660b2cf4d6b5be6737b733d74cf1133103ff54f",
-                "reference": "b660b2cf4d6b5be6737b733d74cf1133103ff54f",
+                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/537eb5856855c62a138b9e94cdcb72799ad6d31c",
+                "reference": "537eb5856855c62a138b9e94cdcb72799ad6d31c",
                 "shasum": ""
             },
             "require": {
@@ -2437,7 +2437,7 @@
                 "source": "https://github.com/silverbackis/ApiComponentBundle/tree/develop",
                 "issues": "https://github.com/silverbackis/ApiComponentBundle/issues"
             },
-            "time": "2018-01-17T18:47:39+00:00"
+            "time": "2018-01-19T13:40:21+00:00"
         },
         {
             "name": "symfony/apache-pack",
@@ -3246,16 +3246,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.62",
+            "version": "v1.0.63",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "c233143ef550f6acbe033fe63d15dad15ca8566a"
+                "reference": "c409fe47e94c3c3c255e94356718ff15417afb0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/c233143ef550f6acbe033fe63d15dad15ca8566a",
-                "reference": "c233143ef550f6acbe033fe63d15dad15ca8566a",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/c409fe47e94c3c3c255e94356718ff15417afb0e",
+                "reference": "c409fe47e94c3c3c255e94356718ff15417afb0e",
                 "shasum": ""
             },
             "require": {
@@ -3288,7 +3288,7 @@
                     "email": "fabien.potencier@gmail.com"
                 }
             ],
-            "time": "2018-01-17T07:28:24+00:00"
+            "time": "2018-01-17T19:45:47+00:00"
         },
         {
             "name": "symfony/form",

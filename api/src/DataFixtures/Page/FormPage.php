@@ -9,13 +9,21 @@ use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
 
 class FormPage extends AbstractPage
 {
+    /**
+     * @var ContactType
+     */
     private $formType;
+    /**
+     * @var ContactHandler
+     */
     private $handler;
+
     public function __construct(
         ContactType $formType,
         ContactHandler $handler
     )
     {
+        parent::__construct();
         $this->formType = $formType;
         $this->handler = $handler;
     }
