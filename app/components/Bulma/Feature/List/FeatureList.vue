@@ -1,5 +1,5 @@
 <template>
-  <component-wrapper :className="['hero', 'feature-horizontal', className]"
+  <component-wrapper :className="['hero', 'feature-list', className]"
                      :extendClass="false"
                      :nested="nested"
   >
@@ -89,10 +89,11 @@
   }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
   @import ~bulma/sass/utilities/mixins
   +mobile
-    .column
-      padding-top: 0
-      padding-bottom: 0
+    .feature-list
+      .column
+        padding-top: 0
+        padding-bottom: 0
 </style>
