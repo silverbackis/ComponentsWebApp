@@ -1,6 +1,7 @@
 export const state = () => ({
   error: false,
-  apiUrl: null
+  apiUrl: null,
+  routeLoading: false
 })
 
 export const mutations = {
@@ -12,12 +13,18 @@ export const mutations = {
   },
   setApiUrl (state, apiUrl) {
     state.apiUrl = apiUrl
+  },
+  routeLoading (state, isRedirecting = true) {
+    state.routeLoading = isRedirecting
   }
 }
 
 export const getters = {
   getApiUrl: (state) => (path) => {
     return state.apiUrl + path
+  },
+  isRouteLoading: (state) => {
+    return state.routeLoading
   }
 }
 

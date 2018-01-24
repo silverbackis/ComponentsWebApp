@@ -1,21 +1,50 @@
+const removeParent = (obj) => {
+  obj = Object.assign({}, obj)
+  delete obj.parent
+  return obj
+}
+
 export default async function ({ store, route, redirect, error }, cb) {
+  if (store.getters.isRouteLoading) {
+    cb()
+    return
+  }
+  store.commit('routeLoading')
   let routeData
   try {
-    routeData = await store.dispatch('page/FETCH_ROUTE', { route })
+    routeData = await store.dispatch('page/FETCH_ROUTE', {route})
   } catch (err) {
     if (err.response && err.response.status) {
-      error({ statusCode: err.response.status, message: err.response.statusText })
+      error({statusCode: err.response.status, message: err.response.statusText})
     } else {
-      error({ statusCode: err.statusCode || 500, message: 'Error fetching from API' })
+      error({statusCode: err.statusCode || 500, message: 'Error fetching from API'})
     }
     cb()
     return
   }
-  if (routeData.redirect) {
-    return redirect(routeData.redirect.route)
+  // Follow all redirects in data tree - to do: ability to set max redirects
+  let maxRedirects = 50
+  if (maxRedirects) {
+    let redirects = 0
+    while (
+      routeData.redirect !== null &&
+      redirects <= maxRedirects
+    ) {
+      routeData = routeData.redirect
+      redirects++
+    }
+    if (redirects) {
+      redirect(routeData.route)
+    }
   }
-  let data = routeData['hydra:member']
+  let data = [removeParent(routeData.page)]
+  routeData = routeData.page
+  while (routeData.parent) {
+    data.unshift(removeParent(routeData.parent))
+    routeData = routeData.parent
+  }
   await store.commit('page/SET_ROUTE_PAGES', { data })
   await store.dispatch('page/FETCH_PAGES')
   cb()
+  store.commit('routeLoading', false)
 }
