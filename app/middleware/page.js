@@ -23,7 +23,7 @@ export default async function ({ store, route, redirect, error }, cb) {
     return
   }
   // Follow all redirects in data tree - to do: ability to set max redirects
-  let maxRedirects = 50
+  let maxRedirects = 10
   if (maxRedirects) {
     let redirects = 0
     while (
@@ -45,6 +45,6 @@ export default async function ({ store, route, redirect, error }, cb) {
   }
   await store.commit('page/SET_ROUTE_PAGES', { data })
   await store.dispatch('page/FETCH_PAGES')
-  cb()
   store.commit('routeLoading', false)
+  cb()
 }
