@@ -2,18 +2,17 @@
 
 namespace App\Tests\Unit\Util;
 
-use App\Entity\Page;
-use App\Util\RouteGenerator;
 use Cocur\Slugify\Slugify;
-use Cocur\Slugify\SlugifyInterface;
 use PHPUnit\Framework\TestCase;
+use Silverback\ApiComponentBundle\Entity\Page;
+use Silverback\ApiComponentBundle\Factory\RouteFactory;
 
 class RouteGeneratorTest extends TestCase
 {
     /**
      * @test
      */
-    public function nested_auto_route_generation ()
+    public function test_nested_auto_route_generation ()
     {
 
         $parent = new Page();
@@ -23,8 +22,8 @@ class RouteGeneratorTest extends TestCase
         $child->setTitle('child');
         $child->setParent($parent);
 
-        $generator = new RouteGenerator(new Slugify());
-        $route = $generator->createPageRoute($child);
+        $generator = new RouteFactory(new Slugify());
+        $route = $generator->create($child);
         $this->assertEquals('/parent/child', $route->getRoute());
     }
 

@@ -20,7 +20,7 @@ class ContactHandler implements FormHandlerInterface
     public function success(Form $form)
     {
         $this->logger->info('Form submitted', [
-            'form' => $form->getClassName()
+            'form' => $form->getFormType()
         ]);
     }
 }
