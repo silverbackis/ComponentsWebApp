@@ -26,7 +26,17 @@
         <div class="navbar-item">
           <div class="field is-grouped">
             <p class="control">
-              <a class="button is-outlined is-dark" href="https://github.com/silverbackis/BwStarterWebsite" rel="noopener">
+              <a class="button is-primary" :href="getApiUrl('')" rel="noopener" target="_blank">
+                <span class="icon">
+                  <font-awesome-icon icon="book" />
+                </span>
+                <span>
+                  API Docs
+                </span>
+              </a>
+            </p>
+            <p class="control">
+              <a class="button is-outlined is-dark" href="https://github.com/silverbackis/BwStarterWebsite" rel="noopener" target="_blank">
                 <span class="icon">
                   <font-awesome-icon :icon="['fab', 'github']" size="lg" />
                 </span>
@@ -41,7 +51,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState, mapGetters } from 'vuex'
   import BulmaNavbarItem from './NavbarItem'
 
   export default {
@@ -96,6 +106,7 @@
       ...mapState({
         layoutData: state => state.layout.data
       }),
+      ...mapGetters(['getApiUrl']),
       navItems () {
         return this.layoutData ? this.layoutData.nav.items : []
       }

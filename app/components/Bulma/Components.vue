@@ -32,9 +32,9 @@
       BulmaTabs: () => import('~/components/Bulma/Nav/Tabs/Tabs.vue'),
       BulmaMenu: () => import('~/components/Bulma/Nav/Menu/Menu.vue'),
       BulmaForm: () => import('~/components/Bulma/Form/Form.vue'),
-      BulmaFeatureHorizontal: () => import('~/components/Bulma/Feature/Horizontal/FeatureHorizontal.vue'),
-      BulmaFeatureList: () => import('~/components/Bulma/Feature/List/FeatureList.vue'),
-      BulmaFeatureMedia: () => import('~/components/Bulma/Feature/Media/FeatureMedia.vue'),
+      BulmaFeatureColumns: () => import('~/components/Bulma/Feature/Columns/FeatureColumns.vue'),
+      BulmaFeatureStacked: () => import('~/components/Bulma/Feature/Stacked/FeatureStacked.vue'),
+      BulmaFeatureTextList: () => import('~/components/Bulma/Feature/TextList/FeatureTextList.vue'),
       BulmaGallery: () => import('~/components/Bulma/Gallery/Gallery.vue'),
       BulmaNews: () => import('~/components/Bulma/News/News.vue')
     },

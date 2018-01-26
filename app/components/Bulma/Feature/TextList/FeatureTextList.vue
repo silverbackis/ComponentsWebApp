@@ -5,21 +5,21 @@
   >
     <div class="hero-body">
       <div class="container has-text-centered">
-        <h3 class="title features-title">Feature List</h3>
+        <h3 class="title features-title" v-if="data.title">{{ data.title }}</h3>
         <div class="is-inline-block-mobile">
           <div class="columns is-centered has-text-left">
             <div v-for="(features) in featureChunks()"
                  class="column is-narrow">
               <ul class="fa-ul">
-                <li v-for="(feature) in features">
+                <li v-for="(feature) in features" :class="feature.className">
                   <span class="fa-li">
                     <font-awesome-icon icon="check-circle" class="has-text-success" size="lg" />
                   </span>
                   <app-link v-if="feature.link" :to="feature.link">
-                    <strong>{{ feature.text }}</strong>
+                    <strong>{{ feature.label }}</strong>
                   </app-link>
                   <span v-else>
-                    {{ feature.text }}
+                    {{ feature.label }}
                   </span>
                 </li>
               </ul>
@@ -39,39 +39,6 @@
 
   export default {
     mixins: [ComponentMixin],
-    data () {
-      return {
-        features: [
-          {
-            text: 'Link back home',
-            link: '/'
-          },
-          {
-            text: 'Link external to BW',
-            link: 'https://www.britishwebsites.co.uk'
-          },
-          {
-            text: 'Feature 3'
-          },
-          {
-            text: 'Feature 4'
-          },
-          {
-            text: 'Feature 5'
-          },
-          {
-            text: 'Feature 6'
-          },
-          {
-            text: 'Feature 7'
-          },
-          {
-            text: 'Yet another feature varying in length'
-          }
-        ],
-        columns: 3
-      }
-    },
     components: {
       AppLink
     },
@@ -83,7 +50,7 @@
     },
     methods: {
       featureChunks () {
-        return _.chunk(this.features, Math.ceil(this.features.length / this.columns))
+        return _.chunk(this.data.items, Math.ceil(this.data.items.length / this.data.columns))
       }
     }
   }

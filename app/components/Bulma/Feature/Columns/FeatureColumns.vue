@@ -5,44 +5,12 @@
   >
     <div class="hero-body">
       <div class="container has-text-centered">
-        <h3 class="title features-title">What's being used?...</h3>
+        <h3 class="title features-title">{{ data.title }}</h3>
         <nav class="columns">
-          <app-link :to="'https://nuxtjs.org/'" class="column">
-            <div>
-              <image-loader
-                :class="imageClass"
-                :src="getApiUrl('images/nuxt.svg')"
-                alt="Nuxt Framework Logo"
-              />
-            </div>
-            <h4 class="title is-4">Nuxt</h4>
-            <h5 class="subtitle is-size-6-touch">Server-side rendering for <app-link :to="'https://vuejs.org/'">VueJS</app-link></h5>
-          </app-link>
-          <app-link :to="'https://api-platform.com/'"
-                class="column">
-            <div>
-              <image-loader
-                :class="imageClass"
-                :src="getApiUrl('images/api-platform-spider.svg')"
-                alt="API Platform Logo"
-              />
-            </div>
-            <h4 class="title is-4">API Platform</h4>
-            <h5 class="subtitle is-size-6-touch">API Framework built on <app-link :to="'https://symfony.com/'">Symfony</app-link></h5>
-          </app-link>
-          <app-link :to="'http://bulma.io/'"
-                class="column"
-          >
-            <div>
-              <image-loader
-                :class="imageClass"
-                :src="getApiUrl('images/bulma.svg')"
-                alt="Bulma CSS Framework Logo"
-              />
-            </div>
-            <h4 class="title is-4">Bulma</h4>
-            <h5 class="subtitle is-size-6-touch">Light-weight CSS Framework</h5>
-          </app-link>
+          <feature-column-item v-for="(feature, count) in data.items"
+                               :data="feature"
+                               :key="count"
+          />
         </nav>
       </div>
     </div>
@@ -51,23 +19,19 @@
 
 <script>
   import ComponentMixin from '~/components/componentMixin'
-  import { mapGetters } from 'vuex'
-  import ImageLoader from '~/components/Utils/ImageLoader'
-  import AppLink from '~/components/Utils/AppLink'
+  import FeatureColumnItem from './FeatureColumnItem'
 
   export default {
     mixins: [ComponentMixin],
     components: {
-      ImageLoader,
-      AppLink
+      FeatureColumnItem
     },
     data () {
       return {
-        imageClass: 'image feature-horizontal-item'
+        imageClass: 'image feature-columns-item'
       }
     },
     computed: {
-      ...mapGetters(['getApiUrl']),
       className () {
         return this.data.className || 'is-dark'
       }
