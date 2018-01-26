@@ -9,7 +9,7 @@ fi
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 	composer install --prefer-dist --no-progress --no-suggest --no-interaction
 	if [ "$APP_ENV" != 'prod' ]; then
-		bin/console app:fixtures:load
+		bin/console api-component-bundle:fixtures:load
 	fi
 
 	# Permissions hack because setfacl does not work on Mac and Windows

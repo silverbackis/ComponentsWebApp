@@ -4,6 +4,7 @@ namespace App\DataFixtures\Page\Navigation\Tabs;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\Component\ContentComponent;
 use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
 
 class TabsTwo extends AbstractPage implements DependentFixtureInterface
@@ -19,7 +20,7 @@ class TabsTwo extends AbstractPage implements DependentFixtureInterface
         $this->entity->setTitle('Tabs Two');
         $this->entity->setMetaDescription('Tabs Link Two');
         $this->entity->setParent($this->getReference('page.navigation.tabs'));
-        $this->addContent();
+        $this->createComponent(ContentComponent::class);
         $this->flush();
         $this->addReference('page.navigation.tabs.tab2', $this->entity);
     }

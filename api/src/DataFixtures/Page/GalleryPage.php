@@ -3,6 +3,8 @@
 namespace App\DataFixtures\Page;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\Component\GalleryComponent;
+use Silverback\ApiComponentBundle\DataFixtures\Component\HeroComponent;
 use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
 
 class GalleryPage extends AbstractPage
@@ -17,9 +19,13 @@ class GalleryPage extends AbstractPage
 
         $this->entity->setTitle('Gallery');
         $this->entity->setMetaDescription('Image gallery component');
-        $hero = $this->addHero('Gallery', 'Here you can see an image gallery');
-        $hero->setClassName('is-danger is-bold');
-        $this->addGallery();
+
+        $this->createComponent(HeroComponent::class, $this->entity, [
+            'title' => 'Gallery',
+            'subtitle' => 'Here you can see an image gallery',
+            'className' => 'is-danger is-bold'
+        ]);
+        $this->createComponent(GalleryComponent::class, $this->entity, []);
 
         $this->flush();
         $this->addReference('page.gallery', $this->entity);

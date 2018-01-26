@@ -9,9 +9,6 @@ use Silverback\ApiComponentBundle\Factory\RouteFactory;
 
 class RouteGeneratorTest extends TestCase
 {
-    /**
-     * @test
-     */
     public function test_nested_auto_route_generation ()
     {
 
@@ -25,14 +22,5 @@ class RouteGeneratorTest extends TestCase
         $generator = new RouteFactory(new Slugify());
         $route = $generator->create($child);
         $this->assertEquals('/parent/child', $route->getRoute());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-        $this->slugify = null;
     }
 }

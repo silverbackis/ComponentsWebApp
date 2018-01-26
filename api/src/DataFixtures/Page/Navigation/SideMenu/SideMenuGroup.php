@@ -4,6 +4,7 @@ namespace App\DataFixtures\Page\Navigation\SideMenu;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\DataFixtures\Component\ContentComponent;
 use Silverback\ApiComponentBundle\DataFixtures\CustomEntityInterface;
 use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
 use Silverback\ApiComponentBundle\Entity\Component\ComponentGroup;
@@ -18,7 +19,7 @@ class SideMenuGroup extends AbstractPage implements CustomEntityInterface, Depen
     {
         parent::load($manager);
         $this->entity->setParent($this->getReference('nav.sidemenu'));
-        $this->addContent();
+        $this->createComponent(ContentComponent::class);
         $this->addReference('page.navigation.sidemenu.components', $this->entity);
         $this->flush();
     }
