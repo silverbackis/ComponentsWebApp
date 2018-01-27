@@ -1972,16 +1972,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "4.2.0",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "66465776cfc249844bde6d117abff1d22e06c2da"
+                "reference": "94fd0001232e47129dd3504189fa1c7225010d08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/66465776cfc249844bde6d117abff1d22e06c2da",
-                "reference": "66465776cfc249844bde6d117abff1d22e06c2da",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/94fd0001232e47129dd3504189fa1c7225010d08",
+                "reference": "94fd0001232e47129dd3504189fa1c7225010d08",
                 "shasum": ""
             },
             "require": {
@@ -2019,7 +2019,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-11-27T17:38:31+00:00"
+            "time": "2017-11-30T07:14:17+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -2383,12 +2383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silverbackis/ApiComponentBundle.git",
-                "reference": "c0af46cf1f3d3c613c9a0b1a6bd8b8d19bd1e178"
+                "reference": "7ead6be231d3b6a04097c40d0774d1a880323346"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/c0af46cf1f3d3c613c9a0b1a6bd8b8d19bd1e178",
-                "reference": "c0af46cf1f3d3c613c9a0b1a6bd8b8d19bd1e178",
+                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/7ead6be231d3b6a04097c40d0774d1a880323346",
+                "reference": "7ead6be231d3b6a04097c40d0774d1a880323346",
                 "shasum": ""
             },
             "require": {
@@ -2443,7 +2443,7 @@
                 "source": "https://github.com/silverbackis/ApiComponentBundle/tree/develop",
                 "issues": "https://github.com/silverbackis/ApiComponentBundle/issues"
             },
-            "time": "2018-01-26T17:40:54+00:00"
+            "time": "2018-01-27T22:54:33+00:00"
         },
         {
             "name": "symfony/apache-pack",

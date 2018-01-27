@@ -3,11 +3,6 @@
 namespace App\DataFixtures\Page;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Silverback\ApiComponentBundle\DataFixtures\Component\FeatureColumnsComponent;
-use Silverback\ApiComponentBundle\DataFixtures\Component\FeatureStackedComponent;
-use Silverback\ApiComponentBundle\DataFixtures\Component\FeatureTextListComponent;
-use Silverback\ApiComponentBundle\DataFixtures\Component\Helper\FeatureHelper;
-use Silverback\ApiComponentBundle\DataFixtures\Component\HeroComponent;
 use Silverback\ApiComponentBundle\DataFixtures\ComponentServiceLocator;
 use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
 use Silverback\ApiComponentBundle\Entity\Component\Feature\Columns\FeatureColumns;
@@ -15,6 +10,11 @@ use Silverback\ApiComponentBundle\Entity\Component\Feature\Columns\FeatureColumn
 use Silverback\ApiComponentBundle\Entity\Component\Feature\Stacked\FeatureStacked;
 use Silverback\ApiComponentBundle\Entity\Component\Feature\Stacked\FeatureStackedItem;
 use Silverback\ApiComponentBundle\Entity\Component\Feature\TextList\FeatureTextList;
+use Silverback\ApiComponentBundle\Factory\Component\FeatureColumnsFactory;
+use Silverback\ApiComponentBundle\Factory\Component\FeatureStackedFactory;
+use Silverback\ApiComponentBundle\Factory\Component\FeatureTextListFactory;
+use Silverback\ApiComponentBundle\Factory\Component\HeroFactory;
+use Silverback\ApiComponentBundle\Factory\Component\Item\FeatureItemFactory;
 
 class FeaturesPage extends AbstractPage
 {
@@ -22,7 +22,7 @@ class FeaturesPage extends AbstractPage
 
     public function __construct(
         ComponentServiceLocator $serviceLocator,
-        FeatureHelper $featureHelper
+        FeatureItemFactory $featureHelper
     )
     {
         parent::__construct($serviceLocator);
@@ -41,7 +41,7 @@ class FeaturesPage extends AbstractPage
         $this->entity->setTitle('Feature Components');
         $this->entity->setMetaDescription('We have 3 ways of listing features to choose from');
 
-        $this->createComponent(HeroComponent::class, $this->entity, [
+        $this->createComponent(HeroFactory::class, $this->entity, [
             'title' => 'Feature Components',
             'subtitle' => 'We have 3 ways of listing features to choose from',
             'className' => 'is-warning is-bold'
@@ -50,7 +50,7 @@ class FeaturesPage extends AbstractPage
         /**
          * @var $feature FeatureTextList
          */
-        $feature = $this->createComponent(FeatureTextListComponent::class, $this->entity);
+        $feature = $this->createComponent(FeatureTextListFactory::class, $this->entity);
         $feature->setTitle('Features from the API');
         $this->featureHelper->createItem($feature, 'Google', 'https://www.google.co.uk');
         $this->featureHelper->createItem($feature, 'Home', '/');
@@ -65,7 +65,7 @@ class FeaturesPage extends AbstractPage
         /**
          * @var $feature FeatureColumns
          */
-        $feature = $this->createComponent(FeatureColumnsComponent::class, $this->entity);
+        $feature = $this->createComponent(FeatureColumnsFactory::class, $this->entity);
         $feature->setTitle('Say hello to my little friends');
         /**
          * @var FeatureColumnsItem $item
@@ -85,7 +85,7 @@ class FeaturesPage extends AbstractPage
         /**
          * @var $feature FeatureStacked
          */
-        $feature = $this->createComponent(FeatureStackedComponent::class, $this->entity);
+        $feature = $this->createComponent(FeatureStackedFactory::class, $this->entity);
         // $feature->setReverse(true);
         /**
          * @var FeatureStackedItem $item
