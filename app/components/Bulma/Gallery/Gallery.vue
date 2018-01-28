@@ -1,5 +1,6 @@
 <template>
   <component-wrapper :nested="nested">
+    {{ data }}
     <div :class="containerClass">
       <ul class="columns is-multiline">
         <gallery-item v-for="(item, index) in items"
