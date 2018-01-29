@@ -16,3 +16,4 @@
 ###< phpunit/phpunit ###
 
 src/ApiComponentBundle/
+public/media/cache/

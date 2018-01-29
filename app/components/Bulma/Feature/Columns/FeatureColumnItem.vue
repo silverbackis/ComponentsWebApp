@@ -6,7 +6,7 @@
     <div>
       <image-loader
         :class="imageClass"
-        :src="getApiUrl(data.image)"
+        :src="getApiUrl(data.filePath)"
         :alt="data.label"
       />
     </div>
