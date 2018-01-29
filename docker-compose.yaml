@@ -8,12 +8,24 @@ services:
         environment:
             MYSQL_RANDOM_ROOT_PASSWORD: "yes"
 
+    rabbitmq:
+        image: 'rabbitmq:alpine'
+        hostname: 'rabbitmq'
+        env_file:
+            - ./api/.env
+        ports:
+            - "15672:15672"
+            - "5672:5672"
+        volumes:
+            - "./api/_docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins"
+
     php:
         build:
             context: ./api
             dockerfile: ./_docker/php/Dockerfile
         depends_on:
             - mysql
+            - rabbitmq
         env_file:
             - ./api/.env
         volumes:

@@ -1,9 +1,8 @@
 <template>
-  <component-wrapper :nested="nested">
-    {{ data }}
+  <component-wrapper :nested="nested" :class="data.className">
     <div :class="containerClass">
       <ul class="columns is-multiline">
-        <gallery-item v-for="(item, index) in items"
+        <gallery-item v-for="(item, index) in data.items"
                       :key="index"
                       class="column is-4 is-3-desktop"
                       :items="items"

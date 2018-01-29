@@ -71,15 +71,15 @@ class FeaturesPage extends AbstractPage
          * @var FeatureColumnsItem $item
          */
         $item = $this->featureHelper->createItem($feature, 'Nuxt', 'https://nuxtjs.org');
-        $item->setImage('images/nuxt.svg');
+        $item->setFilePath('images/nuxt.svg');
         $item->setDescription('Server-Side Rendering for VueJS');
 
         $item = $this->featureHelper->createItem($feature, 'API Platform', 'https://api-platform.com/');
-        $item->setImage('images/api-platform-spider.svg');
+        $item->setFilePath('images/api-platform-spider.svg');
         $item->setDescription('API Framework built on Symfony');
 
         $item = $this->featureHelper->createItem($feature, 'Bulma', 'http://bulma.io/');
-        $item->setImage('images/bulma.svg');
+        $item->setFilePath('images/bulma.svg');
         $item->setDescription('Light-weight CSS Framework');
 
         /**
@@ -93,17 +93,17 @@ class FeaturesPage extends AbstractPage
         $item = $this->featureHelper->createItem($feature, 'VueJS', 'https://nuxtjs.org');
         $item->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.');
         $item->setButtonText('Visit website');
-        $item->setImage('images/nuxt.svg');
+        $item->setFilePath('images/nuxt.svg');
 
         $item = $this->featureHelper->createItem($feature, 'API Platform', 'https://api-platform.com/');
         $item->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.');
         $item->setButtonText('Visit website');
-        $item->setImage('images/api-platform-spider.svg');
+        $item->setFilePath('images/api-platform-spider.svg');
 
         $item = $this->featureHelper->createItem($feature, 'Bulma', 'http://bulma.io/');
         $item->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.');
         $item->setButtonText('Visit website');
-        $item->setImage('images/bulma.svg');
+        $item->setFilePath('images/bulma.svg');
 
         $this->flush();
         $this->addReference('page.features', $this->entity);

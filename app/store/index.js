@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export const state = () => ({
   error: false,
   apiUrl: null,
@@ -21,7 +23,7 @@ export const mutations = {
 
 export const getters = {
   getApiUrl: (state) => (path) => {
-    return state.apiUrl + path
+    return state.apiUrl + _.trimStart(path, '/')
   },
   isRouteLoading: (state) => {
     return state.routeLoading

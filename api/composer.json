@@ -13,7 +13,8 @@
         "doctrine/data-fixtures": "dev-master@dev",
         "silverbackis/api-component-bundle": "dev-develop@dev",
         "symfony/flex": "^1.0",
-        "symfony/proxy-manager-bridge": "^4.0"
+        "symfony/proxy-manager-bridge": "^4.0",
+        "roave/security-advisories": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",
@@ -57,5 +58,7 @@
             "id": "01C0VV89JMTFVSVWMQMEERA3FA",
             "allow-contrib": "true"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

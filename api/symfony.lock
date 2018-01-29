@@ -83,6 +83,36 @@
     "doctrine/orm": {
         "version": "v2.5.13"
     },
+    "enqueue/amqp-ext": {
+        "version": "0.8.12"
+    },
+    "enqueue/amqp-tools": {
+        "version": "0.8.14"
+    },
+    "enqueue/async-event-dispatcher": {
+        "version": "0.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.7",
+            "ref": "9e937ccb79e08b978f91fb816d4e6d645813113a"
+        }
+    },
+    "enqueue/enqueue": {
+        "version": "0.8.17"
+    },
+    "enqueue/enqueue-bundle": {
+        "version": "0.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.4",
+            "ref": "daaea0035c3abd612f71f0288d5c20197c3c34ad"
+        }
+    },
+    "enqueue/null": {
+        "version": "0.8.12"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.3.0"
     },
@@ -92,6 +122,9 @@
     "guzzlehttp/psr7": {
         "version": "1.4.2"
     },
+    "imagine/imagine": {
+        "version": "v0.6.3"
+    },
     "jackalope/jackalope": {
         "version": "1.3.4"
     },
@@ -100,6 +133,15 @@
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "liip/imagine-bundle": {
+        "version": "1.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.8",
+            "ref": "d2a601ea5ccad81de2a131ed68481d012ed4667c"
+        }
     },
     "myclabs/deep-copy": {
         "version": "1.7.0"
@@ -112,6 +154,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
+    },
+    "paragonie/random_compat": {
+        "version": "v2.0.11"
     },
     "phar-io/manifest": {
         "version": "1.0.1"
@@ -178,6 +223,18 @@
     },
     "psr/simple-cache": {
         "version": "1.0.0"
+    },
+    "queue-interop/amqp-interop": {
+        "version": "0.7.2"
+    },
+    "queue-interop/queue-interop": {
+        "version": "0.6.1"
+    },
+    "ramsey/uuid": {
+        "version": "3.7.3"
+    },
+    "roave/security-advisories": {
+        "version": "dev-master"
     },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"
@@ -338,6 +395,9 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.6.0"
     },
+    "symfony/process": {
+        "version": "v4.0.4"
+    },
     "symfony/property-access": {
         "version": "v4.0.1"
     },
@@ -370,6 +430,9 @@
     },
     "symfony/serializer": {
         "version": "v4.0.1"
+    },
+    "symfony/templating": {
+        "version": "v4.0.4"
     },
     "symfony/translation": {
         "version": "3.3",

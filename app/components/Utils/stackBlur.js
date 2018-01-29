@@ -42,16 +42,8 @@ export default function (context, topX, topY, width, height, radius) {
     try {
       imageData = context.getImageData(topX, topY, width, height)
     } catch (e) {
-      // NOTE: this part is supposedly only needed if you want to work with local files
-      // so it might be okay to remove the whole try/catch block and just use
-      // imageData = context.getImageData( topX, topY, width, height )
-      try {
-        window.netscape.security.PrivilegeManager.enablePrivilege('UniversalBrowserRead')
-        imageData = context.getImageData(topX, topY, width, height)
-      } catch (e) {
-        console.warn('Cannot access local image to blur')
-        return
-      }
+      console.warn('Cannot access local image to blur', e)
+      return
     }
   } catch (e) {
     alert('Cannot access image')

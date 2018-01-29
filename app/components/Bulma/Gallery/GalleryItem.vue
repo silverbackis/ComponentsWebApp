@@ -5,19 +5,20 @@
     <div class="gallery-thumb">
       <figure itemprop="associatedMedia" itemscope itemtype="https://schema.org/ImageObject">
         <a class="gallery-link"
-           :href="item.src"
+           :href="getApiUrl(item.image)"
            itemprop="contentUrl"
            @click.prevent="$photoswipe.open(index, items, $el)"
         >
           <image-loader class="image gallery-image"
-                        :src="item.src"
-                        :smallSrc="item.src"
+                        :src="getApiUrl(item.thumbnailPath)"
+                        :smallSrc="getApiUrl(item.placeholderPath)"
                         :cover="true"
+                        :alt="item.title"
           />
           <img src="/img/1x1.png" class="square-space" />
         </a>
-        <meta itemprop="width" :content="item.w">
-        <meta itemprop="height" :content="item.h">
+        <meta itemprop="width" :content="item.width">
+        <meta itemprop="height" :content="item.height">
         <figcaption v-if="item.caption"
                     itemprop="caption description" class="sr-only"
                     v-html="item.caption"
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import ImageLoader from '~/components/Utils/ImageLoader'
 
   export default {
@@ -50,6 +52,9 @@
     },
     components: {
       ImageLoader
+    },
+    computed: {
+      ...mapGetters(['getApiUrl'])
     }
   }
 </script>

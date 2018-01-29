@@ -6,20 +6,40 @@ RUN apk add --no-cache --virtual .persistent-deps \
 		icu-libs \
 		zlib
 
-ENV APCU_VERSION 5.1.8
+ENV APCU_VERSION 5.1.9
 
 RUN set -xe \
 	&& apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		icu-dev \
 		zlib-dev \
+	&& apk add --no-cache \
+		freetype-dev \
+		libpng-dev \
+		libjpeg-turbo-dev \
+		rabbitmq-c-dev \
+		libssh-dev \
+		libxml2-dev autoconf g++ imagemagick-dev libtool make \
+	&& docker-php-ext-install \
+    bcmath \
+    sockets \
+  && pecl install \
+    apcu-${APCU_VERSION} \
+    amqp \
+    imagick \
+  && docker-php-ext-enable --ini-name 20-apcu.ini apcu \
+  && docker-php-ext-enable --ini-name 05-opcache.ini opcache \
+  && docker-php-ext-enable amqp \
+  && docker-php-ext-enable imagick \
 	&& docker-php-ext-install \
 		pdo pdo_mysql \
 		intl zip \
-	&& pecl install \
-		apcu-${APCU_VERSION} \
-	&& docker-php-ext-enable --ini-name 20-apcu.ini apcu \
-	&& docker-php-ext-enable --ini-name 05-opcache.ini opcache \
+	&& docker-php-ext-configure gd \
+	  --with-gd \
+	  --with-freetype-dir=/usr/include/ \
+	  --with-png-dir=/usr/include/ \
+	  --with-jpeg-dir=/usr/include/ \
+	&& docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) gd \
 	&& apk del .build-deps
 
 COPY --from=0 /usr/bin/composer /usr/bin/composer

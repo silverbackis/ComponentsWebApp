@@ -6,7 +6,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Silverback\ApiComponentBundle\DataFixtures\CustomEntityInterface;
 use Silverback\ApiComponentBundle\DataFixtures\Page\AbstractPage;
-use Silverback\ApiComponentBundle\Entity\Component\ComponentGroup;
+use Silverback\ApiComponentBundle\Entity\ComponentGroup;
 use Silverback\ApiComponentBundle\Factory\Component\ContentFactory;
 
 class SideMenuGroup extends AbstractPage implements CustomEntityInterface, DependentFixtureInterface
@@ -18,6 +18,7 @@ class SideMenuGroup extends AbstractPage implements CustomEntityInterface, Depen
     /**
      * @param ObjectManager $manager
      * @return Object|void
+     * @throws \BadMethodCallException
      * @throws \Psr\Container\ContainerExceptionInterface
      */
     public function load(ObjectManager $manager)

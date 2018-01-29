@@ -96,6 +96,7 @@ Author modified: Daniel <daniel@silverback.is>
     },
     mounted () {
       let loResImg = new Image()
+      loResImg.crossOrigin = 'anonymous'
       let hiResImg = new Image()
       let loResCanvas = this.$refs.canvas
 
@@ -115,11 +116,12 @@ Author modified: Daniel <daniel@silverback.is>
         } else {
           ctx.drawImage(loResImg, 0, 0)
         }
-        stackBlur(ctx, 0, 0, loResCanvas.width, loResCanvas.height, 6)
+        stackBlur(ctx, 0, 0, loResCanvas.width, loResCanvas.height, 8)
         this.currentSrc = this.smallSrc
         this.loadedRes = 'low'
       }
       if (this.smallSrc) { // && that.src.split('.').pop() !== 'svg'
+        this.currentSrc = this.smallSrc
         loResImg.src = this.smallSrc
       }
       hiResImg.src = this.src

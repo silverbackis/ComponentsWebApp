@@ -33,7 +33,6 @@
 
 <script>
   import ComponentMixin from '~/components/componentMixin'
-  import { mapGetters } from 'vuex'
   import _ from 'lodash'
   import AppLink from '~/components/Utils/AppLink'
 
@@ -43,7 +42,6 @@
       AppLink
     },
     computed: {
-      ...mapGetters(['getApiUrl']),
       className () {
         return this.data.className || 'is-light'
       }
