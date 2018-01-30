@@ -6,7 +6,8 @@
       >
         <image-loader
           :class="imageClass"
-          :src="getApiUrl(data.filePath)"
+          :src="getApiUrl(data.thumbnailPath || data.filePath)"
+          :smallSrc="data.placeholderPath ? getApiUrl(data.placeholderPath) : null"
           :alt="data.label"
         />
       </component>
