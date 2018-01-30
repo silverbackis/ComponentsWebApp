@@ -5,8 +5,8 @@
       <div :class="wrapperClass">
         <slot></slot>
       </div>
-      <span class="icon is-right is-small" v-if="useIcons && !validating">
-        <i :class="iconClass"></i>
+      <span :class="iconWrapperClass" v-if="useIcons && !validating">
+        <font-awesome-icon :icon="iconClass" />
       </span>
     </div>
     <div v-if="displayErrors && errors.length"
@@ -70,11 +70,18 @@
           this.validating ? 'is-loading' : ''
         ]
       },
+      iconWrapperClass () {
+        return {
+          'icon is-right is-small': true,
+          'has-text-danger': this.hasErrors,
+          'has-text-success': this.valid && !this.validating
+        }
+      },
       iconClass () {
         return {
-          fa: true,
-          'fa-warning has-text-danger': this.hasErrors,
-          'fa-check has-text-success': this.valid && !this.validating
+          'fab': true,
+          'exclamation-triangle': this.hasErrors,
+          'check': this.valid && !this.validating
         }
       },
       wrapperClass () {
