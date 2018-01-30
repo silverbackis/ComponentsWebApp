@@ -78,11 +78,13 @@
         }
       },
       iconClass () {
-        return {
-          'fab': true,
-          'exclamation-triangle': this.hasErrors,
-          'check': this.valid && !this.validating
+        if (this.hasErrors) {
+          return ['fas', 'exclamation-triangle']
         }
+        if (this.valid && !this.validating) {
+          return ['fas', 'check']
+        }
+        return []
       },
       wrapperClass () {
         return this.select ? this.selectClass : this.fieldClass
