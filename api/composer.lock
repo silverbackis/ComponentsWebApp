@@ -2048,12 +2048,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "4eaf557e201ffa276c6315f6f752d588e4bdc65a"
+                "reference": "2f04681b712c30141f52052d3628ce050093f1d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/4eaf557e201ffa276c6315f6f752d588e4bdc65a",
-                "reference": "4eaf557e201ffa276c6315f6f752d588e4bdc65a",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/2f04681b712c30141f52052d3628ce050093f1d1",
+                "reference": "2f04681b712c30141f52052d3628ce050093f1d1",
                 "shasum": ""
             },
             "require": {
@@ -2140,7 +2140,7 @@
                 "symfony",
                 "transformation"
             ],
-            "time": "2018-01-20T10:48:38+00:00"
+            "time": "2018-01-30T06:44:59+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -3273,12 +3273,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silverbackis/ApiComponentBundle.git",
-                "reference": "86def577bd484570c8b21c9c7d92a7b37f1d4bde"
+                "reference": "7279193a60a31acfcf292d4bd2a20b501c3b9177"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/86def577bd484570c8b21c9c7d92a7b37f1d4bde",
-                "reference": "86def577bd484570c8b21c9c7d92a7b37f1d4bde",
+                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/7279193a60a31acfcf292d4bd2a20b501c3b9177",
+                "reference": "7279193a60a31acfcf292d4bd2a20b501c3b9177",
                 "shasum": ""
             },
             "require": {
@@ -3336,7 +3336,7 @@
                 "source": "https://github.com/silverbackis/ApiComponentBundle/tree/develop",
                 "issues": "https://github.com/silverbackis/ApiComponentBundle/issues"
             },
-            "time": "2018-01-29T21:41:11+00:00"
+            "time": "2018-01-30T08:51:34+00:00"
         },
         {
             "name": "symfony/apache-pack",
