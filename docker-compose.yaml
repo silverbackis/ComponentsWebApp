@@ -30,6 +30,10 @@ services:
             - ./api/.env
         volumes:
             - ./api:/srv/api:rw
+        restart_policy:
+            condition: on-failure
+            delay: 5s
+            max_attempts: 3
 
     app:
         build:
