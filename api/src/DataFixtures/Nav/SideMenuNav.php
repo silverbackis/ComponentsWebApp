@@ -14,7 +14,8 @@ class SideMenuNav extends AbstractNav implements DependentFixtureInterface, Cust
     /**
      * @return Menu
      */
-    public function getEntity () {
+    public function getEntity()
+    {
         return new Menu();
     }
 

@@ -23,8 +23,7 @@ class FeaturesPage extends AbstractPage
     public function __construct(
         ComponentServiceLocator $serviceLocator,
         FeatureItemFactory $featureHelper
-    )
-    {
+    ) {
         parent::__construct($serviceLocator);
         $this->featureHelper = $featureHelper;
     }

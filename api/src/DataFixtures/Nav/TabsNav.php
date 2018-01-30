@@ -16,7 +16,8 @@ class TabsNav extends AbstractNav implements DependentFixtureInterface, CustomEn
     /**
      * @return Tabs
      */
-    public function getEntity () {
+    public function getEntity()
+    {
         return new Tabs();
     }
 

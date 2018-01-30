@@ -12,8 +12,7 @@ class ContactHandler implements FormHandlerInterface
 
     public function __construct(
         LoggerInterface $logger
-    )
-    {
+    ) {
         $this->logger = $logger;
     }
 

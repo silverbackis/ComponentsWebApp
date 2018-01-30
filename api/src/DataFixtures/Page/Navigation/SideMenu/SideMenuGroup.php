@@ -11,7 +11,8 @@ use Silverback\ApiComponentBundle\Factory\Component\ContentFactory;
 
 class SideMenuGroup extends AbstractPage implements CustomEntityInterface, DependentFixtureInterface
 {
-    public function getEntity () {
+    public function getEntity()
+    {
         return new ComponentGroup();
     }
 
