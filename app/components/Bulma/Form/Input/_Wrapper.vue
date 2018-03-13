@@ -5,7 +5,7 @@
       <div :class="wrapperClass">
         <slot></slot>
       </div>
-      <span :class="iconWrapperClass" v-if="useIcons && !validating">
+      <span v-if="useIcons && !this.validating && iconClass" :class="iconWrapperClass">
         <font-awesome-icon :icon="iconClass" />
       </span>
     </div>
@@ -74,17 +74,17 @@
         return {
           'icon is-right is-small': true,
           'has-text-danger': this.hasErrors,
-          'has-text-success': this.valid && !this.validating
+          'has-text-success': this.valid
         }
       },
       iconClass () {
         if (this.hasErrors) {
           return ['fas', 'exclamation-triangle']
         }
-        if (this.valid && !this.validating) {
+        if (this.valid) {
           return ['fas', 'check']
         }
-        return []
+        return null
       },
       wrapperClass () {
         return this.select ? this.selectClass : this.fieldClass

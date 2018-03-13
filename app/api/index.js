@@ -1,7 +1,23 @@
 const logRequests = !!process.env.DEBUG_API
 let requests = {}
+let requestsInfo = {}
 
-function fetch ({ path, $axios, method, data, cancelToken, validateStatus }) {
+const isPreviousRequestExpired = (path) => {
+  const now = Date.now()
+  if (
+    requestsInfo[path] !== undefined &&
+    (now - requestsInfo[path].__lastUpdated) <= (1000 * 15)
+  ) {
+    return false
+  }
+
+  requestsInfo[path] = {
+    __lastUpdated: now
+  }
+  return true
+}
+
+export const fetch = ({ path, $axios, method, data, cancelToken, validateStatus }) => {
   if (!method) {
     method = 'GET'
   }
@@ -12,6 +28,10 @@ function fetch ({ path, $axios, method, data, cancelToken, validateStatus }) {
   }
   logRequests && console.log(`fetching ${path}...`)
   if (!requests[path]) {
+    if (!isPreviousRequestExpired(path)) {
+      return requests[path]
+    }
+
     requests[path] = new Promise((resolve, reject) => {
       $axios
         .request({
@@ -33,14 +53,10 @@ function fetch ({ path, $axios, method, data, cancelToken, validateStatus }) {
   return requests[path]
 }
 
-export function fetchPage ({ path, $axios }) {
-  return fetch({ path: `/pages/${path}`, $axios })
+export function fetchAll ({ paths, $axios }) {
+  return Promise.all(paths.map(path => fetch({ path, $axios })))
 }
 
 export function fetchRoute ({ path, $axios }) {
   return fetch({ path: `/routes/${path}`, $axios })
-}
-
-export function fetchPageIds ({ ids, $axios }) {
-  return Promise.all(ids.map(id => fetchPage({ path: id, $axios })))
 }

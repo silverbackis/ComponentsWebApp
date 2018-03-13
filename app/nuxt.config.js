@@ -64,7 +64,15 @@ module.exports = {
         },
         manifest: true,
         meta: false,
-        workbox: true,
+        workbox: {
+          runtimeCaching: [
+            {
+              urlPattern: process.env.API_URL_BROWSER + '/.*',
+              handler: 'networkFirst',
+              method: 'GET'
+            }
+          ]
+        },
         optimize: {
           cssnano: {
             zindex: false
@@ -79,7 +87,12 @@ module.exports = {
         debug: false
       }
     ],
-    ['@nuxtjs/google-tag-manager', { id: 'GTM-MVSWS73' }],
+    [
+      '@nuxtjs/google-tag-manager',
+      {
+        id: 'GTM-MVSWS73'
+      }
+    ],
   ],
   /**
    * Manifest for mobile app
@@ -96,6 +109,6 @@ module.exports = {
    * Router
    */
   router: {
-    middleware: ['initErrorHandler', 'page']
+    middleware: ['initErrorHandler', 'routeLoader']
   }
 }

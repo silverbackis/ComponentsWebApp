@@ -51,7 +51,7 @@
 </template>
 
 <script>
-  import { mapState, mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
   import BulmaNavbarItem from './NavbarItem'
 
   export default {
@@ -64,8 +64,18 @@
         windowY: 0,
         lastWindowY: 0,
         yTicking: false,
-        navY: 0
+        navY: 0,
+        navItems: []
       }
+    },
+    props: {
+      navBar: {
+        type: Object,
+        required: false
+      }
+    },
+    computed: {
+      ...mapGetters(['getApiUrl'])
     },
     watch: {
       // whenever question changes, this function will run
@@ -100,15 +110,6 @@
         }
 
         this.navY = this.isActive ? 0 : Math.min(Math.max(this.navY - diff, this.$refs.nav.clientHeight * -1), 0)
-      }
-    },
-    computed: {
-      ...mapState({
-        layoutData: state => state.layout.data
-      }),
-      ...mapGetters(['getApiUrl']),
-      navItems () {
-        return this.layoutData ? this.layoutData.nav.items : []
       }
     },
     mounted () {

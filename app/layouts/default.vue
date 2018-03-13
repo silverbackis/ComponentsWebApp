@@ -13,11 +13,15 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import BulmaNavbar from '~/components/Bulma/Nav/Navbar/Navbar.vue'
 
   export default {
     components: {
       BulmaNavbar
+    },
+    computed: {
+      ...mapGetters([ 'getApiUrl', 'layout/getLayout' ])
     },
     head () {
       return {

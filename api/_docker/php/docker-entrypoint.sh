@@ -8,7 +8,6 @@ fi
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 	composer install --prefer-dist --no-progress --no-suggest --no-interaction
-	nohup bin/console enqueue:consume --setup-broker -vvv &
 	# Permissions hack because setfacl does not work on Mac and Windows
 	chown -R www-data var
 	if [ "$APP_ENV" != 'prod' ]; then

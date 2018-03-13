@@ -1,9 +1,11 @@
 import _ from 'lodash'
+import { fetchRoute } from '../api'
+import { compile } from '~/.nuxt/utils'
 
 export const state = () => ({
   error: false,
   apiUrl: null,
-  routeLoading: false
+  content: null
 })
 
 export const mutations = {
@@ -16,8 +18,8 @@ export const mutations = {
   setApiUrl (state, apiUrl) {
     state.apiUrl = apiUrl
   },
-  routeLoading (state, isRedirecting = true) {
-    state.routeLoading = isRedirecting
+  setContent (state, content) {
+    state.content = content
   }
 }
 
@@ -25,14 +27,47 @@ export const getters = {
   getApiUrl: (state) => (path) => {
     return state.apiUrl + _.trimStart(path, '/')
   },
-  isRouteLoading: (state) => {
-    return state.routeLoading
+  getContent: state => {
+    return state.content
   }
 }
 
 export const actions = {
-  async nuxtServerInit ({ dispatch, commit }, { app }) {
+  nuxtServerInit ({ dispatch, commit }) {
     commit('setApiUrl', process.env.API_URL_BROWSER + '/')
-    await dispatch('layout/init', { $axios: app.$axios })
+  },
+  async fetchRoute (ctx, { route }) {
+    let path = compile(route.path)(route.params) || '/'
+    return fetchRoute({ path, $axios: this.$axios })
+  },
+  async initRoute ({ commit, dispatch }, { content }) {
+    const withoutParent = (obj) => {
+      obj = Object.assign({}, obj)
+      delete obj.parent
+      return obj
+    }
+
+    let contentArray = [withoutParent(content)]
+    while (content.parent) {
+      contentArray.unshift(withoutParent(content.parent))
+      content = content.parent
+    }
+    commit('setContent', contentArray)
+    let pageComponentInits = []
+    contentArray.forEach((page) => {
+      pageComponentInits.push(dispatch('component/init', page.componentLocations))
+    })
+
+    if (content.layout.navBar) {
+      let mockLocations = [{ component: content.layout.navBar }]
+      pageComponentInits.push(dispatch('component/init', mockLocations))
+    }
+
+    await Promise.all(
+      [
+        dispatch('layout/init', content.layout['@id']),
+        ...pageComponentInits
+      ]
+    )
   }
 }

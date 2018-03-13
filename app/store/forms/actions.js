@@ -1,12 +1,13 @@
 import { getFormId } from '~/components/Form/_FormId'
 import axios from 'axios'
+
 const AxiosCancelToken = axios.CancelToken
 
 export const actions = {
   init ({ commit, state }, form) {
     const formData = form.vars
     const formId = getFormId(formData)
-    if (!state.forms[formId]) {
+    if (!state.forms[ formId ]) {
       commit('setForm', {
         formData: {
           vars: Object.assign({}, formData, { valid: false }),
@@ -18,8 +19,8 @@ export const actions = {
     }
   },
   initInput ({ commit, state }, { formId, inputVars, children }) {
-    if (!state.forms[formId].children[inputVars.full_name]) {
-      let value = inputVars.multiple ? [] : (inputVars.block_prefixes[1] === 'checkbox' ? inputVars.checked : inputVars.value)
+    if (!state.forms[ formId ].children[ inputVars.full_name ]) {
+      let value = inputVars.multiple ? [] : (inputVars.block_prefixes[ 1 ] === 'checkbox' ? inputVars.checked : inputVars.value)
 
       commit('setInput', {
         formId,

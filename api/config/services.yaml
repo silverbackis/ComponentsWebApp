@@ -15,6 +15,10 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\DataFixtures\:
+        resource: '../src/DataFixtures'
+        tags: ['doctrine.fixture.orm']
+
     #App\Form\Handler\:
     #    resource: '../src/Form/Handler/*'
     #    public: true

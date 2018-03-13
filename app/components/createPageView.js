@@ -5,7 +5,7 @@ export default function createPageView (depth) {
     name: `page-${depth}`,
 
     asyncData ({ store }) {
-      let pageData = store.getters['page/getPageByDepth'](depth)
+      let pageData = { components: [] } // store.getters['page/getPageByDepth'](depth)
       return {
         pageData
       }

@@ -14,6 +14,5 @@ return [
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle::class => ['all' => true],
     Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
-    Enqueue\Bundle\EnqueueBundle::class => ['all' => true],
     Silverback\ApiComponentBundle\SilverbackApiComponentBundle::class => ['all' => true],
 ];
