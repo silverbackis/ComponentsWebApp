@@ -48,6 +48,7 @@ RUN pecl install xdebug \
 
 COPY --from=0 /usr/bin/composer /usr/bin/composer
 COPY _docker/php/php.ini /usr/local/etc/php/php.ini
+COPY _docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/wwww.conf
 COPY _docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 

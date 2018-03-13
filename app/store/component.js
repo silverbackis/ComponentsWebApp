@@ -2,13 +2,12 @@ import Vue from 'vue'
 import { fetchAll } from '../api/index'
 
 const mapLocationsToComponents = function (locations) {
-  let components = []
+  let components = {}
   locations.forEach(({ component }) => {
-    components.push(component['@id'])
+    components[component['@id']] = { componentGroups: component.componentGroups }
     component.componentGroups.forEach(({ componentLocations }) => {
       if (componentLocations) {
-        console.log(component['@id'], componentLocations)
-        components.push(...mapLocationsToComponents(componentLocations))
+        components = Object.assign(components, mapLocationsToComponents(componentLocations))
       }
     })
   })
@@ -28,9 +27,9 @@ export const mutations = {
 export const actions = {
   async init ({ commit, rootGetters }, locations) {
     let components = mapLocationsToComponents(locations)
-    let data = await fetchAll({ paths: components, $axios: this.$axios })
+    let data = await fetchAll({ paths: Object.keys(components), $axios: this.$axios })
     data.forEach((component) => {
-      commit('setComponent', component)
+      commit('setComponent', Object.assign(component, { componentGroups: components[component['@id']].componentGroups }))
     })
   }
 }

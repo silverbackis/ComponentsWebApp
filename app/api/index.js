@@ -1,4 +1,5 @@
 const logRequests = !!process.env.DEBUG_API
+const requestExpireTime = process.env.NODE_ENV === 'development' ? 0 : (1000 * 15)
 let requests = {}
 let requestsInfo = {}
 
@@ -6,7 +7,7 @@ const isPreviousRequestExpired = (path) => {
   const now = Date.now()
   if (
     requestsInfo[path] !== undefined &&
-    (now - requestsInfo[path].__lastUpdated) <= (1000 * 15)
+    (now - requestsInfo[path].__lastUpdated) <= requestExpireTime
   ) {
     return false
   }
