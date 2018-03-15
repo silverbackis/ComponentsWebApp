@@ -2,13 +2,14 @@ import ComponentWrapper from './Bulma/ComponentWrapper'
 
 export default {
   props: {
-    data: {
+    component: {
       type: Object,
       required: true
     },
     nested: {
       type: Boolean,
-      required: true
+      required: false,
+      default: false
     }
   },
   components: {
@@ -17,6 +18,17 @@ export default {
   computed: {
     containerClass () {
       return !this.nested ? ['container'] : []
+    },
+    childComponents () {
+      let children = []
+      this.component.componentGroups.forEach(({ componentLocations }) => {
+        let components = []
+        componentLocations.forEach(({ component }) => {
+          components.push(component)
+        })
+        children.push(components)
+      })
+      return children
     }
   }
 }

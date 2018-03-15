@@ -27,8 +27,8 @@ export const getters = {
   getApiUrl: (state) => (path) => {
     return state.apiUrl + _.trimStart(path, '/')
   },
-  getContent: state => {
-    return state.content
+  getContent: state => (depth) => {
+    return state.content[depth] || false
   }
 }
 

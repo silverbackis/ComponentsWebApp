@@ -1,11 +1,11 @@
 <template>
   <div>
-    <bulma-components v-if="pageData && pageData.components.length"
+    <bulma-components v-if="pageData && pageData.componentLocations.length"
                       :pageData="pageData"
                       :depth="depth"
                       :nested="nested"
     />
-    <bulma-components v-else-if="componentGroups.length"
+    <bulma-components v-else-if="componentGroups"
                       v-for="(pageData, index) in componentGroups"
                       :key="index"
                       :pageData="pageData"
@@ -34,14 +34,12 @@
         default: false
       },
       pageData: {
-        type: Object
+        type: Object,
+        required: false
       },
       componentGroups: {
         type: Array,
-        required: false,
-        default () {
-          return []
-        }
+        required: false
       }
     },
 

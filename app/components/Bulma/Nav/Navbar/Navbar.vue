@@ -1,11 +1,13 @@
 <template>
-  <nav class="navbar is-fixed-top has-shadow"
-       :style="{transform: 'translateY(' + this.navY + 'px)'}"
-       ref="nav"
+  <component-wrapper ref="nav"
+                     dom-tag="nav"
+                     :extendClass="false"
+                     :class-name="['navbar is-fixed-top has-shadow', component.className]"
+                     :style="{transform: 'translateY(' + this.navY + 'px)'}"
   >
     <div class="navbar-brand">
       <nuxt-link class="navbar-item" to="/" exact>
-        <img src="~/assets/images/bw-logo.svg" alt="British Websites logo" class="logo" />
+        <img src="~/assets/images/bw-logo.svg" alt="British Websites logo" class="logo"/>
       </nuxt-link>
       <div class="navbar-burger burger" @click="isActive=!isActive" :class="{ 'is-active': isActive }">
         <span></span>
@@ -15,10 +17,13 @@
     </div>
 
     <div class="navbar-menu" :class="{ 'is-active': isActive }">
-      <div class="navbar-start">
-        <bulma-navbar-item v-for="(item, index) in navItems"
+      <div class="navbar-start"
+            v-for="(group, index) in childComponents"
+           :key="index"
+      >
+        <bulma-navbar-item v-for="(component, index) in group"
+                           :component="component"
                            :key="index"
-                           :item="item"
         />
       </div>
 
@@ -28,7 +33,7 @@
             <p class="control">
               <a class="button is-primary" :href="getApiUrl('')" rel="noopener" target="_blank">
                 <span class="icon">
-                  <font-awesome-icon icon="book" />
+                  <font-awesome-icon icon="book"/>
                 </span>
                 <span>
                   API Docs
@@ -38,7 +43,7 @@
             <p class="control">
               <a class="button is-outlined is-dark" href="https://github.com/silverbackis/BwStarterWebsite" rel="noopener" target="_blank">
                 <span class="icon">
-                  <font-awesome-icon :icon="['fab', 'github']" size="lg" />
+                  <font-awesome-icon :icon="['fab', 'github']" size="lg"/>
                 </span>
                 <span>GitHub</span>
               </a>
@@ -47,35 +52,30 @@
         </div>
       </div>
     </div>
-  </nav>
+  </component-wrapper>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
   import BulmaNavbarItem from './NavbarItem'
+  import componentMixin from '~/components/componentMixin'
 
   export default {
     components: {
       BulmaNavbarItem
     },
+    mixins: [ componentMixin ],
     data () {
       return {
         isActive: false,
         windowY: 0,
         lastWindowY: 0,
         yTicking: false,
-        navY: 0,
-        navItems: []
-      }
-    },
-    props: {
-      navBar: {
-        type: Object,
-        required: false
+        navY: 0
       }
     },
     computed: {
-      ...mapGetters(['getApiUrl'])
+      ...mapGetters([ 'getApiUrl' ])
     },
     watch: {
       // whenever question changes, this function will run
@@ -122,7 +122,7 @@
 </script>
 
 <style lang="sass">
-  @import "../../../../assets/css/vars"
+  @import "~assets/css/vars"
 
   .logo
     width: auto

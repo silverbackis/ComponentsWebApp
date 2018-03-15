@@ -1,19 +1,13 @@
+import componentMixin from '~/components/componentMixin'
+
 export default {
-  props: {
-    item: {
-      type: Object,
-      required: true
-    }
-  },
+  mixins: [ componentMixin ],
   data: () => ({
     activeClass: 'is-active'
   }),
   computed: {
-    childItems () {
-      return !this.item.child ? null : this.item.child.items
-    },
     toRoute () {
-      return this.item.route.route + (this.item.fragment ? ('#' + this.item.fragment) : '')
+      return this.component.route.route + (this.component.fragment ? ('#' + this.component.fragment) : '')
     }
   }
 }

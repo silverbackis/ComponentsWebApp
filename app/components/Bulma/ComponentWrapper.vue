@@ -13,16 +13,21 @@
       },
       nested: {
         type: Boolean,
-        required: true
+        required: false,
+        default: false
       },
       extendClass: {
         type: Boolean,
         default: true
+      },
+      domTag: {
+        type: String,
+        required: false
       }
     },
     computed: {
       component () {
-        return this.nested ? 'div' : 'section'
+        return this.domTag || (this.nested ? 'div' : 'section')
       },
       componentClass () {
         return this.nested ? 'component' : 'section'

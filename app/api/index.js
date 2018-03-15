@@ -28,29 +28,27 @@ export const fetch = ({ path, $axios, method, data, cancelToken, validateStatus 
     }
   }
   logRequests && console.log(`fetching ${path}...`)
-  if (!requests[path]) {
-    if (!isPreviousRequestExpired(path)) {
-      return requests[path]
-    }
-
-    requests[path] = new Promise((resolve, reject) => {
-      $axios
-        .request({
-          url: path,
-          method,
-          data,
-          cancelToken,
-          validateStatus
-        })
-        .then(({ data }) => {
-          requests[path] = undefined
-          resolve(data)
-        })
-        .catch((err) => {
-          reject(err)
-        })
-    })
+  logRequests && console.log(path, '<<expired>>', isPreviousRequestExpired(path))
+  if (!isPreviousRequestExpired(path)) {
+    return requests[path]
   }
+  requests[path] = new Promise((resolve, reject) => {
+    $axios
+      .request({
+        url: path,
+        method,
+        data,
+        cancelToken,
+        validateStatus
+      })
+      .then((response) => {
+        logRequests && console.log(response)
+        resolve(response.data)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
   return requests[path]
 }
 

@@ -1,8 +1,10 @@
 <template>
   <div class="layout">
     <div class="site-content">
-      <header>
-        <bulma-navbar />
+      <header v-if="layout">
+        <bulma-navbar v-if="layout.navBar"
+                      :component="layout.navBar"
+        />
       </header>
       <nuxt />
     </div>
@@ -21,7 +23,9 @@
       BulmaNavbar
     },
     computed: {
-      ...mapGetters([ 'getApiUrl', 'layout/getLayout' ])
+      ...mapGetters({
+        layout: 'layout/getLayout'
+      })
     },
     head () {
       return {

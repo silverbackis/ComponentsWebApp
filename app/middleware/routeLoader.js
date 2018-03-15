@@ -1,9 +1,9 @@
-export const RouteLoader = async function ({ store, route, redirect, error }) {
+export const RouteLoader = async function ({ store: { dispatch }, route, redirect, error }) {
   let routeData
   try {
-    routeData = await store.dispatch('fetchRoute', { route })
+    routeData = await dispatch('fetchRoute', { route })
   } catch (err) {
-    console.log(err)
+    await dispatch('layout/init')
     if (err.response && err.response.status) {
       error({statusCode: err.response.status, message: err.response.statusText})
     } else {
@@ -29,7 +29,7 @@ export const RouteLoader = async function ({ store, route, redirect, error }) {
     }
   }
 
-  await store.dispatch('initRoute', routeData)
+  await dispatch('initRoute', routeData)
 }
 
 export default RouteLoader

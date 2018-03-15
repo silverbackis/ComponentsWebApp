@@ -1675,12 +1675,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "988d235c7ff777f8fa88b6262ce1f153771eaddb"
+                "reference": "443b7933ab96488cae23c1956e6533af5e6af564"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/988d235c7ff777f8fa88b6262ce1f153771eaddb",
-                "reference": "988d235c7ff777f8fa88b6262ce1f153771eaddb",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/443b7933ab96488cae23c1956e6533af5e6af564",
+                "reference": "443b7933ab96488cae23c1956e6533af5e6af564",
                 "shasum": ""
             },
             "require": {
@@ -1767,7 +1767,7 @@
                 "symfony",
                 "transformation"
             ],
-            "time": "2018-03-11T22:49:27+00:00"
+            "time": "2018-03-15T04:23:09+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -2829,12 +2829,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silverbackis/ApiComponentBundle.git",
-                "reference": "3915047ff1e351d4ed161582c9341575372b1d21"
+                "reference": "6edc8be02de14ab022279553f2c577c1643fd868"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/3915047ff1e351d4ed161582c9341575372b1d21",
-                "reference": "3915047ff1e351d4ed161582c9341575372b1d21",
+                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/6edc8be02de14ab022279553f2c577c1643fd868",
+                "reference": "6edc8be02de14ab022279553f2c577c1643fd868",
                 "shasum": ""
             },
             "require": {
@@ -2893,7 +2893,7 @@
                 "source": "https://github.com/silverbackis/ApiComponentBundle/tree/develop",
                 "issues": "https://github.com/silverbackis/ApiComponentBundle/issues"
             },
-            "time": "2018-03-13T13:03:15+00:00"
+            "time": "2018-03-15T11:33:47+00:00"
         },
         {
             "name": "symfony/apache-pack",
@@ -6896,16 +6896,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.1.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "ba427289009de6f0fd51fb51186eeaa70ab3a33d"
+                "reference": "9db72995231c12c701249f07743c0591ccf70e73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/ba427289009de6f0fd51fb51186eeaa70ab3a33d",
-                "reference": "ba427289009de6f0fd51fb51186eeaa70ab3a33d",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/9db72995231c12c701249f07743c0591ccf70e73",
+                "reference": "9db72995231c12c701249f07743c0591ccf70e73",
                 "shasum": ""
             },
             "require": {
@@ -6952,7 +6952,7 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2018-02-21T19:43:12+00:00"
+            "time": "2018-03-14T01:02:47+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
