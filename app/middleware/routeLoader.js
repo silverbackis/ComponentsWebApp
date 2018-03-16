@@ -1,5 +1,6 @@
 export const RouteLoader = async function ({ store: { dispatch }, route, redirect, error }) {
   let routeData
+
   try {
     routeData = await dispatch('fetchRoute', { route })
   } catch (err) {
@@ -8,6 +9,7 @@ export const RouteLoader = async function ({ store: { dispatch }, route, redirec
       error({statusCode: err.response.status, message: err.response.statusText})
     } else {
       error({statusCode: err.statusCode || 500, message: 'Error fetching from API'})
+      console.warn(err)
     }
     return
   }

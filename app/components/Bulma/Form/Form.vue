@@ -49,7 +49,7 @@
     mixins: [ComponentMixin, FormMixin],
     computed: {
       form () {
-        return this.data.form
+        return this.component.form
       },
       formErrors () {
         // the form is initialised in the store in the form tag which is a child component

@@ -2,6 +2,8 @@ import _ from 'lodash'
 import { fetchRoute } from '../api'
 import { compile } from '~/.nuxt/utils'
 
+export const strict = false
+
 export const state = () => ({
   error: false,
   apiUrl: null,
@@ -40,7 +42,7 @@ export const actions = {
     let path = compile(route.path)(route.params) || '/'
     return fetchRoute({ path, $axios: this.$axios })
   },
-  async initRoute ({ commit, dispatch }, { content }) {
+  async initRoute ({ commit, dispatch, rootGetters }, { content }) {
     const withoutParent = (obj) => {
       obj = Object.assign({}, obj)
       delete obj.parent
@@ -53,21 +55,21 @@ export const actions = {
       content = content.parent
     }
     commit('setContent', contentArray)
-    let pageComponentInits = []
+    let promises = []
     contentArray.forEach((page) => {
-      pageComponentInits.push(dispatch('component/init', page.componentLocations))
+      if (page.componentLocations.length) {
+        promises.push(dispatch('component/initPage', page))
+      }
     })
 
-    if (content.layout.navBar) {
-      let mockLocations = [{ component: content.layout.navBar }]
-      pageComponentInits.push(dispatch('component/init', mockLocations))
+    if (!content.layout) {
+      console.warn('No layout set and no default layout found')
+    } else {
+      if (content.layout) {
+        promises.push(dispatch('layout/init', content.layout['@id']))
+      }
     }
 
-    await Promise.all(
-      [
-        dispatch('layout/init', content.layout['@id']),
-        ...pageComponentInits
-      ]
-    )
+    await Promise.all(promises)
   }
 }

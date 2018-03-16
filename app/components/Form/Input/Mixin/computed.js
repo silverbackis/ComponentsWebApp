@@ -22,7 +22,10 @@ export default {
       })
     },
     classes () {
-      let classes = [this.inputClass]
+      let classes = []
+      if (this.inputClass !== '') {
+        classes.push(this.inputClass)
+      }
       // could have classes assigned from API side (this will be a string)
       let apiClasses = this.input.vars.attr['class']
       if (undefined !== apiClasses) {

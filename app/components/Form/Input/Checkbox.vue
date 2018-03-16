@@ -1,8 +1,8 @@
 <template>
   <label :class="labelClass" :for="input.vars.id">
-    <input type="checkbox"
-           v-model="inputModel"
+    <input v-model="inputModel"
            v-bind="commonProps"
+           :type="'checkbox'"
     >
     <div class="indicator" v-if="isCustom"></div>
     <span class="input-label" v-html="input.vars.label"></span>

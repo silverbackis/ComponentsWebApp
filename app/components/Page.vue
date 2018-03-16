@@ -5,13 +5,6 @@
                       :depth="depth"
                       :nested="nested"
     />
-    <bulma-components v-else-if="componentGroups"
-                      v-for="(pageData, index) in componentGroups"
-                      :key="index"
-                      :pageData="pageData"
-                      :depth="depth"
-                      :nested="nested"
-    />
     <nuxt-child v-else-if="childKey" :key="childKey" />
     <h1 v-else>No components or children configured for this page</h1>
   </div>
@@ -37,8 +30,8 @@
         type: Object,
         required: false
       },
-      componentGroups: {
-        type: Array,
+      componentGroup: {
+        type: Object,
         required: false
       }
     },

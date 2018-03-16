@@ -1,16 +1,16 @@
 <template>
   <div>
     <div v-if="!nested" class="navbar has-shadow">
-      <div v-if="!nested" class="container">
+      <div class="container">
         <div class="column is-paddingless">
           <slot></slot>
         </div>
       </div>
     </div>
     <slot v-else></slot>
-    <nuxt-child v-if="nuxtChild"
+    <nuxt-child v-if="includeNuxtChild"
                 :key="childKey"
-                :componentGroups="childComponentGroups"
+                :componentGroup="component.childComponentGroup"
     />
   </div>
 </template>
@@ -21,7 +21,7 @@
   export default {
     mixins: [NuxtChildMixin],
     props: {
-      nuxtChild: {
+      includeNuxtChild: {
         type: Boolean,
         default: true
       }

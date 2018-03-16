@@ -24,8 +24,8 @@ export default function createPageView (depth) {
     },
 
     props: {
-      componentGroups: {
-        type: Array,
+      componentGroup: {
+        type: Object,
         required: false
       },
       nested: {
@@ -44,14 +44,15 @@ export default function createPageView (depth) {
     },
 
     render (h) {
-      return h(Page, {
-        props: {
-          depth,
-          pageData: this.pageData,
-          componentGroups: this.componentGroups,
-          nested: this.nested
-        }
-      })
+      if (this.pageData || this.componentGroup) {
+        return h(Page, {
+          props: {
+            depth,
+            pageData: this.pageData || this.componentGroup,
+            nested: this.nested
+          }
+        })
+      }
     },
 
     transition () {

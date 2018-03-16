@@ -1,7 +1,7 @@
 <template>
-  <component-wrapper :nested="nested">
+  <component-wrapper v-if="component" :nested="nested">
     <div :class="containerClass">
-      <div class="content" v-html="data.content"></div>
+      <div class="content" v-html="component.content"></div>
     </div>
   </component-wrapper>
 </template>

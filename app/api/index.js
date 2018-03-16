@@ -1,10 +1,13 @@
 const logRequests = !!process.env.DEBUG_API
-const requestExpireTime = process.env.NODE_ENV === 'development' ? 0 : (1000 * 15)
+const requestExpireTime = process.env.NODE_ENV === 'development' ? (1000 * 60) : (1000 * 300)
 let requests = {}
 let requestsInfo = {}
 
 const isPreviousRequestExpired = (path) => {
   const now = Date.now()
+  if (requestsInfo[path]) {
+    console.log('Re-request', path, (now - requestsInfo[path].__lastUpdated), requestExpireTime)
+  }
   if (
     requestsInfo[path] !== undefined &&
     (now - requestsInfo[path].__lastUpdated) <= requestExpireTime

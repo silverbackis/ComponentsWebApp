@@ -2,18 +2,16 @@
 
 namespace App\DataFixtures\Content;
 
-use App\DataFixtures\Layout\DefaultLayout;
+use App\Form\Handler\ContactHandler;
+use App\Form\Type\ContactType;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Silverback\ApiComponentBundle\Entity\Layout\Layout;
-use Silverback\ApiComponentBundle\Entity\Route\Route;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Content\ContentFactory;
+use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Form\FormFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Hero\HeroFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\PageFactory;
-use Silverback\ApiComponentBundle\Factory\Entity\Route\RouteFactory;
 
-class HomePageFixture extends AbstractFixture implements DependentFixtureInterface
+class FormPageFixture extends AbstractFixture
 {
     /** @var PageFactory */
     private $pageFactory;
@@ -21,22 +19,27 @@ class HomePageFixture extends AbstractFixture implements DependentFixtureInterfa
     private $heroFactory;
     /** @var ContentFactory */
     private $contentFactory;
+    /** @var FormFactory  */
+    private $formFactory;
 
     /**
      * HomePageFixture constructor.
      * @param PageFactory $pageFactory
      * @param HeroFactory $heroFactory
      * @param ContentFactory $contentFactory
+     * @param FormFactory $formFactory
      */
     public function __construct(
         PageFactory $pageFactory,
         HeroFactory $heroFactory,
-        ContentFactory $contentFactory
+        ContentFactory $contentFactory,
+        FormFactory $formFactory
     )
     {
         $this->pageFactory = $pageFactory;
         $this->heroFactory = $heroFactory;
         $this->contentFactory = $contentFactory;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -44,41 +47,38 @@ class HomePageFixture extends AbstractFixture implements DependentFixtureInterfa
      */
     public function load(ObjectManager $manager): void
     {
-        /** @var Layout $layout */
-        $layout = $this->getReference('layout');
-        $homeRoute = new Route('/');
         $page = $this->pageFactory->create(
             [
-                'title' => 'Home Page',
-                'metaDescription' => 'Starter website home page',
-                'parent' => null,
-                'layout' => $layout,
-                'route' => $homeRoute
+                'title' => 'Forms',
+                'metaDescription' => 'Handling Symfony forms in the front-end'
             ]
         );
-        $this->addReference('page.home', $page);
+        $this->addReference('page.form', $page);
 
         $this->heroFactory->create(
             [
-                'title' => 'Welcome',
-                'subtitle' => 'This is the BW Starter PWA',
-                'parentContent' => $page
+                'title' => 'Forms',
+                'subtitle' => 'An example of a Symfony form served and handled by the API with validation',
+                'parentContent' => $page,
+                'className' => 'is-success is-bold'
             ]
         );
 
         $this->contentFactory->create(
             [
+                'parentContent' => $page,
+                'lipsum' => ['2', 'short']
+            ]
+        );
+
+        $this->formFactory->create(
+            [
+                'formType' => ContactType::class,
+                'successHandler' => ContactHandler::class,
                 'parentContent' => $page
             ]
         );
 
         $manager->flush();
-    }
-
-    public function getDependencies(): array
-    {
-        return [
-            DefaultLayout::class
-        ];
     }
 }

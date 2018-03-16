@@ -18,6 +18,8 @@ services:
             - ./api/.env
         volumes:
             - ./api:/srv/api:rw
+            # - php:/srv/api:rw
+            - /app-vendor
         restart: on-failure
 
     app:
@@ -51,3 +53,6 @@ services:
         logging:
             options:
                 max-size: 20m
+
+#volumes:
+#    php:

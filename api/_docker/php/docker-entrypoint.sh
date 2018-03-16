@@ -12,6 +12,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 	chown -R www-data var
 	if [ "$APP_ENV" != 'prod' ]; then
 		bin/console api-component-bundle:fixtures:load
+		bin/console c:c
 	fi
 fi
 

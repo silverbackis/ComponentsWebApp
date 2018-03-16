@@ -17,11 +17,8 @@
     </div>
 
     <div class="navbar-menu" :class="{ 'is-active': isActive }">
-      <div class="navbar-start"
-            v-for="(group, index) in childComponents"
-           :key="index"
-      >
-        <bulma-navbar-item v-for="(component, index) in group"
+      <div class="navbar-start" v-if="childComponents.length">
+        <bulma-navbar-item v-for="(component, index) in childComponents[0]"
                            :component="component"
                            :key="index"
         />
@@ -108,8 +105,7 @@
         if (this.yTicking) {
           requestAnimationFrame(this.updateNavY)
         }
-
-        this.navY = this.isActive ? 0 : Math.min(Math.max(this.navY - diff, this.$refs.nav.clientHeight * -1), 0)
+        this.navY = this.isActive ? 0 : Math.min(Math.max(this.navY - diff, this.$refs.nav.$el.clientHeight * -1), 0)
       }
     },
     mounted () {

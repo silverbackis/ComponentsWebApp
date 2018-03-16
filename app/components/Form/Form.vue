@@ -66,7 +66,7 @@
         }
         this.refreshCancelToken({ formId: this.formId })
         try {
-          let response = await this.$axios.request(
+          let { status, data: { form } } = await this.$axios.request(
             {
               url: this.form.vars.action,
               data: this.submitData,
@@ -77,17 +77,18 @@
               }
             }
           )
-          const VARS = response.data.form.vars
+          console.log(form.vars)
+          const VARS = form.vars
           this.setFormValidationResult({
             formId: this.formId,
-            valid: response.status === 200,
+            valid: status === 200,
             errors: VARS.errors
           })
 
-          let x = response.data.form.children.length
+          let x = form.children.length
           let child
           while (x--) {
-            child = response.data.form.children[x]
+            child = form.children[x]
             // E.g. buttons which are not valid/invalid
             if (child.vars.valid === undefined) {
               continue

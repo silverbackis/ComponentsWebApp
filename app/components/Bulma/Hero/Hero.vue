@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="component">
     <component-wrapper :className="['hero', className]"
                        :extendClass="false"
                        :nested="nested"
@@ -7,29 +7,29 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            {{ data.title }}
+            {{ component.title }}
           </h1>
           <h2 class="subtitle">
-            {{ data.subtitle }}
+            {{ component.subtitle }}
           </h2>
         </div>
       </div>
-      <div v-if="data.nav"
-           class="hero-foot">
+      <div v-if="tabs"
+           class="hero-foot"
+      >
         <div class="container">
           <bulma-tabs _style="boxed"
-                      :items="data.nav.items"
-                      :data="data.nav"
-                      :nuxtChild="false"
+                      :component="tabs"
+                      :includeNuxtChild="false"
                       :nested="true"
                       :depth="depth"
           />
         </div>
       </div>
     </component-wrapper>
-    <nuxt-child v-if="data.nav"
+    <nuxt-child v-if="tabs"
                 :key="childKey"
-                :componentGroups="childComponentGroups"
+                :componentGroup="tabs.childComponentGroup"
                 :nested="false"
     />
   </div>
@@ -42,7 +42,14 @@
     mixins: [NuxtChildMixin],
     computed: {
       className () {
-        return this.data.className || 'is-primary is-bold'
+        return this.component.className || 'is-primary is-bold'
+      },
+      tabs () {
+        let groups = this.component.componentGroups || []
+        if (!groups.length || !groups[0].componentLocations.length) {
+          return
+        }
+        return groups[0].componentLocations[0].component
       }
     },
     components: {

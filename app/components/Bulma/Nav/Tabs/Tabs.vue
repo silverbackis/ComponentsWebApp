@@ -1,34 +1,33 @@
 <template>
-  <page-wrapper :nested="nested"
-                :childComponentGroups="childComponentGroups"
-                :data="data"
-                :nuxtChild="nuxtChild"
+  <tab-page-wrapper :nested="nested"
+                :includeNuxtChild="includeNuxtChild"
                 :depth="depth"
+                :component="component"
   >
     <nav class="tabs" :class="this.classModifiers">
       <ul>
-        <bulma-tab-item v-for="(item, index) in _items"
+        <bulma-tab-item v-for="(component, index) in _items"
                         :key="index"
-                        :item="item"
+                        :component="getComponent(component)"
         />
       </ul>
     </nav>
-  </page-wrapper>
+  </tab-page-wrapper>
 </template>
 
 <script>
   import NuxtChildMixin from '~/components/nuxtChildMixin'
-  import BulmaTabItem from './TabItem'
-  import PageWrapper from './TabPageWrapper'
+  import BulmaTabItem from './TabsItem'
+  import TabPageWrapper from './TabPageWrapper'
 
   export default {
     mixins: [NuxtChildMixin],
     components: {
       BulmaTabItem,
-      PageWrapper
+      TabPageWrapper
     },
     props: {
-      nuxtChild: {
+      includeNuxtChild: {
         type: Boolean,
         default: true
       },
@@ -68,10 +67,7 @@
         ]
       },
       _items () {
-        return this.data.items || []
-      },
-      wrapperClassName () {
-        return this.nested ? [] : ['navbar', 'has-shadow']
+        return this.component.componentGroups.length ? this.component.componentGroups[0].componentLocations.map(location => location.component) : []
       }
     },
     methods: {

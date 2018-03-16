@@ -1,14 +1,16 @@
 <template>
-    <ul v-if="!navItems[0].menuLabel"
+    <ul v-if="navItems.length && !navItems[0].menuLabel"
         class="menu-list">
-      <bulma-menu-item v-for="(item, index) in navItems"
+      <bulma-menu-item v-for="(component, index) in navItems"
                        :key="index"
-                       :item="item" />
+                       :component="component"
+      />
     </ul>
     <div v-else>
-      <bulma-menu-item v-for="(item, index) in navItems"
+      <bulma-menu-item v-for="(component, index) in navItems"
                        :key="index"
-                       :item="item" />
+                       :component="component"
+      />
     </div>
 </template>
 

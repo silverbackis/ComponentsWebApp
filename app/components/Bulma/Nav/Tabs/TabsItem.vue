@@ -4,7 +4,7 @@
              :active-class="activeClass"
              :exact="toRoute === '/'"
   >
-    <a>{{ item.label }}</a>
+    <a>{{ component.label }}</a>
   </nuxt-link>
 </template>
 

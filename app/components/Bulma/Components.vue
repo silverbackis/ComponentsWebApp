@@ -1,16 +1,18 @@
 <template>
-  <div class="bulma-components">
+  <div class="bulma-components" v-if="_components">
     <component v-for="component in _components"
                :is="name(component)"
                :key="component.id"
-               :data="component"
+               :component="getComponent(component['@id'])"
                :nested="nested"
                :depth="depth"
-    ></component>
+    />
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
     props: {
       pageData: {
@@ -40,12 +42,15 @@
     },
     methods: {
       name (component) {
-        return 'bulma-' + component.type
+        return 'bulma-' + component['@type']
       }
     },
     computed: {
+      ...mapGetters({
+        getComponent: 'component/getComponent'
+      }),
       _components () {
-        return this.pageData.components
+        return this.pageData.componentLocations.map(loc => loc.component)
       }
     }
   }
