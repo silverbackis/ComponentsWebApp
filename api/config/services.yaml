@@ -6,6 +6,8 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            $projectDir: '%kernel.project_dir%'
 
     App\:
         resource: '../src/*'
@@ -17,11 +19,6 @@ services:
 
     App\DataFixtures\:
         resource: '../src/DataFixtures'
-        tags: ['doctrine.fixture.orm']
-
-    App\DataFixtures\Content\FeaturePageFixture:
-        arguments:
-            $projectDir: '%kernel.project_dir%'
         tags: ['doctrine.fixture.orm']
 
     #App\Form\Handler\:

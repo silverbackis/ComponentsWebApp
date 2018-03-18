@@ -5,7 +5,7 @@
     <div class="gallery-thumb">
       <figure itemprop="associatedMedia" itemscope itemtype="https://schema.org/ImageObject">
         <a class="gallery-link"
-           :href="getApiUrl(item.image)"
+           :href="getApiUrl(item.filePath)"
            itemprop="contentUrl"
            @click.prevent="$photoswipe.open(index, items, $el)"
         >

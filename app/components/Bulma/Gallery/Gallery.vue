@@ -1,11 +1,13 @@
 <template>
-  <component-wrapper :nested="nested" :class="data.className">
-    <div :class="containerClass">
+  <component-wrapper :nested="nested" :class="component.className">
+    <div v-for="(components, index) in this.childComponents"
+         :key="index"
+         :class="containerClass">
       <ul class="columns is-multiline">
-        <gallery-item v-for="(item, index) in data.items"
+        <gallery-item v-for="(item, index) in components"
                       :key="index"
                       class="column is-4 is-3-desktop"
-                      :items="items"
+                      :items="convertComponentsToItems(components)"
                       :item="item"
                       :index="index"
                       :$photoswipe="$photoswipe"
@@ -28,42 +30,18 @@
     },
     data () {
       return {
-        items: [
-          {
-            src: '/img/chewy1.jpg',
-            w: 848,
-            h: 636
-          }, {
-            src: '/img/stoney1.jpg',
-            w: 636,
-            h: 848
-          }, {
-            src: '/img/silverback2.jpg',
-            w: 972,
-            h: 972
-          }, {
-            src: '/img/silverback1.jpg',
-            w: 972,
-            h: 972
-          }, {
-            src: '/img/silverback3.jpg',
-            w: 972,
-            h: 972
-          }, {
-            src: '/img/silverback2.jpg',
-            w: 972,
-            h: 972
-          }, {
-            src: '/img/chewy1.jpg',
-            w: 848,
-            h: 636
-          }, {
-            src: '/img/silverback3.jpg',
-            w: 972,
-            h: 972
-          }
-        ],
         $photoswipe: null
+      }
+    },
+    methods: {
+      convertComponentsToItems (components) {
+        return components.map((component) => {
+          return {
+            src: component.filePath,
+            w: component.width,
+            h: component.height
+          }
+        })
       }
     },
     created () {
