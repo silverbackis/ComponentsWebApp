@@ -1,8 +1,10 @@
 <template>
   <component-wrapper :nested="nested">
-    <div :class="containerClass">
-      <feature-stacked-item v-for="(feature, count) in data.items"
-                            :data="feature"
+    <div v-for="(components, index) in this.childComponents"
+         :key="index"
+         :class="containerClass">
+      <feature-stacked-item v-for="(feature, count) in components"
+                            :component="feature"
                             :class="columnsClass(count)"
                             :key="count"
       />
@@ -21,7 +23,7 @@
     },
     methods: {
       columnsClass (count) {
-        let useCount = this.data.reverse ? count : count + 1
+        let useCount = this.component.reverse ? count : count + 1
         return {
           'feature-media': true,
           columns: true,

@@ -2,9 +2,12 @@
 
 namespace App\DataFixtures\Layout;
 
+use App\DataFixtures\Content\FeaturePageFixture;
 use App\DataFixtures\Content\FormPageFixture;
+use App\DataFixtures\Content\GalleryPageFixture;
 use App\DataFixtures\Content\HomePageFixture;
 use App\DataFixtures\Content\NavigationPagesFixture;
+use App\DataFixtures\Content\NewsPageFixture;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -103,6 +106,36 @@ class LayoutNavBar extends AbstractFixture implements DependentFixtureInterface
             ]
         );
 
+        $pageFeatures = $this->getReference('page.feature');
+        $this->navBarItemFactory->create(
+            [
+                'label' => 'Features',
+                'route' => $pageFeatures->getRoutes()->first() ?: null,
+                'fragment' => null,
+                'parentComponent' => $navBar
+            ]
+        );
+
+        $pageGallery = $this->getReference('page.gallery');
+        $this->navBarItemFactory->create(
+            [
+                'label' => 'Gallery',
+                'route' => $pageGallery->getRoutes()->first() ?: null,
+                'fragment' => null,
+                'parentComponent' => $navBar
+            ]
+        );
+
+        $pageNews = $this->getReference('page.news');
+        $this->navBarItemFactory->create(
+            [
+                'label' => 'News / Blog',
+                'route' => $pageNews->getRoutes()->first() ?: null,
+                'fragment' => null,
+                'parentComponent' => $navBar
+            ]
+        );
+
         $manager->flush();
     }
 
@@ -115,7 +148,10 @@ class LayoutNavBar extends AbstractFixture implements DependentFixtureInterface
             DefaultLayout::class,
             HomePageFixture::class,
             NavigationPagesFixture::class,
-            FormPageFixture::class
+            FormPageFixture::class,
+            FeaturePageFixture::class,
+            GalleryPageFixture::class,
+            NewsPageFixture::class
         ];
     }
 }

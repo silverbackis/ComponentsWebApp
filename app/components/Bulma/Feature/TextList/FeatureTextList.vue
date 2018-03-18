@@ -5,7 +5,7 @@
   >
     <div class="hero-body">
       <div class="container has-text-centered">
-        <h3 class="title features-title" v-if="data.title">{{ data.title }}</h3>
+        <h3 class="title features-title" v-if="component.title">{{ component.title }}</h3>
         <div class="is-inline-block-mobile">
           <div class="columns is-centered has-text-left">
             <div v-for="(features) in featureChunks()"
@@ -15,11 +15,14 @@
                   <span class="fa-li">
                     <font-awesome-icon icon="check-circle" class="has-text-success" size="lg" />
                   </span>
-                  <app-link v-if="feature.link" :to="feature.link">
-                    <strong>{{ feature.label }}</strong>
+                  <app-link v-if="feature.url" :to="feature.url">
+                    <strong>{{ feature.title }}</strong>
+                  </app-link>
+                  <app-link v-else-if="feature.route" :to="feature.route.route">
+                    <strong>{{ feature.title }}</strong>
                   </app-link>
                   <span v-else>
-                    {{ feature.label }}
+                    {{ feature.title }}
                   </span>
                 </li>
               </ul>
@@ -43,12 +46,15 @@
     },
     computed: {
       className () {
-        return this.data.className || 'is-light'
+        return this.component.className || 'is-light'
       }
     },
     methods: {
       featureChunks () {
-        return _.chunk(this.data.items, Math.ceil(this.data.items.length / this.data.columns))
+        if (!this.childComponents.length) {
+          return []
+        }
+        return _.chunk(this.childComponents[0], Math.ceil(this.childComponents[0].length / (this.component.columns || 1)))
       }
     }
   }

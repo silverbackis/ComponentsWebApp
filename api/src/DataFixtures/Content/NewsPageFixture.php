@@ -11,35 +11,25 @@ use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Form\FormFact
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Hero\HeroFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\PageFactory;
 
-class FormPageFixture extends AbstractFixture
+class NewsPageFixture extends AbstractFixture
 {
     /** @var PageFactory */
     private $pageFactory;
     /** @var HeroFactory */
     private $heroFactory;
-    /** @var ContentFactory */
-    private $contentFactory;
-    /** @var FormFactory  */
-    private $formFactory;
 
     /**
      * HomePageFixture constructor.
      * @param PageFactory $pageFactory
      * @param HeroFactory $heroFactory
-     * @param ContentFactory $contentFactory
-     * @param FormFactory $formFactory
      */
     public function __construct(
         PageFactory $pageFactory,
-        HeroFactory $heroFactory,
-        ContentFactory $contentFactory,
-        FormFactory $formFactory
+        HeroFactory $heroFactory
     )
     {
         $this->pageFactory = $pageFactory;
         $this->heroFactory = $heroFactory;
-        $this->contentFactory = $contentFactory;
-        $this->formFactory = $formFactory;
     }
 
     /**
@@ -49,35 +39,22 @@ class FormPageFixture extends AbstractFixture
     {
         $page = $this->pageFactory->create(
             [
-                'title' => 'Forms',
-                'metaDescription' => 'Handling Symfony forms in the front-end'
+                'title' => 'News / Blog',
+                'metaDescription' => 'This is the list component displaying dynamic pages'
             ]
         );
-        $this->addReference('page.form', $page);
+        $this->addReference('page.news', $page);
 
         $this->heroFactory->create(
             [
-                'title' => 'Forms',
-                'subtitle' => 'An example of a Symfony form served and handled by the API with validation',
+                'title' => 'News / Blog',
+                'subtitle' => 'This is the list component displaying dynamic pages',
                 'parentContent' => $page,
-                'className' => 'is-danger is-bold'
+                'className' => 'is-warning is-bold'
             ]
         );
 
-        $this->contentFactory->create(
-            [
-                'parentContent' => $page,
-                'lipsum' => ['2', 'short']
-            ]
-        );
 
-        $this->formFactory->create(
-            [
-                'formType' => ContactType::class,
-                'successHandler' => ContactHandler::class,
-                'parentContent' => $page
-            ]
-        );
 
         $manager->flush();
     }

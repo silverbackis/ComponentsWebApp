@@ -51,7 +51,6 @@
       localProps () {
         let localProps = Object.assign({}, this.commonProps)
         localProps.class.push(this.child.vars.attr.class)
-        console.log(localProps.class)
         return localProps
       }
     }

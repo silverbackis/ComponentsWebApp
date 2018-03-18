@@ -1,26 +1,26 @@
 <template>
   <div>
     <figure class="column is-narrow">
-      <component :is="component"
-                 :to="data.link"
+      <component :is="dynamicComponent"
+                 :to="toRoute"
       >
         <image-loader
           :class="imageClass"
-          :src="getApiUrl(data.thumbnailPath || data.filePath)"
-          :smallSrc="data.placeholderPath ? getApiUrl(data.placeholderPath) : null"
-          :alt="data.label"
+          :src="getApiUrl(component.thumbnailPath || component.filePath)"
+          :smallSrc="component.placeholderPath ? getApiUrl(component.placeholderPath) : null"
+          :alt="component.title"
         />
       </component>
     </figure>
     <div class="column has-text-centered-mobile">
       <div class="content">
-        <h3>{{ data.label }}</h3>
-        <p v-html="data.description"></p>
-        <app-link v-if="data.link && data.buttonText"
-                  :to="data.link"
-                  :class="data.buttonClass || 'button is-primary'"
+        <h3>{{ component.title }}</h3>
+        <p v-html="component.description"></p>
+        <app-link v-if="toRoute && component.buttonText"
+                  :to="toRoute"
+                  :class="component.buttonClass || 'button is-primary'"
         >
-          {{ data.buttonText }}
+          {{ component.buttonText }}
         </app-link>
       </div>
     </div>
@@ -28,17 +28,13 @@
 </template>
 
 <script>
+  import ComponentMixin from '~/components/componentMixin'
   import { mapGetters } from 'vuex'
   import ImageLoader from '~/components/Utils/ImageLoader'
   import AppLink from '~/components/Utils/AppLink'
 
   export default {
-    props: {
-      data: {
-        type: Object,
-        required: true
-      }
-    },
+    mixins: [ComponentMixin],
     components: {
       ImageLoader,
       AppLink
@@ -50,14 +46,17 @@
     },
     computed: {
       ...mapGetters(['getApiUrl']),
-      component () {
-        return this.data.link ? 'app-link' : 'div'
+      dynamicComponent () {
+        return this.toRoute ? 'app-link' : 'div'
       },
       className () {
         return [
           'column',
-          this.data.className || ''
+          this.component.className || ''
         ]
+      },
+      toRoute () {
+        return this.component.url || (this.component.route ? this.component.route.route : null)
       }
     }
   }

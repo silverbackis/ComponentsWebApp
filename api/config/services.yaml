@@ -19,6 +19,11 @@ services:
         resource: '../src/DataFixtures'
         tags: ['doctrine.fixture.orm']
 
+    App\DataFixtures\Content\FeaturePageFixture:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+        tags: ['doctrine.fixture.orm']
+
     #App\Form\Handler\:
     #    resource: '../src/Form/Handler/*'
     #    public: true

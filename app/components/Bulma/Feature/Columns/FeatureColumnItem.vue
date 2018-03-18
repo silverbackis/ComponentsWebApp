@@ -1,33 +1,29 @@
 <template>
-  <component :is="component"
-             :to="data.link"
+  <component :is="dynamicComponent"
+             :to="toRoute"
              :class="className"
   >
-    <div>
+    <div v-if="component.filePath">
       <image-loader
         :class="imageClass"
-        :src="getApiUrl(data.thumbnailPath || data.filePath)"
-        :smallSrc="data.placeholderPath ? getApiUrl(data.placeholderPath) : null"
-        :alt="data.label"
+        :src="getApiUrl(component.thumbnailPath || component.filePath)"
+        :smallSrc="component.placeholderPath ? getApiUrl(component.placeholderPath) : null"
+        :alt="component.title"
       />
     </div>
-    <h4 class="title is-4">{{ data.label }}</h4>
-    <h5 class="subtitle is-size-6-touch">{{ data.description }}</h5>
+    <h4 class="title is-4">{{ component.title }}</h4>
+    <h5 class="subtitle is-size-6-touch">{{ component.description }}</h5>
   </component>
 </template>
 
 <script>
+  import ComponentMixin from '~/components/componentMixin'
   import { mapGetters } from 'vuex'
   import ImageLoader from '~/components/Utils/ImageLoader'
   import AppLink from '~/components/Utils/AppLink'
 
   export default {
-    props: {
-      data: {
-        type: Object,
-        required: true
-      }
-    },
+    mixins: [ComponentMixin],
     components: {
       ImageLoader,
       AppLink
@@ -39,14 +35,17 @@
     },
     computed: {
       ...mapGetters(['getApiUrl']),
-      component () {
-        return this.data.link ? 'app-link' : 'div'
+      dynamicComponent () {
+        return this.toRoute ? 'app-link' : 'div'
       },
       className () {
         return [
           'column',
-          this.data.className || ''
+          this.component.className || ''
         ]
+      },
+      toRoute () {
+        return this.component.url || (this.component.route ? this.component.route.route : null)
       }
     }
   }

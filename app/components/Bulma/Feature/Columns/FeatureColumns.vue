@@ -5,10 +5,13 @@
   >
     <div class="hero-body">
       <div class="container has-text-centered">
-        <h3 class="title features-title">{{ data.title }}</h3>
-        <nav class="columns">
-          <feature-column-item v-for="(feature, count) in data.items"
-                               :data="feature"
+        <h3 class="title features-title">{{ component.title }}</h3>
+        <nav class="columns"
+             v-for="(components, index) in this.childComponents"
+             :key="index"
+        >
+          <feature-column-item v-for="(feature, count) in components"
+                               :component="feature"
                                :key="count"
           />
         </nav>
@@ -33,7 +36,7 @@
     },
     computed: {
       className () {
-        return this.data.className || 'is-dark'
+        return this.component.className || 'is-dark'
       }
     }
   }
