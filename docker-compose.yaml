@@ -21,7 +21,7 @@ services:
         restart: on-failure
         volumes:
             - ./api:/srv/api:rw,cached
-            - /srv/api/var/logs/
+            - /srv/api/var/log/
 
     app:
         build:
