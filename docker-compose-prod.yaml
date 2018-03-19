@@ -1,12 +1,6 @@
 version: '3'
 
 services:
-    mysql:
-        env_file:
-            - ./api/.env
-        volumes:
-            - ./docker/db/data:/var/lib/mysql:rw
-
     varnish:
         environment:
             # HTTPS_METHOD: noredirect
@@ -26,9 +20,6 @@ services:
             LETSENCRYPT_EMAIL: info@silverbackhosting.com
         expose:
             - 3000
-        build:
-            args:
-                app_env: production
         networks:
             - default
             - proxy

@@ -2,8 +2,6 @@ version: '3'
 
 services:
     mysql:
-        volumes:
-            - db-mysql:/var/lib/mysql:rw
         ports:
             - "4306:3306"
     php:
@@ -23,9 +21,3 @@ services:
     app:
         ports:
             - "80:3000"
-        build:
-            args:
-                app_env: development
-
-volumes:
-    db-mysql:
