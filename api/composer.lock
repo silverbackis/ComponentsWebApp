@@ -2830,12 +2830,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silverbackis/ApiComponentBundle.git",
-                "reference": "14897ca80dd27541e81234c81768a63e80466e77"
+                "reference": "43a92dd25644c4a844c2988074ac55fa29f693d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/14897ca80dd27541e81234c81768a63e80466e77",
-                "reference": "14897ca80dd27541e81234c81768a63e80466e77",
+                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/43a92dd25644c4a844c2988074ac55fa29f693d1",
+                "reference": "43a92dd25644c4a844c2988074ac55fa29f693d1",
                 "shasum": ""
             },
             "require": {
@@ -2894,7 +2894,7 @@
                 "source": "https://github.com/silverbackis/ApiComponentBundle/tree/develop",
                 "issues": "https://github.com/silverbackis/ApiComponentBundle/issues"
             },
-            "time": "2018-03-18T18:20:16+00:00"
+            "time": "2018-03-19T12:46:47+00:00"
         },
         {
             "name": "symfony/apache-pack",

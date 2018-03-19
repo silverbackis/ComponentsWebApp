@@ -13,6 +13,9 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 	if [ "$APP_ENV" != 'prod' ]; then
 		bin/console api-component-bundle:fixtures:load
 		bin/console c:c
+  else
+		bin/console c:c
+    bin/console c:w
 	fi
 fi
 
