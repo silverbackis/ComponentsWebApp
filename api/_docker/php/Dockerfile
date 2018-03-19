@@ -27,7 +27,6 @@ RUN set -xe \
 		make \
   && pecl install \
     apcu-${APCU_VERSION} \
-    amqp \
     imagick \
     xdebug \
 	&& docker-php-ext-configure gd \
