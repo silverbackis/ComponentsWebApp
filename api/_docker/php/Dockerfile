@@ -18,9 +18,18 @@ RUN set -xe \
 		freetype-dev \
 		libpng-dev \
 		libjpeg-turbo-dev \
-		rabbitmq-c-dev \
 		libssh-dev \
-		libxml2-dev autoconf g++ imagemagick-dev libtool make \
+		libxml2-dev \
+	&& apk add --no-cache autoconf \
+		g++ \
+		imagemagick-dev \
+		libtool \
+		make \
+  && pecl install \
+    apcu-${APCU_VERSION} \
+    amqp \
+    imagick \
+    xdebug \
 	&& docker-php-ext-configure gd \
 	  --with-gd \
 	  --with-freetype-dir=/usr/include/ \
@@ -35,21 +44,14 @@ RUN set -xe \
     intl \
     zip \
 	&& docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) gd \
-  && pecl install \
-    apcu-${APCU_VERSION} \
-    amqp \
-    imagick \
   && docker-php-ext-enable --ini-name 20-apcu.ini apcu \
   && docker-php-ext-enable --ini-name 05-opcache.ini opcache \
-  && docker-php-ext-enable amqp \
   && docker-php-ext-enable imagick \
+  && docker-php-ext-enable xdebug \
 	&& apk del .build-deps
 
-RUN pecl install xdebug \
-  && docker-php-ext-enable xdebug
-
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-COPY docker/php/php.ini /usr/local/etc/php/php.ini
+COPY _docker/php/php.ini /usr/local/etc/php/php.ini
 COPY _docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/wwww.conf
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
