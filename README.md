@@ -30,4 +30,7 @@ bin/console app:fixtures:load
 
 # Updates timestamps in database to file last modified
 bin/console app:form:cache:clear
+
+docker-compose exec php bin/console cache:warmup
+docker-compose exec php bin/console app:fixtures:load -e dev
 ```
