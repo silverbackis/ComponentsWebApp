@@ -60,7 +60,7 @@ class FeaturePageFixture extends AbstractFixture implements DependentFixtureInte
     {
         $page = $this->pageFactory->create(
             [
-                'title' => 'Features',
+                'title' => 'Feature content',
                 'metaDescription' => 'Feature components'
             ]
         );
@@ -68,7 +68,7 @@ class FeaturePageFixture extends AbstractFixture implements DependentFixtureInte
 
         $this->heroFactory->create(
             [
-                'title' => 'Features',
+                'title' => 'Feature content',
                 'subtitle' => 'We have 3 ways of listing features to choose from as standard',
                 'parentContent' => $page,
                 'className' => 'is-success is-bold'
