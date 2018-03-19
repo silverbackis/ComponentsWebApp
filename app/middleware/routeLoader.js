@@ -13,13 +13,23 @@ export const RouteLoader = async function ({ store: { dispatch }, route, redirec
     }
     return
   }
+  if (!routeData) {
+    console.warn(routeData)
+    error({statusCode: 500, message: 'Error fetching from API - No Route Data'})
+    return
+  }
+  if (typeof routeData !== 'object') {
+    console.warn(routeData)
+    error({statusCode: 500, message: 'API returned invalid JSON'})
+    return
+  }
 
   // Follow all redirects in data tree - to do: ability to set max redirects
   let maxRedirects = 10
   if (maxRedirects) {
     let redirects = 0
     while (
-      routeData.redirect !== null &&
+      routeData.redirect &&
       redirects <= maxRedirects
     ) {
       routeData = routeData.redirect
@@ -27,7 +37,6 @@ export const RouteLoader = async function ({ store: { dispatch }, route, redirec
     }
     if (redirects) {
       redirect(routeData.route)
-      return
     }
   }
 
