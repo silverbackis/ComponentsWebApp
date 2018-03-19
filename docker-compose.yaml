@@ -16,10 +16,6 @@ services:
             - mysql
         env_file:
             - ./api/.env
-        volumes:
-            - ./api:/srv/api:rw
-            # - php:/srv/api:rw
-            - /app-vendor
         restart: on-failure
 
     app:

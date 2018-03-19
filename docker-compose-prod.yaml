@@ -6,6 +6,7 @@ services:
             - ./api/.env
         volumes:
             - ./docker/db/data:/var/lib/mysql:rw
+
     varnish:
         environment:
             # HTTPS_METHOD: noredirect

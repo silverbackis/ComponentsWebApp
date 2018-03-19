@@ -8,6 +8,7 @@ services:
             - "4306:3306"
     php:
         volumes:
+            - ./api:/srv/api:rw,cached
             # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
             - /srv/api/var/
             - /srv/api/var/cache/
