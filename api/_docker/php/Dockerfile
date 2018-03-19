@@ -1,6 +1,5 @@
 ARG PHP_VERSION=7.2
 ARG ALPINE_VERSION=3.7
-FROM composer:1.5
 FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION}
 
 RUN apk add --no-cache --virtual .persistent-deps \
