@@ -8,7 +8,6 @@ services:
         volumes:
             - /srv/api/var/
             - /srv/api/var/cache/
-            - /srv/api/var/logs/
             - /srv/api/var/sessions/
     nginx:
         ports:
