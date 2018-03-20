@@ -93,7 +93,7 @@ class FeaturePageFixture extends AbstractFixture implements DependentFixtureInte
         $itemFactory->create(
             [
                 'title' => 'Nuxt',
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.',
+                'description' => 'Nuxt.js is a minimal framework for creating Vue.js applications with server side rendering, code-splitting, hot-reloading, static generation and more!',
                 'url' => 'https://nuxtjs.org/',
                 'filePath' => $this->projectDir . '/public/images/nuxt.svg',
                 'parentComponent' => $featureStacked,
@@ -103,7 +103,7 @@ class FeaturePageFixture extends AbstractFixture implements DependentFixtureInte
         $itemFactory->create(
             [
                 'title' => 'API Platform',
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.',
+                'description' => 'API Platform is a set of tools to build and consume web APIs. Develop complex and high performance API-first projects',
                 'url' => 'https://api-platform.com/',
                 'filePath' => $this->projectDir . '/public/images/api-platform-spider.svg',
                 'parentComponent' => $featureStacked,
@@ -113,13 +113,14 @@ class FeaturePageFixture extends AbstractFixture implements DependentFixtureInte
         $itemFactory->create(
             [
                 'title' => 'Bulma',
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.',
+                'description' => 'Bulma is an open source CSS framework based on Flexbox and built with Sass. It\'s 100% responsive, fully modular, and available for free.',
                 'url' => 'http://bulma.io/',
                 'filePath' => $this->projectDir . '/public/images/bulma.svg',
                 'parentComponent' => $featureStacked,
                 'buttonText' => 'Visit Website'
             ]
         );
+
         return $featureStacked;
     }
 
