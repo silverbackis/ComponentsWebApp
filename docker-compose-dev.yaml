@@ -6,10 +6,9 @@ services:
             - "4306:3306"
     php:
         volumes:
-            - /srv/api/var/
-            - /srv/api/var/log/
-            - /srv/api/var/cache/
-            - /srv/api/var/sessions/
+            - ./api:/srv/api:rw,cached
+            # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
+            # - ./api/var:/srv/api/var:rw
     api:
         ports:
             - "8080:80"
