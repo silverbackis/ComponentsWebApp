@@ -14,19 +14,6 @@ services:
             - default
             - proxy
 
-#    nginx:
-#        environment:
-#            VIRTUAL_HOST: api.starter.b-w.uk
-#            LETSENCRYPT_HOST: api.starter.b-w.uk
-#            LETSENCRYPT_EMAIL: info@silverbackhosting.com
-#            VIRTUAL_PORT: 80
-#            # HTTPS_METHOD: noredirect
-#        expose:
-#            - 80
-#        networks:
-#            - default
-#            - proxy
-
     app:
         environment:
             VIRTUAL_HOST: starter.b-w.uk

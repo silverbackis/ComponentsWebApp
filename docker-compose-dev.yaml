@@ -9,10 +9,12 @@ services:
             - /srv/api/var/
             - /srv/api/var/cache/
             - /srv/api/var/sessions/
-    nginx:
+    api:
         ports:
             - "8080:80"
     varnish:
+        volumes:
+            - ./api/_docker/varnish/conf:/etc/varnish:ro
         ports:
             - "8081:80"
     app:

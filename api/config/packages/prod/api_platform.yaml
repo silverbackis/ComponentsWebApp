@@ -1,0 +1,3 @@
+api_platform:
+    http_cache:
+        max_age: 15

@@ -41,7 +41,7 @@
     },
     data () {
       return {
-        imageClass: 'image feature-stacked-item'
+        imageClass: 'image feature-stacked-item has-text-centered'
       }
     },
     computed: {
@@ -70,10 +70,12 @@
     position: relative
     height: 100%
     max-height: 150px
-    margin: auto auto 1rem
     width: 100%
     min-width: 50px
     max-width: 200px
+    margin: auto
     +mobile
       width: 200px
+    +desktop
+      margin: auto auto 1rem
 </style>

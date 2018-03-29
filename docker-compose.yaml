@@ -34,7 +34,7 @@ services:
             - /usr/src/app/node_modules
             - /usr/src/app/build
 
-    nginx:
+    api:
         build:
             context: ./api
             dockerfile: ./_docker/nginx/Dockerfile
@@ -48,13 +48,7 @@ services:
             context: ./api
             dockerfile: ./_docker/varnish/Dockerfile
         depends_on:
-            - nginx
-        volumes:
-            - ./api/_docker/varnish/conf:/etc/varnish:ro
-        logging:
-            options:
-                max-size: 20m
+            - api
 
 volumes:
     db-mysql:
-#    php:
