@@ -66,6 +66,5 @@ RUN composer dump-autoload --classmap-authoritative --no-dev
 COPY _docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
-RUN usermod -u 1000 www-data
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
