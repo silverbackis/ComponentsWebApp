@@ -27,6 +27,9 @@ services:
             - default
             - proxy
 
+    php:
+        volumes:
+            - ./api/var/log:/srv/api/var/log:ro
 networks:
   proxy:
     external:
