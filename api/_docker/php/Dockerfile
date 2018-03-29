@@ -28,6 +28,7 @@ RUN set -xe \
     apcu-${APCU_VERSION} \
     imagick \
     xdebug \
+  && pecl clear-cache \
 	&& docker-php-ext-configure gd \
 	  --with-gd \
 	  --with-freetype-dir=/usr/include/ \
@@ -53,15 +54,32 @@ COPY _docker/php/php.ini /usr/local/etc/php/php.ini
 COPY _docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/wwww.conf
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --classmap-authoritative
+RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --classmap-authoritative \
+	&& composer clear-cache
+ENV PATH="${PATH}:/root/.composer/vendor/bin"
 
 WORKDIR /srv/api
 
+# Prevent Symfony Flex from generating a project ID at build time
+ARG SYMFONY_SKIP_REGISTRATION=1
+
+# Build for production
+ARG APP_ENV=prod
+
+# Prevent the reinstallation of vendors at every changes in the source code
+COPY composer.json composer.lock ./
+RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest \
+	&& composer clear-cache
+
 COPY . ./
 
-RUN mkdir -p ./var/cache ./var/log ./var/sessions
-RUN composer dump-autoload --classmap-authoritative --no-dev
-RUN chown -R www-data ./var
+RUN mkdir -p var/cache var/logs var/sessions \
+	&& composer dump-autoload --classmap-authoritative --no-dev \
+	&& composer run-script --no-dev post-install-cmd \
+	&& chmod +x bin/console \
+	&& sync \
+	&& chown -R www-data var
+VOLUME /srv/api/var
 
 COPY _docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint

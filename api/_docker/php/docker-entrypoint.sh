@@ -7,16 +7,19 @@ if [ "${1#-}" != "$1" ]; then
 fi
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
-	composer install --prefer-dist --no-progress --no-suggest --no-interaction
-	# Permissions hack because setfacl does not work on Mac and Windows
-	chown -R www-data var
+  mkdir -p var/cache var/logs var/sessions
+
 	if [ "$APP_ENV" != 'prod' ]; then
+	  composer install --prefer-dist --no-progress --no-suggest --no-interaction
 		bin/console api-component-bundle:fixtures:load
 		bin/console c:c
   else
 		bin/console c:c
     bin/console c:w
 	fi
+
+	# Permissions hack because setfacl does not work on Mac and Windows
+	chown -R www-data var
 fi
 
 exec docker-php-entrypoint "$@"
