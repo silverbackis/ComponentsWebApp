@@ -73,7 +73,7 @@ RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-pr
 
 COPY . ./
 
-RUN mkdir -p var/cache var/logs var/sessions \
+RUN mkdir -p var/cache var/log var/sessions \
 	&& composer dump-autoload --classmap-authoritative --no-dev \
 	&& chmod +x bin/console \
 	&& sync \
