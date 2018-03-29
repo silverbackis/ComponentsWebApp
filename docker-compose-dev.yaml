@@ -7,6 +7,7 @@ services:
     php:
         volumes:
             - /srv/api/var/
+            - /srv/api/var/log/
             - /srv/api/var/cache/
             - /srv/api/var/sessions/
     api:
