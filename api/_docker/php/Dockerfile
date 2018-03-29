@@ -65,7 +65,6 @@ ARG SYMFONY_SKIP_REGISTRATION=1
 
 # Build for production
 ARG APP_ENV=prod
-ARG APP_SECRET=NotASecret
 
 # Prevent the reinstallation of vendors at every changes in the source code
 COPY composer.json composer.lock ./
@@ -76,7 +75,6 @@ COPY . ./
 
 RUN mkdir -p var/cache var/logs var/sessions \
 	&& composer dump-autoload --classmap-authoritative --no-dev \
-	&& composer run-script --no-dev post-install-cmd \
 	&& chmod +x bin/console \
 	&& sync \
 	&& chown -R www-data var
