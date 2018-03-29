@@ -58,10 +58,10 @@ RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress
 WORKDIR /srv/api
 
 COPY . ./
-RUN mkdir -p ./var/cache ./var/log ./var/sessions
-RUN chown -R www-data ./var
 
+RUN mkdir -p ./var/cache ./var/log ./var/sessions
 RUN composer dump-autoload --classmap-authoritative --no-dev
+RUN chown -R www-data ./var
 
 COPY _docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
