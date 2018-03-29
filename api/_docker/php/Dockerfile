@@ -65,6 +65,7 @@ ARG SYMFONY_SKIP_REGISTRATION=1
 
 # Build for production
 ARG APP_ENV=prod
+ARG APP_SECRET=NotASecret
 
 # Prevent the reinstallation of vendors at every changes in the source code
 COPY composer.json composer.lock ./
