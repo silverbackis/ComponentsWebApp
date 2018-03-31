@@ -10,25 +10,33 @@ RUN apk add --no-cache --virtual .persistent-deps \
 ENV APCU_VERSION 5.1.11
 
 RUN set -xe \
+  && apk upgrade --update \
 	&& apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		icu-dev \
 		zlib-dev \
-		freetype-dev \
-		libpng-dev \
-		libjpeg-turbo-dev \
-		libssh-dev \
-		libxml2-dev \
-	&& apk add --no-cache autoconf \
+	&& apk add --no-cache \
+	  autoconf \
 		g++ \
-		imagemagick-dev \
 		libtool \
 		make \
+		imagemagick \
+		freetype \
+		libpng \
+		libjpeg-turbo \
+		libssh \
+		libxml2 \
+  && apk add --no-cache \
+      imagemagick-dev \
+      freetype-dev \
+      libpng-dev \
+      libjpeg-turbo-dev \
+      libssh-dev \
+      libxml2-dev \
   && pecl install \
     apcu-${APCU_VERSION} \
     imagick \
     xdebug \
-  && pecl clear-cache \
 	&& docker-php-ext-configure gd \
 	  --with-gd \
 	  --with-freetype-dir=/usr/include/ \
@@ -42,12 +50,14 @@ RUN set -xe \
     pdo_mysql \
     intl \
     zip \
-	&& docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) gd \
+    -j$(getconf _NPROCESSORS_ONLN) gd \
   && docker-php-ext-enable --ini-name 20-apcu.ini apcu \
   && docker-php-ext-enable --ini-name 05-opcache.ini opcache \
-  && docker-php-ext-enable imagick \
   && docker-php-ext-enable xdebug \
-	&& apk del .build-deps
+  && docker-php-ext-enable imagick \
+	&& apk del --no-cache .build-deps \
+             imagemagick-dev freetype-dev libpng-dev libjpeg-turbo-dev libmcrypt-dev libssh-dev libxml2-dev \
+  && pecl clear-cache
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY _docker/php/php.ini /usr/local/etc/php/php.ini
