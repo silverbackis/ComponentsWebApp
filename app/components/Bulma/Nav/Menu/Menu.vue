@@ -1,49 +1,52 @@
 <template>
-  <section class="section">
+  <component-wrapper :nested="nested">
     <div class="container">
       <div class="columns">
         <div class="column is-narrow">
           <aside class="menu">
             <bulma-menu-item-group v-for="(itemGroup, index) in navItemsGrouped"
                                    :navItems="itemGroup"
-                                   :key="index" />
+                                   :key="index"
+            />
           </aside>
         </div>
         <div class="column">
-          <nuxt-child :key="childKey" :componentGroups="childComponentGroups" :noContainer="false" />
+          <nuxt-child :key="childKey"
+                      :componentGroup="component.childComponentGroup"
+                      :nested="true"
+          />
         </div>
       </div>
     </div>
-  </section>
+  </component-wrapper>
 </template>
 
 <script>
+  import NuxtChildMixin from '~/components/nuxtChildMixin'
   import BulmaMenuItemGroup from './MenuItemGroup'
-  import NuxtChildMixin from '../NuxtChildMixin'
 
   export default {
-    name: 'Menu',
     mixins: [NuxtChildMixin],
     components: {
       BulmaMenuItemGroup
     },
     computed: {
       navItems () {
-        return this.data.items
+        return this.childComponents[0]
       },
       navItemsGrouped () {
         let groups = []
         let currentGroup = []
         let previousItem
-        for (let i = 0; i < this.navItems.length; i++) {
-          let navItem = this.navItems[i]
+        this.navItems.forEach((navItem) => {
+          navItem = this.getComponent(navItem)
           if (previousItem && (previousItem.menuLabel || navItem.menuLabel)) {
             groups.push(currentGroup)
             currentGroup = []
           }
           currentGroup.push(navItem)
           previousItem = navItem
-        }
+        })
         groups.push(currentGroup)
         return groups
       }
@@ -56,5 +59,6 @@
 
   aside.menu
     padding: .75rem
-    border-right: 2px solid $grey-lighter
+    border: 1px solid $grey-lighter
+    min-width: 250px
 </style>

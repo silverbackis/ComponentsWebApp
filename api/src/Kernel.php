@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Silverback\ApiComponentBundle\Form\Handler\FormHandlerInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

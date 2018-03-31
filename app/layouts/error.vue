@@ -7,7 +7,7 @@
             <div class="level-left">
               <h1 class="error-code">{{ error.statusCode }}</h1>
             </div>
-            <div class="level-right">
+            <div class="level-right is-marginless">
               <h2 class="error-message" v-if="error.statusCode === 404"><span v-html="error.message"></span></h2>
               <h2 class="error-message" v-else><span v-html="error.message"></span><b></b></h2>
             </div>
@@ -40,9 +40,11 @@ export default {
       font-size: 1.6rem
       font-weight: 500
       vertical-align: top
-      border-right: 1px solid $grey-light
-      margin: 0 20px 0 0
-      padding: 10px 23px
+      margin: 0 0 .7rem
+      +tablet
+        border-right: 1px solid $grey-light
+        margin: 0 20px 0 0
+        padding: 10px 23px
 
     .error-wrapper-message
       display: inline-block
@@ -56,7 +58,7 @@ export default {
       font-weight: normal
       margin: 0
       padding: 0
-      text-align: left
+      text-align: center
       b
         color: $red
 

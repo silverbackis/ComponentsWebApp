@@ -3,7 +3,7 @@ vcl 4.0;
 import std;
 
 backend default {
-  .host = "nginx";
+  .host = "api";
   .port = "80";
   # Health check
   #.probe = {
@@ -34,6 +34,11 @@ sub vcl_deliver {
   unset resp.http.url;
   # Uncomment the following line to NOT send the "Cache-Tags" header to the client (prevent using CloudFlare cache tags)
   #unset resp.http.Cache-Tags;
+  if (obj.hits > 0) {
+       set resp.http.X-Cache = "HIT";
+  } else {
+       set resp.http.X-Cache = "MISS";
+  }
 }
 
 sub vcl_recv {
@@ -53,6 +58,27 @@ sub vcl_recv {
     }
 
     return(synth(400, "ApiPlatform-Ban-Regex HTTP header must be set."));
+  }
+
+  if (req.http.Cookie) {
+    set req.http.Cookie = ";" + req.http.Cookie;
+    set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+    set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
+    set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+    set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+
+    if (req.http.Cookie == "") {
+      // If there are no more cookies, remove the header to get page cached.
+      unset req.http.Cookie;
+    }
+  }
+
+  set req.http.Surrogate-Capability = "abc=ESI/1.0";
+
+  if (req.http.X-Forwarded-Proto == "https" ) {
+    set req.http.X-Forwarded-Port = "443";
+  } else {
+    set req.http.X-Forwarded-Port = "80";
   }
 }
 
@@ -78,4 +104,12 @@ sub vcl_hit {
       return (synth(503, "API is down"));
     }
   }
+}
+
+sub vcl_backend_response {
+    // Check for ESI acknowledgement and remove Surrogate-Control header
+    if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
+        unset beresp.http.Surrogate-Control;
+        set beresp.do_esi = true;
+    }
 }

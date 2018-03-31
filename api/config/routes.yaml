@@ -1,3 +1,7 @@
 #index:
 #    path: /
 #    defaults: { _controller: 'App\Controller\DefaultController::index' }
+
+silverback_api_components:
+    resource: '@SilverbackApiComponentBundle/Controller/'
+    type: annotation

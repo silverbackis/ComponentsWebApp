@@ -1,39 +1,70 @@
-FROM composer:1.5
-FROM php:7.2-fpm-alpine
+ARG PHP_VERSION=7.2
+ARG ALPINE_VERSION=3.7
+FROM php:${PHP_VERSION}-fpm-alpine${ALPINE_VERSION}
 
 RUN apk add --no-cache --virtual .persistent-deps \
 		git \
 		icu-libs \
 		zlib
 
-ENV APCU_VERSION 5.1.8
+ENV APCU_VERSION 5.1.11
 
 RUN set -xe \
 	&& apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		icu-dev \
 		zlib-dev \
+		freetype-dev \
+		libpng-dev \
+		libjpeg-turbo-dev \
+		libssh-dev \
+		libxml2-dev \
+	&& apk add --no-cache autoconf \
+		g++ \
+		imagemagick-dev \
+		libtool \
+		make \
+  && pecl install \
+    apcu-${APCU_VERSION} \
+    imagick \
+    xdebug \
+  && pecl clear-cache \
+	&& docker-php-ext-configure gd \
+	  --with-gd \
+	  --with-freetype-dir=/usr/include/ \
+	  --with-png-dir=/usr/include/ \
+	  --with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-install \
-		pdo pdo_mysql \
-		intl zip \
-	&& pecl install \
-		apcu-${APCU_VERSION} \
-	&& docker-php-ext-enable --ini-name 20-apcu.ini apcu \
-	&& docker-php-ext-enable --ini-name 05-opcache.ini opcache \
+		exif \
+    bcmath \
+    sockets \
+    pdo \
+    pdo_mysql \
+    intl \
+    zip \
+	&& docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) gd \
+  && docker-php-ext-enable --ini-name 20-apcu.ini apcu \
+  && docker-php-ext-enable --ini-name 05-opcache.ini opcache \
+  && docker-php-ext-enable imagick \
+  && docker-php-ext-enable xdebug \
 	&& apk del .build-deps
 
-COPY --from=0 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY _docker/php/php.ini /usr/local/etc/php/php.ini
-COPY _docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-RUN chmod +x /usr/local/bin/docker-entrypoint
+COPY _docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/wwww.conf
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
+RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --classmap-authoritative \
+	&& composer clear-cache
+ENV PATH="${PATH}:/root/.composer/vendor/bin"
 
 WORKDIR /srv/api
-ENTRYPOINT ["docker-entrypoint"]
-CMD ["php-fpm"]
 
-# https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
-ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --classmap-authoritative  --no-interaction
+# Prevent Symfony Flex from generating a project ID at build time
+ARG SYMFONY_SKIP_REGISTRATION=1
+
+# Build for production
+ARG APP_ENV=prod
 
 # Prevent the reinstallation of vendors at every changes in the source code
 COPY composer.json composer.lock ./
@@ -42,6 +73,15 @@ RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-pr
 
 COPY . ./
 
-RUN mkdir -p var/cache var/logs var/sessions \
-  && composer dump-autoload --classmap-authoritative --no-dev \
-	  && chown -R www-data var
+RUN mkdir -p var/cache var/log var/sessions var/logs \
+	&& composer dump-autoload --classmap-authoritative --no-dev \
+	&& chmod +x bin/console \
+	&& sync \
+	&& chown -R www-data var
+VOLUME /srv/api/var
+
+COPY _docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint
+
+ENTRYPOINT ["docker-entrypoint"]
+CMD ["php-fpm"]

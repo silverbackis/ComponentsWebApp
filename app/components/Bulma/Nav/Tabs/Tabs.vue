@@ -1,46 +1,35 @@
 <template>
-  <div>
-    <page-wrapper :wrap="wrap"
-                  :depth="depth"
-                  :childComponentGroups="childComponentGroups"
-                  :data="data"
-    >
-      <nav class="tabs" :class="this.classModifiers">
-        <ul>
-          <bulma-tab-item v-for="(item, index) in _items"
-                          :key="index"
-                          :item="item"
-          />
-        </ul>
-      </nav>
-    </page-wrapper>
-  </div>
+  <tab-page-wrapper :nested="nested"
+                :includeNuxtChild="includeNuxtChild"
+                :depth="depth"
+                :component="component"
+  >
+    <nav class="tabs" :class="this.classModifiers">
+      <ul>
+        <bulma-tab-item v-for="(component, index) in _items"
+                        :key="index"
+                        :component="getComponent(component)"
+        />
+      </ul>
+    </nav>
+  </tab-page-wrapper>
 </template>
 
 <script>
-  import BulmaTabItem from './TabItem'
-  import PageWrapper from './TabPageWrapper'
+  import NuxtChildMixin from '~/components/nuxtChildMixin'
+  import BulmaTabItem from './TabsItem'
+  import TabPageWrapper from './TabPageWrapper'
 
   export default {
+    mixins: [NuxtChildMixin],
     components: {
       BulmaTabItem,
-      PageWrapper
+      TabPageWrapper
     },
     props: {
-      depth: {
-        type: Number,
-        required: false
-      },
-      data: {
-        type: Object,
-        required: false
-      },
-      items: {
-        type: Array,
-        required: false
-      },
-      childComponentGroups: {
-        type: Array
+      includeNuxtChild: {
+        type: Boolean,
+        default: true
       },
       align: {
         type: String,
@@ -66,9 +55,6 @@
       fullwidth: {
         type: Boolean,
         default: false
-      },
-      wrap: {
-        type: Boolean
       }
     },
     computed: {
@@ -81,8 +67,7 @@
         ]
       },
       _items () {
-        let items = this.data ? this.data.items : this.items
-        return items || []
+        return this.component.componentGroups.length ? this.component.componentGroups[0].componentLocations.map(location => location.component) : []
       }
     },
     methods: {

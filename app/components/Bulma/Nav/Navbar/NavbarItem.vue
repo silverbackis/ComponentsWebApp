@@ -1,11 +1,11 @@
 <template>
-  <nuxt-link v-if="!item.child"
+  <nuxt-link v-if="!childComponents.length"
              class="navbar-item"
              :to="toRoute"
              :active-class="activeClass"
              :exact="toRoute === '/'"
   >
-    {{ item.label }}
+    {{ component.label }}
   </nuxt-link>
   <div v-else class="navbar-item has-dropdown is-hoverable">
     <nuxt-link class="navbar-link"
@@ -13,16 +13,22 @@
                :active-class="activeClass"
                :exact="toRoute === '/'"
     >
-      {{ item.label }}
+      {{ component.label }}
     </nuxt-link>
-    <div class="navbar-dropdown">
-      <bulma-navbar-item v-for="(childItem, childIndex) in childItems" :key="childIndex" :item="childItem" />
+    <div class="navbar-dropdown"
+         v-for="(group, index) in childComponents"
+         :key="index"
+    >
+      <bulma-navbar-item v-for="(childComponent, index) in group"
+                         :key="index"
+                         :component="childComponent"
+      />
     </div>
   </div>
 </template>
 
 <script>
-  import NavItemMixin from '../NavItemMixin'
+  import NavItemMixin from '../navItemMixin'
 
   export default {
     name: 'BulmaNavbarItem',

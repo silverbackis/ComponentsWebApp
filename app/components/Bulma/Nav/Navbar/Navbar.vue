@@ -1,11 +1,13 @@
 <template>
-  <nav class="navbar is-fixed-top has-shadow"
-       :style="{transform: 'translateY(' + this.navY + 'px)'}"
-       ref="nav"
+  <component-wrapper ref="nav"
+                     dom-tag="nav"
+                     :extendClass="false"
+                     :class-name="['navbar is-fixed-top has-shadow', component.className]"
+                     :style="{transform: 'translateY(' + this.navY + 'px)'}"
   >
     <div class="navbar-brand">
       <nuxt-link class="navbar-item" to="/" exact>
-        <img src="~/assets/images/bw-logo.svg" alt="British Websites logo" class="logo" />
+        <img src="~/assets/images/bw-logo.svg" alt="British Websites logo" class="logo"/>
       </nuxt-link>
       <div class="navbar-burger burger" @click="isActive=!isActive" :class="{ 'is-active': isActive }">
         <span></span>
@@ -15,17 +17,30 @@
     </div>
 
     <div class="navbar-menu" :class="{ 'is-active': isActive }">
-      <div class="navbar-start">
-        <bulma-navbar-item v-for="(item, index) in navItems" :key="index" :item="item" />
+      <div class="navbar-start" v-if="childComponents.length">
+        <bulma-navbar-item v-for="(component, index) in childComponents[0]"
+                           :component="component"
+                           :key="index"
+        />
       </div>
 
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="field is-grouped">
             <p class="control">
-              <a class="button is-outlined is-dark" href="https://github.com/silverbackis/BwStarterWebsite" rel="noopener">
+              <a class="button is-primary" :href="getApiUrl('')" rel="noopener" target="_blank">
                 <span class="icon">
-                  <i class="fa fa-lg fa-github"></i>
+                  <font-awesome-icon icon="book"/>
+                </span>
+                <span>
+                  API Docs
+                </span>
+              </a>
+            </p>
+            <p class="control">
+              <a class="button is-outlined is-dark" href="https://github.com/silverbackis/BwStarterWebsite" rel="noopener" target="_blank">
+                <span class="icon">
+                  <font-awesome-icon :icon="['fab', 'github']" size="lg"/>
                 </span>
                 <span>GitHub</span>
               </a>
@@ -34,17 +49,19 @@
         </div>
       </div>
     </div>
-  </nav>
+  </component-wrapper>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapGetters } from 'vuex'
   import BulmaNavbarItem from './NavbarItem'
+  import componentMixin from '~/components/componentMixin'
 
   export default {
     components: {
       BulmaNavbarItem
     },
+    mixins: [ componentMixin ],
     data () {
       return {
         isActive: false,
@@ -54,12 +71,18 @@
         navY: 0
       }
     },
+    computed: {
+      ...mapGetters([ 'getApiUrl' ])
+    },
     watch: {
       // whenever question changes, this function will run
       isActive: function (isActive) {
         if (isActive) {
           this.navY = 0
         }
+      },
+      $route () {
+        this.isActive = false
       }
     },
     methods: {
@@ -82,18 +105,10 @@
         if (this.yTicking) {
           requestAnimationFrame(this.updateNavY)
         }
-
-        this.navY = this.isActive ? 0 : Math.min(Math.max(this.navY - diff, this.$refs.nav.clientHeight * -1), 0)
+        this.navY = this.isActive ? 0 : Math.min(Math.max(this.navY - diff, this.$refs.nav.$el.clientHeight * -1), 0)
       }
     },
-    computed: {
-      ...mapState({
-        navItems: state => state.layout.data.nav.items
-      })
-    },
     mounted () {
-      // Not using font awesome immediately in this website, so no need to include it in the head of page
-      require('font-awesome/css/font-awesome.css')
       window.addEventListener('scroll', this.updateWindowY)
     },
     beforeDestroy () {
@@ -103,7 +118,7 @@
 </script>
 
 <style lang="sass">
-  @import "../../../../assets/css/vars"
+  @import "~assets/css/vars"
 
   .logo
     width: auto

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="wrap" class="navbar has-shadow">
+    <div v-if="!nested" class="navbar has-shadow">
       <div class="container">
         <div class="column is-paddingless">
           <slot></slot>
@@ -8,28 +8,22 @@
       </div>
     </div>
     <slot v-else></slot>
-    <nuxt-child v-if="depth" :key="childKey" :componentGroups="childComponentGroups" />
+    <nuxt-child v-if="includeNuxtChild"
+                :key="childKey"
+                :componentGroup="component.childComponentGroup"
+    />
   </div>
 </template>
 
 <script>
-  import NuxtChildMixin from '../NuxtChildMixin'
+  import NuxtChildMixin from '../../../nuxtChildMixin'
 
   export default {
     mixins: [NuxtChildMixin],
     props: {
-      wrap: {
+      includeNuxtChild: {
         type: Boolean,
-        default: false
-      },
-      depth: {
-        required: false
-      }
-    },
-    computed: {
-      parentName () {
-        console.log(this.$parent)
-        return this.$parent.$options.name
+        default: true
       }
     }
   }

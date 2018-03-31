@@ -1,21 +1,21 @@
 <template>
-  <div v-if="item.menuLabel"
+  <div v-if="component.menuLabel"
        class="menu-label">
-    {{ item.label }}
+    {{ component.label }}
   </div>
   <li v-else>
     <nuxt-link :to="toRoute"
                :active-class="activeClass"
                :exact="toRoute === '/'"
     >
-      {{ item.label }}
+      {{ component.label }}
     </nuxt-link>
-    <ul v-if="item.child">
+    <ul v-if="component.child">
     </ul>
   </li>
 </template>
 <script>
-  import NavItemMixin from '../NavItemMixin'
+  import NavItemMixin from '../navItemMixin'
 
   export default {
     name: 'BulmaMenuItem',

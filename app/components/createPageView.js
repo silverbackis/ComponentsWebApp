@@ -4,10 +4,10 @@ export default function createPageView (depth) {
   return {
     name: `page-${depth}`,
 
-    async asyncData ({ store, route }) {
-      await store.dispatch('page/FETCH_DEPTH_DATA', { depth, route })
+    asyncData ({ store: { getters } }) {
+      let pageData = getters['getContent'](depth)
       return {
-        pageData: await store.getters['page/getPageByDepth'](depth)
+        pageData
       }
     },
 
@@ -24,12 +24,13 @@ export default function createPageView (depth) {
     },
 
     props: {
-      componentGroups: {
-        type: Array
+      componentGroup: {
+        type: Object,
+        required: false
       },
-      noContainer: {
+      nested: {
         type: Boolean,
-        default: true
+        default: false
       }
     },
 
@@ -43,14 +44,15 @@ export default function createPageView (depth) {
     },
 
     render (h) {
-      return h(Page, {
-        props: {
-          depth,
-          pageData: this.pageData,
-          componentGroups: this.componentGroups,
-          noContainer: this.noContainer
-        }
-      })
+      if (this.pageData || this.componentGroup) {
+        return h(Page, {
+          props: {
+            depth,
+            pageData: this.pageData || this.componentGroup,
+            nested: this.nested
+          }
+        })
+      }
     },
 
     transition () {

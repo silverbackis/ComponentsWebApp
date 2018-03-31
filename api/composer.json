@@ -1,33 +1,26 @@
 {
-    "name": "symfony/skeleton",
+    "name": "silverbackis/bw-starter-website",
     "type": "project",
-    "license": "proprietary",
-    "description": "Project description",
+    "license": "MIT",
+    "description": "BW Starter Website API using API Platform",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/silverbackis/ApiComponentBundle"
+        }
+    ],
     "require": {
-        "php": "^7.0.8",
-        "api-platform/api-pack": "dev-master@dev",
-        "cocur/slugify": "^3.0",
-        "doctrine/data-fixtures": "^1.3",
-        "doctrine/doctrine-fixtures-bundle": "^3.0",
-        "guzzlehttp/guzzle": "^6.3",
-        "jackalope/jackalope-doctrine-dbal": "^1.3",
-        "nelmio/cors-bundle": "^1.5",
-        "symfony/apache-pack": "^1.0",
-        "symfony/browser-kit": "^4.0",
-        "symfony/console": "^4.0",
+        "silverbackis/api-component-bundle": "dev-develop",
         "symfony/flex": "^1.0",
-        "symfony/framework-bundle": "^4.0",
-        "symfony/lts": "^4",
-        "symfony/maker-bundle": "^1.0",
-        "symfony/orm-pack": "^1.0",
-        "symfony/profiler-pack": "^1.0",
-        "symfony/yaml": "^4.0",
-        "webonyx/graphql-php": "^0.11.5"
+        "symfony/proxy-manager-bridge": "^4.0",
+        "roave/security-advisories": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",
         "symfony/dotenv": "^3.4 || ^4.0",
-        "symfony/phpunit-bridge": "^4.0"
+        "symfony/maker-bundle": "^1.0",
+        "symfony/phpunit-bridge": "^4.0",
+        "symfony/var-dumper": "^4.0"
     },
     "config": {
         "preferred-install": {
@@ -63,7 +56,7 @@
     "extra": {
         "symfony": {
             "id": "01C0VV89JMTFVSVWMQMEERA3FA",
-            "allow-contrib": false
+            "allow-contrib": "true"
         }
     },
     "minimum-stability": "dev",

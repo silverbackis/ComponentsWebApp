@@ -1,19 +1,15 @@
 <template>
-  <section :class="sectionClass">
-    <div class="container">
-      <div class="content" v-html="data.content"></div>
+  <component-wrapper v-if="component" :nested="nested">
+    <div :class="containerClass">
+      <div class="content" v-html="component.content"></div>
     </div>
-  </section>
+  </component-wrapper>
 </template>
 
 <script>
+  import ComponentMixin from '~/components/componentMixin'
+
   export default {
-    name: 'Content',
-    props: ['data', 'wrap'],
-    computed: {
-      sectionClass () {
-        return this.wrap ? 'section' : ''
-      }
-    }
+    mixins: [ComponentMixin]
   }
 </script>

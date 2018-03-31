@@ -1,36 +1,57 @@
 <template>
-  <div>
-    <section class="hero is-primary is-bold">
+  <div v-if="component">
+    <component-wrapper :className="['hero', className]"
+                       :extendClass="false"
+                       :nested="nested"
+    >
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            {{ data.title }}
+            {{ component.title }}
           </h1>
           <h2 class="subtitle">
-            {{ data.subtitle }}
+            {{ component.subtitle }}
           </h2>
         </div>
       </div>
-      <div v-if="data.nav"
-           class="hero-foot">
+      <div v-if="tabs"
+           class="hero-foot"
+      >
         <div class="container">
           <bulma-tabs _style="boxed"
-                      :items="data.nav.items"
-                      :data="data.nav"
+                      :component="tabs"
+                      :includeNuxtChild="false"
+                      :nested="true"
+                      :depth="depth"
           />
         </div>
       </div>
-    </section>
-    <nuxt-child v-if="data.nav" :key="childKey" :componentGroups="childComponentGroups" />
+    </component-wrapper>
+    <nuxt-child v-if="tabs"
+                :key="childKey"
+                :componentGroup="tabs.childComponentGroup"
+                :nested="false"
+    />
   </div>
 </template>
 
 <script>
-  import NuxtChildMixin from '~/components/Bulma/Nav/NuxtChildMixin'
+  import NuxtChildMixin from '~/components/nuxtChildMixin'
 
   export default {
-    name: 'Hero',
     mixins: [NuxtChildMixin],
+    computed: {
+      className () {
+        return this.component.className || 'is-primary is-bold'
+      },
+      tabs () {
+        let groups = this.component.componentGroups || []
+        if (!groups.length || !groups[0].componentLocations.length) {
+          return
+        }
+        return groups[0].componentLocations[0].component
+      }
+    },
     components: {
       BulmaTabs: () => import('~/components/Bulma/Nav/Tabs/Tabs.vue')
     }

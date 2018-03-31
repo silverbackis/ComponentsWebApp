@@ -3,6 +3,8 @@ version: '3'
 services:
     mysql:
         image: mysql
+        volumes:
+            - db-mysql:/var/lib/mysql:rw
         env_file:
             - ./api/.env
         environment:
@@ -16,8 +18,7 @@ services:
             - mysql
         env_file:
             - ./api/.env
-        volumes:
-            - ./api:/srv/api:rw
+        restart: on-failure
 
     app:
         build:
@@ -28,8 +29,9 @@ services:
         volumes:
             - ./app:/usr/src/app:rw
             - /usr/src/app/node_modules
+            - /usr/src/app/build
 
-    nginx:
+    api:
         build:
             context: ./api
             dockerfile: ./_docker/nginx/Dockerfile
@@ -43,6 +45,7 @@ services:
             context: ./api
             dockerfile: ./_docker/varnish/Dockerfile
         depends_on:
-            - nginx
-        volumes:
-            - ./api/_docker/varnish/conf:/etc/varnish:ro
+            - api
+
+volumes:
+    db-mysql:
