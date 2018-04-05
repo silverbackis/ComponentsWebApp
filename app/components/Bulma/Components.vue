@@ -42,7 +42,7 @@
     },
     methods: {
       name (component) {
-        return 'bulma-' + component['@type']
+        return 'bulma-' + component['@type'].toLowerCase()
       }
     },
     computed: {

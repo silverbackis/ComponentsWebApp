@@ -11,7 +11,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 
 	if [ "$APP_ENV" != 'prod' ]; then
 	  composer install --prefer-dist --no-progress --no-suggest --no-interaction
-		# bin/console api-component-bundle:fixtures:load
+		bin/console api-component-bundle:fixtures:load
 		bin/console c:c
   else
     composer run-script --no-dev post-install-cmd
