@@ -31,7 +31,7 @@ services:
             - /usr/src/app/node_modules
             - /usr/src/app/build
 
-    api:
+    nginx:
         build:
             context: ./api
             dockerfile: ./_docker/nginx/Dockerfile
@@ -45,7 +45,7 @@ services:
             context: ./api
             dockerfile: ./_docker/varnish/Dockerfile
         depends_on:
-            - api
+            - nginx
 
 volumes:
     db-mysql:

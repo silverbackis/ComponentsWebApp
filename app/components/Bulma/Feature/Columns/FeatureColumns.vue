@@ -5,7 +5,7 @@
   >
     <div class="hero-body">
       <div class="container has-text-centered">
-        <h3 class="title features-title">{{ component.title }}</h3>
+        <h3 class="title features-title">{{ injectDynamicData(component.title) }}</h3>
         <nav class="columns"
              v-for="(components, index) in this.childComponents"
              :key="index"

@@ -5,24 +5,24 @@
   >
     <div class="hero-body">
       <div class="container has-text-centered">
-        <h3 class="title features-title" v-if="component.title">{{ component.title }}</h3>
+        <h3 class="title features-title" v-if="component.title">{{ injectDynamicData(component.title) }}</h3>
         <div class="is-inline-block-mobile">
           <div class="columns is-centered has-text-left">
             <div v-for="(features) in featureChunks()"
                  class="column is-narrow">
               <ul class="fa-ul">
-                <li v-for="(feature) in features" :class="feature.className">
+                <li v-for="(feature) in features" :class="injectDynamicData(feature.className)">
                   <span class="fa-li">
                     <font-awesome-icon icon="check-circle" class="has-text-success" size="lg" />
                   </span>
                   <app-link v-if="feature.url" :to="feature.url">
-                    <strong>{{ feature.title }}</strong>
+                    <strong>{{ injectDynamicData(feature.title) }}</strong>
                   </app-link>
                   <app-link v-else-if="feature.route" :to="feature.route.route">
-                    <strong>{{ feature.title }}</strong>
+                    <strong>{{ injectDynamicData(feature.title) }}</strong>
                   </app-link>
                   <span v-else>
-                    {{ feature.title }}
+                    {{ injectDynamicData(feature.title) }}
                   </span>
                 </li>
               </ul>
@@ -46,7 +46,7 @@
     },
     computed: {
       className () {
-        return this.component.className || 'is-light'
+        return this.injectDynamicData(this.component.className) || 'is-light'
       }
     },
     methods: {

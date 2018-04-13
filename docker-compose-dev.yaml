@@ -9,7 +9,7 @@ services:
             - ./api:/srv/api:rw,cached
             # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
             # - ./api/var:/srv/api/var:rw
-    api:
+    nginx:
         ports:
             - "8080:80"
     varnish:

@@ -1,5 +1,5 @@
 <template>
-  <component-wrapper :nested="nested" :class="component.className">
+  <component-wrapper :nested="nested" :class="injectDynamicData(component.className)">
     <div v-for="(components, index) in this.childComponents"
          :key="index"
          :class="containerClass">

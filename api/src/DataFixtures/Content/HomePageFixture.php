@@ -46,7 +46,7 @@ class HomePageFixture extends AbstractFixture implements DependentFixtureInterfa
     {
         /** @var Layout $layout */
         $layout = $this->getReference('layout');
-        $homeRoute = new Route('/');
+        $homeRoute = new Route('home', '/');
         $page = $this->pageFactory->create(
             [
                 'title' => 'Home Page',

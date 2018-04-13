@@ -12,15 +12,15 @@
     "require": {
         "silverbackis/api-component-bundle": "dev-develop",
         "symfony/flex": "^1.0",
-        "symfony/proxy-manager-bridge": "^4.0",
-        "roave/security-advisories": "dev-master"
+        "symfony/proxy-manager-bridge": "^4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",
         "symfony/dotenv": "^3.4 || ^4.0",
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^4.0",
-        "symfony/var-dumper": "^4.0"
+        "symfony/var-dumper": "^4.0",
+        "roave/security-advisories": "dev-master"
     },
     "config": {
         "preferred-install": {

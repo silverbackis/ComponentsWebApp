@@ -6,12 +6,14 @@
                :component="getComponent(component['@id'])"
                :nested="nested"
                :depth="depth"
+               :dynamicData="dynamicData"
     />
   </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
+  import _ from 'lodash'
 
   export default {
     props: {
@@ -38,11 +40,11 @@
       BulmaFeatureStacked: () => import('~/components/Bulma/Feature/Stacked/FeatureStacked.vue'),
       BulmaFeatureTextList: () => import('~/components/Bulma/Feature/TextList/FeatureTextList.vue'),
       BulmaGallery: () => import('~/components/Bulma/Gallery/Gallery.vue'),
-      BulmaNews: () => import('~/components/Bulma/News/News.vue')
+      BulmaCollection: () => import('~/components/Bulma/Collection/Collection.vue')
     },
     methods: {
       name (component) {
-        return 'bulma-' + component['@type'].toLowerCase()
+        return 'bulma-' + component['@type']
       }
     },
     computed: {
@@ -51,6 +53,9 @@
       }),
       _components () {
         return this.pageData.componentLocations.map(loc => loc.component)
+      },
+      dynamicData () {
+        return _.omit(this.pageData, ['@id', '@type', 'componentLocations', 'parent', 'layout'])
       }
     }
   }

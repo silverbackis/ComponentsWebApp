@@ -7,10 +7,10 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            {{ component.title }}
+            {{ injectDynamicData(component.title) }}
           </h1>
           <h2 class="subtitle">
-            {{ component.subtitle }}
+            {{ injectDynamicData(component.subtitle) }}
           </h2>
         </div>
       </div>
@@ -40,6 +40,7 @@
 
   export default {
     mixins: [NuxtChildMixin],
+    props: ['cid'],
     computed: {
       className () {
         return this.component.className || 'is-primary is-bold'

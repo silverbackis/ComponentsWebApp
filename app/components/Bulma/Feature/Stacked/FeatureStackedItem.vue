@@ -6,21 +6,21 @@
       >
         <image-loader
           :class="imageClass"
-          :src="getApiUrl(component.thumbnailPath || component.filePath)"
-          :smallSrc="component.placeholderPath ? getApiUrl(component.placeholderPath) : null"
-          :alt="component.title"
+          :src="getApiUrl(injectDynamicData(component.thumbnailPath) || injectDynamicData(component.filePath))"
+          :smallSrc="injectDynamicData(component.placeholderPath) ? getApiUrl(injectDynamicData(component.placeholderPath)) : null"
+          :alt="injectDynamicData(component.title)"
         />
       </component>
     </figure>
     <div class="column has-text-centered-mobile">
       <div class="content">
-        <h3>{{ component.title }}</h3>
-        <p v-html="component.description"></p>
+        <h3>{{ injectDynamicData(component.title) }}</h3>
+        <p v-html="injectDynamicData(component.description)"></p>
         <app-link v-if="toRoute && component.buttonText"
                   :to="toRoute"
-                  :class="component.buttonClass || 'button is-primary'"
+                  :class="injectDynamicData(component.buttonClass) || 'button is-primary'"
         >
-          {{ component.buttonText }}
+          {{ injectDynamicData(component.buttonText) }}
         </app-link>
       </div>
     </div>

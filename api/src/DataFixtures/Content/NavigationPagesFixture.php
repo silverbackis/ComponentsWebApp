@@ -130,6 +130,7 @@ class NavigationPagesFixture extends AbstractFixture
         $this->em->refresh($heroPageTwo);
 
         $heroPage->getRoutes()->first()->setRedirect($heroPageOne->getRoutes()->first());
+        $this->em->flush();
 
         $hero = $this->heroFactory->create(
             [
@@ -159,6 +160,7 @@ class NavigationPagesFixture extends AbstractFixture
         );
 
         $this->addReference('page.navigation.hero', $heroPage);
+        $this->em->flush();
         return $heroPageOne;
     }
 
@@ -233,6 +235,7 @@ class NavigationPagesFixture extends AbstractFixture
         );
 
         $this->addReference('page.navigation.tabs', $tabsPage);
+        $this->em->flush();
         return $tabsPageOne;
     }
 
@@ -286,7 +289,7 @@ class NavigationPagesFixture extends AbstractFixture
                 'parentContent' => $menu->getChildComponentGroup()
             ]
         );
-
+        $this->em->flush();
         return $menuPage;
     }
 }

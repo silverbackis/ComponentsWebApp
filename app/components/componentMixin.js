@@ -11,6 +11,10 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    dynamicData: {
+      type: Object,
+      required: false
     }
   },
   components: {
@@ -26,6 +30,16 @@ export default {
     childComponents () {
       return this.component.componentGroups.map(({ componentLocations }) => {
         return componentLocations.map(loc => loc.component)
+      })
+    }
+  },
+  methods: {
+    injectDynamicData (string) {
+      if (!string) {
+        return string
+      }
+      return string.replace(/{{(\s+)?(\S{1,})(\s+)?}}/g, (str, space, dynamicVar) => {
+        return this.dynamicData[dynamicVar] || str
       })
     }
   }

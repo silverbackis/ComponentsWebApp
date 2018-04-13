@@ -6,13 +6,13 @@
     <div v-if="component.filePath">
       <image-loader
         :class="imageClass"
-        :src="getApiUrl(component.thumbnailPath || component.filePath)"
-        :smallSrc="component.placeholderPath ? getApiUrl(component.placeholderPath) : null"
-        :alt="component.title"
+        :src="getApiUrl(injectDynamicData(component.thumbnailPath) || injectDynamicData(component.filePath))"
+        :smallSrc="injectDynamicData(component.placeholderPath) ? getApiUrl(injectDynamicData(component.placeholderPath)) : null"
+        :alt="injectDynamicData(component.title)"
       />
     </div>
-    <h4 class="title is-4">{{ component.title }}</h4>
-    <h5 class="subtitle is-size-6-touch">{{ component.description }}</h5>
+    <h4 class="title is-4">{{ injectDynamicData(component.title) }}</h4>
+    <h5 class="subtitle is-size-6-touch">{{ injectDynamicData(component.description) }}</h5>
   </component>
 </template>
 
@@ -41,7 +41,7 @@
       className () {
         return [
           'column',
-          this.component.className || ''
+          this.injectDynamicData(this.component.className) || ''
         ]
       },
       toRoute () {

@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Silverback\ApiComponentBundle\Entity\Content\Dynamic\ArticlePage;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Collection\CollectionFactory;
+use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Content\ContentFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Hero\HeroFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Dynamic\ArticlePageFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\PageFactory;
@@ -22,6 +23,8 @@ class NewsPageFixture extends AbstractFixture
     private $articlePageFactory;
     /** @var string  */
     private $projectDir;
+    /** @var ContentFactory */
+    private $contentFactory;
 
     /**
      * HomePageFixture constructor.
@@ -29,6 +32,7 @@ class NewsPageFixture extends AbstractFixture
      * @param HeroFactory $heroFactory
      * @param CollectionFactory $collectionFactory
      * @param ArticlePageFactory $articlePageFactory
+     * @param ContentFactory $contentFactory
      * @param string $projectDir
      */
     public function __construct(
@@ -36,6 +40,7 @@ class NewsPageFixture extends AbstractFixture
         HeroFactory $heroFactory,
         CollectionFactory $collectionFactory,
         ArticlePageFactory $articlePageFactory,
+        ContentFactory $contentFactory,
         string $projectDir = ''
     )
     {
@@ -43,6 +48,7 @@ class NewsPageFixture extends AbstractFixture
         $this->heroFactory = $heroFactory;
         $this->collectionFactory = $collectionFactory;
         $this->articlePageFactory = $articlePageFactory;
+        $this->contentFactory = $contentFactory;
         $this->projectDir = $projectDir;
     }
 
@@ -57,6 +63,8 @@ class NewsPageFixture extends AbstractFixture
                 'metaDescription' => 'This is the list component displaying dynamic pages'
             ]
         );
+        $manager->flush();
+        $manager->refresh($page);
         $this->addReference('page.news', $page);
 
         $this->heroFactory->create(
@@ -75,13 +83,31 @@ class NewsPageFixture extends AbstractFixture
             ]
         );
 
+        $hero = $this->heroFactory->create(
+            [
+                'title' => '{{ title }}',
+                'subtitle' => '{{ subtitle }}',
+                'className' => 'is-warning is-bold',
+                'dynamicPageClass' => ArticlePage::class
+            ]
+        );
+        $hero->getLocations()->first()->setSort(1);
+
+        $content = $this->contentFactory->create(
+            [
+                'content' => '{{ content }}',
+                'dynamicPageClass' => ArticlePage::class
+            ]
+        );
+        $content->getLocations()->first()->setSort(2);
+
         $this->articlePageFactory->create(
             [
                 'title' => 'My Article Title',
                 'subtitle' => 'Once upon a time...',
                 'content' => 'We made a dynamic page which can be loaded as a normal page would be. It also has a route!',
                 'filePath' => $this->projectDir . '/public/img/chewy1.jpg',
-                'parent' => $page
+                'parentRoute' => $page->getRoutes()->first()
             ]
         );
 
