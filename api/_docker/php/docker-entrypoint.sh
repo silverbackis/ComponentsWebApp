@@ -8,9 +8,9 @@ fi
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
   mkdir -p var/cache var/log var/sessions var/logs
+	composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
 	if [ "$APP_ENV" != 'prod' ]; then
-	  composer install --prefer-dist --no-progress --no-suggest --no-interaction
 		bin/console api-component-bundle:fixtures:load
 		bin/console c:c
   else
