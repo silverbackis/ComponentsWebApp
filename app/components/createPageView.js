@@ -3,6 +3,7 @@ import Page from './Page.vue'
 export default function createPageView (depth) {
   return {
     name: `page-${depth}`,
+    middleware: ['routeLoader'],
 
     asyncData ({ store: { getters } }) {
       let pageData = getters['getContent'](depth)

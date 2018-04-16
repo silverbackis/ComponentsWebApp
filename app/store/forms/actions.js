@@ -18,13 +18,13 @@ export const actions = {
       })
     }
   },
-  initInput ({ commit, state }, { formId, inputVars, children }) {
+  initInput ({ commit, state }, { formId, inputVars, children, disableValidation }) {
     if (!state.forms[ formId ].children[ inputVars.full_name ]) {
       let value = inputVars.multiple ? [] : (inputVars.block_prefixes[ 1 ] === 'checkbox' ? inputVars.checked : inputVars.value)
-
       commit('setInput', {
         formId,
         inputData: {
+          disableValidation,
           validating: false,
           displayErrors: false,
           debounceValidate: null,

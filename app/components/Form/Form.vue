@@ -24,6 +24,10 @@
       form: {
         type: Object,
         required: true
+      },
+      successFn: {
+        type: Function,
+        required: false
       }
     },
     computed: {
@@ -66,44 +70,48 @@
         }
         this.refreshCancelToken({ formId: this.formId })
         try {
-          let { status, data: { form } } = await this.$axios.request(
+          let { status, data } = await this.$axios.request(
             {
               url: this.form.vars.action,
               data: this.submitData,
               method: 'POST',
               cancelToken: this.cancelToken.token,
               validateStatus (status) {
-                return [ 400, 200, 201 ].indexOf(status) !== -1
+                return [ 400, 200, 201, 401 ].indexOf(status) !== -1
               }
             }
           )
-          console.log(form.vars)
-          const VARS = form.vars
+          if (this.successFn) {
+            this.successFn(data)
+          }
+          const form = data.form
+          const VARS = form ? form.vars : { errors: [ data.message ] }
           this.setFormValidationResult({
             formId: this.formId,
             valid: status === 200,
             errors: VARS.errors
           })
-
-          let x = form.children.length
-          let child
-          while (x--) {
-            child = form.children[x]
-            // E.g. buttons which are not valid/invalid
-            if (child.vars.valid === undefined) {
-              continue
+          if (form) {
+            let x = form.children.length
+            let child
+            while (x--) {
+              child = form.children[x]
+              // E.g. buttons which are not valid/invalid
+              if (child.vars.valid === undefined) {
+                continue
+              }
+              this.setInputValidationResult({
+                formId: this.formId,
+                inputName: child.vars.full_name,
+                valid: child.vars.valid,
+                errors: child.vars.errors
+              })
+              this.setInputDisplayErrors({
+                formId: this.formId,
+                inputName: child.vars.full_name,
+                displayErrors: true
+              })
             }
-            this.setInputValidationResult({
-              formId: this.formId,
-              inputName: child.vars.full_name,
-              valid: child.vars.valid,
-              errors: child.vars.errors
-            })
-            this.setInputDisplayErrors({
-              formId: this.formId,
-              inputName: child.vars.full_name,
-              displayErrors: true
-            })
           }
         } catch (error) {
           this.submitError(error)

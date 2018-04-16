@@ -1,4 +1,4 @@
-version: '3'
+version: '3.6'
 
 services:
     mysql:
@@ -26,6 +26,7 @@ services:
             dockerfile: ./_docker/Dockerfile
         env_file:
             - ./app/.env
+            - ./api/.env
         volumes:
             - ./app:/usr/src/app:rw
             - /usr/src/app/node_modules

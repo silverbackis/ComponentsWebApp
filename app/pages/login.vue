@@ -1,0 +1,108 @@
+<template>
+  <section class="page-section">
+    <div class="columns is-centered">
+      <div class="column is-narrow">
+        <div class="card">
+          <div class="card-header">
+            <h1 class="card-header-title">Login</h1>
+          </div>
+          <div class="card-content">
+            <div v-if="formErrors.length">
+              <ul class="content">
+                <li v-for="(error, index) in formErrors" :key="index"><h4 class="help is-danger" v-html="error"></h4></li>
+              </ul>
+            </div>
+            <form-tag v-if="form"
+                      :form="form"
+                      :successFn="formSuccess"
+                      :apiUrl="false">
+              <form-input v-for="input in form.children"
+                          :key="input.vars.unique_block_prefix"
+                          :input="input"
+                          :formId="formId"
+                          :wrapped="true"
+                          :disableValidation="true"
+              />
+            </form-tag>
+            <span class="help is-success">
+                <ul>
+                    <li>Username: admin@admin.com</li>
+                    <li>Password: admin</li>
+                </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+  import { mapGetters, mapMutations } from 'vuex'
+  import FormTag from '~/components/Form/Form'
+  import FormInput from '~/components/Form/FormInput'
+  import FormMixin from '~/components/Form/_Mixin'
+  import jwtDecode from 'jwt-decode'
+
+  export default {
+    mixins: [FormMixin],
+    components: {
+      FormTag,
+      FormInput
+    },
+    head: {
+      title: 'Admin Login',
+      meta: [
+        { hid: 'description', name: 'description', content: '' }
+      ]
+    },
+    computed: {
+      ...mapGetters({
+        getApiUrl: 'getApiUrl',
+        getAuthUser: 'getAuthUser'
+      }),
+      formErrors () {
+        return this.storeForm ? this.storeForm.vars.errors : []
+      }
+    },
+    methods: {
+      ...mapMutations({
+        setAuthUser: 'setAuthUser'
+      }),
+      formSuccess (data) {
+        this.setAuthUser(jwtDecode(data.token))
+        this.$router.replace('/')
+      }
+    },
+    mounted () {
+      let authUser = this.getAuthUser
+      if (authUser) {
+        this.$router.replace('/')
+      }
+    },
+    async asyncData ({ store: { dispatch, getters }, app: { $axios } }) {
+      await dispatch('layout/init')
+      try {
+        let { data: { form } } = await $axios.get(getters.getApiUrl('login_form'))
+        form.vars.action = getters.getApiUrl(form.vars.action)
+        return {
+          form
+        }
+      } catch (err) {
+        console.error('Could not load form', err)
+      }
+    }
+  }
+</script>
+
+<style lang="sass" scoped>
+  @import ~assets/css/_vars
+
+  .card
+    width: 300px
+    margin-top: 2rem
+    .media
+      margin: 1rem
+    .card-header
+      background: $warning
+</style>

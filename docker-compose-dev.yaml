@@ -1,22 +1,26 @@
-version: '3'
+version: '3.6'
 
 services:
     mysql:
         ports:
             - "4306:3306"
+
     php:
         volumes:
             - ./api:/srv/api:rw,cached
             # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
             # - ./api/var:/srv/api/var:rw
+
     nginx:
         ports:
             - "8080:80"
+
     varnish:
         volumes:
             - ./api/_docker/varnish/conf:/etc/varnish:ro
         ports:
             - "8081:80"
+
     app:
         ports:
             - "80:3000"

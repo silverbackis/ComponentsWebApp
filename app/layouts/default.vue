@@ -8,24 +8,57 @@
       </header>
       <nuxt />
     </div>
-    <footer class="footer">
-
+    <footer :class="{'footer': true, 'authorized': getAuthUser}">
+      <div class="container has-text-centered has-text-weight-bold">
+        <div v-if="!getAuthUser">
+          Try out the admin? <app-link to="/login">Admin login</app-link>
+        </div>
+        <div v-else>
+          You are logged in <a href="#" @click.prevent="logout">Logout</a>
+        </div>
+      </div>
     </footer>
   </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapMutations } from 'vuex'
   import BulmaNavbar from '~/components/Bulma/Nav/Navbar/Navbar.vue'
+  import AppLink from '~/components/Utils/AppLink'
 
   export default {
     components: {
-      BulmaNavbar
+      BulmaNavbar,
+      AppLink
     },
     computed: {
       ...mapGetters({
-        layout: 'layout/getLayout'
+        layout: 'layout/getLayout',
+        getAuthUser: 'getAuthUser',
+        getApiUrl: 'getApiUrl'
       })
+    },
+    methods: {
+      ...mapMutations({
+        setAuthUser: 'setAuthUser'
+      }),
+      logout () {
+        this.$axios.post('/logout',
+          {
+            _action: this.getApiUrl('logout')
+          },
+          {
+            baseURL: null
+          }
+        )
+          .then(() => {
+            // this.addNotification('You have successfully logged out')
+            this.setAuthUser(null)
+          })
+          .catch((err) => {
+            console.warn(err)
+          })
+      }
     },
     head () {
       return {
@@ -77,4 +110,8 @@
 
   .footer
     margin-top: 3rem
+    padding-bottom: 3rem
+    &.authorized
+      background-color: $success
+      color: $white
 </style>

@@ -23,6 +23,10 @@
       formId: {
         type: String,
         required: true
+      },
+      disableValidation: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
@@ -73,7 +77,7 @@
       }
     },
     created () {
-      this.initInput({formId: this.formId, inputVars: this.input.vars, children: this.input.children})
+      this.initInput({formId: this.formId, inputVars: this.input.vars, children: this.input.children, disableValidation: this.disableValidation})
       this.resolveInputComponent()
     }
   }

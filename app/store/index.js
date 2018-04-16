@@ -7,7 +7,8 @@ export const strict = false
 export const state = () => ({
   error: false,
   apiUrl: null,
-  content: null
+  content: null,
+  authUser: null
 })
 
 export const mutations = {
@@ -22,6 +23,12 @@ export const mutations = {
   },
   setContent (state, content) {
     state.content = content
+  },
+  setAuthUser (state, user) {
+    state.authUser = user
+  },
+  hasRole: (state) => (role) => {
+    return !state.authUser ? false : (state.authUser.roles ? state.authUser.roles.indexOf(role) !== -1 : false)
   }
 }
 
@@ -31,7 +38,8 @@ export const getters = {
   },
   getContent: state => (depth) => {
     return state.content[depth] || false
-  }
+  },
+  getAuthUser: state => state.authUser
 }
 
 export const actions = {

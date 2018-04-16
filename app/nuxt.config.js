@@ -109,6 +109,6 @@ module.exports = {
    * Router
    */
   router: {
-    middleware: ['initErrorHandler', 'routeLoader']
+    middleware: ['initErrorHandler']
   }
 }

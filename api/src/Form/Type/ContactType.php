@@ -194,10 +194,11 @@ class ContactType extends AbstractType
                 [
                     'label' => 'Select at least one',
                     'choices' => [
-                        'Trump' => 'trump',
-                        'Obama' => 'obama',
-                        'Corbyn' => 'corbyn',
-                        'May' => 'may'
+                        'API Platform' => 'API Platform',
+                        'Nuxt' => 'Nuxt',
+                        'Bulma' => 'Bulma',
+                        'Symfony' => 'Symfony',
+                        'VueJS' => 'VueJS'
                     ],
                     'choice_attr' => function () {
                         return ['class' => 'custom'];

@@ -23,6 +23,9 @@ export default {
       await this.beginValidation()
     },
     beginValidation () {
+      if (this.input.disableValidation) {
+        return
+      }
       const localValue = this.child ? this.child.vars.value : this.inputModel
       if (this.lastValidationValue !== localValue) {
         this.lastValidationValue = this.inputModel

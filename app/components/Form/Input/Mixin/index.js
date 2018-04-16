@@ -14,6 +14,10 @@ export default {
       type: String,
       required: false,
       default: 'input'
+    },
+    disableValidation: {
+      type: Boolean,
+      default: false
     }
   }
 }

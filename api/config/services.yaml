@@ -32,3 +32,7 @@ services:
     #        -
     #            App\FooCommand: '@app.command_handler.foo'
     #            App\BarCommand: '@app.command_handler.bar'
+
+    App\DataProvider\LoginUserDataProvider:
+        tags: [ { name: 'api_platform.item_data_provider', priority: 1 } ]
+        autoconfigure: false
