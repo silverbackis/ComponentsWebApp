@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Silverback\ApiComponentBundle\Controller\AbstractForm;
 use Silverback\ApiComponentBundle\Entity\Content\Component\Form\Form;
 use Silverback\ApiComponentBundle\Entity\Content\Component\Form\FormView;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -32,14 +33,20 @@ class LoginFormAction extends AbstractForm
     public function __invoke(LoginUser $data, string $_format): Response
     {
         $form = $this->createForm(LoginType::class, $data, [
-            'action' => $this->generateUrl('api_login_check')
+            'action' => '#'
+        ])
+        ->add('_action', HiddenType::class, [
+            'data' => $this->generateUrl('api_login_check'),
+            'mapped' => false
         ]);
         $formEntity = new Form();
         $formEntity->setForm(new FormView($form->createView()));
-        return $this->getResponse(
+        $response = $this->getResponse(
             $formEntity,
             $_format,
             true
         );
+        $response->setSharedMaxAge(0);
+        return $response;
     }
 }

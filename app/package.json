@@ -22,6 +22,7 @@
     "@nuxtjs/google-tag-manager": "^1.1.0",
     "@nuxtjs/pwa": "^2.0.4",
     "axios": "^0.17.1",
+    "body-parser": "^1.18.2",
     "bulma": "^0.6.1",
     "caniuse-lite": "^1.0.30000782",
     "cookie-parser": "^1.4.3",

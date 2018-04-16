@@ -1,6 +1,8 @@
 import _ from 'lodash'
 import { fetchRoute } from '../api'
 import { compile } from '~/.nuxt/utils'
+import jwtDecode from 'jwt-decode'
+import CookieUtils from '~/server/api/cookies'
 
 export const strict = false
 
@@ -43,7 +45,11 @@ export const getters = {
 }
 
 export const actions = {
-  nuxtServerInit ({ dispatch, commit }) {
+  nuxtServerInit ({ dispatch, commit }, { req: { session }, res }) {
+    if (session && session.authUser) {
+      CookieUtils.setJwtCookie(res, session.authUser)
+      commit('setAuthUser', jwtDecode(session.authUser))
+    }
     commit('setApiUrl', process.env.API_URL_BROWSER + '/')
   },
   async fetchRoute (ctx, { route }) {

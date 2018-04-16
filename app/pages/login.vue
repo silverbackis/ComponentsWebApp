@@ -15,7 +15,7 @@
             <form-tag v-if="form"
                       :form="form"
                       :successFn="formSuccess"
-                      :apiUrl="false">
+                      :apiAction="false">
               <form-input v-for="input in form.children"
                           :key="input.vars.unique_block_prefix"
                           :input="input"
@@ -67,24 +67,28 @@
     },
     methods: {
       ...mapMutations({
-        setAuthUser: 'setAuthUser'
+        setAuthUser: 'setAuthUser',
+        addNotification: 'notifications/addNotification'
       }),
       formSuccess (data) {
-        this.setAuthUser(jwtDecode(data.token))
-        this.$router.replace('/')
+        if (data.token) {
+          this.setAuthUser(jwtDecode(data.token))
+          this.$router.replace('/')
+        }
       }
     },
     mounted () {
       let authUser = this.getAuthUser
       if (authUser) {
         this.$router.replace('/')
+        this.addNotification('You are already logged in')
       }
     },
     async asyncData ({ store: { dispatch, getters }, app: { $axios } }) {
       await dispatch('layout/init')
       try {
-        let { data: { form } } = await $axios.get(getters.getApiUrl('login_form'))
-        form.vars.action = getters.getApiUrl(form.vars.action)
+        let { data: { form } } = await $axios.get('login_form')
+        form.vars.action = '/login'
         return {
           form
         }

@@ -1,5 +1,6 @@
 import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
+import bodyParser from 'body-parser'
 import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
@@ -38,6 +39,8 @@ const port = process.env.PORT || 3000
 app.set('port', port)
 app.disable('x-powered-by')
 app.set('trust proxy', !!config.dev)
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(session(sessOps))
 app.use(helmet())
 app.use(cookieParser())

@@ -18,6 +18,7 @@
         </div>
       </div>
     </footer>
+    <notifications />
   </div>
 </template>
 
@@ -25,11 +26,13 @@
   import { mapGetters, mapMutations } from 'vuex'
   import BulmaNavbar from '~/components/Bulma/Nav/Navbar/Navbar.vue'
   import AppLink from '~/components/Utils/AppLink'
+  import Notifications from '~/components/Bulma/Notifications/Notifications'
 
   export default {
     components: {
       BulmaNavbar,
-      AppLink
+      AppLink,
+      Notifications
     },
     computed: {
       ...mapGetters({
@@ -40,7 +43,8 @@
     },
     methods: {
       ...mapMutations({
-        setAuthUser: 'setAuthUser'
+        setAuthUser: 'setAuthUser',
+        addNotification: 'notifications/addNotification'
       }),
       logout () {
         this.$axios.post('/logout',
@@ -52,7 +56,7 @@
           }
         )
           .then(() => {
-            // this.addNotification('You have successfully logged out')
+            this.addNotification('You have successfully logged out')
             this.setAuthUser(null)
           })
           .catch((err) => {

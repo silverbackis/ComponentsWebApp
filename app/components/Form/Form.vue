@@ -28,6 +28,10 @@
       successFn: {
         type: Function,
         required: false
+      },
+      apiAction: {
+        type: Boolean,
+        default: true
       }
     },
     computed: {
@@ -70,17 +74,19 @@
         }
         this.refreshCancelToken({ formId: this.formId })
         try {
-          let { status, data } = await this.$axios.request(
-            {
-              url: this.form.vars.action,
-              data: this.submitData,
-              method: 'POST',
-              cancelToken: this.cancelToken.token,
-              validateStatus (status) {
-                return [ 400, 200, 201, 401 ].indexOf(status) !== -1
-              }
+          let ops = {
+            url: this.form.vars.action,
+            data: this.submitData,
+            method: 'POST',
+            cancelToken: this.cancelToken.token,
+            validateStatus (status) {
+              return [ 400, 200, 201, 401 ].indexOf(status) !== -1
             }
-          )
+          }
+          if (!this.apiAction) {
+            ops.baseURL = '//'
+          }
+          let { status, data } = await this.$axios.request(ops)
           if (this.successFn) {
             this.successFn(data)
           }
