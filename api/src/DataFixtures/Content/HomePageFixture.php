@@ -32,8 +32,7 @@ class HomePageFixture extends AbstractFixture implements DependentFixtureInterfa
         PageFactory $pageFactory,
         HeroFactory $heroFactory,
         ContentFactory $contentFactory
-    )
-    {
+    ) {
         $this->pageFactory = $pageFactory;
         $this->heroFactory = $heroFactory;
         $this->contentFactory = $contentFactory;

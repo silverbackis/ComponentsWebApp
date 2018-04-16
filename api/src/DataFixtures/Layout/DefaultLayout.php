@@ -15,8 +15,7 @@ class DefaultLayout extends AbstractFixture
 
     public function __construct(
         LayoutFactory $layoutFactory
-    )
-    {
+    ) {
         $this->layoutFactory = $layoutFactory;
     }
 

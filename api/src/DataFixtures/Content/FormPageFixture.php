@@ -34,8 +34,7 @@ class FormPageFixture extends AbstractFixture
         HeroFactory $heroFactory,
         ContentFactory $contentFactory,
         FormFactory $formFactory
-    )
-    {
+    ) {
         $this->pageFactory = $pageFactory;
         $this->heroFactory = $heroFactory;
         $this->contentFactory = $contentFactory;

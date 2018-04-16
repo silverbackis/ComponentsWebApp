@@ -42,8 +42,7 @@ class NewsPageFixture extends AbstractFixture
         ArticlePageFactory $articlePageFactory,
         ContentFactory $contentFactory,
         string $projectDir = ''
-    )
-    {
+    ) {
         $this->pageFactory = $pageFactory;
         $this->heroFactory = $heroFactory;
         $this->collectionFactory = $collectionFactory;

@@ -10,6 +10,8 @@
         }
     ],
     "require": {
+        "gesdinet/jwt-refresh-token-bundle": "^0.3.3",
+        "lexik/jwt-authentication-bundle": "^2.4",
         "silverbackis/api-component-bundle": "dev-develop",
         "symfony/flex": "^1.0",
         "symfony/proxy-manager-bridge": "^4.0"

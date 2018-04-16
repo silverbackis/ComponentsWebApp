@@ -54,8 +54,7 @@ class NavigationPagesFixture extends AbstractFixture
         MenuFactory $menuFactory,
         MenuItemFactory $menuItemFactory,
         ContentFactory $contentFactory
-    )
-    {
+    ) {
         $this->pageFactory = $pageFactory;
         $this->heroFactory = $heroFactory;
         $this->tabsFactory = $tabsFactory;

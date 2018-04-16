@@ -35,8 +35,7 @@ class GalleryPageFixture extends AbstractFixture
         HeroFactory $heroFactory,
         GalleryFactory $galleryFactory,
         string $projectDir = ''
-    )
-    {
+    ) {
         $this->pageFactory = $pageFactory;
         $this->heroFactory = $heroFactory;
         $this->galleryFactory = $galleryFactory;

@@ -15,6 +15,13 @@
         <env name="APP_SECRET" value="s$cretf0rt3st" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <!-- define your env variables for the test env here -->
+
+        <!-- ###+ lexik/jwt-authentication-bundle ### -->
+        <!-- Key paths should be relative to the project directory -->
+        <env name="JWT_PRIVATE_KEY_PATH" value="config/jwt/private.pem"/>
+        <env name="JWT_PUBLIC_KEY_PATH" value="config/jwt/public.pem"/>
+        <env name="JWT_PASSPHRASE" value="c108c4dea8167ba4bc7f3a0ed02bf54e"/>
+        <!-- ###- lexik/jwt-authentication-bundle ### -->
     </php>
 
     <testsuites>

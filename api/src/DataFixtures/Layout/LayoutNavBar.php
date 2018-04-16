@@ -31,8 +31,7 @@ class LayoutNavBar extends AbstractFixture implements DependentFixtureInterface
     public function __construct(
         NavBarFactory $navBarFactory,
         NavBarItemFactory $navBarItemFactory
-    )
-    {
+    ) {
         $this->navBarFactory = $navBarFactory;
         $this->navBarItemFactory = $navBarItemFactory;
     }

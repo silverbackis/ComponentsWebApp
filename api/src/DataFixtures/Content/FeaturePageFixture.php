@@ -43,8 +43,7 @@ class FeaturePageFixture extends AbstractFixture implements DependentFixtureInte
         FeatureColumnsFactory $featureColumnsFactory,
         FeatureStackedFactory $featureStackedFactory,
         string $projectDir = ''
-    )
-    {
+    ) {
         $this->pageFactory = $pageFactory;
         $this->heroFactory = $heroFactory;
         $this->featureTextListFactory = $featureTextListFactory;
@@ -87,7 +86,8 @@ class FeaturePageFixture extends AbstractFixture implements DependentFixtureInte
         $manager->flush();
     }
 
-    private function createFeatureStacked() {
+    private function createFeatureStacked()
+    {
         $featureStacked = $this->featureStackedFactory->create();
         $itemFactory = $this->featureStackedFactory->getItemFactory();
         $itemFactory->create(
@@ -124,7 +124,8 @@ class FeaturePageFixture extends AbstractFixture implements DependentFixtureInte
         return $featureStacked;
     }
 
-    private function createFeatureColumns() {
+    private function createFeatureColumns()
+    {
         $featureColumns = $this->featureColumnsFactory->create(
             [
                 'title' => 'Feature Columns'
@@ -162,7 +163,8 @@ class FeaturePageFixture extends AbstractFixture implements DependentFixtureInte
         return $featureColumns;
     }
 
-    private function createFeatureTextList() {
+    private function createFeatureTextList()
+    {
         $featureTextList = $this->featureTextListFactory->create(
             [
                 'title' => 'Feature Text List'
@@ -187,7 +189,7 @@ class FeaturePageFixture extends AbstractFixture implements DependentFixtureInte
             ]
         );
         $x = 7;
-        while($x > 0) {
+        while ($x > 0) {
             $itemFactory->create(
                 [
                     'title' => 'Feature ' . $x,
