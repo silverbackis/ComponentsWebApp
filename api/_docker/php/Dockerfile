@@ -83,11 +83,11 @@ RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-pr
 
 COPY . ./
 
-RUN mkdir -p var/cache var/log var/sessions var/logs \
+RUN mkdir -p var/cache var/sessions var/logs public/media \
 	&& composer dump-autoload --classmap-authoritative --no-dev \
 	&& chmod +x bin/console \
 	&& sync \
-	&& chown -R www-data var
+	&& chown -R www-data var public/media
 VOLUME /srv/api/var
 
 COPY _docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
