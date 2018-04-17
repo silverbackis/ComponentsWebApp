@@ -46,6 +46,7 @@ module.exports = {
    * Plugins
    */
   plugins: [
+    { src: '~/plugins/vue-cookie', ssr: false },
     { src: '~/plugins/quill', ssr: false },
     // Without ssr we get a warning ssr and browser rendering do not match as of 19 Jan 18
     { src: '~/plugins/fontawesome', ssr: true }

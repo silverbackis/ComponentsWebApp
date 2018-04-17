@@ -2,9 +2,17 @@
   <section class="page-section">
     <div class="columns is-centered">
       <div class="column is-narrow">
-        <div class="card">
+        <div class="card" v-if="!!getAuthUser">
           <div class="card-header">
-            <h1 class="card-header-title">Login</h1>
+            <h1 class="card-header-title">Redirecting...</h1>
+          </div>
+          <div class="card-content">
+            <p>You are logged in. Please wait while we redirect you.</p>
+          </div>
+        </div>
+        <div class="card" v-else>
+          <div class="card-header is-dark">
+            <h1 class="card-header-title has-text-white">Login</h1>
           </div>
           <div class="card-content">
             <div v-if="formErrors.length">
@@ -111,6 +119,6 @@
     margin-top: 2rem
     .media
       margin: 1rem
-    .card-header
-      background: $warning
+    .card-header.is-dark
+      background: $dark
 </style>

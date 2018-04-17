@@ -62,6 +62,7 @@
           .then(() => {
             this.addNotification('You have successfully logged out')
             this.setAuthUser(null)
+            this.$cookie.delete('PHPSESSID')
           })
           .catch((err) => {
             console.warn(err)

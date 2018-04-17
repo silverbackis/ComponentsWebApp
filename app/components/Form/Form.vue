@@ -84,18 +84,18 @@
             }
           }
           if (!this.apiAction) {
-            ops.baseURL = '//'
+            ops.baseURL = null
           }
           let { status, data } = await this.$axios.request(ops)
           if (this.successFn) {
             this.successFn(data)
           }
           const form = data.form
-          const VARS = form ? form.vars : { errors: [ data.message ] }
+          const errors = form ? form.vars.errors : (data.message ? [ data.message ] : [])
           this.setFormValidationResult({
             formId: this.formId,
             valid: status === 200,
-            errors: VARS.errors
+            errors: errors
           })
           if (form) {
             let x = form.children.length
