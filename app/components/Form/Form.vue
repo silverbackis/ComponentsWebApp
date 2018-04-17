@@ -81,6 +81,9 @@
             cancelToken: this.cancelToken.token,
             validateStatus (status) {
               return [ 400, 200, 201, 401 ].indexOf(status) !== -1
+            },
+            headers: {
+              'X-XSRF-TOKEN': this.$cookie.get('XSRF-TOKEN')
             }
           }
           if (!this.apiAction) {

@@ -116,7 +116,7 @@
 
   .card
     width: 300px
-    margin-top: 2rem
+    margin: 2rem auto
     .media
       margin: 1rem
     .card-header.is-dark

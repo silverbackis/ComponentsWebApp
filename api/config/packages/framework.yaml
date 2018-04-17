@@ -6,6 +6,7 @@ framework:
 
     session:
         handler_id: ~
+        cookie_domain: '%env(COOKIE_DOMAIN)%'
 
     #esi: ~
     #fragments: ~

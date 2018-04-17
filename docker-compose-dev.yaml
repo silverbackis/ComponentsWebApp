@@ -24,5 +24,9 @@ services:
             - "8081:80"
 
     app:
+        volumes:
+            - ./app:/usr/src/app:rw
+            - ./app/node_modules:/usr/src/app/node_modules
+            - ./app/build:/usr/src/app/build
         ports:
             - "80:3000"
