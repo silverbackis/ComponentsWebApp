@@ -15,9 +15,6 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 		bin/console c:c
   else
     composer run-script --no-dev post-install-cmd
-    bin/console assets:install
-		bin/console c:c
-    bin/console c:w
 	fi
 
 	# Permissions hack because setfacl does not work on Mac and Windows
