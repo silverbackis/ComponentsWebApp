@@ -38,8 +38,6 @@ services:
             dockerfile: ./_docker/nginx/Dockerfile
         depends_on:
             - php
-        volumes:
-            - ./api/public:/srv/api/public:ro
 
     varnish:
         build:

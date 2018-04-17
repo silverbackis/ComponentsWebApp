@@ -27,10 +27,18 @@ services:
             - default
             - proxy
 
-#    php:
-#        volumes:
-#            - ./api/var/log:/srv/api/var/log:rw,cached
+    php:
+        volumes:
+            - api-public:/srv/api/public:rw,cached
+
+    nginx:
+        volumes:
+            - api-public:/srv/api/public:ro
+
 networks:
   proxy:
     external:
       name: proxy
+
+volumes:
+    api-public:
