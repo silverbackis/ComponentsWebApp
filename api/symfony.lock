@@ -83,6 +83,9 @@
     "doctrine/orm": {
         "version": "v2.5.13"
     },
+    "dunglas/angular-csrf-bundle": {
+        "version": "v1.1.0"
+    },
     "gesdinet/jwt-refresh-token-bundle": {
         "version": "v0.3.3"
     },

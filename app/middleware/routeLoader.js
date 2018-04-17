@@ -1,10 +1,16 @@
-export const RouteLoader = async function ({ store: { dispatch }, route, redirect, error }) {
-  let routeData
+import cookies from '~/server/api/cookies'
 
+export const RouteLoader = async function ({ store: { dispatch }, route, redirect, error, res }) {
+  let routeData, response
   try {
-    routeData = await dispatch('fetchRoute', { route })
+    response = await dispatch('fetchRoute', { route })
+    routeData = response.data
   } catch (err) {
-    await dispatch('layout/init')
+    response = await dispatch('layout/init')
+    if (process.server) {
+      cookies.setCookies(res, response)
+    }
+
     if (err.response && err.response.status) {
       error({statusCode: err.response.status, message: err.response.statusText})
     } else {
@@ -13,6 +19,10 @@ export const RouteLoader = async function ({ store: { dispatch }, route, redirec
     }
     return
   }
+  if (process.server) {
+    cookies.setCookies(res, response)
+  }
+
   if (!routeData) {
     console.warn(routeData)
     error({statusCode: 500, message: 'Error fetching from API - No Route Data'})

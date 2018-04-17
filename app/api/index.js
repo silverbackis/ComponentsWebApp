@@ -46,7 +46,7 @@ export const fetch = ({ path, $axios, method, data, cancelToken, validateStatus 
       })
       .then((response) => {
         logRequests && console.log(response)
-        resolve(response.data)
+        resolve(response)
       })
       .catch((err) => {
         reject(err)

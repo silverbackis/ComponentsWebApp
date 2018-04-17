@@ -6,7 +6,8 @@ const router = Router()
 
 const reqHeaders = (cookies) => {
   return {
-    'X-XSRF-TOKEN': cookies['XSRF-TOKEN'] || 'unset'
+    'X-XSRF-TOKEN': cookies['XSRF-TOKEN'] || '',
+    'Cookie': 'PHPSESSID=' + cookies['PHPSESSID'] || ''
   }
 }
 

@@ -110,5 +110,8 @@ module.exports = {
    */
   router: {
     middleware: ['initErrorHandler']
+  },
+  loading: {
+    color: '#23d160'
   }
 }

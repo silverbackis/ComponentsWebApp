@@ -2,7 +2,7 @@
   <component-wrapper ref="nav"
                      dom-tag="nav"
                      :extendClass="false"
-                     :class-name="['navbar is-fixed-top has-shadow', component.className]"
+                     :class-name="['navbar', 'is-fixed-top', 'has-shadow', component.className]"
                      :style="{transform: 'translateY(' + this.navY + 'px)'}"
   >
     <div class="navbar-brand">
@@ -38,7 +38,7 @@
               </a>
             </p>
             <p class="control">
-              <a class="button is-outlined is-dark" href="https://github.com/silverbackis/BwStarterWebsite" rel="noopener" target="_blank">
+              <a class="button is-outlined" href="https://github.com/silverbackis/BwStarterWebsite" rel="noopener" target="_blank">
                 <span class="icon">
                   <font-awesome-icon :icon="['fab', 'github']" size="lg"/>
                 </span>

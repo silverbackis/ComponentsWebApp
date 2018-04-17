@@ -26,10 +26,12 @@ export const mutations = {
 }
 
 export const actions = {
-  async init ({ commit, state, dispatch }, id) {
+  async init ({ commit, state, dispatch, res }, id) {
     id = (id || DEFAULT)
     try {
-      let data = await fetch({ path: id, $axios: this.$axios })
+      let response = await fetch({ path: id, $axios: this.$axios })
+      const data = response.data
+
       commit('setLayout', { data, isDefault: DEFAULT === id })
 
       if (data.navBar) {
@@ -39,6 +41,7 @@ export const actions = {
           commit('component/setComponent', components[componentId], { root: true })
         })
       }
+      return response
     } catch (err) {
       console.warn('Layout init error', id, err)
       commit('setError', { source: 'store/modules/layout.js', statusCode: err.statusCode, message: err.message || 'Failed to load layout' }, {root: true})

@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "dunglas/angular-csrf-bundle": "^1.1",
         "gesdinet/jwt-refresh-token-bundle": "^0.3.3",
         "lexik/jwt-authentication-bundle": "^2.4",
         "silverbackis/api-component-bundle": "dev-develop",

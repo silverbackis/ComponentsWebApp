@@ -4,6 +4,7 @@
       <header v-if="layout">
         <bulma-navbar v-if="layout.navBar"
                       :component="layout.navBar"
+                      :class="navbarClass"
         />
       </header>
       <nuxt />
@@ -39,7 +40,10 @@
         layout: 'layout/getLayout',
         getAuthUser: 'getAuthUser',
         getApiUrl: 'getApiUrl'
-      })
+      }),
+      navbarClass () {
+        return this.getAuthUser ? 'is-dark' : ''
+      }
     },
     methods: {
       ...mapMutations({
@@ -116,6 +120,6 @@
     margin-top: 3rem
     padding-bottom: 3rem
     &.authorized
-      background-color: $success
+      background-color: $grey-dark
       color: $white
 </style>

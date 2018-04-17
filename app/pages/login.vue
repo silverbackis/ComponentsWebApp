@@ -43,6 +43,7 @@
   import FormInput from '~/components/Form/FormInput'
   import FormMixin from '~/components/Form/_Mixin'
   import jwtDecode from 'jwt-decode'
+  import cookies from '~/server/api/cookies'
 
   export default {
     mixins: [FormMixin],
@@ -84,8 +85,11 @@
         this.addNotification('You are already logged in')
       }
     },
-    async asyncData ({ store: { dispatch, getters }, app: { $axios } }) {
-      await dispatch('layout/init')
+    async asyncData ({ store: { dispatch, getters }, app: { $axios }, res }) {
+      let response = await dispatch('layout/init')
+      if (process.server) {
+        cookies.setCookies(res, response)
+      }
       try {
         let { data: { form } } = await $axios.get('login_form')
         form.vars.action = '/login'

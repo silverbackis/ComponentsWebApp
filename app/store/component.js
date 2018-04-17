@@ -38,7 +38,7 @@ export const getters = {
 
 export const actions = {
   async initPage ({ commit, rootGetters }, page) {
-    let data = await fetch({ path: page['@id'], $axios: this.$axios })
+    let { data } = await fetch({ path: page['@id'], $axios: this.$axios })
     let locations = data.componentLocations
     let components = flattenComponentData(locations)
     Object.keys(components).forEach((componentId) => {

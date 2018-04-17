@@ -17,4 +17,5 @@ return [
     Silverback\ApiComponentBundle\SilverbackApiComponentBundle::class => ['all' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
     Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle::class => ['all' => true],
+    Dunglas\AngularCsrfBundle\DunglasAngularCsrfBundle::class => ['all' => true],
 ];
