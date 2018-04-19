@@ -30,13 +30,14 @@ router.post('/login', (req, res) => {
       cookies.setCookies(res, loginRes)
       // Set a cookie to pass with JWT Token
       cookies.setJwtCookie(res, loginRes.data.token)
+      // loginRes.headers['set-cookie']
       sess.authUser = loginRes.data.token
       // save the refresh token to the session (NEVER to the client/browser)
       // Reference: Auth0: https://auth0.com/docs/tokens/refresh-token/current#restrictions
       // "A Single Page Application (normally implementing Implicit Grant) should not under any circumstances get a refresh token. The reason for that is the sensitivity of this piece of information."
       // Client will need to call middleware to refresh a session for them if they believe they are authenticated and get a 401
       sess.refreshToken = loginRes.data.refresh_token
-      res.status(200).json({ token: loginRes.data.token })
+      res.status(200)
     })
     .catch((err) => {
       if (!err.response) {

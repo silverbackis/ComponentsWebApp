@@ -12,21 +12,15 @@ services:
             # - ./api/var:/srv/api/var:rw
 
     nginx:
-        ports:
-            - "8080:80"
         volumes:
             - ./api/public:/srv/api/public:ro
+        ports:
+            - "8080:80"
 
     varnish:
-        volumes:
-            - ./api/_docker/varnish/conf:/etc/varnish:ro
         ports:
             - "8081:80"
 
     app:
-        volumes:
-            - ./app:/usr/src/app:rw
-            - ./app/node_modules:/usr/src/app/node_modules
-            - ./app/build:/usr/src/app/build
         ports:
             - "80:3000"

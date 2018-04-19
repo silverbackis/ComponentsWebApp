@@ -7,6 +7,7 @@ services:
             - db-mysql:/var/lib/mysql:rw
         env_file:
             - ./shared/.env
+            - ./api/.env
         environment:
             MYSQL_RANDOM_ROOT_PASSWORD: "yes"
 
@@ -21,6 +22,16 @@ services:
             - ./api/.env
         restart: on-failure
 
+    nginx:
+        image: silverbackis/nginx:symfony4
+        depends_on:
+            - php
+
+    varnish:
+        image: silverbackis/varnish:symfony4
+        depends_on:
+            - nginx
+
     app:
         build:
             context: ./app
@@ -28,20 +39,10 @@ services:
         env_file:
             - ./shared/.env
             - ./app/.env
-
-    nginx:
-        build:
-            context: ./api
-            dockerfile: ./_docker/nginx/Dockerfile
-        depends_on:
-            - php
-
-    varnish:
-        build:
-            context: ./api
-            dockerfile: ./_docker/varnish/Dockerfile
-        depends_on:
-            - nginx
+        volumes:
+            - ./app:/usr/src/app:rw
+            - /usr/src/app/node_modules
+            - /usr/src/app/build
 
 volumes:
     db-mysql:
