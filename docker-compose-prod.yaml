@@ -3,9 +3,9 @@ version: '3.6'
 services:
     varnish:
         environment:
-            VIRTUAL_HOST: api.domain.com
-            LETSENCRYPT_HOST: api.domain.com
-            LETSENCRYPT_EMAIL: my@email.com
+            VIRTUAL_HOST: api.starter.b-w.uk
+            LETSENCRYPT_HOST: api.starter.b-w.uk
+            LETSENCRYPT_EMAIL: info@silverbackhosting.com
             VIRTUAL_PORT: 80
             # HTTPS_METHOD: noredirect
         expose:
@@ -16,9 +16,9 @@ services:
 
     app:
         environment:
-            VIRTUAL_HOST: domain.com
-            LETSENCRYPT_HOST: domain.com
-            LETSENCRYPT_EMAIL: my@email.com
+            VIRTUAL_HOST: starter.b-w.uk
+            LETSENCRYPT_HOST: starter.b-w.uk
+            LETSENCRYPT_EMAIL: info@silverbackhosting.com
             VIRTUAL_PORT: 3000
             # HTTPS_METHOD: noredirect
         expose:
@@ -36,9 +36,9 @@ services:
             - api-public:/srv/api/public:ro
 
 networks:
-  proxy:
-    external:
-      name: proxy
+    proxy:
+        external:
+            name: proxy
 
 volumes:
     api-public:
