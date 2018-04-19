@@ -41,4 +41,4 @@ networks:
       name: proxy
 
 volumes:
-    php-api:
+    api-public:
