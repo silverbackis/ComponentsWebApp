@@ -29,11 +29,11 @@ services:
 
     php:
         volumes:
-            - php-api:/srv/api/var/log:rw,cached
+            - api-public:/srv/api/public:rw,cached
 
     nginx:
         volumes:
-            - php-api:/srv/api/public:ro
+            - api-public:/srv/api/public:ro
 
 networks:
   proxy:
