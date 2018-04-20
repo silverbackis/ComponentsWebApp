@@ -59,6 +59,7 @@ router.post('/login', (req, res = null) => {
 })
 
 router.post('/logout', (req, res) => {
+  req.session.authToken = null
   req.session.destroy()
   cookies.clearJwtCookie(res)
   res
