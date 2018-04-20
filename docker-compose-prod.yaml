@@ -32,6 +32,8 @@ services:
             - api-public:/srv/api/public:rw,cached
 
     nginx:
+        environment:
+            - CORS_HOST="https://starter.b-w.uk"
         volumes:
             - api-public:/srv/api/public:ro
 

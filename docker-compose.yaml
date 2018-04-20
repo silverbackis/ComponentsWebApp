@@ -23,7 +23,9 @@ services:
         restart: on-failure
 
     nginx:
-        image: silverbackis/nginx:symfony4
+        build:
+            context: ./api
+            dockerfile: ./_docker/nginx/Dockerfile
         depends_on:
             - php
 
