@@ -39,7 +39,7 @@ router.post('/login', (req, res) => {
       cookies.setJwtCookie(res, session.authToken)
       cookies.setCookies(res, loginRes)
 
-      res.status(200).json({ token: session.authUser })
+      res.status(200).json({ token: session.authToken })
     })
     .catch((err) => {
       logging && console.error(err)
