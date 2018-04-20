@@ -13,7 +13,7 @@ services:
 
     nginx:
         environment:
-            - CORS_HOST="https?://(serve.b-w.uk|localhost):?[0-9]*"
+            - CORS_HOST=https?://(serve.b-w.uk|localhost):?[0-9]*
         volumes:
             - ./api/public:/srv/api/public:ro
         ports:
