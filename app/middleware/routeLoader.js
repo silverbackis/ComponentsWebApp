@@ -14,7 +14,7 @@ export const RouteLoader = async function ({ store: { dispatch }, route, redirec
     if (err.response && err.response.status) {
       error({statusCode: err.response.status, message: err.response.statusText})
     } else {
-      error({statusCode: err.statusCode || 500, message: 'Error fetching from API'})
+      error({statusCode: err.statusCode || 500, message: 'Error fetching from API (routeLoader)'})
       console.warn(err)
     }
     return

@@ -1,25 +1,5 @@
 const logRequests = !!process.env.DEBUG_API
-const requestExpireTime = (1000 * 30)
 let requests = {}
-let requestsInfo = {}
-
-const isPreviousRequestExpired = (path) => {
-  const now = Date.now()
-  if (requestsInfo[path]) {
-    logRequests && console.log('Re-request', path, (now - requestsInfo[path].__lastUpdated), requestExpireTime)
-  }
-  if (
-    requestsInfo[path] !== undefined &&
-    (now - requestsInfo[path].__lastUpdated) <= requestExpireTime
-  ) {
-    return false
-  }
-
-  requestsInfo[path] = {
-    __lastUpdated: now
-  }
-  return true
-}
 
 export const fetch = ({ path, $axios, method, data, cancelToken, validateStatus }) => {
   if (!method) {
@@ -31,10 +11,6 @@ export const fetch = ({ path, $axios, method, data, cancelToken, validateStatus 
     }
   }
   logRequests && console.log(`fetching ${path}...`)
-  logRequests && console.log(path, '<<expired>>', isPreviousRequestExpired(path))
-  if (!isPreviousRequestExpired(path)) {
-    return requests[path]
-  }
   requests[path] = new Promise((resolve, reject) => {
     $axios
       .request({
@@ -45,7 +21,7 @@ export const fetch = ({ path, $axios, method, data, cancelToken, validateStatus 
         validateStatus
       })
       .then((response) => {
-        logRequests && console.log(response)
+        logRequests && console.log('api/index.js', response)
         resolve(response)
       })
       .catch((err) => {
