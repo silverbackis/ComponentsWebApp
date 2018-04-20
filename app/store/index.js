@@ -10,6 +10,7 @@ export const state = () => ({
   error: false,
   apiUrl: null,
   content: null,
+  authToken: null,
   authUser: null
 })
 
@@ -26,8 +27,9 @@ export const mutations = {
   setContent (state, content) {
     state.content = content
   },
-  setAuthUser (state, user) {
-    state.authUser = user
+  setAuthToken (state, token) {
+    state.authToken = token
+    state.authUser = token ? jwtDecode(token) : null
   },
   hasRole: (state) => (role) => {
     return !state.authUser ? false : (state.authUser.roles ? state.authUser.roles.indexOf(role) !== -1 : false)
@@ -41,14 +43,15 @@ export const getters = {
   getContent: state => (depth) => {
     return state.content[depth] || false
   },
+  getAuthToken: state => state.authToken,
   getAuthUser: state => state.authUser
 }
 
 export const actions = {
   nuxtServerInit ({ dispatch, commit }, { req: { session }, res }) {
-    if (session && session.authUser) {
-      CookieUtils.setJwtCookie(res, session.authUser)
-      commit('setAuthUser', jwtDecode(session.authUser))
+    if (session && session.authToken) {
+      CookieUtils.setJwtCookie(res, session.authToken)
+      commit('setAuthToken', session.authToken)
     }
     commit('setApiUrl', process.env.API_URL_BROWSER + '/')
   },

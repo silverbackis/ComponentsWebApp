@@ -50,7 +50,6 @@
   import FormTag from '~/components/Form/Form'
   import FormInput from '~/components/Form/FormInput'
   import FormMixin from '~/components/Form/_Mixin'
-  import jwtDecode from 'jwt-decode'
   import cookies from '~/server/api/cookies'
 
   export default {
@@ -76,12 +75,12 @@
     },
     methods: {
       ...mapMutations({
-        setAuthUser: 'setAuthUser',
+        setAuthToken: 'setAuthToken',
         addNotification: 'notifications/addNotification'
       }),
       formSuccess (data) {
         if (data.token) {
-          this.setAuthUser(jwtDecode(data.token))
+          this.setAuthToken(data.token)
           this.$router.replace('/')
         }
       }

@@ -47,7 +47,7 @@
     },
     methods: {
       ...mapMutations({
-        setAuthUser: 'setAuthUser',
+        setAuthToken: 'setAuthToken',
         addNotification: 'notifications/addNotification'
       }),
       logout () {
@@ -61,7 +61,7 @@
         )
           .then(() => {
             this.addNotification('You have successfully logged out')
-            this.setAuthUser(null)
+            this.setAuthToken(null)
             this.$cookie.delete('PHPSESSID')
           })
           .catch((err) => {
