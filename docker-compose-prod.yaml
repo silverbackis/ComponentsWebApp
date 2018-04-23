@@ -3,9 +3,9 @@ version: '3.6'
 services:
     varnish:
         environment:
-            VIRTUAL_HOST: api.starter.b-w.uk
-            LETSENCRYPT_HOST: api.starter.b-w.uk
-            LETSENCRYPT_EMAIL: info@silverbackhosting.com
+            VIRTUAL_HOST: ${API_HOST}
+            LETSENCRYPT_HOST: ${API_HOST}
+            LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
             VIRTUAL_PORT: 80
             # HTTPS_METHOD: noredirect
         expose:
@@ -16,9 +16,9 @@ services:
 
     app:
         environment:
-            VIRTUAL_HOST: starter.b-w.uk
-            LETSENCRYPT_HOST: starter.b-w.uk
-            LETSENCRYPT_EMAIL: info@silverbackhosting.com
+            VIRTUAL_HOST: ${APP_HOST}
+            LETSENCRYPT_HOST: ${APP_HOST}
+            LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
             VIRTUAL_PORT: 3000
             # HTTPS_METHOD: noredirect
         expose:
@@ -32,8 +32,6 @@ services:
             - api-public:/srv/api/public:rw,cached
 
     nginx:
-        environment:
-            - CORS_HOST=https://starter.b-w.uk
         volumes:
             - api-public:/srv/api/public:ro
 

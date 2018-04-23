@@ -36,6 +36,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
     "lru-cache": "^4.1.1",
+    "mysql": "^2.15.0",
     "node-sass": "^4.7.2",
     "nuxt": "^1.2.0",
     "photoswipe": "^4.1",

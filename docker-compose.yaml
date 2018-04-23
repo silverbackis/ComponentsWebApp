@@ -2,14 +2,13 @@ version: '3.6'
 
 services:
     mysql:
-        image: mysql
+        # for mysql v8 we would want PR merged here for node https://github.com/mysqljs/mysql/pull/1962 + release
+        # and pdo for PHP should support mysql 8 (new authentication plugins) - this seems to be unnecessary hassle otherwise (http://php.net/manual/en/ref.pdo-mysql.php)
+        image: mysql:5
         volumes:
-            - db-mysql:/var/lib/mysql:rw
+            - ./db-data:/var/lib/mysql:rw
         env_file:
             - ./shared/.env
-            - ./api/.env
-        environment:
-            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
 
     php:
         build:
@@ -20,12 +19,18 @@ services:
         env_file:
             - ./shared/.env
             - ./api/.env
+        volumes:
+            - ./_docker/php/www.conf:/usr/local/etc/php-fpm.d/99-www.conf
         restart: on-failure
 
     nginx:
         image: silverbackis/nginx:symfony4
         depends_on:
             - php
+        env_file:
+            - ./shared/.env
+        volumes:
+            - ./api/_docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
 
     varnish:
         image: silverbackis/varnish:symfony4

@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import { fetchRoute } from '../api'
-import { compile } from '~/.nuxt/utils'
 import jwtDecode from 'jwt-decode'
 import CookieUtils from '~/server/api/cookies'
 
@@ -11,7 +10,8 @@ export const state = () => ({
   apiUrl: null,
   content: null,
   authToken: null,
-  authUser: null
+  authUser: null,
+  currentRoute: null
 })
 
 export const mutations = {
@@ -33,6 +33,9 @@ export const mutations = {
   },
   hasRole: (state) => (role) => {
     return !state.authUser ? false : (state.authUser.roles ? state.authUser.roles.indexOf(role) !== -1 : false)
+  },
+  setCurrentRoute (state, currentRoute) {
+    state.currentRoute = currentRoute
   }
 }
 
@@ -55,8 +58,7 @@ export const actions = {
     }
     commit('setApiUrl', process.env.API_URL_BROWSER + '/')
   },
-  async fetchRoute (ctx, { route }) {
-    let path = compile(route.path)(route.params) || '/'
+  async fetchRoute (ctx, { path }) {
     return fetchRoute({ path, $axios: this.$axios })
   },
   async initRoute ({ commit, dispatch, rootGetters }, { content }) {

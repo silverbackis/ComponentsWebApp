@@ -96,7 +96,9 @@ Author modified: Daniel <daniel@silverback.is>
     },
     mounted () {
       let loResImg = new Image()
+      // HTML5 - send Origin header - no credentials though
       loResImg.crossOrigin = 'anonymous'
+
       let hiResImg = new Image()
       let loResCanvas = this.$refs.canvas
 

@@ -12,8 +12,6 @@ services:
             # - ./api/var:/srv/api/var:rw
 
     nginx:
-        environment:
-            - CORS_HOST=https?://(serve.b-w.uk|localhost):?[0-9]*
         volumes:
             - ./api/public:/srv/api/public:ro
         ports:

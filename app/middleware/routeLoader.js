@@ -1,9 +1,17 @@
 import cookies from '~/server/api/cookies'
+import { compile } from '~/.nuxt/utils'
 
-export const RouteLoader = async function ({ store: { dispatch }, route, redirect, error, res }) {
+export const RouteLoader = async function ({ store: { state, commit, dispatch }, route, redirect, error, res }) {
+  // Middleware defined on pages - prevent route loading for each page depth
+  const path = compile(route.path)(route.params) || '/'
+  if (path === state.currentRoute) {
+    return
+  }
+  commit('setCurrentRoute', path)
+
   let routeData, response
   try {
-    response = await dispatch('fetchRoute', { route })
+    response = await dispatch('fetchRoute', { path })
     routeData = response.data
   } catch (err) {
     response = await dispatch('layout/init')

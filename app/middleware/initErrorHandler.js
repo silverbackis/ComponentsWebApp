@@ -1,5 +1,5 @@
-export default function ({ store, error }) {
-  if (store.state.error) {
-    error(store.state.error)
+export default function ({ store: { state }, error }) {
+  if (state.error) {
+    error(state.error)
   }
 }

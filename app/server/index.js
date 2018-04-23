@@ -1,22 +1,25 @@
 import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
 import bodyParser from 'body-parser'
-import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import api from './api'
+import session from 'express-session'
 import MysqlSession from 'express-mysql-session'
+import mysql from 'mysql'
 import config from '../nuxt.config.js'
 config.dev = process.env.NODE_ENV !== 'production'
 
 const MySQLStore = MysqlSession(session)
-const sessionStore = new MySQLStore({
+const mysqlOps = {
   host: 'mysql',
   port: 3306,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE
-})
+}
+const connection = mysql.createConnection(mysqlOps)
+const sessionStore = new MySQLStore({}, connection)
 let sessOps = {
   secret: process.env.COOKIE_SECRET,
   name: 'JS_SESSION',

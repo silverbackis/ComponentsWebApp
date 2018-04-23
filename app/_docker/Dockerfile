@@ -1,5 +1,8 @@
 FROM node:alpine
 
+# While we have a git dep and the latest mysql authentication plugins are not supportred in the official repo
+RUN apk add --no-cache git
+
 # ARG app_env
 # ENV APP_ENV $app_env
 # ENV NODE_ENV "development"
