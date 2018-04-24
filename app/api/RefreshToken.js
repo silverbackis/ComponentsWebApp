@@ -19,7 +19,8 @@ export const RefreshToken = async (req, res, sendResult = true) => {
         refresh_token: session.refreshToken
       },
       {
-        headers: CookiesToHeaders(req.cookies)
+        headers: CookiesToHeaders(req.cookies),
+        refreshTokenRequest: true
       })
     const data = response.data
     session.authToken = data.token

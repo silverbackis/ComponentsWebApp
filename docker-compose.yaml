@@ -23,7 +23,7 @@ services:
             - ./shared/.env
             - ./api/.env
         volumes:
-            - ./_docker/php/www.conf:/usr/local/etc/php-fpm.d/99-www.conf
+            - ./api/_docker/php/www.conf:/usr/local/etc/php-fpm.d/99-www.conf
         restart: on-failure
         networks:
             - api
@@ -35,8 +35,6 @@ services:
             - php
         env_file:
             - ./shared/.env
-        volumes:
-            - ./api/_docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
         networks:
             - api
 
