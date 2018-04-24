@@ -4,27 +4,25 @@ services:
     varnish:
         environment:
             VIRTUAL_HOST: ${API_HOST}
+            VIRTUAL_PORT: 80
+            HTTPS_METHOD: ${HTTPS_METHOD}
             LETSENCRYPT_HOST: ${API_HOST}
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
-            VIRTUAL_PORT: 80
-            # HTTPS_METHOD: noredirect
         expose:
             - 80
         networks:
-            - default
             - proxy
 
     app:
         environment:
             VIRTUAL_HOST: ${APP_HOST}
+            VIRTUAL_PORT: 3000
+            HTTPS_METHOD: ${HTTPS_METHOD}
             LETSENCRYPT_HOST: ${APP_HOST}
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
-            VIRTUAL_PORT: 3000
-            # HTTPS_METHOD: noredirect
         expose:
             - 3000
         networks:
-            - default
             - proxy
 
     php:

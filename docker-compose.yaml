@@ -9,6 +9,9 @@ services:
             - ./db-data:/var/lib/mysql:rw
         env_file:
             - ./shared/.env
+        networks:
+            - api
+            - app
 
     php:
         build:
@@ -22,20 +25,28 @@ services:
         volumes:
             - ./_docker/php/www.conf:/usr/local/etc/php-fpm.d/99-www.conf
         restart: on-failure
+        networks:
+            - api
 
     nginx:
         image: silverbackis/nginx:symfony4
+        container_name: nginx
         depends_on:
             - php
         env_file:
             - ./shared/.env
         volumes:
             - ./api/_docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - api
 
     varnish:
         image: silverbackis/varnish:symfony4
         depends_on:
             - nginx
+            - php
+        networks:
+            - api
 
     app:
         build:
@@ -48,6 +59,12 @@ services:
             - ./app:/usr/src/app:rw
             - /usr/src/app/node_modules
             - /usr/src/app/build
+        networks:
+            - app
 
 volumes:
     db-mysql:
+
+networks:
+    app:
+    api:
