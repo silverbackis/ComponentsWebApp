@@ -3,7 +3,7 @@ import { Nuxt, Builder } from 'nuxt'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
-import api from './api'
+import AuthRoutes from '../.nuxt/bwstarter/auth_routes'
 import session from 'express-session'
 import MysqlSession from 'express-mysql-session'
 import mysql from 'mysql'
@@ -47,7 +47,16 @@ app.use(bodyParser.json())
 app.use(session(sessOps))
 app.use(helmet())
 app.use(cookieParser())
-app.use(api)
+
+const router = express.Router()
+router.use((req, res, next) => {
+  Object.setPrototypeOf(req, app.request)
+  Object.setPrototypeOf(res, app.response)
+  req.res = res
+  res.req = req
+  next()
+})
+app.use(AuthRoutes(router))
 
 // Init Nuxt.js
 const nuxt = new Nuxt(config)

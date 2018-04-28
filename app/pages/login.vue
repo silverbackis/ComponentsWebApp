@@ -2,7 +2,7 @@
   <section class="page-section">
     <div class="columns is-centered">
       <div class="column is-narrow">
-        <div class="card" v-if="!!getAuthUser">
+        <div class="card" v-if="!!token">
           <div class="card-header">
             <h1 class="card-header-title">Redirecting...</h1>
           </div>
@@ -46,11 +46,11 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations } from 'vuex'
-  import FormTag from '~/components/Form/Form'
-  import FormInput from '~/components/Form/FormInput'
-  import FormMixin from '~/components/Form/_Mixin'
-  import cookies from '~/server/api/cookies'
+  import { mapGetters, mapMutations, mapState } from 'vuex'
+  import FormTag from '~/.nuxt/bwstarter/components/Form/Form'
+  import FormInput from '~/.nuxt/bwstarter/components/Form/FormInput'
+  import FormMixin from '~/.nuxt/bwstarter/components/Form/_Mixin'
+  import { setResponseCookies } from '~/.nuxt/bwstarter/utilities'
 
   export default {
     mixins: [FormMixin],
@@ -66,9 +66,9 @@
     },
     computed: {
       ...mapGetters({
-        getApiUrl: 'getApiUrl',
-        getAuthUser: 'getAuthUser'
+        getApiUrl: 'bwstarter/getApiUrl'
       }),
+      ...mapState({ token: state => state.bwstarter.token }),
       formErrors () {
         return this.storeForm ? this.storeForm.vars.errors : []
       }
@@ -80,22 +80,21 @@
       }),
       formSuccess (data) {
         if (data.token) {
-          this.setAuthToken(data.token)
+          this.$bwstarter.$storage.setState('token', data.token)
           this.$router.replace('/')
         }
       }
     },
     mounted () {
-      let authUser = this.getAuthUser
-      if (authUser) {
+      if (this.token) {
         this.$router.replace('/')
         this.addNotification('You are already logged in')
       }
     },
-    async asyncData ({ store: { dispatch, getters }, app: { $axios }, res }) {
-      let response = await dispatch('layout/init')
+    async asyncData ({ store: { dispatch, getters }, app: { $axios, $bwstarter }, res }) {
+      let response = await $bwstarter.getLayout()
       if (process.server) {
-        cookies.setCookies(res, response)
+        setResponseCookies(res, response)
       }
       try {
         let { data: { form } } = await $axios.get('login_form')
