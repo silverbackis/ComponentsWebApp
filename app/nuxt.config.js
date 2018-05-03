@@ -111,9 +111,19 @@ module.exports = {
    * Router
    */
   router: {
-    middleware: ['initErrorHandler']
+    middleware: ['initErrorHandler'],
+    extendRoutes (routes, resolve) {
+      routes.push({
+        path: "/news-blog/:page1?",
+        component: resolve('~/.nuxt/bwstarter/bulma/pages/_base'),
+        name: "news-blog-page1"
+      })
+    }
   },
   loading: {
     color: '#23d160'
+  },
+  bwstarter: {
+    pagesDepth: 3
   }
 }
