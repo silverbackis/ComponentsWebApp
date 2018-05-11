@@ -46,6 +46,8 @@ services:
             - api
             - app
             - proxy
+        environment:
+            - ACCEPT_COOKIES=none
 
     app:
         build:
