@@ -66,15 +66,15 @@ module.exports = {
         },
         manifest: true,
         meta: false,
-        workbox: {
-          runtimeCaching: [
-            {
-              urlPattern: process.env.API_URL_BROWSER + '/.*',
-              handler: 'networkFirst',
-              method: 'GET'
-            }
-          ]
-        },
+        // workbox: {
+        //   runtimeCaching: [
+        //     {
+        //       urlPattern: process.env.API_URL_BROWSER + '/.*',
+        //       handler: 'networkFirst',
+        //       method: 'GET'
+        //     }
+        //   ]
+        // },
         optimize: {
           cssnano: {
             zindex: false
