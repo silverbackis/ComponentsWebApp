@@ -2,7 +2,7 @@ nelmio_cors:
     defaults:
         allow_credentials: true
         origin_regex: true
-        allow_origin: ['%env(CORS_ALLOW_ORIGIN)%', '^https?://localhost:?[0-9]*$']
+        allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
         allow_methods: ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
         allow_headers: ['content-type', 'authorization', 'access-control-request-method', 'access-control-request-headers', 'x-xsrf-token', 'cache-control', 'x-requested-with', 'cookie']
         expose_headers: ['Link']

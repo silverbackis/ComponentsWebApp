@@ -10,8 +10,6 @@ services:
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
         expose:
             - 80
-        networks:
-            - proxy
 
     app:
         environment:
@@ -22,8 +20,6 @@ services:
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
         expose:
             - 3000
-        networks:
-            - proxy
 
     php:
         volumes:
@@ -32,11 +28,6 @@ services:
     nginx:
         volumes:
             - api-public:/srv/api/public:ro
-
-networks:
-    proxy:
-        external:
-            name: proxy
 
 volumes:
     api-public:
