@@ -20,11 +20,15 @@ module.exports = {
    * Add axios globally
    */
   build: {
+    analyze: true,
     vendor: ['axios', 'lodash'],
+    maxChunkSize: 300000,
     /*
     ** Run ESLINT on save
     */
     extend (config, ctx) {
+      config.resolve.alias['vue'] = 'vue/dist/vue.common'
+
       if (ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -66,6 +70,7 @@ module.exports = {
         },
         manifest: true,
         meta: false,
+        // Causes issues in safari when requesting pages when authentication changes (annonymous/authenticated user)
         // workbox: {
         //   runtimeCaching: [
         //     {

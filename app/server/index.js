@@ -1,3 +1,4 @@
+import compression from 'compression'
 import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
 import bodyParser from 'body-parser'
@@ -53,6 +54,7 @@ const init = async function () {
   app.set('port', port)
   app.disable('x-powered-by')
   app.set('trust proxy', !!config.dev)
+  app.use(compression())
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
   app.use(session(sessOps))

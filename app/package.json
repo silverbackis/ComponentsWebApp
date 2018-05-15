@@ -13,10 +13,10 @@
         "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
     },
     "dependencies": {
-        "@bwstarter/server": "^1.1.0",
-        "@bwstarter/core": "^1.1.0",
-        "@bwstarter/components": "^1.1.0",
         "@bwstarter/bulma": "^1.1.0",
+        "@bwstarter/components": "^1.1.0",
+        "@bwstarter/core": "^1.1.0",
+        "@bwstarter/server": "^1.1.0",
         "@fortawesome/fontawesome": "^1.1.2",
         "@fortawesome/fontawesome-free-brands": "^5.0.4",
         "@fortawesome/fontawesome-free-regular": "^5.0.4",
@@ -31,6 +31,7 @@
         "body-parser": "^1.18.2",
         "bulma": "^0.6.1",
         "caniuse-lite": "^1.0.30000782",
+        "compression": "^1.7.2",
         "cookie-parser": "^1.4.3",
         "cross-env": "^5.0.1",
         "es6-promise": "^4.1.1",

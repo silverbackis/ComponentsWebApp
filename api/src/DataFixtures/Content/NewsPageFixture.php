@@ -86,6 +86,7 @@ class NewsPageFixture extends AbstractFixture
             [
                 'title' => '{{ title }}',
                 'subtitle' => '{{ subtitle }}',
+                'filePath' => '{{ filePath }}',
                 'className' => 'is-warning is-bold',
                 'dynamicPageClass' => ArticlePage::class
             ]
