@@ -2,26 +2,26 @@
 # yarn lockfile v1
 
 
-"@bwstarter/bulma@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@bwstarter/bulma/-/bulma-1.1.0.tgz#9be72bec7da9fba7ea12094056f1c54172f94a82"
+"@bwstarter/bulma@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@bwstarter/bulma/-/bulma-0.1.0.tgz#ba3da3483304a77e2199e4245248e04147fcf519"
   dependencies:
-    "@bwstarter/components" "^1.0.0"
-    "@bwstarter/core" "^1.0.0"
-    "@bwstarter/server" "^1.0.0"
+    "@bwstarter/components" "^0.1.0"
+    "@bwstarter/core" "^0.1.0"
+    "@bwstarter/server" "^0.1.0"
 
-"@bwstarter/components@^1.0.0", "@bwstarter/components@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@bwstarter/components/-/components-1.1.0.tgz#b44a40024eeb0ad4cf2b8713d9c8d34d7585d506"
+"@bwstarter/components@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@bwstarter/components/-/components-0.1.0.tgz#448103dfe17aae550706ab6e6154114ecdb912a3"
   dependencies:
-    "@bwstarter/core" "^1.0.0"
-    "@bwstarter/server" "^1.0.0"
+    "@bwstarter/core" "^0.1.0"
+    "@bwstarter/server" "^0.1.0"
 
-"@bwstarter/core@^1.0.0", "@bwstarter/core@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@bwstarter/core/-/core-1.1.0.tgz#5ebc759885dbb2b36797e34766e6b0d3d061c679"
+"@bwstarter/core@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@bwstarter/core/-/core-0.1.0.tgz#421ca26587cf0b961696bb96ab90d04690eda06e"
   dependencies:
-    "@bwstarter/server" "^1.0.0"
+    "@bwstarter/server" "^0.1.0"
     "@nuxtjs/axios" "^5.3.1"
     jwt-decode "^2.2.0"
     lodash "^4.17.10"
@@ -29,9 +29,9 @@
     vue-cookie "^1.1.4"
     vue-quill-editor "^3.0.6"
 
-"@bwstarter/server@^1.0.0", "@bwstarter/server@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@bwstarter/server/-/server-1.1.0.tgz#59163d25d318253652ba58c576189d29caa4394c"
+"@bwstarter/server@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@bwstarter/server/-/server-0.1.0.tgz#8d64ee24a074ffae977ae33cf46111f1bff905a6"
   dependencies:
     axios "^0.18.0"
     set-cookie-parser "^2.1.1"

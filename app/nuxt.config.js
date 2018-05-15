@@ -20,7 +20,7 @@ module.exports = {
    * Add axios globally
    */
   build: {
-    analyze: true,
+    // analyze: true,
     vendor: ['axios', 'lodash'],
     maxChunkSize: 300000,
     /*

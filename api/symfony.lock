@@ -83,9 +83,6 @@
     "doctrine/orm": {
         "version": "v2.5.13"
     },
-    "dunglas/angular-csrf-bundle": {
-        "version": "v1.1.0"
-    },
     "gesdinet/jwt-refresh-token-bundle": {
         "version": "v0.3.3"
     },
@@ -392,6 +389,9 @@
     "symfony/process": {
         "version": "v4.0.4"
     },
+    "symfony/profiler-pack": {
+        "version": "v1.0.3"
+    },
     "symfony/property-access": {
         "version": "v4.0.1"
     },
@@ -425,6 +425,9 @@
     "symfony/serializer": {
         "version": "v4.0.1"
     },
+    "symfony/stopwatch": {
+        "version": "v4.0.9"
+    },
     "symfony/templating": {
         "version": "v4.0.4"
     },
@@ -454,6 +457,15 @@
     },
     "symfony/var-dumper": {
         "version": "v4.0.5"
+    },
+    "symfony/web-profiler-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
+        }
     },
     "symfony/yaml": {
         "version": "v4.0.9"

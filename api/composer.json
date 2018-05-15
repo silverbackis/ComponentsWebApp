@@ -10,7 +10,6 @@
         }
     ],
     "require": {
-        "dunglas/angular-csrf-bundle": "^1.1",
         "gesdinet/jwt-refresh-token-bundle": "^0.3.3",
         "lexik/jwt-authentication-bundle": "^2.4",
         "silverbackis/api-component-bundle": "dev-develop",
@@ -23,6 +22,7 @@
         "symfony/dotenv": "^3.4 || ^4.0",
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^4.0",
+        "symfony/profiler-pack": "^1.0",
         "symfony/var-dumper": "^4.0",
         "roave/security-advisories": "dev-master"
     },

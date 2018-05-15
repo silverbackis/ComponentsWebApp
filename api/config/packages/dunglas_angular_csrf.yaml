@@ -1,7 +1,0 @@
-dunglas_angular_csrf:
-    cookie:
-        domain: '%env(COOKIE_DOMAIN)%'
-        set_on:
-            - { path: ^/, methods: [GET, HEAD] }
-    secure:
-        - { path: ^/, methods: [POST, PUT, PATCH, LINK, DELETE] }
