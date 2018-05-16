@@ -16,12 +16,26 @@ I've chosen to use NuxtJS (VueJS) and API Platform (build on Symfony) for many r
 ## Installation
 Simply clone or download this repository, then run:
 ```bash
+make env
+```
+You can now modify the following environment files:
+- /.env
+- /shared/.env
+- /app/.env
+- /api/.env
+
+There is a command `make php` which is for an empty Symfony application in the `api` directory. It will install the composer application and when all the files have appeared in your directory and the Symfony Flex scripts have been run, you can press any key to stop that operation before running the application as described below.
+
+To run in development mode:
+```bash
 make start
 ```
-Or in production
+Or in production:
 ```bash
 make start env=prod
 ```
+
+_Please note: the env=prod flag refers to which docker composer file to use and does not adjust the configuration of your front-end application or API - the front-end application's mode can be adjusted in it's own .env file - the Docker image will control whether your Symfony application is built in development or production_
 
 The production environment should also be running nginx as a proxy and you can configure the domain names and more in `./docker-compose-prod.yaml`.
 
