@@ -24,6 +24,7 @@ services:
     php:
         volumes:
             - api-public:/srv/api/public:rw,cached
+            - ./api/config:/srv/api/config:ro,cached
 
     nginx:
         volumes:
