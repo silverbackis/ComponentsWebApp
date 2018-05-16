@@ -35,7 +35,7 @@ Or in production:
 make start env=prod
 ```
 
-_Please note: the env=prod flag refers to which docker composer file to use and does not adjust the configuration of your front-end application or API - the front-end application's mode can be adjusted in it's own .env file - the Docker image will control whether your Symfony application is built in development or production_
+_Please note: the env=prod flag refers to which docker composer file to use and does not adjust the configuration of your front-end application or API - the application's environment for both the API and front-end application can be adjusted in their own .env files_
 
 The production environment should also be running nginx as a proxy and you can configure the domain names and more in `./docker-compose-prod.yaml`.
 
