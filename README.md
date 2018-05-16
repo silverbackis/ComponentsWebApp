@@ -63,6 +63,44 @@ This application is build using a number of repositories. You can visit each one
 1. API - This uses [API Component Bundle](https://github.com/silverbackis/ApiComponentBundle) which is built on [API Platform](https://api-platform.com/)
 2. Front-end - This uses 4 NPM packages which will allow different CSS frameworks and components to be added in future. All the NPM packages are namespaced under [@bwstarter and available in their own repository](https://github.com/silverbackis/bwstarter_nuxt_modules)
 
+## Adding/Modifying Components
+By default the [API Component Bundle](https://github.com/silverbackis/ApiComponentBundle) comes with commonly used pre-configured entities. The [@bwstarter/bulma](https://github.com/silverbackis/bwstarter_nuxt_modules/tree/master/bulma) Nuxt Module has components and is preconfigured to match them by name to the entities from your API. You can override any component in the @bwstarter/bulma module. The default configuration is
+```js
+...
+{
+  pagesDepth: 5,
+  components: {
+    Hero: '~/.nuxt/bwstarter/bulma/components/Hero/Hero.vue',
+    Content: '~/.nuxt/bwstarter/bulma/components/Content/Content.vue',
+    Tabs: '~/.nuxt/bwstarter/bulma/components/Nav/Tabs/Tabs.vue',
+    Menu: '~/.nuxt/bwstarter/bulma/components/Nav/Menu/Menu.vue',
+    Form: '~/.nuxt/bwstarter/bulma/components/Form/Form.vue',
+    FeatureColumns: '~/.nuxt/bwstarter/bulma/components/Feature/Columns/FeatureColumns.vue',
+    FeatureStacked: '~/.nuxt/bwstarter/bulma/components/Feature/Stacked/FeatureStacked.vue',
+    FeatureTextList: '~/.nuxt/bwstarter/bulma/components/Feature/TextList/FeatureTextList.vue',
+    Gallery: '~/.nuxt/bwstarter/bulma/components/Gallery/Gallery.vue',
+    Collection: '~/.nuxt/bwstarter/bulma/components/Collection/Collection.vue'
+  }
+}
+...
+```
+
+Modify this to suit your needs in the nuxt.config.js file. For example:
+```js
+module.exports = {
+  ...
+  bwstarter: {
+    pagesDepth: 3,
+    components: {
+      Hero: '~/components/CustomHero.vue',
+      ...
+    }
+  }
+  ...
+}
+```
+The example above will modify the component used for the `Hero` component entity in your API.
+
 ## Why
 With the rise of front-end frameworks and decoupled applications, I wanted to create a group of applications that could bring all the latest web technologies together and provide a starting point for any web application. As all the frameworks I use are Open Source and I owe most of my knowledge to superb free and open source projects, this is also free and open-source.
 
