@@ -1,12 +1,17 @@
-version: '3'
+version: '3.6'
 
 services:
     mysql:
-        image: mysql
+        # for mysql v8 we would want PR merged here for node https://github.com/mysqljs/mysql/pull/1962 + release
+        # and pdo for PHP should support mysql 8 (new authentication plugins) - this seems to be unnecessary hassle otherwise (http://php.net/manual/en/ref.pdo-mysql.php)
+        image: mysql:5
+        volumes:
+            - ./db-data:/var/lib/mysql:rw
         env_file:
-            - ./api/.env
-        environment:
-            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+            - ./shared/.env
+        networks:
+            - api
+            - app
 
     php:
         build:
@@ -15,34 +20,54 @@ services:
         depends_on:
             - mysql
         env_file:
+            - ./shared/.env
             - ./api/.env
         volumes:
-            - ./api:/srv/api:rw
+            - ./api/_docker/php/www.conf:/usr/local/etc/php-fpm.d/99-www.conf
+        restart: on-failure
+        networks:
+            - api
+
+    nginx:
+        image: silverbackis/nginx:symfony4
+        depends_on:
+            - php
+        env_file:
+            - ./shared/.env
+        networks:
+            - api
+
+    varnish:
+        image: silverbackis/varnish:symfony4
+        depends_on:
+            - nginx
+            - php
+        networks:
+            - api
+            - app
+            - proxy
 
     app:
         build:
             context: ./app
             dockerfile: ./_docker/Dockerfile
         env_file:
+            - ./shared/.env
             - ./app/.env
         volumes:
             - ./app:/usr/src/app:rw
             - /usr/src/app/node_modules
+            - /usr/src/app/build
+        networks:
+            - app
+            - proxy
 
-    nginx:
-        build:
-            context: ./api
-            dockerfile: ./_docker/nginx/Dockerfile
-        depends_on:
-            - php
-        volumes:
-            - ./api/public:/srv/api/public:ro
+volumes:
+    db-mysql:
 
-    varnish:
-        build:
-            context: ./api
-            dockerfile: ./_docker/varnish/Dockerfile
-        depends_on:
-            - nginx
-        volumes:
-            - ./api/_docker/varnish/conf:/etc/varnish:ro
+networks:
+    app:
+    api:
+    proxy:
+        external:
+            name: proxy

@@ -1,30 +1,32 @@
-version: '3'
+version: '3.6'
 
 services:
     mysql:
-        volumes:
-            - db-mysql:/var/lib/mysql:rw
         ports:
             - "4306:3306"
+
     php:
         volumes:
-            # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
-            - /srv/api/var/
-            - /srv/api/var/cache/
-            - /srv/api/var/logs/
-            - /srv/api/var/sessions/
+            - ./api:/srv/api:rw,cached
+            # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
+            # - ./api/var:/srv/api/var:rw
+            # - /Volumes/LaCie/GitHub/_BWStarter/api-component-bundle:/srv/api/vendor/silverbackis/api-component-bundle:ro
+
     nginx:
+        volumes:
+            - ./api/public:/srv/api/public:ro
         ports:
             - "8080:80"
+
     varnish:
         ports:
             - "8081:80"
+
     app:
+        expose:
+            - "8888"
         ports:
             - "80:3000"
-        build:
-            args:
-                app_env: development
-
-volumes:
-    db-mysql: {}
+            - "8888:8888"
+#        volumes:
+#            - /Volumes/LaCie/GitHub/_BWStarter/node_modules/@bwstarter:/usr/src/app/node_modules/@bwstarter:ro

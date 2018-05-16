@@ -10,3 +10,4 @@ _docker/Dockerfile
 .env*
 .nuxt
 node_modules
+build

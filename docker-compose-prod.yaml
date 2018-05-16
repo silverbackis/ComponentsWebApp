@@ -1,34 +1,35 @@
-version: '3'
+version: '3.6'
 
 services:
-    mysql:
-        env_file:
-            - ./api/.env
-        volumes:
-            - ./docker/db/data:/var/lib/mysql:rw
     varnish:
         environment:
-            VIRTUAL_HOST: api.starter.b-w.uk
-            LETSENCRYPT_HOST: api.starter.b-w.uk
-            LETSENCRYPT_EMAIL: info@silverbackhosting.com
-        volumes:
-            - ./:/usr/share/nginx/html
+            VIRTUAL_HOST: ${API_HOST}
+            VIRTUAL_PORT: 80
+            HTTPS_METHOD: ${HTTPS_METHOD}
+            LETSENCRYPT_HOST: ${API_HOST}
+            LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
         expose:
             - 80
+
     app:
         environment:
-            VIRTUAL_HOST: starter.b-w.uk
-            LETSENCRYPT_HOST: starter.b-w.uk
-            LETSENCRYPT_EMAIL: info@silverbackhosting.com
-        volumes:
-            - ./:/usr/share/nginx/html
+            VIRTUAL_HOST: ${APP_HOST}
+            VIRTUAL_PORT: 3000
+            HTTPS_METHOD: ${HTTPS_METHOD}
+            LETSENCRYPT_HOST: ${APP_HOST}
+            LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
         expose:
             - 3000
-        build:
-            args:
-                app_env: production
 
-networks:
-  default:
-    external:
-      name: nginx-proxy
+    php:
+        volumes:
+            - api-public:/srv/api/public:rw,cached
+            # Had an issue where a config file wasn't removed after a composer update - may have been another issue with git fetch in prod
+            # - ./api/config:/srv/api/config:rw,cached
+
+    nginx:
+        volumes:
+            - api-public:/srv/api/public:ro
+
+volumes:
+    api-public:

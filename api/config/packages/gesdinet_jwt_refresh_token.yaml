@@ -1,0 +1,5 @@
+gesdinet_jwt_refresh_token:
+    # 1 day
+    ttl: 86400
+    user_identity_field: username
+    firewall: main

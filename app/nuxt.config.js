@@ -20,17 +20,24 @@ module.exports = {
    * Add axios globally
    */
   build: {
+    // analyze: true,
     vendor: ['axios', 'lodash'],
+    maxChunkSize: 300000,
     /*
     ** Run ESLINT on save
     */
     extend (config, ctx) {
+      config.resolve.alias['vue'] = 'vue/dist/vue.common'
+
       if (ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
+          exclude: /node_modules/,
+          options : {
+            fix : true
+          }
         })
       }
     }
@@ -43,15 +50,17 @@ module.exports = {
    * Plugins
    */
   plugins: [
-    { src: '~/plugins/quill.js', ssr: false },
-    { src: '~/plugins/apiPage.js', ssr: true }
+    // Without ssr we get a warning ssr and browser rendering do not match as of 19 Jan 18
+    { src: '~/plugins/fontawesome', ssr: true }
   ],
   /**
    * Modules
    */
   modules: [
+    '@bwstarter/core',
+    '@bwstarter/components',
+    '@bwstarter/bulma',
     '@nuxtjs/component-cache',
-    '@nuxtjs/font-awesome',
     [
       '@nuxtjs/pwa',
       {
@@ -61,7 +70,16 @@ module.exports = {
         },
         manifest: true,
         meta: false,
-        workbox: true,
+        // Causes issues in safari when requesting pages when authentication changes (annonymous/authenticated user)
+        // workbox: {
+        //   runtimeCaching: [
+        //     {
+        //       urlPattern: process.env.API_URL_BROWSER + '/.*',
+        //       handler: 'networkFirst',
+        //       method: 'GET'
+        //     }
+        //   ]
+        // },
         optimize: {
           cssnano: {
             zindex: false
@@ -76,7 +94,12 @@ module.exports = {
         debug: false
       }
     ],
-    ['@nuxtjs/google-tag-manager', { id: 'GTM-MVSWS73' }],
+    [
+      '@nuxtjs/google-tag-manager',
+      {
+        id: 'GTM-MVSWS73'
+      }
+    ]
   ],
   /**
    * Manifest for mobile app
@@ -93,6 +116,19 @@ module.exports = {
    * Router
    */
   router: {
-    middleware: ['initErrorHandler']
+    middleware: ['initErrorHandler'],
+    extendRoutes (routes, resolve) {
+      routes.push({
+        path: "/news-blog/:page1?",
+        component: resolve('~/.nuxt/bwstarter/bulma/pages/_base'),
+        name: "news-blog-page1"
+      })
+    }
+  },
+  loading: {
+    color: '#23d160'
+  },
+  bwstarter: {
+    pagesDepth: 3
   }
 }
