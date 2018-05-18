@@ -13,7 +13,7 @@ services:
             - api
             - app
 
-    php:
+    api:
         build:
             context: ./api
             dockerfile: ./_docker/php/Dockerfile
@@ -31,7 +31,7 @@ services:
     nginx:
         image: silverbackis/nginx:symfony4
         depends_on:
-            - php
+            - api
         env_file:
             - ./shared/.env
         networks:
@@ -41,7 +41,7 @@ services:
         image: silverbackis/varnish:symfony4
         depends_on:
             - nginx
-            - php
+            - api
         networks:
             - api
             - app

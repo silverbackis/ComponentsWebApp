@@ -4,7 +4,7 @@ env?=dev
 env:
 	./bin/copy-env.sh
 
-php:
+api:
 	@docker-compose -f ./docker-compose.yaml -f ./docker-compose-$(env).yaml up -d php
 	read -r -p "Press any key when you can see all your files in your project's ./api firectory (composer install command running)" input
 	make stop

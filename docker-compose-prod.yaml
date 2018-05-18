@@ -21,7 +21,7 @@ services:
         expose:
             - 3000
 
-    php:
+    api:
         volumes:
             - api-public:/srv/api/public:rw,cached
             # Had an issue where a config file wasn't removed after a composer update - may have been another issue with git fetch in prod
