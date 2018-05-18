@@ -11,6 +11,22 @@ $navbar-height: 3.75rem
 $navbar-item-active-color: $blue
 $navbar-item-active-background-color: $grey-lightest
 
+$link: darken($blue, 30%)
+
+$pre-background: $grey-dark
+$pre: $grey-lightest
+$code: darken($red, 10%)
+
+$content-blockquote-background-color: $white
+$content-blockquote-border-left: 4px solid $primary
+$content-blockquote-padding: .8em 1.05em
+.content blockquote
+  &:before
+    content: open-quote
+  &:after
+    content: close-quote
+  font-size: $size-4
+
 @import '~bulma/sass/utilities/functions.sass'
 @import '~bulma/sass/utilities/derived-variables.sass'
 // @import '~bulma/sass/utilities/animations.sass'
