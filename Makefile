@@ -9,7 +9,13 @@ api:
 	read -r -p "Press any key when you can see all your files in your project's ./api firectory (composer install command running)" input
 	make stop
 
-build:
+update:
+	@docker-compose exec api php -d memory_limit=-1 /usr/bin/composer update
+	@docker-compose exec app yarn upgrade
+	make pull
+
+pull:
+	@docker-compose -f ./docker-compose.yaml -f ./docker-compose-$(env).yaml pull
 	@docker-compose -f ./docker-compose.yaml -f ./docker-compose-$(env).yaml build --no-cache --pull
 
 start:
@@ -18,4 +24,4 @@ start:
 stop:
 	@docker-compose down
 
-.PHONY: env php build start stop
+.PHONY: env api update pull start stop
