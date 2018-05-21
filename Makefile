@@ -24,4 +24,8 @@ start:
 stop:
 	@docker-compose down
 
-.PHONY: env api update pull start stop
+restart:
+	make stop
+	make start env=$(env)
+
+.PHONY: env api update pull start stop restart
