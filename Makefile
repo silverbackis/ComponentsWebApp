@@ -12,11 +12,13 @@ api:
 update:
 	@docker-compose exec api php -d memory_limit=-1 /usr/bin/composer update
 	@docker-compose exec app yarn upgrade
-	make pull
 
 pull:
 	@docker-compose -f ./docker-compose.yaml -f ./docker-compose-$(env).yaml pull
 	@docker-compose -f ./docker-compose.yaml -f ./docker-compose-$(env).yaml build --no-cache --pull
+
+build:
+	@docker-compose -f ./docker-compose.yaml -f ./docker-compose-$(env).yaml build
 
 start:
 	@docker-compose -f ./docker-compose.yaml -f ./docker-compose-$(env).yaml up -d --force-recreate
@@ -28,4 +30,4 @@ restart:
 	make stop
 	make start env=$(env)
 
-.PHONY: env api update pull start stop restart
+.PHONY: env api update pull build start stop restart

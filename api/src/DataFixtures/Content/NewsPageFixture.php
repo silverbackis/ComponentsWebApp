@@ -4,8 +4,12 @@ namespace App\DataFixtures\Content;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Silverback\ApiComponentBundle\Entity\Content\Component\ComponentLocation;
+use Silverback\ApiComponentBundle\Entity\Content\Component\Layout\SideColumn;
+use Silverback\ApiComponentBundle\Entity\Content\ComponentGroup;
 use Silverback\ApiComponentBundle\Entity\Content\Dynamic\ArticlePage;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Collection\CollectionFactory;
+use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\ComponentLocationFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Content\ContentFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Hero\HeroFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Dynamic\ArticlePageFactory;
@@ -33,6 +37,7 @@ class NewsPageFixture extends AbstractFixture
      * @param CollectionFactory $collectionFactory
      * @param ArticlePageFactory $articlePageFactory
      * @param ContentFactory $contentFactory
+     * @param ComponentLocationFactory $componentLocationFactory
      * @param string $projectDir
      */
     public function __construct(
@@ -86,20 +91,42 @@ class NewsPageFixture extends AbstractFixture
             [
                 'title' => '{{ title }}',
                 'subtitle' => '{{ subtitle }}',
-                'filePath' => '{{ filePath }}',
+                // 'filePath' => '{{ filePath }}',
                 'className' => 'is-warning is-bold',
                 'dynamicPageClass' => ArticlePage::class
             ]
         );
         $hero->getLocations()->first()->setSort(1);
 
-        $content = $this->contentFactory->create(
-            [
-                'content' => '{{ content }}',
-                'dynamicPageClass' => ArticlePage::class
-            ]
-        );
-        $content->getLocations()->first()->setSort(2);
+        $layout = new SideColumn();
+        $location = new ComponentLocation(null, $layout);
+        $location->setDynamicPageClass(ArticlePage::class);
+        $location->setSort(2);
+        $layout->addLocation($location);
+        $manager->persist($layout);
+        $manager->persist($location);
+
+        $groups = $layout->getComponentGroups();
+        /** @var ComponentGroup|null $leftColumn */
+        if ($leftColumn = $groups->get(0)) {
+            $this->contentFactory->create(
+                [
+                    'content' => '{{ content }}',
+                    'parentContent' => $leftColumn
+                ]
+            );
+        }
+
+        if ($rightColumn = $groups->get(1)) {
+            $this->collectionFactory->create(
+                [
+                    'resource' => ArticlePage::class,
+                    'componentName' => 'ColumnCollection',
+                    'parentContent' => $rightColumn,
+                    'title' => 'More news...'
+                ]
+            );
+        }
 
         $this->articlePageFactory->create(
             [

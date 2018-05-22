@@ -13,10 +13,10 @@
         "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
     },
     "dependencies": {
-        "@bwstarter/bulma": "^0.1.0",
-        "@bwstarter/components": "^0.1.0",
-        "@bwstarter/core": "^0.1.0",
-        "@bwstarter/server": "^0.1.0",
+        "@bwstarter/bulma": "^0",
+        "@bwstarter/components": "^0",
+        "@bwstarter/core": "^0",
+        "@bwstarter/server": "^0",
         "@fortawesome/fontawesome": "^1.1.2",
         "@fortawesome/fontawesome-free-brands": "^5.0.4",
         "@fortawesome/fontawesome-free-regular": "^5.0.4",

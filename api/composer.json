@@ -5,8 +5,11 @@
     "description": "BW Starter Website API using API Platform",
     "repositories": [
         {
-            "type": "vcs",
-            "url": "https://github.com/silverbackis/ApiComponentBundle"
+            "type": "path",
+            "url": "/Volumes/LaCie/GitHub/_BWStarter/api-component-bundle",
+            "options": {
+                "symlink": false
+            }
         }
     ],
     "require": {
@@ -19,6 +22,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",
+        "symfony/debug-pack": "^1.0",
         "symfony/dotenv": "^3.4 || ^4.0",
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^4.0",
