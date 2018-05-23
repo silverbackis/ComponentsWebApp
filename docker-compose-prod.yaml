@@ -21,12 +21,12 @@ services:
         expose:
             - 3000
         volumes:
-            - api:/srv/api:rw
+            - app:/usr/src/app:rw
 
     api:
         volumes:
-            - api-public:/srv/api/public:rw
             - api:/srv/api:rw
+            - api-public:/srv/api/public:rw
             # Had an issue where a config file wasn't removed after a composer update - may have been another issue with git fetch in prod
             # - ./api/config:/srv/api/config:rw,cached
 
@@ -34,9 +34,6 @@ services:
         volumes:
             - api-public:/srv/api/public:ro
 
-    app:
-        volumes:
-            - app:/usr/src/app:rw
 volumes:
     api-public:
     api:
