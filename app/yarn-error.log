@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EROFS: read-only file system, unlink '/usr/src/app/node_modules/@bwstarter/.eslintrc.js'
+  Error: EROFS: read-only file system, mkdir '/usr/src/app/node_modules/@bwstarter/bulma/node_modules'
 
 npm manifest: 
   {
@@ -32,10 +32,10 @@ npm manifest:
           "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
       },
       "dependencies": {
-          "@bwstarter/bulma": "^0.1.0",
-          "@bwstarter/components": "^0.1.0",
-          "@bwstarter/core": "^0.1.0",
-          "@bwstarter/server": "^0.1.0",
+          "@bwstarter/bulma": "^0",
+          "@bwstarter/components": "^0",
+          "@bwstarter/core": "^0",
+          "@bwstarter/server": "^0",
           "@fortawesome/fontawesome": "^1.1.2",
           "@fortawesome/fontawesome-free-brands": "^5.0.4",
           "@fortawesome/fontawesome-free-regular": "^5.0.4",
@@ -63,7 +63,7 @@ npm manifest:
           "lodash": "^4.17.10",
           "lru-cache": "^4.1.1",
           "mysql": "^2.15.0",
-          "node-sass": "^4.7.2",
+          "node-sass": "^4.9.0",
           "nuxt": "^1.4.0",
           "photoswipe": "^4.1",
           "sass-loader": "^6.0.6",
@@ -95,24 +95,25 @@ Lockfile:
   # yarn lockfile v1
   
   
-  "@bwstarter/bulma@^0.1.0":
-    version "0.1.2"
-    resolved "https://registry.yarnpkg.com/@bwstarter/bulma/-/bulma-0.1.2.tgz#3fdf2b0673dddad7120183fc82797e73ec142338"
+  "@bwstarter/bulma@^0":
+    version "0.2.1"
+    resolved "https://registry.yarnpkg.com/@bwstarter/bulma/-/bulma-0.2.1.tgz#f1196687f6804b40ad74142e984f3f35abcd70ae"
     dependencies:
-      "@bwstarter/components" "^0.1.2"
-      "@bwstarter/core" "^0.1.2"
+      "@bwstarter/components" "^0.2.1"
+      "@bwstarter/core" "^0.2.1"
+      "@bwstarter/server" "^0.1.0"
+      bulma "^0.7.1"
+  
+  "@bwstarter/components@^0", "@bwstarter/components@^0.2.1":
+    version "0.2.1"
+    resolved "https://registry.yarnpkg.com/@bwstarter/components/-/components-0.2.1.tgz#02f6723034811d3c0984800a1c136a9717798db2"
+    dependencies:
+      "@bwstarter/core" "^0.2.1"
       "@bwstarter/server" "^0.1.0"
   
-  "@bwstarter/components@^0.1.0", "@bwstarter/components@^0.1.2":
-    version "0.1.2"
-    resolved "https://registry.yarnpkg.com/@bwstarter/components/-/components-0.1.2.tgz#15755d0d5f6fa73c78ba156e214f5aa031ae54cc"
-    dependencies:
-      "@bwstarter/core" "^0.1.2"
-      "@bwstarter/server" "^0.1.0"
-  
-  "@bwstarter/core@^0.1.0", "@bwstarter/core@^0.1.2":
-    version "0.1.2"
-    resolved "https://registry.yarnpkg.com/@bwstarter/core/-/core-0.1.2.tgz#ea68d6f11e3a0ef089c48ff0f5210afc7bb9e5c8"
+  "@bwstarter/core@^0", "@bwstarter/core@^0.2.1":
+    version "0.2.1"
+    resolved "https://registry.yarnpkg.com/@bwstarter/core/-/core-0.2.1.tgz#bde242472982739ffa763760669c8dd81bfc664e"
     dependencies:
       "@bwstarter/server" "^0.1.0"
       "@nuxtjs/axios" "^5.3.1"
@@ -122,7 +123,7 @@ Lockfile:
       vue-cookie "^1.1.4"
       vue-quill-editor "^3.0.6"
   
-  "@bwstarter/server@^0.1.0":
+  "@bwstarter/server@^0", "@bwstarter/server@^0.1.0":
     version "0.1.0"
     resolved "https://registry.yarnpkg.com/@bwstarter/server/-/server-0.1.0.tgz#8d64ee24a074ffae977ae33cf46111f1bff905a6"
     dependencies:
@@ -1402,6 +1403,10 @@ Lockfile:
   bulma@^0.6.1:
     version "0.6.2"
     resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.6.2.tgz#f4b1d11d5acc51a79644eb0a2b0b10649d3d71f5"
+  
+  bulma@^0.7.1:
+    version "0.7.1"
+    resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.1.tgz#73c2e3b2930c90cc272029cbd19918b493fca486"
   
   bytes@3.0.0:
     version "3.0.0"
@@ -3179,8 +3184,8 @@ Lockfile:
       wide-align "^1.1.0"
   
   gaze@^1.0.0:
-    version "1.1.2"
-    resolved "https://registry.yarnpkg.com/gaze/-/gaze-1.1.2.tgz#847224677adb8870d679257ed3388fdb61e40105"
+    version "1.1.3"
+    resolved "https://registry.yarnpkg.com/gaze/-/gaze-1.1.3.tgz#c441733e13b927ac8c0ff0b4c3b033f28812924a"
     dependencies:
       globule "^1.0.0"
   
@@ -4362,10 +4367,6 @@ Lockfile:
       pseudomap "^1.0.2"
       yallist "^2.1.2"
   
-  macaddress@^0.2.8:
-    version "0.2.8"
-    resolved "https://registry.yarnpkg.com/macaddress/-/macaddress-0.2.8.tgz#5904dc537c39ec6dbefeae902327135fa8511f12"
-  
   make-dir@^1.0.0:
     version "1.3.0"
     resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.3.0.tgz#79c1033b80515bd6d24ec9933e860ca75ee27f0c"
@@ -4723,7 +4724,7 @@ Lockfile:
       semver "^5.3.0"
       tar "^4"
   
-  node-sass@^4.7.2:
+  node-sass@^4.9.0:
     version "4.9.0"
     resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.9.0.tgz#d1b8aa855d98ed684d6848db929a20771cc2ae52"
     dependencies:
@@ -5493,11 +5494,10 @@ Lockfile:
       uniqs "^2.0.0"
   
   postcss-filter-plugins@^2.0.0:
-    version "2.0.2"
-    resolved "https://registry.yarnpkg.com/postcss-filter-plugins/-/postcss-filter-plugins-2.0.2.tgz#6d85862534d735ac420e4a85806e1f5d4286d84c"
+    version "2.0.3"
+    resolved "https://registry.yarnpkg.com/postcss-filter-plugins/-/postcss-filter-plugins-2.0.3.tgz#82245fdf82337041645e477114d8e593aa18b8ec"
     dependencies:
       postcss "^5.0.4"
-      uniqid "^4.0.0"
   
   postcss-font-family-system-ui@^3.0.0:
     version "3.0.0"
@@ -7244,12 +7244,6 @@ Lockfile:
   uniq@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/uniq/-/uniq-1.0.1.tgz#b31c5ae8254844a3a8281541ce2b04b865a734ff"
-  
-  uniqid@^4.0.0:
-    version "4.1.1"
-    resolved "https://registry.yarnpkg.com/uniqid/-/uniqid-4.1.1.tgz#89220ddf6b751ae52b5f72484863528596bb84c1"
-    dependencies:
-      macaddress "^0.2.8"
   
   uniqs@^2.0.0:
     version "2.0.0"
