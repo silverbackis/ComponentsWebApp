@@ -22,14 +22,12 @@ services:
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
         expose:
             - 3000
-        volumes:
-            - app:/usr/src/app:rw
         networks:
             - proxy
 
     api:
         volumes:
-            - api-public:/srv/api/public:rw
+            - api-public:/srv/api/public:rw,cached
             # Had an issue where a config file wasn't removed after a composer update - may have been another issue with git fetch in prod
             # - ./api/config:/srv/api/config:rw,cached
 
@@ -39,8 +37,6 @@ services:
 
 volumes:
     api-public:
-    api:
-    app:
 
 networks:
     proxy:
