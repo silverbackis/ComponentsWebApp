@@ -54,10 +54,6 @@ services:
         env_file:
             - ./shared/.env
             - ./app/.env
-        volumes:
-            - ./app:/usr/src/app:rw
-            - /usr/src/app/node_modules
-            - /usr/src/app/build
         networks:
             - app
             - proxy
