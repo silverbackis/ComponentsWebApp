@@ -14,6 +14,7 @@ COPY . ./
 # Adjust the following 2 lines if your web application needs any other folders creating or to be writable
 RUN mkdir -p var/cache var/sessions var/log
 RUN chown -R www-data var
+VOLUME /srv/api/var
 
 RUN composer dump-autoload --classmap-authoritative --no-dev
 
