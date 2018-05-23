@@ -20,6 +20,8 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 		# Uncomment the following line if you are using Symfony Encore
 		#yarn run watch
   else
+    # When deps are updated it seems something is overriding the volume to original state so for now lets reinstall
+    composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-suggest
     composer run-script --no-dev post-install-cmd
 
 		# Uncomment the following line if you are using Symfony Encore
