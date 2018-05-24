@@ -5,13 +5,6 @@
     "description": "BW Starter Website API using API Platform",
     "repositories": [
         {
-            "type": "path",
-            "url": "/Volumes/LaCie/GitHub/_BWStarter/api-component-bundle",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
             "type": "vcs",
             "url": "https://github.com/silverbackis/ApiComponentBundle"
         }
