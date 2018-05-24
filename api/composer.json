@@ -8,8 +8,12 @@
             "type": "path",
             "url": "/Volumes/LaCie/GitHub/_BWStarter/api-component-bundle",
             "options": {
-                "symlink": false
+                "symlink": true
             }
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/silverbackis/ApiComponentBundle"
         }
     ],
     "require": {

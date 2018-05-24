@@ -9,9 +9,9 @@ use Silverback\ApiComponentBundle\Entity\Content\Component\Layout\SideColumn;
 use Silverback\ApiComponentBundle\Entity\Content\ComponentGroup;
 use Silverback\ApiComponentBundle\Entity\Content\Dynamic\ArticlePage;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Collection\CollectionFactory;
-use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\ComponentLocationFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Content\ContentFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Hero\HeroFactory;
+use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Image\SimpleImageFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Dynamic\ArticlePageFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\PageFactory;
 
@@ -29,6 +29,8 @@ class NewsPageFixture extends AbstractFixture
     private $projectDir;
     /** @var ContentFactory */
     private $contentFactory;
+    /** @var SimpleImageFactory */
+    private $imageFactory;
 
     /**
      * HomePageFixture constructor.
@@ -37,7 +39,7 @@ class NewsPageFixture extends AbstractFixture
      * @param CollectionFactory $collectionFactory
      * @param ArticlePageFactory $articlePageFactory
      * @param ContentFactory $contentFactory
-     * @param ComponentLocationFactory $componentLocationFactory
+     * @param SimpleImageFactory $imageFactory
      * @param string $projectDir
      */
     public function __construct(
@@ -46,6 +48,7 @@ class NewsPageFixture extends AbstractFixture
         CollectionFactory $collectionFactory,
         ArticlePageFactory $articlePageFactory,
         ContentFactory $contentFactory,
+        SimpleImageFactory $imageFactory,
         string $projectDir = ''
     ) {
         $this->pageFactory = $pageFactory;
@@ -53,6 +56,7 @@ class NewsPageFixture extends AbstractFixture
         $this->collectionFactory = $collectionFactory;
         $this->articlePageFactory = $articlePageFactory;
         $this->contentFactory = $contentFactory;
+        $this->imageFactory = $imageFactory;
         $this->projectDir = $projectDir;
     }
 
@@ -60,6 +64,35 @@ class NewsPageFixture extends AbstractFixture
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
+    {
+        $collectionPage = $this->createNewsCollection($manager);
+        $dynamicPage = $this->createDynamicNewsPage($manager);
+
+
+        $this->articlePageFactory->create(
+            [
+                'title' => 'My Article Title',
+                'subtitle' => 'Once upon a time...',
+                'content' => 'We made a dynamic page which can be loaded as a normal page would be. It also has a route!',
+                'filePath' => $this->projectDir . '/public/img/chewy1.jpg',
+                'parentRoute' => $collectionPage->getRoutes()->first()
+            ]
+        );
+
+        $this->articlePageFactory->create(
+            [
+                'title' => 'Another article for fun',
+                'subtitle' => '...the end',
+                'content' => 'This article is just filler for fun',
+                'filePath' => $this->projectDir . '/public/img/stoney1.jpg',
+                'parentRoute' => $collectionPage->getRoutes()->first()
+            ]
+        );
+
+        $manager->flush();
+    }
+
+    private function createNewsCollection(ObjectManager $manager)
     {
         $page = $this->pageFactory->create(
             [
@@ -87,17 +120,28 @@ class NewsPageFixture extends AbstractFixture
             ]
         );
 
+        return $page;
+    }
+
+    private function createDynamicNewsPage(ObjectManager $manager): void
+    {
+        /**
+         * CREATE THE HERO
+         */
+
         $hero = $this->heroFactory->create(
             [
                 'title' => '{{ title }}',
                 'subtitle' => '{{ subtitle }}',
-                // 'filePath' => '{{ filePath }}',
                 'className' => 'is-warning is-bold',
                 'dynamicPageClass' => ArticlePage::class
             ]
         );
         $hero->getLocations()->first()->setSort(1);
 
+        /**
+         * CREATE THE COLUMN LAYOUT
+         */
         $layout = new SideColumn();
         $location = new ComponentLocation(null, $layout);
         $location->setDynamicPageClass(ArticlePage::class);
@@ -106,9 +150,19 @@ class NewsPageFixture extends AbstractFixture
         $manager->persist($layout);
         $manager->persist($location);
 
+        /**
+         * POPULATE THE COLUMN LAYOUT
+         */
         $groups = $layout->getComponentGroups();
         /** @var ComponentGroup|null $leftColumn */
         if ($leftColumn = $groups->get(0)) {
+            $this->imageFactory->create(
+                [
+                    'filePath' => '{{ filePath }}',
+                    'parentContent' => $leftColumn,
+                    'caption' => '{{ title }}'
+                ]
+            );
             $this->contentFactory->create(
                 [
                     'content' => '{{ content }}',
@@ -120,24 +174,13 @@ class NewsPageFixture extends AbstractFixture
         if ($rightColumn = $groups->get(1)) {
             $this->collectionFactory->create(
                 [
+
                     'resource' => ArticlePage::class,
                     'componentName' => 'ColumnCollection',
                     'parentContent' => $rightColumn,
-                    'title' => 'More news...'
+                    'title' => 'Discover more'
                 ]
             );
         }
-
-        $this->articlePageFactory->create(
-            [
-                'title' => 'My Article Title',
-                'subtitle' => 'Once upon a time...',
-                'content' => 'We made a dynamic page which can be loaded as a normal page would be. It also has a route!',
-                'filePath' => $this->projectDir . '/public/img/chewy1.jpg',
-                'parentRoute' => $page->getRoutes()->first()
-            ]
-        );
-
-        $manager->flush();
     }
 }

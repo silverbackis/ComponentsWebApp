@@ -7,10 +7,16 @@ services:
 
     api:
         volumes:
-            - ./api:/srv/api:rw,cached
+#            - /Volumes/LaCie/GitHub/_BWStarter/api-component-bundle:/srv/api/vendor/silverbackis/api-component-bundle:ro
+            - ./api/bin:/srv/api/bin:rw,cached
+            - ./api/config:/srv/api/config:rw,cached
+            - ./api/public:/srv/api/public:rw,cached
+            - ./api/src:/srv/api/src:rw,cached
+            - ./api/templates:/srv/api/templates:rw,cached
+            - ./api/tests:/srv/api/tests:rw,cached
+            - ./api/translations:/srv/api/translations:rw,cached
             # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
             # - ./api/var:/srv/api/var:rw
-#            - /Volumes/LaCie/GitHub/_BWStarter/api-component-bundle:/srv/api/vendor/silverbackis/api-component-bundle:ro
 
     nginx:
         volumes:
@@ -23,11 +29,8 @@ services:
             - "8081:80"
 
     app:
-        expose:
-            - "8888"
         ports:
             - "80:3000"
-            - "8888:8888"
         volumes:
-            - ./app:/usr/src/app:rw
 #            - /Volumes/LaCie/GitHub/_BWStarter/node_modules/@bwstarter:/usr/src/app/node_modules/@bwstarter:ro
+            - ./app:/usr/src/app:rw

@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5dad73ad0e84e3526de428c0f3e14b7",
+    "content-hash": "95be7d158c212a20d5d7cd9bcf7e08f8",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -3016,16 +3016,11 @@
         {
             "name": "silverbackis/api-component-bundle",
             "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/silverbackis/ApiComponentBundle.git",
-                "reference": "4bd721997a9c20e085a0e4b5ca7513793325c287"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/4bd721997a9c20e085a0e4b5ca7513793325c287",
-                "reference": "4bd721997a9c20e085a0e4b5ca7513793325c287",
-                "shasum": ""
+                "type": "path",
+                "url": "/Volumes/LaCie/GitHub/_BWStarter/api-component-bundle",
+                "reference": "d1834560e593562b1966b6f9e759519837caf453",
+                "shasum": null
             },
             "require": {
                 "api-platform/api-pack": "^1.0.1",
@@ -3070,12 +3065,18 @@
                     "Silverback\\ApiComponentBundle\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Silverback\\ApiComponentBundle\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
             "description": "Built on API Platform, this bundle provides components, form handling and more for a BW Starter website.",
-            "time": "2018-05-22T16:43:44+00:00"
+            "transport-options": {
+                "symlink": true
+            }
         },
         {
             "name": "symfony/apache-pack",
