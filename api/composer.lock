@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "95be7d158c212a20d5d7cd9bcf7e08f8",
+    "content-hash": "e9cebd5547c74283c29153a8040deb3e",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -3016,11 +3016,16 @@
         {
             "name": "silverbackis/api-component-bundle",
             "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silverbackis/ApiComponentBundle.git",
+                "reference": "d1834560e593562b1966b6f9e759519837caf453"
+            },
             "dist": {
-                "type": "path",
-                "url": "/Volumes/LaCie/GitHub/_BWStarter/api-component-bundle",
+                "type": "zip",
+                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/d1834560e593562b1966b6f9e759519837caf453",
                 "reference": "d1834560e593562b1966b6f9e759519837caf453",
-                "shasum": null
+                "shasum": ""
             },
             "require": {
                 "api-platform/api-pack": "^1.0.1",
@@ -3074,9 +3079,11 @@
                 "MIT"
             ],
             "description": "Built on API Platform, this bundle provides components, form handling and more for a BW Starter website.",
-            "transport-options": {
-                "symlink": true
-            }
+            "support": {
+                "source": "https://github.com/silverbackis/ApiComponentBundle/tree/develop",
+                "issues": "https://github.com/silverbackis/ApiComponentBundle/issues"
+            },
+            "time": "2018-05-24T17:01:46+00:00"
         },
         {
             "name": "symfony/apache-pack",
