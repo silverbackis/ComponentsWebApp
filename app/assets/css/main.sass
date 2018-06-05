@@ -45,9 +45,16 @@
 @import '~bulma/sass/utilities/animations'
 
 .news-blog-page1
-  .image-component
-    max-width: 500px
-  .image-holder
-    max-height: 500px
-    img
-      max-height: 500px
+  .image-loader
+    &.portrait
+      .image-placeholder
+        max-height: 500px
+    &.landscape
+      .image-placeholder
+        max-width: 500px
+  //.image-component
+  //  max-width: 500px
+  //.image-holder
+  //  max-height: 500px
+  //  img
+  //    max-height: 500px

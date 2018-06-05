@@ -34,3 +34,4 @@ services:
         volumes:
 #            - /Volumes/LaCie/GitHub/_BWStarter/node_modules/@bwstarter:/usr/src/app/node_modules/@bwstarter:ro
             - ./app:/usr/src/app:rw
+            - /usr/src/app/node_modules/
