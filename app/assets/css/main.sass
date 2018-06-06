@@ -46,12 +46,19 @@
 
 .news-blog-page1
   .image-loader
-    &.portrait
-      .image-placeholder
-        max-height: 500px
-    &.landscape
+    max-height: 350px
+    .image-placeholder
+      max-width: 100%
+      max-height: 350px
+    +desktop
+      max-height: 500px
       .image-placeholder
         max-width: 500px
+        max-height: 500px
+      &.landscape
+        max-height: 400px
+        .image-placeholder
+          max-height: 400px
   //.image-component
   //  max-width: 500px
   //.image-holder
