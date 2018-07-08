@@ -10,8 +10,8 @@ api:
 	make stop
 
 update:
-	@docker-compose exec api php -d memory_limit=-1 /usr/bin/composer update
-	@docker-compose exec app yarn upgrade
+	@docker-compose run api php -d memory_limit=-1 /usr/bin/composer update
+	@docker-compose run app yarn upgrade
 
 pull:
 	@docker-compose -f ./docker-compose.yaml -f ./docker-compose-$(env).yaml pull

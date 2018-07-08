@@ -15,6 +15,7 @@ services:
             - ./api/templates:/srv/api/templates:rw,cached
             - ./api/tests:/srv/api/tests:rw,cached
             - ./api/translations:/srv/api/translations:rw,cached
+            - ./api/composer.lock:/srv/api/composer.lock:rw
             # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
             # - ./api/var:/srv/api/var:rw
 
