@@ -15,7 +15,9 @@ WORKDIR /usr/src/app
 
 COPY package.json yarn.lock ./
 
-RUN yarn install --production
+RUN yarn install
+# Not just production files because docker will need to build this
+# -- production
 
 COPY . ./
 
