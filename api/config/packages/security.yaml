@@ -5,9 +5,7 @@ security:
 
     providers:
         db_provider:
-            entity:
-                class: App\Entity\User
-                property: username
+            id: App\Security\User\EntityUserProvider
 
     firewalls:
         dev:

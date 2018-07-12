@@ -8,9 +8,10 @@ import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle'
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
 import faExclamationTriangle from '@fortawesome/fontawesome-free-solid/faExclamationTriangle'
 import faBook from '@fortawesome/fontawesome-free-solid/faBook'
+import faBars from '@fortawesome/fontawesome-free-solid/faBars'
 
 fontawesome.library.add(
-  faGithub, faCheckCircle, faBook, faCheck, faExclamationTriangle
+  faGithub, faCheckCircle, faBook, faCheck, faExclamationTriangle, faBars
 )
 
 Vue.use(FontAwesomeIcon)

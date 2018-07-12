@@ -7,17 +7,11 @@ services:
 
     api:
         volumes:
-#            - /Volumes/LaCie/GitHub/_BWStarter/api-component-bundle:/srv/api/vendor/silverbackis/api-component-bundle:ro
-            - ./api/bin:/srv/api/bin:rw,cached
-            - ./api/config:/srv/api/config:rw,cached
-            - ./api/public:/srv/api/public:rw,cached
-            - ./api/src:/srv/api/src:rw,cached
-            - ./api/templates:/srv/api/templates:rw,cached
-            - ./api/tests:/srv/api/tests:rw,cached
-            - ./api/translations:/srv/api/translations:rw,cached
-            - ./api/composer.lock:/srv/api/composer.lock:rw
+            - ./api:/srv/api:rw
             # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
             # - ./api/var:/srv/api/var:rw
+            # Uncomment this line to link in local composer packages (comment during composer updates)
+            - /Volumes/LaCie/GitHub/_BWStarter/api-component-bundle:/srv/api/vendor/silverbackis/api-component-bundle:ro
 
     nginx:
         volumes:
@@ -33,6 +27,6 @@ services:
         ports:
             - "80:3000"
         volumes:
-#            - /Volumes/LaCie/GitHub/_BWStarter/node_modules/@bwstarter:/usr/src/app/node_modules/@bwstarter:ro
             - ./app:/usr/src/app:rw
-            - /usr/src/app/node_modules/
+            # Uncomment this line to link in local node packages (comment during yarn upgrades)
+            - /Volumes/LaCie/GitHub/_BWStarter/node_modules/@bwstarter:/usr/src/app/node_modules/@bwstarter:ro

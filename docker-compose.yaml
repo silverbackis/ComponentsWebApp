@@ -3,10 +3,10 @@ version: '3.6'
 services:
     mysql:
         # for mysql v8 we would want PR merged here for node https://github.com/mysqljs/mysql/pull/1962 + release
-        # and pdo for PHP should support mysql 8 (new authentication plugins) - this seems to be unnecessary hassle otherwise (http://php.net/manual/en/ref.pdo-mysql.php)
         image: mysql:5
         volumes:
-            - ./db-data:/var/lib/mysql:rw
+            - ./mysql/data:/var/lib/mysql:rw
+            - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
         env_file:
             - ./shared/.env
         networks:

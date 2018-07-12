@@ -52,6 +52,7 @@
         "source-map-support": "^0.5.0",
         "vue-cookie": "^1.1.4",
         "vue-quill-editor": "^3.0.6",
+        "vuedraggable": "^2.16.0",
         "webpack": "^3.10.0"
     },
     "devDependencies": {

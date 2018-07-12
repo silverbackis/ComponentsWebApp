@@ -11,7 +11,6 @@
 **/Thumbs.db
 .editorconfig
 .env*
-**/.dockerignore
 .nuxt
 node_modules
 build
