@@ -11,7 +11,7 @@ services:
             # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
             # - ./api/var:/srv/api/var:rw
             # Uncomment this line to link in local composer packages (comment during composer updates)
-            - /Volumes/LaCie/GitHub/_BWStarter/api-component-bundle:/srv/api/vendor/silverbackis/api-component-bundle:ro
+            #- /Volumes/LaCie/GitHub/_BWStarter/api-component-bundle:/srv/api/vendor/silverbackis/api-component-bundle:ro
 
     nginx:
         volumes:
@@ -29,4 +29,4 @@ services:
         volumes:
             - ./app:/usr/src/app:rw
             # Uncomment this line to link in local node packages (comment during yarn upgrades)
-            - /Volumes/LaCie/GitHub/_BWStarter/node_modules/@bwstarter:/usr/src/app/node_modules/@bwstarter:ro
+            #- /Volumes/LaCie/GitHub/_BWStarter/node_modules/@bwstarter:/usr/src/app/node_modules/@bwstarter:ro

@@ -11,7 +11,7 @@ api:
 
 update:
 	# Update the applications and as long as the lock files are mounted from local fs they will update
-	make start env=$(env)
+	@docker-compose -f ./docker-compose.yaml up -d
 	@docker-compose exec api php -d memory_limit=-1 /usr/bin/composer update
 	@docker-compose exec app yarn upgrade
 	make stop

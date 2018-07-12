@@ -3,27 +3,27 @@
 
 
 "@bwstarter/bulma@^0":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@bwstarter/bulma/-/bulma-0.3.4.tgz#e27ef3383f3c559dc2b4182f63f6c4c683d06c23"
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@bwstarter/bulma/-/bulma-0.3.6.tgz#08133c2751a4448a035b7ffbcf31eb4258feccf4"
   dependencies:
-    "@bwstarter/components" "^0.3.4"
-    "@bwstarter/core" "^0.2.3"
-    "@bwstarter/server" "^0.1.0"
+    "@bwstarter/components" "^0.3.6"
+    "@bwstarter/core" "^0.3.6"
+    "@bwstarter/server" "^0.3.6"
     bulma "^0.7.1"
     vuedraggable "^2"
 
-"@bwstarter/components@^0", "@bwstarter/components@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@bwstarter/components/-/components-0.3.4.tgz#1fce2473846b3ea32aa2ef714bd85a52cb9b1f76"
+"@bwstarter/components@^0", "@bwstarter/components@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@bwstarter/components/-/components-0.3.6.tgz#416d652bab1aa1c430491221aaa110b68aaa8ac7"
   dependencies:
-    "@bwstarter/core" "^0.2.3"
-    "@bwstarter/server" "^0.1.0"
+    "@bwstarter/core" "^0.3.6"
+    "@bwstarter/server" "^0.3.6"
 
-"@bwstarter/core@^0", "@bwstarter/core@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@bwstarter/core/-/core-0.2.3.tgz#39260e86d3f4f2aff7c6db5f0528c4922e4450f9"
+"@bwstarter/core@^0", "@bwstarter/core@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@bwstarter/core/-/core-0.3.6.tgz#ec5a128643fd27d17b5f121a72aa9878977d3100"
   dependencies:
-    "@bwstarter/server" "^0.1.0"
+    "@bwstarter/server" "^0.3.6"
     "@nuxtjs/axios" "^5.3.1"
     jwt-decode "^2.2.0"
     lodash "^4.17.10"
@@ -31,9 +31,9 @@
     vue-cookie "^1.1.4"
     vue-quill-editor "^3.0.6"
 
-"@bwstarter/server@^0", "@bwstarter/server@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@bwstarter/server/-/server-0.1.0.tgz#8d64ee24a074ffae977ae33cf46111f1bff905a6"
+"@bwstarter/server@^0", "@bwstarter/server@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@bwstarter/server/-/server-0.3.6.tgz#a0a7bf782cc4a031bead2cf562e1acde4bbfd9de"
   dependencies:
     axios "^0.18.0"
     set-cookie-parser "^2.1.1"
@@ -2546,8 +2546,8 @@ eslint-plugin-standard@^3.0.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-3.1.0.tgz#2a9e21259ba4c47c02d53b2d0c9135d4b1022d47"
 
 eslint-scope@^3.7.1:
-  version "3.7.2"
-  resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-3.7.2.tgz#59152c94e2e2cbf64c03b8d3bdc5072a39d54043"
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-3.7.3.tgz#bb507200d3d17f60247636160b4826284b108535"
   dependencies:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
@@ -7327,10 +7327,8 @@ url@^0.11.0:
     querystring "0.2.0"
 
 use@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/use/-/use-3.1.0.tgz#14716bf03fdfefd03040aef58d8b4b85f3a7c544"
-  dependencies:
-    kind-of "^6.0.2"
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
 
 util-deprecate@~1.0.1:
   version "1.0.2"
