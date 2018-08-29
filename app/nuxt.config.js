@@ -57,9 +57,9 @@ module.exports = {
    * Modules
    */
   modules: [
-    '@bwstarter/core',
-    '@bwstarter/components',
-    '@bwstarter/bulma',
+    '@cwamodules/core',
+    '@cwamodules/components',
+    '@cwamodules/bulma',
     '@nuxtjs/component-cache',
     [
       '@nuxtjs/pwa',

@@ -33,7 +33,7 @@ services:
 
     nginx:
         volumes:
-            - api-public:/srv/api/public:ro
+            - api-public:/srv/api/public:ro,cached
 
 volumes:
     api-public:

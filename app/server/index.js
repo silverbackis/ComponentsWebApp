@@ -10,7 +10,7 @@ import mysql from 'mysql'
 import config from '../nuxt.config.js'
 
 const logging = process.env.NODE_ENV === 'development'
-import BWServerBase from '@bwstarter/server'
+import BWServerBase from '@cwamodules/server'
 const BWServer = new BWServerBase(process.env)
 
 const init = async function () {

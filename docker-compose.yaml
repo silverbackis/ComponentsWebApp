@@ -5,8 +5,7 @@ services:
         # for mysql v8 we would want PR merged here for node https://github.com/mysqljs/mysql/pull/1962 + release
         image: mysql:5
         volumes:
-            - ./mysql/data:/var/lib/mysql:rw
-            - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+            - ./mysql/data:/var/lib/mysql:rw,delegated
         env_file:
             - ./shared/.env
         networks:
@@ -23,7 +22,7 @@ services:
             - ./shared/.env
             - ./api/.env
         volumes:
-            - ./api/_docker/php/www.conf:/usr/local/etc/php-fpm.d/99-www.conf
+            - ./api/_docker/php/www.conf:/usr/local/etc/php-fpm.d/99-www.conf:rw,cached
         restart: on-failure
         networks:
             - api

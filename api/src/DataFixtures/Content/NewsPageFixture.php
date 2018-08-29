@@ -158,7 +158,7 @@ class NewsPageFixture extends AbstractFixture
         if ($leftColumn = $groups->get(0)) {
             $this->imageFactory->create(
                 [
-                    'filePath' => '{{ filePath }}',
+                    'filePath' => '{{ file:publicPath }}',
                     'parentContent' => $leftColumn,
                     'caption' => '{{ title }}'
                 ]
