@@ -3326,12 +3326,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silverbackis/ApiComponentBundle.git",
-                "reference": "260538ab9542b2948bfc2f77547be38e3cc29f33"
+                "reference": "9941da538382594a51390cede161cbf73de511a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/260538ab9542b2948bfc2f77547be38e3cc29f33",
-                "reference": "260538ab9542b2948bfc2f77547be38e3cc29f33",
+                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/9941da538382594a51390cede161cbf73de511a0",
+                "reference": "9941da538382594a51390cede161cbf73de511a0",
                 "shasum": ""
             },
             "require": {
@@ -3385,12 +3385,11 @@
             "license": [
                 "MIT"
             ],
-            "description": "Built on API Platform, this bundle provides components, form handling and more for a BW Starter website.",
             "support": {
                 "source": "https://github.com/silverbackis/ApiComponentBundle/tree/develop",
                 "issues": "https://github.com/silverbackis/ApiComponentBundle/issues"
             },
-            "time": "2018-07-13T21:29:40+00:00"
+            "time": "2018-09-08T23:54:53+00:00"
         },
         {
             "name": "symfony/apache-pack",
@@ -4300,16 +4299,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "d6f5fed47ddad2eb25d5cc19316692203a2898eb"
+                "reference": "9fb60f232af0764d58002e7872acb43a74506d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/d6f5fed47ddad2eb25d5cc19316692203a2898eb",
-                "reference": "d6f5fed47ddad2eb25d5cc19316692203a2898eb",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/9fb60f232af0764d58002e7872acb43a74506d25",
+                "reference": "9fb60f232af0764d58002e7872acb43a74506d25",
                 "shasum": ""
             },
             "require": {
@@ -4343,7 +4342,7 @@
                 }
             ],
             "description": "Composer plugin for Symfony",
-            "time": "2018-08-21T07:51:18+00:00"
+            "time": "2018-09-03T08:17:12+00:00"
         },
         {
             "name": "symfony/form",
@@ -7370,16 +7369,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "6.5.12",
+            "version": "6.5.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "24da433d7384824d65ea93fbb462e2f31bbb494e"
+                "reference": "0973426fb012359b2f18d3bd1e90ef1172839693"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/24da433d7384824d65ea93fbb462e2f31bbb494e",
-                "reference": "24da433d7384824d65ea93fbb462e2f31bbb494e",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0973426fb012359b2f18d3bd1e90ef1172839693",
+                "reference": "0973426fb012359b2f18d3bd1e90ef1172839693",
                 "shasum": ""
             },
             "require": {
@@ -7450,7 +7449,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-08-22T06:32:48+00:00"
+            "time": "2018-09-08T15:10:43+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -8301,16 +8300,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.6.0",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "a1b0d9ff35219ec36c44fcc6213056cc339a1cf8"
+                "reference": "22a9bf33868f0fed6cab013fe5231e8485d15e20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/a1b0d9ff35219ec36c44fcc6213056cc339a1cf8",
-                "reference": "a1b0d9ff35219ec36c44fcc6213056cc339a1cf8",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/22a9bf33868f0fed6cab013fe5231e8485d15e20",
+                "reference": "22a9bf33868f0fed6cab013fe5231e8485d15e20",
                 "shasum": ""
             },
             "require": {
@@ -8331,7 +8330,8 @@
                 "doctrine/orm": "^2.3",
                 "friendsofphp/php-cs-fixer": "^2.8",
                 "symfony/phpunit-bridge": "^3.4|^4.0",
-                "symfony/process": "^3.4|^4.0"
+                "symfony/process": "^3.4|^4.0",
+                "symfony/yaml": "^3.4|^4.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -8362,7 +8362,7 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2018-08-07T16:05:09+00:00"
+            "time": "2018-08-30T01:08:06+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",

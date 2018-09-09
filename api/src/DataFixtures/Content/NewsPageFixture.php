@@ -14,6 +14,8 @@ use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Hero\HeroFact
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Component\Image\SimpleImageFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\Dynamic\ArticlePageFactory;
 use Silverback\ApiComponentBundle\Factory\Entity\Content\PageFactory;
+use Silverback\ApiComponentBundle\Uploader\FixtureFileUploader;
+use Symfony\Component\HttpFoundation\File\File;
 
 class NewsPageFixture extends AbstractFixture
 {
@@ -25,12 +27,14 @@ class NewsPageFixture extends AbstractFixture
     private $collectionFactory;
     /** @var ArticlePageFactory  */
     private $articlePageFactory;
-    /** @var string  */
-    private $projectDir;
     /** @var ContentFactory */
     private $contentFactory;
     /** @var SimpleImageFactory */
     private $imageFactory;
+    /** @var FixtureFileUploader */
+    private $fileUploader;
+    /** @var string */
+    private $uploadsDir;
 
     /**
      * HomePageFixture constructor.
@@ -40,6 +44,7 @@ class NewsPageFixture extends AbstractFixture
      * @param ArticlePageFactory $articlePageFactory
      * @param ContentFactory $contentFactory
      * @param SimpleImageFactory $imageFactory
+     * @param FixtureFileUploader $fileUploader
      * @param string $projectDir
      */
     public function __construct(
@@ -49,6 +54,7 @@ class NewsPageFixture extends AbstractFixture
         ArticlePageFactory $articlePageFactory,
         ContentFactory $contentFactory,
         SimpleImageFactory $imageFactory,
+        FixtureFileUploader $fileUploader,
         string $projectDir = ''
     ) {
         $this->pageFactory = $pageFactory;
@@ -57,7 +63,8 @@ class NewsPageFixture extends AbstractFixture
         $this->articlePageFactory = $articlePageFactory;
         $this->contentFactory = $contentFactory;
         $this->imageFactory = $imageFactory;
-        $this->projectDir = $projectDir;
+        $this->fileUploader = $fileUploader;
+        $this->uploadsDir = $projectDir . '/assets/fixtures/news';
     }
 
     /**
@@ -68,25 +75,26 @@ class NewsPageFixture extends AbstractFixture
         $collectionPage = $this->createNewsCollection($manager);
         $dynamicPage = $this->createDynamicNewsPage($manager);
 
-
-        $this->articlePageFactory->create(
+        $this->fileUploader->upload(
+            $this->articlePageFactory,
             [
                 'title' => 'My Article Title',
                 'subtitle' => 'Once upon a time...',
                 'content' => 'We made a dynamic page which can be loaded as a normal page would be. It also has a route!',
-                'filePath' => $this->projectDir . '/public/img/chewy1.jpg',
                 'parentRoute' => $collectionPage->getRoutes()->first()
-            ]
+            ],
+            new File($this->uploadsDir . '/chewy1.jpg')
         );
 
-        $this->articlePageFactory->create(
+        $this->fileUploader->upload(
+            $this->articlePageFactory,
             [
                 'title' => 'Another article for fun',
                 'subtitle' => '...the end',
                 'content' => 'This article is just filler for fun',
-                'filePath' => $this->projectDir . '/public/img/stoney1.jpg',
                 'parentRoute' => $collectionPage->getRoutes()->first()
-            ]
+            ],
+            new File($this->uploadsDir . '/stoney1.jpg')
         );
 
         $manager->flush();

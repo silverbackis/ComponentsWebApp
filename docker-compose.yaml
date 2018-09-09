@@ -35,6 +35,8 @@ services:
             - ./shared/.env
         networks:
             - api
+        volumes:
+            - ./api/_docker/nginx/custom.conf:/etc/nginx/conf.d/custom.conf:ro
 
     varnish:
         image: silverbackis/varnish:symfony4

@@ -18,5 +18,7 @@ bin/*
 docker/db/data/
 helm/
 public/bundles/
-var/
+var/cache/
+var/log/
+var/sessions/
 vendor/
