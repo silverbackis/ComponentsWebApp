@@ -24,8 +24,6 @@ class FeaturePageFixture extends AbstractFixture implements DependentFixtureInte
     private $featureTextListFactory;
     /** @var FeatureColumnsFactory */
     private $featureColumnsFactory;
-    /** @var string  */
-    private $projectDir;
     /** @var FeatureStackedFactory  */
     private $featureStackedFactory;
     /** @var string */
