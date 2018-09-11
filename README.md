@@ -53,6 +53,10 @@ bin/console app:form:cache:clear
 
 docker-compose exec php bin/console cache:warmup
 docker-compose exec php bin/console app:fixtures:load -e dev
+
+# Generate keys for the login. The password entered when prompted should match that of your .env file
+openssl genrsa -out config/jwt/private.pem -aes256 4096
+openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
 ```
 
 ## Production Docker Compose Nginx Proxy
