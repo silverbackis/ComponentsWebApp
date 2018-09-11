@@ -26,6 +26,11 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 		#yarn run build
 	fi
 
+	if [ ! -f $JWT_PRIVATE_KEY_PATH ]; then
+    openssl genrsa -out $JWT_PRIVATE_KEY_PATH -aes256 -passout pass:$JWT_PASSPHRASE 4096
+    openssl rsa -passin pass:$JWT_PASSPHRASE -pubout -in $JWT_PRIVATE_KEY_PATH -out $JWT_PUBLIC_KEY_PATH
+  fi
+
 	# Permissions hack because setfacl does not work on Mac and Windows
 	# Add any other paths that your web application may need to write to
 	chown -R www-data var config
