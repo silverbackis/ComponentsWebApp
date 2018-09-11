@@ -8,7 +8,7 @@ fi
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
   # Add any other folders that your web application needs to create here
-  mkdir -p var/cache var/sessions var/log
+  mkdir -p var/cache var/sessions var/log var/uploads config/jwt
 
 	if [ "$APP_ENV" != 'prod' ]; then
 	  # local filesystem mounts after install in Dockerfile so run again here
@@ -21,14 +21,14 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 		#yarn run watch
   else
     composer run-script --no-dev post-install-cmd
-
+    php bin/console doctrine:fixtures:load --no-interaction
 		# Uncomment the following line if you are using Symfony Encore
 		#yarn run build
 	fi
 
 	# Permissions hack because setfacl does not work on Mac and Windows
 	# Add any other paths that your web application may need to write to
-	chown -R www-data var
+	chown -R www-data var config
 fi
 
 exec docker-php-entrypoint "$@"
