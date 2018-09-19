@@ -2,7 +2,7 @@ api_platform:
     enable_swagger_ui: true
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
-    title: 'BW Starter Website API'
+    title: 'Components Web App API'
     description: 'API for the front-end web application'
     version: 1.0.0-dev
     http_cache:

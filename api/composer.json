@@ -2,7 +2,6 @@
     "name": "silverbackis/bw-starter-website",
     "type": "project",
     "license": "MIT",
-    "description": "BW Starter Website API using API Platform",
     "repositories": [
         {
             "type": "vcs",

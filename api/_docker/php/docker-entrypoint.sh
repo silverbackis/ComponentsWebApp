@@ -21,6 +21,8 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 		#yarn run watch
   else
     composer run-script --no-dev post-install-cmd
+    php bin/console doctrine:migrations:diff --no-interaction
+    php bin/console doctrine:migrations:migrate --no-interaction
     php bin/console doctrine:fixtures:load --no-interaction
 		# Uncomment the following line if you are using Symfony Encore
 		#yarn run build
