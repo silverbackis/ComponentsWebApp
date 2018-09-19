@@ -1,3 +1,4 @@
 api_platform:
     http_cache:
         max_age: 60
+        shared_max_age: 3600

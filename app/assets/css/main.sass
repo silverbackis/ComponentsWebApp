@@ -17,7 +17,7 @@
 // @import '~bulma/sass/elements/image.sass'
 @import '~bulma/sass/elements/notification.sass'
 @import '~bulma/sass/elements/other.sass'
-// @import '~bulma/sass/elements/progress.sass'
+@import '~bulma/sass/elements/progress.sass'
 // @import '~bulma/sass/elements/table.sass'
 // @import '~bulma/sass/elements/tag.sass'
 @import '~bulma/sass/elements/title.sass'
@@ -30,7 +30,7 @@
 @import '~bulma/sass/components/media.sass'
 @import '~bulma/sass/components/menu.sass'
 // @import '~bulma/sass/components/message.sass'
-// @import '~bulma/sass/components/modal.sass'
+@import '~bulma/sass/components/modal.sass'
 @import '~bulma/sass/components/navbar.sass'
 // @import '~bulma/sass/components/pagination.sass'
 // @import '~bulma/sass/components/panel.sass'
@@ -43,3 +43,25 @@
 // Layout (Hero, section & footer)
 @import '~bulma/sass/layout/_all'
 @import '~bulma/sass/utilities/animations'
+
+.news-blog-page1
+  .image-loader
+    max-height: 350px
+    .image-placeholder
+      max-width: 100%
+      max-height: 350px
+    +desktop
+      max-height: 500px
+      .image-placeholder
+        max-width: 500px
+        max-height: 500px
+      &.landscape
+        max-height: 400px
+        .image-placeholder
+          max-height: 400px
+  //.image-component
+  //  max-width: 500px
+  //.image-holder
+  //  max-height: 500px
+  //  img
+  //    max-height: 500px

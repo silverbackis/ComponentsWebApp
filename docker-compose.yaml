@@ -3,17 +3,16 @@ version: '3.6'
 services:
     mysql:
         # for mysql v8 we would want PR merged here for node https://github.com/mysqljs/mysql/pull/1962 + release
-        # and pdo for PHP should support mysql 8 (new authentication plugins) - this seems to be unnecessary hassle otherwise (http://php.net/manual/en/ref.pdo-mysql.php)
         image: mysql:5
         volumes:
-            - ./db-data:/var/lib/mysql:rw
+            - ./mysql/data:/var/lib/mysql:rw,delegated
         env_file:
             - ./shared/.env
         networks:
             - api
             - app
 
-    php:
+    api:
         build:
             context: ./api
             dockerfile: ./_docker/php/Dockerfile
@@ -23,7 +22,7 @@ services:
             - ./shared/.env
             - ./api/.env
         volumes:
-            - ./api/_docker/php/www.conf:/usr/local/etc/php-fpm.d/99-www.conf
+            - ./api/_docker/php/www.conf:/usr/local/etc/php-fpm.d/99-www.conf:rw,cached
         restart: on-failure
         networks:
             - api
@@ -31,21 +30,22 @@ services:
     nginx:
         image: silverbackis/nginx:symfony4
         depends_on:
-            - php
+            - api
         env_file:
             - ./shared/.env
         networks:
             - api
+        volumes:
+            - ./api/_docker/nginx/custom.conf:/etc/nginx/conf.d/custom.conf:ro
 
     varnish:
         image: silverbackis/varnish:symfony4
         depends_on:
             - nginx
-            - php
+            - api
         networks:
             - api
             - app
-            - proxy
 
     app:
         build:
@@ -54,13 +54,8 @@ services:
         env_file:
             - ./shared/.env
             - ./app/.env
-        volumes:
-            - ./app:/usr/src/app:rw
-            - /usr/src/app/node_modules
-            - /usr/src/app/build
         networks:
             - app
-            - proxy
 
 volumes:
     db-mysql:
@@ -68,6 +63,3 @@ volumes:
 networks:
     app:
     api:
-    proxy:
-        external:
-            name: proxy

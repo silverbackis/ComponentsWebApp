@@ -2,7 +2,6 @@
     "name": "silverbackis/bw-starter-website",
     "type": "project",
     "license": "MIT",
-    "description": "BW Starter Website API using API Platform",
     "repositories": [
         {
             "type": "vcs",
@@ -10,9 +9,10 @@
         }
     ],
     "require": {
-        "gesdinet/jwt-refresh-token-bundle": "^0.3.3",
+        "gesdinet/jwt-refresh-token-bundle": "^0.4",
         "lexik/jwt-authentication-bundle": "^2.4",
         "silverbackis/api-component-bundle": "dev-develop",
+        "symfony/debug-pack": "^1.0",
         "symfony/flex": "^1.0",
         "symfony/proxy-manager-bridge": "^4.0",
         "symfony/yaml": "^4.0"
@@ -22,8 +22,6 @@
         "symfony/dotenv": "^3.4 || ^4.0",
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^4.0",
-        "symfony/profiler-pack": "^1.0",
-        "symfony/var-dumper": "^4.0",
         "roave/security-advisories": "dev-master"
     },
     "config": {
@@ -63,6 +61,5 @@
             "allow-contrib": "true"
         }
     },
-    "minimum-stability": "dev",
     "prefer-stable": true
 }

@@ -2,19 +2,22 @@ version: '3.6'
 
 services:
     mysql:
+#        volumes:
+#            - ./mysql/my-no-aio.cnf:/etc/mysql/conf.d/my-no-aio.cnf
         ports:
             - "4306:3306"
 
-    php:
+    api:
         volumes:
             - ./api:/srv/api:rw,cached
             # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
             # - ./api/var:/srv/api/var:rw
-            # - /Volumes/LaCie/GitHub/_BWStarter/api-component-bundle:/srv/api/vendor/silverbackis/api-component-bundle:ro
+            # Uncomment this line to link in local composer packages (comment during composer updates)
+            # - /Volumes/LaCie/GitHub/_ComponentsWebApp/ApiComponentBundle:/srv/api/vendor/silverbackis/api-component-bundle:ro
 
     nginx:
         volumes:
-            - ./api/public:/srv/api/public:ro
+            - ./api/public:/srv/api/public:ro,cached
         ports:
             - "8080:80"
 
@@ -23,10 +26,9 @@ services:
             - "8081:80"
 
     app:
-        expose:
-            - "8888"
         ports:
             - "80:3000"
-            - "8888:8888"
-#        volumes:
-#            - /Volumes/LaCie/GitHub/_BWStarter/node_modules/@bwstarter:/usr/src/app/node_modules/@bwstarter:ro
+        volumes:
+            - ./app:/usr/src/app:rw,cached
+            # Uncomment this line to link in local node packages (comment during yarn upgrades)
+            # - /Volumes/LaCie/GitHub/_ComponentsWebApp/CWAModules/packages:/usr/src/app/node_modules/@cwamodules:ro

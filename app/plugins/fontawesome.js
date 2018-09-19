@@ -1,19 +1,9 @@
 import Vue from 'vue'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
+import { faBook, faExclamationTriangle, faCheck, faCheckCircle, faChevronUp, faChevronDown, faArrowsAlt, faUpload, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
-// import regular from '@fortawesome/fontawesome-free-regular'
-import fontawesome from '@fortawesome/fontawesome'
-import faGithub from '@fortawesome/fontawesome-free-brands/faGithub'
-import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle'
-import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
-import faExclamationTriangle from '@fortawesome/fontawesome-free-solid/faExclamationTriangle'
-import faBook from '@fortawesome/fontawesome-free-solid/faBook'
+library.add(faGithub, faCheckCircle, faBook, faCheck, faExclamationTriangle, faChevronUp, faChevronDown, faArrowsAlt, faUpload, faPlus, faTrashAlt)
 
-fontawesome.library.add(
-  faGithub, faCheckCircle, faBook, faCheck, faExclamationTriangle
-)
-
-Vue.use(FontAwesomeIcon)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-
-export default fontawesome

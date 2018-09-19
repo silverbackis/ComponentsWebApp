@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:9-alpine
 
 # While we have a git dep and the latest mysql authentication plugins are not supportred in the official repo
 RUN apk add --no-cache git
@@ -16,6 +16,8 @@ WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 
 RUN yarn install
+# Not just production files because docker will need to build this
+# -- production
 
 COPY . ./
 
