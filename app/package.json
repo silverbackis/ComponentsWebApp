@@ -39,7 +39,7 @@
         "fecha": "^2.3.2",
         "helmet": "^3.9.0",
         "jwt-decode": "^2.2.0",
-        "lodash": "^4.17.10",
+        "lodash": "^4.17.11",
         "lru-cache": "^4.1.1",
         "mysql": "^2.15.0",
         "node-sass": "^4.9.0",
