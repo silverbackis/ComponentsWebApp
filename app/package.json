@@ -43,7 +43,7 @@
         "lru-cache": "^4.1.1",
         "mysql": "^2.15.0",
         "node-sass": "^4.9.0",
-        "nuxt": "^1.4.0",
+        "nuxt": "^2.0.0",
         "photoswipe": "^4.1",
         "sass-loader": "^6.0.6",
         "set-cookie-parser": "^2.1.1",
