@@ -3,7 +3,7 @@ vcl 4.0;
 import std;
 
 backend api {
-  .host = "cwa_nginx";
+  .host = "${NETWORK_PREFIX}nginx";
   .port = "80";
   # Health check
   #.probe = {
@@ -16,7 +16,7 @@ backend api {
 }
 
 backend app {
-  .host = "cwa_app";
+  .host = "${NETWORK_PREFIX}app";
   .port = "3000";
   # Health check
   #.probe = {
@@ -31,7 +31,7 @@ backend app {
 # Hosts allowed to send BAN requests
 acl invalidators {
   "localhost";
-  "cwa_api";
+  "${NETWORK_PREFIX}api";
 }
 
 sub vcl_backend_response {

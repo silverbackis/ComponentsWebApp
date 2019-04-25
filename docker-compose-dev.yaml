@@ -4,7 +4,7 @@ services:
     mysql:
         volumes:
             - mysql-data:/var/lib/mysql:rw,delegated
-#            - ./mysql/my-no-aio.cnf:/etc/mysql/conf.d/my-no-aio.cnf
+        #            - ./mysql/my-no-aio.cnf:/etc/mysql/conf.d/my-no-aio.cnf
         ports:
             - "4306:3306"
         env_file:
@@ -15,7 +15,7 @@ services:
             - ./api:/srv/api:rw,delegated
             - ./api/_docker/php/crontab:/etc/cron.d/app-cron:rw,cached
             # Link local bundle into container, composer.json can be used to configure this as a repository to use for the bundle (or not)
-            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/ApiComponentBundle:/Volumes/LaCie/GitHub/_ComponentsWebApp/ApiComponentBundle:ro,cached
+        #            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/ApiComponentBundle:/Volumes/LaCie/GitHub/_ComponentsWebApp/ApiComponentBundle:ro,cached
         env_file:
             - shared/.env.local
             - api/.env.local
@@ -43,7 +43,7 @@ services:
         volumes:
             - ./app:/usr/src/app:rw,delegated
             # Uncomment this line to link in local node packages (comment during yarn upgrades)
-            #- /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/CWAModules/packages:/usr/src/app/node_modules/@cwamodules:ro,cached
+        #            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/CWAModules/packages:/usr/src/app/node_modules/@cwamodules:ro,cached
         env_file:
             - shared/.env.local
             - app/_docker/.env.local

@@ -22,7 +22,7 @@ services:
             smtp: ~
             api:
                 aliases:
-                    - onsem_api
+                    - ${NETWORK_PREFIX}api
 
     nginx:
         build:
@@ -32,7 +32,7 @@ services:
         networks:
             api:
                 aliases:
-                    - onsem_nginx
+                    - ${NETWORK_PREFIX}nginx
 
     varnish:
         image: ${CONTAINER_REGISTRY_BASE}/varnish
@@ -45,6 +45,8 @@ services:
             - app
         tmpfs:
             - /usr/local/var/varnish:exec
+        environment:
+            NETWORK_PREFIX: ${NETWORK_PREFIX}
         networks:
             - api
             - app
@@ -58,7 +60,7 @@ services:
         networks:
             app:
                 aliases:
-                    - onsem_app
+                    - ${NETWORK_PREFIX}app
 
 
     blackfire:
