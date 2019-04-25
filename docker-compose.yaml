@@ -1,0 +1,90 @@
+version: '3.7'
+
+services:
+    mysql:
+        # for mysql v8 w§e would want PR merged here for node https://github.com/mysqljs/mysql/pull/1962 + release
+        image: mysql:5
+        networks:
+            - api
+            - app
+
+    api:
+        build:
+            context: ./api
+            dockerfile: ./_docker/php/Dockerfile
+        depends_on:
+            - mysql
+        environment:
+            XDEBUG_HOST: ${XDEBUG_HOST}
+        restart: on-failure
+        networks:
+            blackfire: ~
+            smtp: ~
+            api:
+                aliases:
+                    - onsem_api
+
+    nginx:
+        build:
+            context: ./api/_docker/nginx
+        depends_on:
+            - api
+        networks:
+            api:
+                aliases:
+                    - onsem_nginx
+
+    varnish:
+        image: ${CONTAINER_REGISTRY_BASE}/varnish
+        build:
+            context: varnish
+            target: varnish
+        depends_on:
+            - nginx
+            - api
+            - app
+        tmpfs:
+            - /usr/local/var/varnish:exec
+        networks:
+            - api
+            - app
+
+    app:
+        build:
+            context: ./app
+            dockerfile: _docker/Dockerfile
+        depends_on:
+            - mysql
+        networks:
+            app:
+                aliases:
+                    - onsem_app
+
+
+    blackfire:
+        image: blackfire/blackfire
+        env_file:
+            - blackfire/.env.local
+        networks:
+            - blackfire
+
+    smtp_relay:
+        image: namshi/smtp
+        restart: always
+        networks:
+            - smtp
+
+    admin:
+        # Use a static website hosting service in production
+        # See https://facebook.github.io/create-react-app/docs/deployment
+        image: ${CONTAINER_REGISTRY_BASE}/admin
+        build:
+            context: ./admin
+            cache_from:
+                - ${CONTAINER_REGISTRY_BASE}/admin
+
+networks:
+    app:
+    api:
+    blackfire:
+    smtp:

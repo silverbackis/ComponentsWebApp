@@ -1,0 +1,77 @@
+version: '3.7'
+
+services:
+    mysql:
+        volumes:
+            - mysql-data:/var/lib/mysql:rw,delegated
+        env_file:
+            - shared/.env.prod.local
+        restart: on-failure
+
+    varnish:
+        networks:
+            - proxy
+        restart: on-failure
+        labels:
+            - "traefik.docker.network=proxy"
+            - "traefik.enable=true"
+            - "traefik.api.port=80"
+            - "traefik.api.protocol=http"
+            - "traefik.api.frontend.rule=Host:${API_HOST}"
+
+    app:
+        env_file:
+            - shared/.env.prod.local
+            - app/_docker/.env.prod.local
+        restart: on-failure
+        networks:
+            - proxy
+        labels:
+            - "traefik.docker.network=proxy"
+            - "traefik.enable=true"
+            - "traefik.app.port=3000"
+            - "traefik.app.protocol=http"
+            - "traefik.app.frontend.rule=Host:${APP_HOST},website.com,new.website.com"
+            - "traefik.app.frontend.redirect.regex=^https?://(new.)?website.com(.*)$$"
+            - "traefik.app.frontend.redirect.replacement=https://${APP_HOST}$$2"
+            - "traefik.app.frontend.redirect.permanent=true"
+
+    api:
+        volumes:
+            - api-public:/srv/api/public:rw,cached
+            - ./api/config/jwt:/srv/api/config/jwt:rw,cached
+            - api-uploads:/srv/api/var/uploads:rw
+            # Had an issue where a config file wasn't removed after a composer update - may have been another issue with git fetch in prod
+            # - ./api/config:/srv/api/config:rw,cached
+        env_file:
+            - shared/.env.prod.local
+            - api/.env.prod.local
+        restart: on-failure
+
+    nginx:
+        volumes:
+            - api-public:/srv/api/public:ro,cached
+        env_file:
+            - shared/.env.prod.local
+        restart: on-failure
+
+    admin:
+        env_file:
+            - ./admin/.env.prod.local
+        networks:
+            - proxy
+        labels:
+            - "traefik.docker.network=proxy"
+            - "traefik.enable=true"
+            - "traefik.app.port=3000"
+            - "traefik.app.protocol=http"
+            - "traefik.app.frontend.rule=Host:admin.website.com"
+
+networks:
+    proxy:
+        external: true
+
+volumes:
+    api-public:
+    api-uploads:
+    mysql-data:

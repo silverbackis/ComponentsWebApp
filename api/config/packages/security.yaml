@@ -1,0 +1,48 @@
+security:
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+    encoders:
+        Silverback\ApiComponentBundle\Entity\User\User:
+            algorithm: argon2i
+    providers:
+        db_provider:
+            id: Silverback\ApiComponentBundle\Security\EntityUserProvider
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        refresh:
+            pattern: ^/token/refresh
+            stateless: true
+            anonymous: true
+        login:
+            pattern: ^/login
+            stateless: true
+            anonymous: false
+            guard:
+                authenticators:
+                    - Silverback\ApiComponentBundle\Security\TokenAuthenticator
+            json_login:
+                check_path:               /login_check
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+        main:
+            pattern: ^/
+            provider: db_provider
+            stateless: true
+            anonymous: true
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login_check, roles: ROLE_TOKEN_USER }
+        - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [ GET ] }

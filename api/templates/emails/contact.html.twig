@@ -1,0 +1,17 @@
+{% block subject 'You have received a new contact message - ' ~ subject %}
+
+{% block body_html %}
+  Name: <strong>{{ name }}</strong><br>
+  Subject: <strong>{{ subject }}</strong><br>
+  Email: <strong>{{ email }}</strong><br>
+  <strong>Message:</strong><br>
+  {{ message|nl2br }}
+{% endblock %}
+
+{% block body_text %}
+  Name: {{ name }}
+  Subject: {{ subject }}
+  Email: {{ email }}
+  Message:
+  {{ message }}
+{% endblock %}

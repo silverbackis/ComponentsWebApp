@@ -1,0 +1,5 @@
+silverback_api_component:
+    table_prefix: ~
+    mailer:
+        logo_src: 'images/logo.svg'
+        website_name: 'New CWA'

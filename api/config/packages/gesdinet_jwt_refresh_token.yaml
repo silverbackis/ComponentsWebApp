@@ -1,0 +1,6 @@
+gesdinet_jwt_refresh_token:
+    # 30 day
+    ttl: 2592000
+    user_identity_field: username
+    firewall: main
+    user_provider: Silverback\ApiComponentBundle\Security\EntityUserProvider

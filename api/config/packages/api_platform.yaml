@@ -1,0 +1,20 @@
+api_platform:
+    enable_swagger_ui: true
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity']
+    title: 'Components Web App API'
+    description: 'API for the front-end web application'
+    version: 0.0.1-dev
+    http_cache:
+        invalidation:
+            enabled: true
+            varnish_urls: ['%env(VARNISH_URL)%']
+        max_age: 0
+        shared_max_age: 10
+        vary: ['Content-Type', 'Authorization']
+        public: true
+    swagger:
+        api_keys:
+            apiKey:
+                name: Authorization
+                type: header

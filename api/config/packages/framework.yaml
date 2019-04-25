@@ -1,0 +1,16 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    default_locale: en
+    #csrf_protection: ~
+    #http_method_override: true
+
+    session:
+        handler_id: ~
+        cookie_domain: '%env(COOKIE_DOMAIN)%'
+
+    #esi: ~
+    #fragments: ~
+    php_errors:
+        log: true
+    serializer:
+        enabled: true

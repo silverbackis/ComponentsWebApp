@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+RESET=$'\033[0m'
+BOLD=$'\033[1m'
+YELLOW=$'\033[32m'
+
+function promptUser {
+	local VAR
+	read -p "$1 ${BOLD}${YELLOW}[$2]${RESET}: " VAR
+  echo ${VAR:-$2}
+}
+
+# Set environment variables for dev
+export XDEBUG_HOST=$(ipconfig getifaddr en1) # Specific to Macintosh
+
+if [ $# -eq 0 ]; then
+  docker-compose ps
+else
+  ENABLE_XDEBUG="${ENABLE_XDEBUG:-0}"
+  if [[ "$@" == *"up"* ]]; then
+    if [[ -z "${APP_ENV}" ]]; then
+      PROD=$(promptUser "Are you running in production? ${BOLD}(y/n)${RESET}" "no")
+      case ${PROD:0:1} in
+          y|Y )
+            APP_ENV="prod"
+          ;;
+          * )
+            APP_ENV="dev"
+            ENABLE_XDEBUG_RESPONSE=$(promptUser "Would you like to enable xdebug? ${BOLD}(y/n)${RESET}" "no")
+            case ${PROD:0:1} in
+              y|Y )
+                ENABLE_XDEBUG="1"
+              ;;
+            esac
+          ;;
+      esac
+    fi
+    OPS="-f docker-compose.yaml -f docker-compose-${APP_ENV}.yaml"
+  else
+    OPS=""
+  fi
+  export ENABLE_XDEBUG=${ENABLE_XDEBUG}
+  CMD="docker-compose $OPS $@"
+  echo ${CMD}
+  eval ${CMD}
+fi

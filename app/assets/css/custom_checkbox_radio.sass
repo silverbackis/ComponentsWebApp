@@ -1,0 +1,104 @@
+@import 'vars'
+
+.field-body
+  .radio,
+  .checkbox
+    &.is-custom
+      margin-top: .5em
+
+.checkbox,
+.radio
+  &.is-custom
+    + .checkbox,
+    + .radio
+        margin-left: .75rem
+    > input
+      position: absolute
+      z-index: -1
+      opacity: 0
+      ~ .custom-control-label
+        position: relative
+        padding-left: 1.25rem
+        line-height: 36px
+        &:before,
+        &:after
+          content: ''
+          position: absolute
+          width: 1rem
+          height: 1rem
+          top: 50%
+          margin-top: -.5rem
+          left: 0
+          pointer-events: none
+          user-select: none
+          transition: background-color .4s, transform .4s, opacity .4s
+        &:before
+          background: 50% 50% no-repeat $grey-lighter
+          background-size: 50% 50%
+          border: 1px solid $grey-light
+        &:after
+          background-color: $white
+          opacity: 0
+          z-index: 1
+      &:checked
+        ~ .custom-control-label
+          &:before
+            background-color: $primary
+          &:after
+            opacity: 1
+      &.is-success:checked ~ .custom-control-label:before
+        background-color: $success
+      &.is-danger:checked ~ .custom-control-label:before
+        background-color: $danger
+
+
+.checkbox.is-custom:not(.is-toggle) > input
+  &:checked ~ .custom-control-label:after
+    transform: scale(.6)
+    background-color: transparent
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E")
+
+.checkbox.is-custom.is-toggle
+  &.is-warning
+    > input:not(:checked)
+      ~ .custom-control-label
+        &:before
+          background-color: lighten($warning, 15%)
+        &:after
+          border: 3px solid darken($warning, 10%)
+  > input
+    ~ .custom-control-label
+      padding-left: 2.75rem
+      &:before
+        height: 1.4rem
+        width: 2.5rem
+        margin-top: -.7rem
+        border-radius: .7rem
+        border: 1px solid $grey-light
+        background-color: $grey-light
+      &:after
+        opacity: 1
+        border-radius: 50%
+        height: calc(1.4rem - 4px)
+        width: calc(1.4rem - 4px)
+        margin-left: 3px
+        margin-top: calc(-.7rem + 2px)
+        border: 3px solid darken($grey-light, 10%)
+    &:checked
+      ~ .custom-control-label
+        &:before
+          background-color: lighten($success, 15%)
+        &:after
+          transform: translateX(1rem)
+          opacity: 1
+          border: 3px solid darken($success, 10%)
+
+.radio.is-custom
+  > input
+    ~ .custom-control-label
+      &:before,
+      &:after
+        border-radius: 50%
+    &:checked ~ .custom-control-label:after
+      transform: scale(.4)
+
