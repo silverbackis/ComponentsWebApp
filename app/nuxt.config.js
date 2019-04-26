@@ -6,7 +6,7 @@ export default {
    * Headers of the page
    */
   head: {
-    titleTemplate: '%s - Onsem - Efficient, affordable IT repairs and maintenance',
+    titleTemplate: '%s - Components Web App',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -16,7 +16,7 @@ export default {
       {
         rel: 'icon',
         type: 'image/png',
-        href: 'icons/icon.png',
+        href: 'icons/icon.png'
       }
     ]
   },
@@ -24,9 +24,9 @@ export default {
    * Customize the progress-bar color
    */
   loading: {
-    color: "hsl(141, 71%,  48%)",
+    color: 'hsl(141, 71%,  48%)',
     failedColor: 'hsl(348, 100%, 61%)',
-    height: "4px"
+    height: '4px'
   },
   /**
    * Global CSS
@@ -35,9 +35,7 @@ export default {
   /**
    * Plugins
    */
-  plugins: [
-    { src: '~/plugins/fontawesome', ssr: true }
-  ],
+  plugins: [{ src: '~/plugins/fontawesome', ssr: true }],
   /**
    * Modules
    */
