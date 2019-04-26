@@ -5,11 +5,14 @@ RUN chmod +x /usr/local/bin/run
 
 WORKDIR /usr/src/app
 
-RUN apk --no-cache add git
+RUN apk --no-cache add -no-cache --virtual .gyp \
+  git \
+  python
 
 COPY package.json yarn.* ./
 
-RUN yarn install
+RUN yarn install \
+  && apk del .gyp
 
 COPY . ./
 
