@@ -1,18 +1,19 @@
-FROM node:alpine
+FROM node:11-alpine
 
 COPY _docker/run.sh /usr/local/bin/run
 RUN chmod +x /usr/local/bin/run
 
 WORKDIR /usr/src/app
 
-RUN apk --no-cache add -no-cache --virtual .gyp \
+RUN apk add --no-cache \
   git \
-  python
+  python \
+  make \
+  g++
 
 COPY package.json yarn.* ./
 
-RUN yarn install \
-  && apk del .gyp
+RUN yarn install
 
 COPY . ./
 
