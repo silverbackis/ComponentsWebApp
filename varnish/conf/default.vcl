@@ -15,19 +15,6 @@ backend api {
   #}
 }
 
-backend app {
-  .host = "${NETWORK_PREFIX}app";
-  .port = "3000";
-  # Health check
-  #.probe = {
-  #  .url = "/";
-  #  .timeout = 5s;
-  #  .interval = 10s;
-  #  .window = 5;
-  #  .threshold = 3;
-  #}
-}
-
 # Hosts allowed to send BAN requests
 acl invalidators {
   "localhost";
@@ -57,11 +44,7 @@ sub vcl_deliver {
 }
 
 sub vcl_recv {
-  if (req.http.Host ~ "varnish" || req.http.Host ~ "^api\." || req.http.Host ~ ":8081$") {
-    set req.backend_hint = api;
-  } else {
-    set req.backend_hint = app;
-  }
+  set req.backend_hint = api;
 
   # Remove the "Forwarded" HTTP header if exists (security)
   unset req.http.forwarded;
@@ -98,9 +81,10 @@ sub vcl_recv {
 
   if (req.http.X-Forwarded-Proto == "https" ) {
     set req.http.X-Forwarded-Port = "443";
-  } else {
-    set req.http.X-Forwarded-Port = "80";
   }
+  # else {
+  #  set req.http.X-Forwarded-Port = "80";
+  #}
 }
 
 # From https://github.com/varnish/Varnish-Book/blob/master/vcl/grace.vcl

@@ -30,9 +30,7 @@ services:
         depends_on:
             - api
         networks:
-            api:
-                aliases:
-                    - ${NETWORK_PREFIX}nginx
+            - api
 
     varnish:
         image: ${CONTAINER_REGISTRY_BASE}/varnish
@@ -45,8 +43,6 @@ services:
             - app
         tmpfs:
             - /usr/local/var/varnish:exec
-        environment:
-            NETWORK_PREFIX: ${NETWORK_PREFIX}
         networks:
             - api
             - app
@@ -58,10 +54,7 @@ services:
         depends_on:
             - mysql
         networks:
-            app:
-                aliases:
-                    - ${NETWORK_PREFIX}app
-
+            - app
 
     blackfire:
         image: blackfire/blackfire
@@ -72,7 +65,6 @@ services:
 
     smtp_relay:
         image: namshi/smtp
-        restart: always
         networks:
             - smtp
 
