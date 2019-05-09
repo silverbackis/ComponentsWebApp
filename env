@@ -14,13 +14,12 @@ CONTINUE=$(promptUser "This will overwrite existing .env files. Are you sure you
 
 case ${CONTINUE:0:1} in
     y|Y )
+      cp ./.env.dist ./.env
+
       cp ./shared/.env ./shared/.env.local
       cp ./shared/.env ./shared/.env.prod.local
 
       cp ./blackfire/.env ./blackfire/.env.local
-
-      cp ./app/_docker/.env ./app/_docker/.env.local
-      cp ./app/_docker/.env ./app/_docker/.env.prod.local
 
       cp ./api/.env ./api/.env.local
       cp ./api/.env ./api/.env.prod.local

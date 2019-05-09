@@ -1,0 +1,14 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.3
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-AXIOS-174505:
+    - '@nuxtjs/axios > axios':
+        patched: '2019-05-05T23:14:51.518Z'
+    - '@cwamodules/bulma > @cwamodules/server > axios':
+        patched: '2019-05-05T23:14:51.518Z'
+    - '@cwamodules/bulma > @cwamodules/core > @nuxtjs/axios > axios':
+        patched: '2019-05-05T23:14:51.518Z'
+    - '@cwamodules/bulma > @cwamodules/components > @cwamodules/core > @nuxtjs/axios > axios':
+        patched: '2019-05-05T23:14:51.518Z'

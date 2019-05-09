@@ -19,7 +19,6 @@ services:
     app:
         env_file:
             - shared/.env.prod.local
-            - app/_docker/.env.prod.local
         networks:
             - traefik_traefik
         labels:

@@ -20,9 +20,7 @@ services:
         networks:
             blackfire: ~
             smtp: ~
-            api:
-                aliases:
-                    - ${NETWORK_PREFIX}api
+            api: ~
 
     nginx:
         build:
@@ -36,7 +34,8 @@ services:
         image: ${CONTAINER_REGISTRY_BASE}/varnish
         build:
             context: varnish
-            target: varnish
+            cache_from:
+                - ${CONTAINER_REGISTRY_BASE}/admin
         depends_on:
             - nginx
             - api
@@ -51,6 +50,11 @@ services:
         build:
             context: ./app
             dockerfile: _docker/Dockerfile
+            args:
+                API_HOST: ${API_HOST}
+                COOKIE_SECRET: ${COOKIE_SECRET}
+        environment:
+            COOKIE_SECRET: ${COOKIE_SECRET}
         depends_on:
             - mysql
         networks:
