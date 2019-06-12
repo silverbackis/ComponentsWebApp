@@ -19,7 +19,12 @@ else
   ENABLE_XDEBUG="${ENABLE_XDEBUG:-0}"
 
   PRE_OPS=""
-  if [[ "$@" == *"up"* ]] || [[ "$@" == *"stack"* ]]; then
+  FILE_OPTION="-f"
+  if [[ "$@" == " stack"* ]]; then
+    FILE_OPTION="-c"
+  fi
+
+  if [[ "$@" == *"up"* ]] || [[ "$@" == " stack"* ]]; then
     if [[ -z "${APP_ENV}" ]]; then
       PROD=$(promptUser "Are you running in production? ${BOLD}(y/n)${RESET}" "no")
       case ${PROD:0:1} in
@@ -37,7 +42,7 @@ else
           ;;
       esac
     fi
-    PRE_OPS="-f docker-compose.yaml -f docker-compose-${APP_ENV}.yaml"
+    PRE_OPS="$FILE_OPTION docker-compose.yaml $FILE_OPTION docker-compose-${APP_ENV}.yaml"
   fi
 
   INPUT="$@"
