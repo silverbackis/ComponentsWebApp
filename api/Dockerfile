@@ -133,7 +133,7 @@ COPY src src/
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative --no-dev; \
-	chmod +x bin/console; sync
+	sync
 VOLUME /srv/api/var
 
 COPY _docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint

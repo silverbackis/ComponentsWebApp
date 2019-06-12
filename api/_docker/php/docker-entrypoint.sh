@@ -46,6 +46,9 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
     echo ${EXIT_CODE}
 	fi
 
+	# Make console script executable
+	chmod +x bin/console
+
 	echo "Waiting for db to be ready..."
 	until bin/console doctrine:query:sql "SELECT 1" > /dev/null 2>&1; do
 		sleep 1
