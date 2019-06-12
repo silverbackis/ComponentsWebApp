@@ -116,7 +116,7 @@ WORKDIR /srv/api
 ARG APP_ENV=prod
 
 # prevent the reinstallation of vendors at every changes in the source code
-COPY composer.json composer.lock symfony.lock ./
+COPY composer.* symfony.lock ./
 
 # do not use .env files in production
 RUN echo '<?php return [];' > .env.local.php
