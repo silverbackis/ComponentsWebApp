@@ -1,0 +1,1 @@
+0 10,22 * * * bin/console app:papers:remove_orphans >> /var/log/cron.log 2>&1

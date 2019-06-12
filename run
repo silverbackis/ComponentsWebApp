@@ -17,7 +17,9 @@ if [ $# -eq 0 ]; then
   docker-compose ps
 else
   ENABLE_XDEBUG="${ENABLE_XDEBUG:-0}"
-  if [[ "$@" == *"up"* ]]; then
+
+  PRE_OPS=""
+  if [[ "$@" == *"up"* ]] || [[ "$@" == *"stack"* ]]; then
     if [[ -z "${APP_ENV}" ]]; then
       PROD=$(promptUser "Are you running in production? ${BOLD}(y/n)${RESET}" "no")
       case ${PROD:0:1} in
@@ -35,12 +37,22 @@ else
           ;;
       esac
     fi
-    OPS="-f docker-compose.yaml -f docker-compose-${APP_ENV}.yaml"
-  else
-    OPS=""
+    PRE_OPS="-f docker-compose.yaml -f docker-compose-${APP_ENV}.yaml"
   fi
+
+  INPUT="$@"
+  if [[ "$@" == *"build"* ]]; then
+    FIND="build"
+    REPLACE="build -m=250M"
+    INPUT="${INPUT/$FIND/$REPLACE}"
+  fi
+
   export ENABLE_XDEBUG=${ENABLE_XDEBUG}
-  CMD="docker-compose $OPS $@"
-  echo ${CMD}
+  CMD="docker-compose"
+  if [[ "$@" == " stack"* ]] || [[ "$@" == " swarm"* ]]; then
+    CMD="docker"
+  fi
+  CMD="$CMD $PRE_OPS $INPUT"
+  echo "Running '${CMD}'"
   eval ${CMD}
 fi

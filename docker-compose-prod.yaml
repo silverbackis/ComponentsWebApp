@@ -5,7 +5,38 @@ services:
         volumes:
             - mysql-data:/var/lib/mysql:rw,delegated
         env_file:
-            - shared/.env.prod.local
+            - ./shared/.env.prod
+
+    app:
+        networks:
+            - traefik_traefik
+        env_file:
+            - ./shared/.env.prod
+            - ./app/.env.prod
+        labels:
+            - "traefik.enable=true"
+            - "traefik.app.frontend.rule=Host:${APP_HOST},addictionpat.org,pat-v2.b-w.uk"
+            - "traefik.app.port=3000"
+            - "traefik.app.protocol=http"
+            - "traefik.app.frontend.redirect.regex=^https?://(addictionpat.org|pat-v2.b-w.uk)(.*)$$"
+            - "traefik.app.frontend.redirect.replacement=https://${APP_HOST}$$2"
+            - "traefik.app.frontend.redirect.permanent=true"
+
+    api:
+        volumes:
+            - api-public:/srv/api/public:rw,cached
+            - ./api/config/jwt:/srv/api/config/jwt:rw,cached
+            # Had an issue where a config file wasn't removed after a composer update - may have been another issue with git fetch in prod
+            # - ./api/config:/srv/api/config:rw,cached
+        env_file:
+            - ./shared/.env.prod
+            - ./api/.env.prod
+
+    nginx:
+        volumes:
+            - api-public:/srv/api/public:ro,cached
+        env_file:
+            - ./shared/.env.prod
 
     varnish:
         networks:
@@ -14,46 +45,10 @@ services:
             - "traefik.enable=true"
             - "traefik.api.port=80"
             - "traefik.api.protocol=http"
-            - "traefik.api.frontend.rule=Host:${API_HOST}"
-
-    app:
-        env_file:
-            - shared/.env.prod.local
-        networks:
-            - traefik_traefik
-        labels:
-            - "traefik.enable=true"
-            - "traefik.app.port=3000"
-            - "traefik.app.protocol=http"
-            - "traefik.app.frontend.rule=Host:${APP_HOST},website.com,new.website.com"
-            - "traefik.app.frontend.redirect.regex=^https?://(new.)?website.com(.*)$$"
-            - "traefik.app.frontend.redirect.replacement=https://${APP_HOST}$$2"
-            - "traefik.app.frontend.redirect.permanent=true"
-
-    api:
-        volumes:
-            - api-public:/srv/api/public:rw,cached
-            - api-uploads:/srv/api/var/uploads:rw
-        env_file:
-            - shared/.env.prod.local
-            - api/.env.prod.local
-
-    nginx:
-        volumes:
-            - api-public:/srv/api/public:ro,cached
-        env_file:
-            - shared/.env.prod.local
-
-    admin:
-        env_file:
-            - ./admin/.env.prod.local
-        networks:
-            - traefik_traefik
-        labels:
-            - "traefik.enable=true"
-            - "traefik.app.port=3000"
-            - "traefik.app.protocol=http"
-            - "traefik.app.frontend.rule=Host:admin.website.com"
+            - "traefik.api.frontend.rule=Host:${API_HOST},api.pat-v2.b-w.uk"
+            - "traefik.api.frontend.redirect.regex=^https?://api.pat-v2.b-w.uk(.*)$$"
+            - "traefik.api.frontend.redirect.replacement=https://${API_HOST}$$1"
+            - "traefik.api.frontend.redirect.permanent=true"
 
 networks:
     traefik_traefik:
@@ -61,5 +56,4 @@ networks:
 
 volumes:
     api-public:
-    api-uploads:
     mysql-data:

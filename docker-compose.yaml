@@ -1,85 +1,91 @@
 version: '3.7'
 
-services:
-    mysql:
-        # for mysql v8 w§e would want PR merged here for node https://github.com/mysqljs/mysql/pull/1962 + release
-        image: mysql:5
-        networks:
-            - api
-            - app
+x-cache:
+  &cache
+    cache_from:
+        - ${CONTAINER_REGISTRY_BASE}/php
+        - ${CONTAINER_REGISTRY_BASE}/nginx
+        - ${CONTAINER_REGISTRY_BASE}/varnish
+        - ${CONTAINER_REGISTRY_BASE}/app
 
-    api:
+services:
+    php:
+        image: ${CONTAINER_REGISTRY_BASE}/php
         build:
             context: ./api
-            dockerfile: ./_docker/php/Dockerfile
+            target: sbwa_php
+            <<: *cache
         depends_on:
-            - mysql
+            - db
         environment:
             XDEBUG_HOST: ${XDEBUG_HOST}
-        restart: on-failure
         networks:
-            blackfire: ~
-            smtp: ~
-            api: ~
+            - blackfire
+            - smtp
+            - api
 
     nginx:
+        image: ${CONTAINER_REGISTRY_BASE}/nginx
         build:
-            context: ./api/_docker/nginx
+            context: ./api
+            target: sbwa_nginx
+            <<: *cache
         depends_on:
-            - api
+            - php
         networks:
             - api
 
     varnish:
         image: ${CONTAINER_REGISTRY_BASE}/varnish
         build:
-            context: varnish
-            cache_from:
-                - ${CONTAINER_REGISTRY_BASE}/admin
+            context: ./api
+            target: sbwa_varnish
+            <<: *cache
         depends_on:
             - nginx
-            - api
-            - app
         tmpfs:
             - /usr/local/var/varnish:exec
         networks:
             - api
             - app
 
-    app:
-        build:
-            context: ./app
-            dockerfile: _docker/Dockerfile
-            args:
-                API_HOST: ${API_HOST}
-                COOKIE_SECRET: ${COOKIE_SECRET}
-        environment:
-            COOKIE_SECRET: ${COOKIE_SECRET}
-        depends_on:
-            - mysql
-        networks:
-            - app
-
-    blackfire:
-        image: blackfire/blackfire
-        env_file:
-            - blackfire/.env.local
-        networks:
-            - blackfire
-
     smtp_relay:
         image: namshi/smtp
         networks:
             - smtp
 
-    admin:
-        # Use a static website hosting service in production
-        # See https://facebook.github.io/create-react-app/docs/deployment
-        image: ${CONTAINER_REGISTRY_BASE}/admin
+    blackfire:
+        image: blackfire/blackfire
+        env_file:
+            - ./api/_docker/blackfire/.env
+        networks:
+            - blackfire
+
+    db:
+        # for mysql v8 we would want PR merged here for node https://github.com/mysqljs/mysql/pull/1962 + release
+        image: mysql:5
+        networks:
+            - api
+            - app
+
+    app:
+        image: ${CONTAINER_REGISTRY_BASE}/app
         build:
-            context: ./admin
-            cache_from:
-                - ${CONTAINER_REGISTRY_BASE}/admin
+            context: ./app
+            target: sbwa_app
+            <<: *cache
+        depends_on:
+            - db
+        networks:
+            - app
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.5'
+                    memory: 250M
+                reservations:
+                    cpus: '0.5'
+                    memory: 100M
 
 networks:
     app:

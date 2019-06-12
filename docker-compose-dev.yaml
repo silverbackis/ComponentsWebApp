@@ -1,41 +1,41 @@
 version: '3.7'
 
 services:
-    mysql:
+    php:
         volumes:
-            - mysql-data:/var/lib/mysql:rw,delegated
-        #            - ./mysql/my-no-aio.cnf:/etc/mysql/conf.d/my-no-aio.cnf
-        ports:
-            - "4306:3306"
-        env_file:
-            - shared/.env.local
-
-    api:
-        volumes:
-            - ./api:/srv/api:rw,delegated
-            - ./api/_docker/php/crontab:/etc/cron.d/app-cron:rw,cached
+            - ./api:/srv/api:rw,cached
             # Link local bundle into container, composer.json can be used to configure this as a repository to use for the bundle (or not)
-        #            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/ApiComponentBundle:/Volumes/LaCie/GitHub/_ComponentsWebApp/ApiComponentBundle:ro,cached
+#            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/ApiComponentBundle:/Volumes/Samsung_T5/GitHub/_ComponentsWebApp/ApiComponentBundle:ro,cached
         env_file:
-            - shared/.env.local
-            - api/.env.local
+            - ./shared/.env
+            - ./api/.env
         environment:
             ENABLE_XDEBUG: ${ENABLE_XDEBUG}
 
     nginx:
         volumes:
-            - ./api/public:/srv/api/public:ro,delegated
-            - ./api/_docker/nginx/custom.conf:/etc/nginx/conf.d/custom.conf:ro,cached
+            - ./api/public:/srv/api/public:ro
+            - ./api/_docker/nginx/conf.d/custom.conf:/etc/nginx/conf.d/custom.conf:ro,cached
         ports:
             - "8080:80"
         env_file:
-            - shared/.env.local
+            - ./shared/.env
 
     varnish:
         volumes:
-            - ./varnish/conf/default.vcl:/usr/local/etc/varnish/default.vcl:ro,delegated
+            - ./api/_docker/varnish/conf:/usr/local/etc/varnish:ro
+            - ./api/_docker/varnish/errors:/var/www/errors:ro
         ports:
             - "8081:80"
+
+    db:
+        volumes:
+            - mysql-data:/var/lib/mysql:rw,delegated
+#            - ./mysql/my-no-aio.cnf:/etc/mysql/conf.d/my-no-aio.cnf
+        ports:
+            - "4306:3306"
+        env_file:
+            - ./shared/.env
 
     app:
         ports:
@@ -43,18 +43,10 @@ services:
         volumes:
             - ./app:/usr/src/app:rw,delegated
             # Uncomment this line to link in local node packages (comment during yarn upgrades)
-        #            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/CWAModules/packages:/usr/src/app/node_modules/@cwamodules:ro,cached
+#            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/CWAModules/packages:/usr/src/app/node_modules/@cwamodules:ro,cached
         env_file:
-            - shared/.env.local
-
-    admin:
-        volumes:
-            - ./admin:/usr/src/admin:rw,cached
-            - /usr/src/admin/node_modules
-        ports:
-            - "81:3000"
-        env_file:
-            - ./admin/.env.local
+            - ./shared/.env
+            - ./app/.env
 
 volumes:
     mysql-data:
