@@ -46,7 +46,7 @@ services:
 #            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/CWAModules/packages:/usr/src/app/node_modules/@cwamodules:ro,cached
         env_file:
             - ./shared/.env
-            - ./app/.env
+            - ./app/_docker/.env.local
 
 volumes:
     mysql-data:

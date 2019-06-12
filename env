@@ -24,6 +24,9 @@ case ${CONTINUE:0:1} in
       cp ./api/.env ./api/.env.local
       cp ./api/.env ./api/.env.prod.local
 
+      cp ./app/.env ./app/.env.local
+      cp ./app/.env ./app/.env.prod.local
+
       cp ./admin/.env ./admin/.env.local
       cp ./admin/.env ./admin/.env.prod.local
 

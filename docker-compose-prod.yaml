@@ -1,28 +1,7 @@
 version: '3.7'
 
 services:
-    mysql:
-        volumes:
-            - mysql-data:/var/lib/mysql:rw,delegated
-        env_file:
-            - ./shared/.env.prod
-
-    app:
-        networks:
-            - traefik_traefik
-        env_file:
-            - ./shared/.env.prod
-            - ./app/.env.prod
-        labels:
-            - "traefik.enable=true"
-            - "traefik.app.frontend.rule=Host:${APP_HOST},addictionpat.org,pat-v2.b-w.uk"
-            - "traefik.app.port=3000"
-            - "traefik.app.protocol=http"
-            - "traefik.app.frontend.redirect.regex=^https?://(addictionpat.org|pat-v2.b-w.uk)(.*)$$"
-            - "traefik.app.frontend.redirect.replacement=https://${APP_HOST}$$2"
-            - "traefik.app.frontend.redirect.permanent=true"
-
-    api:
+    php:
         volumes:
             - api-public:/srv/api/public:rw,cached
             - ./api/config/jwt:/srv/api/config/jwt:rw,cached
@@ -49,6 +28,27 @@ services:
             - "traefik.api.frontend.redirect.regex=^https?://api.pat-v2.b-w.uk(.*)$$"
             - "traefik.api.frontend.redirect.replacement=https://${API_HOST}$$1"
             - "traefik.api.frontend.redirect.permanent=true"
+
+    db:
+        volumes:
+            - mysql-data:/var/lib/mysql:rw,delegated
+        env_file:
+            - ./shared/.env.prod
+
+    app:
+        networks:
+            - traefik_traefik
+        env_file:
+            - ./shared/.env.prod
+            - ./app/_docker/.env.prod.local
+        labels:
+            - "traefik.enable=true"
+            - "traefik.app.frontend.rule=Host:${APP_HOST},addictionpat.org,pat-v2.b-w.uk"
+            - "traefik.app.port=3000"
+            - "traefik.app.protocol=http"
+            - "traefik.app.frontend.redirect.regex=^https?://(addictionpat.org|pat-v2.b-w.uk)(.*)$$"
+            - "traefik.app.frontend.redirect.replacement=https://${APP_HOST}$$2"
+            - "traefik.app.frontend.redirect.permanent=true"
 
 networks:
     traefik_traefik:
