@@ -129,6 +129,7 @@ COPY bin bin/
 COPY config config/
 COPY public public/
 COPY src src/
+COPY assets assets/
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
