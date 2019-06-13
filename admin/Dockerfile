@@ -16,7 +16,7 @@ RUN apk add --no-cache --virtual .gyp \
 
 COPY . ./
 
-RUN chmod +x ./start.sh && mv ./start.sh /usr/local/bin/start
+RUN chmod +x _docker/start.sh && mv _docker/start.sh /usr/local/bin/start
 
 EXPOSE 3000
 

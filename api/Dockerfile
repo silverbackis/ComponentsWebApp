@@ -168,10 +168,9 @@ CMD ["nginx", "-g", "daemon off;"]
 # does not depend on any of the above stages, but placed here to keep everything in one Dockerfile
 FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS sbwa_varnish
 
-#COPY _docker/varnish/conf /usr/local/etc/varnish/
-#COPY _docker/varnish/errors /var/www/errors/
+ENV VARNISH_CONFIG='default.vcl'
+COPY _docker/varnish/conf /usr/local/etc/varnish/available/
+COPY _docker/varnish/errors /var/www/errors/
+RUN ls -s "/usr/local/etc/varnish/available/${VARNISH_CONFIG}" "/usr/local/etc/varnish/default.vcl"
 
-# ENV VARNISH_CONFIG='default.vcl'
-COPY _docker/varnish/conf/default.vcl /usr/local/etc/varnish/default.vcl
-
-# CMD "varnishd -F -f /usr/local/etc/varnish/${VARNISH_CONFIG}"
+CMD ["varnishd", "-F", "-f", "/usr/local/etc/varnish/default.vcl", "-p", "http_resp_hdr_len=256000"]
