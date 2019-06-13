@@ -4,9 +4,8 @@ services:
     php:
         volumes:
             - api-public:/srv/api/public:rw,cached
-            - ./api/config/jwt:/srv/api/config/jwt:rw,cached
-            # Had an issue where a config file wasn't removed after a composer update - may have been another issue with git fetch in prod
-            # - ./api/config:/srv/api/config:rw,cached
+            - api-uploads:/srv/api/var/uploads:rw,cached
+            - jwt-keys:/srv/api/config/jwt
         env_file:
             - ./shared/.env.prod.local
             - ./api/.env.prod.local
@@ -24,10 +23,7 @@ services:
             - "traefik.enable=true"
             - "traefik.api.port=80"
             - "traefik.api.protocol=http"
-            - "traefik.api.frontend.rule=Host:${API_HOST},api.pat-v2.b-w.uk"
-            - "traefik.api.frontend.redirect.regex=^https?://api.pat-v2.b-w.uk(.*)$$"
-            - "traefik.api.frontend.redirect.replacement=https://${API_HOST}$$1"
-            - "traefik.api.frontend.redirect.permanent=true"
+            - "traefik.api.frontend.rule=Host:${API_HOST}"
 
     db:
         volumes:
@@ -43,12 +39,9 @@ services:
             - ./app/_docker/.env.prod.local
         labels:
             - "traefik.enable=true"
-            - "traefik.app.frontend.rule=Host:${APP_HOST},addictionpat.org,pat-v2.b-w.uk"
+            - "traefik.app.frontend.rule=Host:${APP_HOST}"
             - "traefik.app.port=3000"
             - "traefik.app.protocol=http"
-            - "traefik.app.frontend.redirect.regex=^https?://(addictionpat.org|pat-v2.b-w.uk)(.*)$$"
-            - "traefik.app.frontend.redirect.replacement=https://${APP_HOST}$$2"
-            - "traefik.app.frontend.redirect.permanent=true"
 
 networks:
     traefik_traefik:
