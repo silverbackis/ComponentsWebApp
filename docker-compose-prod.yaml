@@ -8,14 +8,14 @@ services:
             # Had an issue where a config file wasn't removed after a composer update - may have been another issue with git fetch in prod
             # - ./api/config:/srv/api/config:rw,cached
         env_file:
-            - ./shared/.env.prod
-            - ./api/.env.prod
+            - ./shared/.env.prod.local
+            - ./api/.env.prod.local
 
     nginx:
         volumes:
             - api-public:/srv/api/public:ro,cached
         env_file:
-            - ./shared/.env.prod
+            - ./shared/.env.prod.local
 
     varnish:
         networks:
@@ -33,13 +33,13 @@ services:
         volumes:
             - mysql-data:/var/lib/mysql:rw,delegated
         env_file:
-            - ./shared/.env.prod
+            - ./shared/.env.prod.local
 
     app:
         networks:
             - traefik_traefik
         env_file:
-            - ./shared/.env.prod
+            - ./shared/.env.prod.local
             - ./app/_docker/.env.prod.local
         labels:
             - "traefik.enable=true"
