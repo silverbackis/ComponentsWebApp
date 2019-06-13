@@ -171,6 +171,6 @@ FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS sbwa_varnish
 ENV VARNISH_CONFIG='default.vcl'
 COPY _docker/varnish/conf /usr/local/etc/varnish/available/
 COPY _docker/varnish/errors /var/www/errors/
-RUN ls -s "/usr/local/etc/varnish/available/${VARNISH_CONFIG}" "/usr/local/etc/varnish/default.vcl"
+RUN ln -s "/usr/local/etc/varnish/available/${VARNISH_CONFIG}" /usr/local/etc/varnish/default.vcl
 
 CMD ["varnishd", "-F", "-f", "/usr/local/etc/varnish/default.vcl", "-p", "http_resp_hdr_len=256000"]
