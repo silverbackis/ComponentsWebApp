@@ -3,8 +3,8 @@ version: '3.7'
 services:
     php:
         volumes:
-            - api-public:/srv/api/public:rw,cached
-            - api-uploads:/srv/api/var/uploads:rw,cached
+            - php-public:/srv/api/public:rw,cached
+            - php-uploads:/srv/api/var/uploads:rw,cached
             - jwt-keys:/srv/api/config/jwt
         env_file:
             - ./shared/.env.prod.local
@@ -12,7 +12,7 @@ services:
 
     nginx:
         volumes:
-            - api-public:/srv/api/public:ro,cached
+            - php-public:/srv/api/public:ro,cached
         env_file:
             - ./shared/.env.prod.local
 
@@ -48,5 +48,8 @@ networks:
         external: true
 
 volumes:
-    api-public:
+    php-public:
+    php-uploads:
+    jwt-keys:
     mysql-data:
+

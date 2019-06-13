@@ -7,8 +7,8 @@ services:
             # Link local bundle into container, composer.json can be used to configure this as a repository to use for the bundle (or not)
 #            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/ApiComponentBundle:/Volumes/Samsung_T5/GitHub/_ComponentsWebApp/ApiComponentBundle:ro,cached
         env_file:
-            - ./shared/.env
-            - ./api/.env
+            - ./shared/.env.local
+            - ./api/.env.local
         environment:
             ENABLE_XDEBUG: ${ENABLE_XDEBUG}
 
@@ -19,7 +19,7 @@ services:
         ports:
             - "8080:80"
         env_file:
-            - ./shared/.env
+            - ./shared/.env.local
 
     varnish:
         volumes:
@@ -35,7 +35,7 @@ services:
         ports:
             - "4306:3306"
         env_file:
-            - ./shared/.env
+            - ./shared/.env.local
 
     app:
         ports:
@@ -45,7 +45,7 @@ services:
             # Uncomment this line to link in local node packages (comment during yarn upgrades)
 #            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/CWAModules/packages:/usr/src/app/node_modules/@cwamodules:ro,cached
         env_file:
-            - ./shared/.env
+            - ./shared/.env.local
             - ./app/_docker/.env.local
 
 volumes:
