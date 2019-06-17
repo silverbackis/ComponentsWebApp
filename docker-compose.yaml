@@ -87,6 +87,15 @@ services:
                     cpus: '0.5'
                     memory: 100M
 
+#    admin:
+#        # Use a static website hosting service in production
+#        # See https://facebook.github.io/create-react-app/docs/deployment
+#        image: quay.io/api-platform/admin
+#        build:
+#            context: ./admin
+#            cache_from:
+#                - quay.io/api-platform/admin
+
 networks:
     app:
     api:

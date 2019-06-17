@@ -23,12 +23,6 @@ RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707\n" > $PHP_INI_DIR/conf.d/blackfire.ini \
     && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
 
-# Enable configured cron jobs
-COPY _docker/php/crontab /etc/cron.d/app-cron
-RUN chmod 0644 /etc/cron.d/app-cron; \
-    crontab /etc/cron.d/app-cron; \
-    touch /var/log/cron.log
-CMD cron
 
 # persistent / runtime deps
 RUN apk add --no-cache \
@@ -140,6 +134,13 @@ VOLUME /srv/api/var
 
 COPY _docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
+
+# Enable configured cron jobs
+COPY _docker/php/crontab /etc/cron.d/app-cron
+RUN chmod 0644 /etc/cron.d/app-cron; \
+    crontab /etc/cron.d/app-cron; \
+    touch /var/log/cron.log
+CMD ["cron"]
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]

@@ -31,7 +31,6 @@ services:
     db:
         volumes:
             - mysql-data:/var/lib/mysql:rw,delegated
-#            - ./mysql/my-no-aio.cnf:/etc/mysql/conf.d/my-no-aio.cnf
         ports:
             - "4306:3306"
         env_file:
@@ -47,6 +46,15 @@ services:
         env_file:
             - ./shared/.env.local
             - ./app/_docker/.env.local
+
+#    admin:
+#        volumes:
+#            - ./admin:/usr/src/admin:rw,cached
+#            - /usr/src/admin/node_modules
+#        ports:
+#            - "81:3000"
+#        env_file:
+#            - ./admin/.env.local
 
 volumes:
     mysql-data:

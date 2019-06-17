@@ -25,6 +25,10 @@ services:
             - "traefik.api.protocol=http"
             - "traefik.api.frontend.rule=Host:${API_HOST}"
 
+    smtp_relay:
+        environment:
+            MAILNAME: ${APP_HOST}
+
     db:
         volumes:
             - mysql-data:/var/lib/mysql:rw,delegated
@@ -42,6 +46,17 @@ services:
             - "traefik.app.frontend.rule=Host:${APP_HOST}"
             - "traefik.app.port=3000"
             - "traefik.app.protocol=http"
+
+#    admin:
+#        env_file:
+#            - ./admin/.env.prod.local
+#        networks:
+#            - traefik_traefik
+#        labels:
+#            - "traefik.enable=true"
+#            - "traefik.app.port=3000"
+#            - "traefik.app.protocol=http"
+#            - "traefik.app.frontend.rule=Host:admin.website.com"
 
 networks:
     traefik_traefik:
