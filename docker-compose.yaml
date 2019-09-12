@@ -17,13 +17,15 @@ services:
             <<: *cache
         depends_on:
             - db
-        environment:
-            XDEBUG_HOST: ${XDEBUG_HOST}
         networks:
             - blackfire
             - smtp
             - api
-
+        volumes:
+            - ./api:/srv/api:rw,cached
+        env_file:
+            - ./shared/.env.local
+            - ./api/.env.local
     nginx:
         image: ${CONTAINER_REGISTRY_BASE}/nginx
         build:
@@ -34,6 +36,12 @@ services:
             - php
         networks:
             - api
+        volumes:
+            - ./api/public:/srv/api/public:ro
+        ports:
+            - "8080:80"
+        env_file:
+            - ./shared/.env.local
 
     varnish:
         image: ${CONTAINER_REGISTRY_BASE}/varnish
@@ -48,6 +56,12 @@ services:
         networks:
             - api
             - app
+        volumes:
+            - ./api/_docker/varnish/errors:/var/www/errors:ro
+        ports:
+            - "8081:80"
+        env_file:
+            - ./shared/.env.local
 
     smtp_relay:
         image: namshi/smtp
@@ -57,7 +71,7 @@ services:
     blackfire:
         image: blackfire/blackfire
         env_file:
-            - ./api/_docker/blackfire/.env
+            - ./api/_docker/blackfire/.env.local
         networks:
             - blackfire
 
@@ -67,6 +81,12 @@ services:
         networks:
             - api
             - app
+        volumes:
+            - mysql-data:/var/lib/mysql:rw,delegated
+        ports:
+            - "4306:3306"
+        env_file:
+            - ./shared/.env.local
 
     app:
         image: ${CONTAINER_REGISTRY_BASE}/app
@@ -78,14 +98,13 @@ services:
             - db
         networks:
             - app
-        deploy:
-            resources:
-                limits:
-                    cpus: '0.5'
-                    memory: 250M
-                reservations:
-                    cpus: '0.5'
-                    memory: 100M
+        ports:
+            - "80:3000"
+        volumes:
+            - ./app:/usr/src/app:rw,delegated
+        env_file:
+            - ./shared/.env.local
+            - ./app/_docker/.env.local
 
 #    admin:
 #        # Use a static website hosting service in production
@@ -95,9 +114,19 @@ services:
 #            context: ./admin
 #            cache_from:
 #                - quay.io/api-platform/admin
+#        volumes:
+#            - ./admin:/usr/src/admin:rw,cached
+#            - /usr/src/admin/node_modules
+#        ports:
+#            - "81:3000"
+#        env_file:
+#            - ./admin/.env.local
 
 networks:
     app:
     api:
     blackfire:
     smtp:
+
+volumes:
+    mysql-data:

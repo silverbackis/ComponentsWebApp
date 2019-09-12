@@ -1,5 +1,3 @@
-public/media/cache/
-
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -8,10 +6,6 @@ public/media/cache/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-
-###> lexik/jwt-authentication-bundle ###
-/config/jwt/*.pem
-###< lexik/jwt-authentication-bundle ###
 
 ###> liip/imagine-bundle ###
 /public/media/cache/
@@ -25,3 +19,7 @@ public/media/cache/
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###

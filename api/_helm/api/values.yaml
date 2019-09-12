@@ -1,0 +1,78 @@
+# Default values for api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+#phpConsume:
+#  repository: registry.gitlab.com/silverback-web-apps/j-savory-golf/php-consume
+#  tag: latest
+#  pullPolicy: Always
+#  replicaCount: 1
+imagePullSecrets:
+  - name: gitlab-registry
+
+php:
+  repository: registry.gitlab.com/silverback-web-apps/j-savory-golf/php
+  tag: latest
+  pullPolicy: Always
+  replicaCount: 1
+  env: prod
+  debug: '0'
+  secret: ""
+  corsAllowOrigin: "^https?://(.*\\.)?jsavorygolf\\.com$"
+  trustedHosts: "^(.*\\.)?jsavorygolf\\.com|varnish$"
+  trustedProxies:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+  jwt:
+    secretKey: ''
+    publicKey: ''
+    passphrase: ''
+  passwordManagerTokenTtl: 8600
+  passwordRequestTimeout: 3600
+  mailerDsn: smtp://smtp-relay
+  varnishToken: ChangeMe
+  cookieDomain: "jsavorygolf.com"
+  fromEmailAddress: noreply@website.com
+
+nginx:
+  repository: registry.gitlab.com/silverback-web-apps/j-savory-golf/nginx
+  tag: latest
+  pullPolicy: Always
+  replicaCount: 1
+
+varnish:
+  enabled: true
+  url: https://api.jsavorygolf.com
+  repository: registry.gitlab.com/silverback-web-apps/j-savory-golf/varnish
+  tag: latest
+  pullPolicy: Always
+  replicaCount: 1
+
+mysql:
+  url: mysql://user:pass@example.com/api?serverVersion=10.1
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+  tls:
+    - hosts:
+      - host: api.jsavorygolf.com
+      secretName: letsencrypt-prod
+  hosts:
+    api:
+      host: api.jsavorygolf.com
+      serviceName: varnish
+
+pvc:
+  size:
+    uploads: 4Gi
+    cache: 4Gi
+
+resources: {}
+#  limits:
+#    cpu: 100m
+#    memory: 256Mi
+#  requests:
+#    cpu: 100m
+#    memory: 256Mi

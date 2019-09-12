@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Exception;
-use Silverback\ApiComponentBundle\Entity\User\User;
 use Silverback\ApiComponentBundle\Repository\User\UserRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 

@@ -25,15 +25,40 @@ acl invalidators {
   "192.168.0.0"/16;
 }
 
-sub vcl_backend_response {
-  # Ban lurker friendly header
-  set beresp.http.url = bereq.url;
-
-  # Add a grace in case the backend is down
-  set beresp.grace = 1h;
+acl profile {
+   "88.98.91.88";
 }
 
 sub vcl_recv {
+  if (req.esi_level > 0) {
+    # ESI request should not be included in the profile.
+    # Instead you should profile them separately, each one
+    # in their dedicated profile.
+    # Removing the Blackfire header avoids to trigger the profiling.
+    # Not returning let it go trough your usual workflow as a regular
+    # ESI request without distinction.
+    unset req.http.X-Blackfire-Query;
+  }
+
+  if (req.http.X-Blackfire-Query && client.ip ~ profile) {
+    return (pass);
+  }
+
+  set req.http.Surrogate-Capability = "abc=ESI/1.0";
+
+  if (req.http.Cookie) {
+    set req.http.Cookie = ";" + req.http.Cookie;
+    set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
+    set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
+    set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
+    set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
+
+    if (req.http.Cookie == "") {
+      // If there are no more cookies, remove the header to get page cached.
+      unset req.http.Cookie;
+    }
+  }
+
   if (req.restarts > 0) {
     set req.hash_always_miss = true;
   }
@@ -60,21 +85,6 @@ sub vcl_recv {
   if (req.method == "GET" && req.url == "/healthz") {
     return (synth(200, "OK"));
   }
-
-  if (req.http.Cookie && req.method == "GET") {
-    set req.http.Cookie = ";" + req.http.Cookie;
-    set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
-    set req.http.Cookie = regsuball(req.http.Cookie, ";(TKN|JS_SESSION)=", "; \1=");
-    set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
-    set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
-
-    if (req.http.Cookie == "") {
-      // If there are no more cookies, remove the header to get page cached.
-      unset req.http.Cookie;
-    }
-  }
-
-  set req.http.Surrogate-Capability = "abc=ESI/1.0";
 }
 
 sub vcl_hit {
@@ -107,23 +117,27 @@ sub vcl_deliver {
   unset resp.http.url;
   # Comment the following line to send the "Cache-Tags" header to the client (e.g. to use CloudFlare cache tags)
   unset resp.http.Cache-Tags;
+
   if (obj.hits > 0) {
-       set resp.http.X-Cache = "HIT";
+     set resp.http.X-Cache = "HIT";
+     if (req.http.Origin ~ "$CORS_ALLOW_ORIGIN") {
+       set resp.http.Access-Control-Allow-Origin=req.http.Origin;
+       set resp.http.Access-Control-Allow-Credentials="true";
+     }
   } else {
-       set resp.http.X-Cache = "MISS";
+     set resp.http.X-Cache = "MISS";
   }
 }
 
 sub vcl_backend_response {
+  if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
+    unset beresp.http.Surrogate-Control;
+    set beresp.do_esi = true;
+  }
+
   # Ban lurker friendly header
   set beresp.http.url = bereq.url;
 
   # Add a grace in case the backend is down
   set beresp.grace = 1h;
-
-  # Check for ESI acknowledgement and remove Surrogate-Control header
-  if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
-      unset beresp.http.Surrogate-Control;
-      set beresp.do_esi = true;
-  }
 }

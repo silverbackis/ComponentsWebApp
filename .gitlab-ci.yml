@@ -1,0 +1,106 @@
+image: alpine:latest
+
+variables:
+    AUTO_DEVOPS_DOMAIN: jsavorygolf.com
+
+stages:
+    - build
+    - test
+    - production
+    - performance
+
+cache:
+    paths:
+        - $HOME/google-cloud-sdk
+
+before_script:
+    - source ./bin/auto_devops.sh
+
+build:
+    stage: build
+    image: docker:stable-git
+    services:
+        - docker:stable-dind
+    variables:
+        DOCKER_DRIVER: overlay2
+    script:
+        - install_dependencies
+        - setup_docker
+        - build
+    only:
+        - branches
+    except:
+        variables:
+            - $BUILD_DISABLED
+
+code_quality:
+    stage: test
+    image: docker:stable
+    variables:
+        DOCKER_DRIVER: overlay2
+        DOCKER_TLS_CERTDIR: ""
+    allow_failure: true
+    services:
+        - docker:stable-dind
+    script:
+        - setup_docker
+        - code_quality
+    artifacts:
+        reports:
+            codequality: gl-code-quality-report.json
+        expire_in: 1 week
+    dependencies: []
+    only:
+        - branches
+    except:
+        variables:
+            - $CODE_QUALITY_DISABLED
+
+production_api:
+    stage: production
+    script:
+        - check_kube_domain
+        - install_dependencies
+        - helm_init
+        - ensure_namespace
+        - initialize_tiller
+        - create_secret
+        - deploy_api
+        - persist_environment_url
+    environment:
+        name: production
+        url: https://$AUTO_DEVOPS_DOMAIN
+    artifacts:
+        paths: [environment_url.txt]
+#    when: manual
+    retry: 1
+    allow_failure: false
+    only:
+        refs:
+            - master
+    except:
+        variables:
+            - $PRODUCTION_API_DISABLED          
+
+performance:
+    stage: performance
+    image: docker:stable
+    variables:
+        DOCKER_DRIVER: overlay2
+    allow_failure: true
+    services:
+        - docker:stable-dind
+    script:
+        - setup_docker
+        - performance
+    artifacts:
+        paths:
+            - performance.json
+            - sitespeed-results/
+    only:
+        refs:
+            - branches
+        kubernetes: active
+    except:
+        variables:
+            - $PERFORMANCE_DISABLED

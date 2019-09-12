@@ -3,3 +3,6 @@ silverback_api_component:
     mailer:
         logo_src: 'images/logo.svg'
         website_name: 'New CWA'
+    user:
+        class_name: App\Entity\User
+        change_username_path: /account/confirm-username/{{ token }}/{{ email }}

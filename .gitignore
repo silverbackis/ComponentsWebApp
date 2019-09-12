@@ -1,9 +1,4 @@
 .idea/
 .DS_Store
-/.env
-**/.env.local
-**/.env.local.php
-**/.env.*.local
+**/.env.*
 .php_cs.cache
-mysql/_backup/
-mysql/data/

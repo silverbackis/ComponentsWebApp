@@ -11,7 +11,8 @@
 **/Dockerfile*
 **/Thumbs.db
 .editorconfig
-.env*
+.env.*
+!.env.*.php
 .php_cs.cache
 public/bundles/
 var/

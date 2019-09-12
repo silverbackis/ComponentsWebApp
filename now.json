@@ -1,0 +1,44 @@
+{
+  "name": "components-web-app",
+  "version": 2,
+  "env": {
+    "HOST": "0.0.0.0",
+    "NODE_ENV": "development",
+    "API_URL": "https://api.cwa.silverbackwebapps.com",
+    "API_URL_BROWSER": "https://api.cwa.silverbackwebapps.com",
+    "COOKIE_SECRET": "@cwa-cookie-secret",
+    "APP_DATABASE_URL": "@cwa-db-url",
+    "VARNISH_TOKEN": "@cwa-varnish-token"
+  },
+  "build": {
+    "env": {
+      "HOST": "0.0.0.0",
+      "NODE_ENV": "development",
+      "API_URL": "https://api.cwa.silverbackwebapps.com",
+      "API_URL_BROWSER": "https://api.cwa.silverbackwebapps.com",
+      "COOKIE_SECRET": "@cwa-cookie-secret",
+      "APP_DATABASE_URL": "@cwa-db-url",
+      "VARNISH_TOKEN": "@cwa-varnish-token"
+    }
+  },
+  "builds": [
+    {
+      "src": "app/nuxt.config.js",
+      "use": "@nuxtjs/now-builder",
+      "config": {
+        "serverFiles": ["server/index.js"]
+      }
+    },
+    {
+      "src": "app/static/**",
+      "use": "@now/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/images/(.*)|/favicon\\.ico|/icon\\.(svg|png)",
+      "headers": { "cache-control": "public, max-age=120, s-maxage=604800" },
+      "dest": "/images/$1"
+    }
+  ]
+}
