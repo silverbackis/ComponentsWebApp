@@ -3,7 +3,7 @@
   "version": 2,
   "env": {
     "HOST": "0.0.0.0",
-    "NODE_ENV": "development",
+    "NODE_ENV": "production",
     "API_URL": "https://api.cwa.silverbackwebapps.com",
     "API_URL_BROWSER": "https://api.cwa.silverbackwebapps.com",
     "COOKIE_SECRET": "@cwa-cookie-secret",
@@ -13,7 +13,7 @@
   "build": {
     "env": {
       "HOST": "0.0.0.0",
-      "NODE_ENV": "development",
+      "NODE_ENV": "production",
       "API_URL": "https://api.cwa.silverbackwebapps.com",
       "API_URL_BROWSER": "https://api.cwa.silverbackwebapps.com",
       "COOKIE_SECRET": "@cwa-cookie-secret",

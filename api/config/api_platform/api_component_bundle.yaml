@@ -14,70 +14,80 @@ resources:
     Silverback\ApiComponentBundle\Entity\Content\Page\StaticPage: ~
     Silverback\ApiComponentBundle\Entity\Content\Page\DynamicPage: ~
     Silverback\ApiComponentBundle\Entity\Content\ComponentGroup\ComponentGroup: ~
+    Silverback\ApiComponentBundle\Entity\Component\ComponentLocation: ~
     # components
-#    Silverback\ApiComponentBundle\Entity\Component\Collection\Collection: ~
-#    Silverback\ApiComponentBundle\Entity\Component\ComponentLocation: ~
-#    Silverback\ApiComponentBundle\Entity\Component\Feature\Columns\FeatureColumns: ~
-#    Silverback\ApiComponentBundle\Entity\Component\Feature\Columns\FeatureColumnsItem: ~
-#    Silverback\ApiComponentBundle\Entity\Component\Feature\Stacked\FeatureStacked: ~
-#    Silverback\ApiComponentBundle\Entity\Component\Feature\Stacked\FeatureStackedItem: ~
-#    Silverback\ApiComponentBundle\Entity\Component\Feature\TextList\FeatureTextList: ~
-#    Silverback\ApiComponentBundle\Entity\Component\Feature\TextList\FeatureTextListItem: ~
-#    Silverback\ApiComponentBundle\Entity\Component\Form\Form:
-#        collectionOperations:
-#            get: ~
-#            post: ~
-#        itemOperations:
-#            get: ~
-#            delete: ~
-#            put: ~
-#            patch:
-#                method: PATCH
-#                path: '/forms/{id}/submit.{_format}'
-#                requirements:
-#                    id: '[^/]+'
-#                denormalization_context:
-#                    groups:
-#                        - none
-#                controller: 'Silverback\ApiComponentBundle\Controller\FormPatchAction'
-#            post:
-#                method: POST
-#                path: '/forms/{id}/submit.{_format}'
-#                requirements:
-#                    id: '[^/]+'
-#                denormalization_context:
-#                    groups:
-#                        - none
-#                controller: 'Silverback\ApiComponentBundle\Controller\FormPostAction'
-#    Silverback\ApiComponentBundle\Entity\Content\Component\Gallery\Gallery: ~
-#    Silverback\ApiComponentBundle\Entity\Content\Component\Gallery\GalleryItem:
-#        iri: http://schema.org/ImageObject
-#    Silverback\ApiComponentBundle\Entity\Component\Hero\Hero: ~
-#    Silverback\ApiComponentBundle\Entity\Component\Image\SimpleImage:
-#        iri: http://schema.org/ImageObject
-#    Silverback\ApiComponentBundle\Entity\Component\Navigation\NavBar\NavBar: ~
-#    Silverback\ApiComponentBundle\Entity\Component\Navigation\NavBar\NavBarItem: ~
-#    Silverback\ApiComponentBundle\Entity\Content\Component\Navigation\Menu\Menu: ~
-#    Silverback\ApiComponentBundle\Entity\Content\Component\Navigation\Menu\MenuItem: ~
-#    Silverback\ApiComponentBundle\Entity\Content\Component\Navigation\Tabs\Tabs: ~
-#    Silverback\ApiComponentBundle\Entity\Content\Component\Navigation\Tabs\TabsItem: ~
-#    Silverback\ApiComponentBundle\Entity\Component\Layout\SideColumn: ~
-#    Silverback\ApiComponentBundle\Entity\Component\Content\Content: ~
+    Silverback\ApiComponentBundle\Entity\Component\Collection\Collection: ~
+    Silverback\ApiComponentBundle\Entity\Component\Feature\Columns\FeatureColumns: ~
+    Silverback\ApiComponentBundle\Entity\Component\Feature\Columns\FeatureColumnsItem: ~
+    Silverback\ApiComponentBundle\Entity\Component\Feature\Stacked\FeatureStacked: ~
+    Silverback\ApiComponentBundle\Entity\Component\Feature\Stacked\FeatureStackedItem: ~
+    Silverback\ApiComponentBundle\Entity\Component\Feature\TextList\FeatureTextList: ~
+    Silverback\ApiComponentBundle\Entity\Component\Feature\TextList\FeatureTextListItem: ~
+    Silverback\ApiComponentBundle\Entity\Component\Form\Form:
+        collectionOperations:
+            get: ~
+            post: ~
+        itemOperations:
+            get: ~
+            delete: ~
+            put: ~
+            patch:
+                method: PATCH
+                path: '/forms/{id}/submit.{_format}'
+                requirements:
+                    id: '[^/]+'
+                denormalization_context:
+                    groups:
+                        - none
+                controller: 'Silverback\ApiComponentBundle\Controller\FormPatchAction'
+            post:
+                method: POST
+                path: '/forms/{id}/submit.{_format}'
+                requirements:
+                    id: '[^/]+'
+                denormalization_context:
+                    groups:
+                        - none
+                controller: 'Silverback\ApiComponentBundle\Controller\FormPostAction'
+    Silverback\ApiComponentBundle\Entity\Component\Gallery\Gallery: ~
+    Silverback\ApiComponentBundle\Entity\Component\Gallery\GalleryItem:
+        iri: http://schema.org/ImageObject
+    Silverback\ApiComponentBundle\Entity\Component\Hero\Hero: ~
+    Silverback\ApiComponentBundle\Entity\Component\Image\SimpleImage:
+        iri: http://schema.org/ImageObject
+    Silverback\ApiComponentBundle\Entity\Component\Navigation\NavBar\NavBar: ~
+    Silverback\ApiComponentBundle\Entity\Component\Navigation\NavBar\NavBarItem: ~
+    #    Silverback\ApiComponentBundle\Entity\Content\Component\Navigation\Menu\Menu: ~
+    #    Silverback\ApiComponentBundle\Entity\Content\Component\Navigation\Menu\MenuItem: ~
+    #    Silverback\ApiComponentBundle\Entity\Content\Component\Navigation\Tabs\Tabs: ~
+    #    Silverback\ApiComponentBundle\Entity\Content\Component\Navigation\Tabs\TabsItem: ~
+    #    Silverback\ApiComponentBundle\Entity\Component\Layout\SideColumn: ~
+    Silverback\ApiComponentBundle\Entity\Component\Content\Content: ~
     # dynamic pages
-#    Silverback\ApiComponentBundle\Entity\Content\Page\Dynamic\ArticlePage\ArticlePage:
-#        attributes:
-#            order:
-#                created: DESC
-#                sort: DESC
-#            pagination_client_enabled: true
-#            pagination_enabled: true
-#            pagination_items_per_page: 12
-#            pagination_client_items_per_page: true
-#    Silverback\ApiComponentBundle\Entity\Form\LoginForm:
-#        collectionOperations: ~
-#        properties:
-#            id:
-#                identifier: true
-#            _username: ~
-#            _password: ~
-#    Silverback\ApiComponentBundle\Entity\User\User: ~
+    Silverback\ApiComponentBundle\Entity\Content\Page\Dynamic\ArticlePage\ArticlePage:
+        attributes:
+            order:
+                created: DESC
+                sort: DESC
+            pagination_client_enabled: true
+            pagination_enabled: true
+            pagination_items_per_page: 12
+            pagination_client_items_per_page: true
+    Silverback\ApiComponentBundle\Entity\Form\LoginForm:
+        collectionOperations: ~
+        properties:
+            id:
+                identifier: true
+            _username: ~
+            _password: ~
+
+    Silverback\ApiComponentBundle\Entity\User\User: ~
+    App\Entity\VideoHero: ~
+    App\Entity\SocialWidgets: ~
+    App\Entity\HomeTestimonials: ~
+    App\Entity\ContactWidget: ~
+    App\Entity\FeaturePackages: ~
+    App\Entity\FeaturePackagesItem: ~
+    App\Entity\ContentFeatureTextList: ~
+    App\Entity\FeatureTestimonials: ~
+    App\Entity\FeatureTestimonialsItem: ~
