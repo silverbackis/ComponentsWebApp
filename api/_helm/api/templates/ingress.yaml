@@ -8,10 +8,10 @@ metadata:
     helm.sh/chart: {{ include "chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-  {{- with .Values.ingress.annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
     certmanager.k8s.io/cluster-issuer:  {{ .Values.ingress.secretName }}
+  {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
   tls:
