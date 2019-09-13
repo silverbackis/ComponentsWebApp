@@ -4,16 +4,18 @@
 [[ "$TRACE" ]] && set -x
 
 export GITLAB_PULL_SECRET_NAME=gitlab-registry
-
-# Choose the branch for production deploy.
-export DEPLOYMENT_BRANCH=master
-
-# Configure your sub-domains for: api
-export API_SUBDOMAIN=api
-
-# Appication versions
 export KUBERNETES_VERSION=1.15.1
 export HELM_VERSION=2.14.3
+
+# Choose the branch for production deploy.
+if [ -z "$DEPLOYMENT_BRANCH" ]; then
+  export DEPLOYMENT_BRANCH=master
+fi
+
+# Configure your sub-domains for: api
+if [ -z "$API_SUBDOMAIN" ]; then
+  export API_SUBDOMAIN=api
+fi
 
 # Miscellaneous
 if [ -z "$CORS_ALLOW_ORIGIN" ]; then
