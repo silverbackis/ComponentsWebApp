@@ -1,0 +1,5 @@
+api_platform:
+  http_cache:
+    max_age: 30
+    # 30 days
+    shared_max_age: 2592000
