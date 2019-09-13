@@ -1,8 +1,5 @@
 image: alpine:latest
 
-variables:
-    AUTO_DEVOPS_DOMAIN: jsavorygolf.com
-
 stages:
     - build
     - test
