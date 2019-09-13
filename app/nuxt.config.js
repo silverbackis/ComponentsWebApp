@@ -70,7 +70,7 @@ export default {
       '@nuxtjs/pwa',
       {
         icon: {
-          iconSrc: '~/static/icons/logo.png'
+          iconSrc: 'static/icons/logo.png'
         },
         manifest: true,
         meta: false,
