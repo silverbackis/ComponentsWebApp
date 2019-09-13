@@ -10,15 +10,15 @@ imagePullSecrets:
   - name: gitlab-registry
 
 php:
-  repository: registry.gitlab.com/silverback-web-apps/j-savory-golf/php
+  repository: registry.gitlab.com/silverback-web-apps/components-web-app/php
   tag: latest
   pullPolicy: Always
   replicaCount: 1
   env: prod
   debug: '0'
   secret: ""
-  corsAllowOrigin: "^https?://(.*\\.)?jsavorygolf\\.com$"
-  trustedHosts: "^(.*\\.)?jsavorygolf\\.com|varnish$"
+  corsAllowOrigin: "^https?://(.*\\.)?domain\\.com$"
+  trustedHosts: "^(.*\\.)?domain\\.com|varnish$"
   trustedProxies:
     - 10.0.0.0/8
     - 172.16.0.0/12
@@ -31,19 +31,19 @@ php:
   passwordRequestTimeout: 3600
   mailerDsn: smtp://smtp-relay
   varnishToken: ChangeMe
-  cookieDomain: "jsavorygolf.com"
+  cookieDomain: "domain.com"
   fromEmailAddress: noreply@website.com
 
 nginx:
-  repository: registry.gitlab.com/silverback-web-apps/j-savory-golf/nginx
+  repository: registry.gitlab.com/silverback-web-apps/components-web-app/nginx
   tag: latest
   pullPolicy: Always
   replicaCount: 1
 
 varnish:
   enabled: true
-  url: https://api.jsavorygolf.com
-  repository: registry.gitlab.com/silverback-web-apps/j-savory-golf/varnish
+  url: https://api.domain.com
+  repository: registry.gitlab.com/silverback-web-apps/components-web-app/varnish
   tag: latest
   pullPolicy: Always
   replicaCount: 1
