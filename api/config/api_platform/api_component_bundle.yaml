@@ -82,12 +82,3 @@ resources:
             _password: ~
 
     Silverback\ApiComponentBundle\Entity\User\User: ~
-    App\Entity\VideoHero: ~
-    App\Entity\SocialWidgets: ~
-    App\Entity\HomeTestimonials: ~
-    App\Entity\ContactWidget: ~
-    App\Entity\FeaturePackages: ~
-    App\Entity\FeaturePackagesItem: ~
-    App\Entity\ContentFeatureTextList: ~
-    App\Entity\FeatureTestimonials: ~
-    App\Entity\FeatureTestimonialsItem: ~
