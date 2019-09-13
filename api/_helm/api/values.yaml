@@ -52,19 +52,10 @@ mysql:
   url: mysql://user:pass@example.com/api?serverVersion=10.1
 
 ingress:
-  host: &host api.domain.com
-  secretName: &secretName letsencrypt-prod
+  host: api.domain.com
+  secretName: letsencrypt-prod
   annotations:
     kubernetes.io/ingress.class: nginx
-    certmanager.k8s.io/cluster-issuer:  *secretName
-  tls:
-    - hosts:
-      - host: *host
-      secretName: *secretName
-  hosts:
-    api:
-      host: *host
-      serviceName: varnish
 
 pvc:
   size:

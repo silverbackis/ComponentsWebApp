@@ -47,7 +47,7 @@ else
   fi
   if [[ -z "$RELEASE" ]]; then echo 'RELEASE is not defined in your ci environment variables for non-production releases.'; fi
   export TAG=$RELEASE
-  export API_ENTRYPOINT="${API_SUBDOMAIN}-${RELEASE}.${DOMAIN}"
+  export API_ENTRYPOINT="${RELEASE}.${API_SUBDOMAIN}.${DOMAIN}"
 fi
 
 SP_VERSION=`echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/'`
@@ -245,8 +245,8 @@ deploy_api() {
     --set blackfire.blackfire.server_id="$BLACKFIRE_SERVER_ID" \
     --set blackfire.blackfire.server_token="$BLACKFIRE_SERVER_TOKEN" \
     --set blackfire.fullnameOverride="blackfire" \
-    --set ingress.host="&host $API_ENTRYPOINT" \
-    --set ingress.secretName="&secretName $LETSENCRYPT_SECRET"
+    --set ingress.host="$API_ENTRYPOINT" \
+    --set ingress.secretName="$LETSENCRYPT_SECRET"
 }
 
 persist_environment_url() {
