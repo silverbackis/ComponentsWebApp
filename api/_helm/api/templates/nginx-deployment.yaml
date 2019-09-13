@@ -24,7 +24,7 @@ spec:
       volumes:
         - name: image-cache
           persistentVolumeClaim:
-            claimName: {{ include "name" . }}-pvc-cache
+            claimName: {{ template "fullname" . }}-pvc-cache
       containers:
         - name: {{ .Chart.Name }}-nginx
           volumeMounts:

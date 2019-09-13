@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ include "name" . }}-pvc-uploads
+  name: {{ template "fullname" . }}-pvc-uploads
 spec:
   accessModes:
     - ReadWriteOnce
@@ -12,7 +12,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ include "name" . }}-pvc-cache
+  name: {{ template "fullname" . }}-pvc-cache
 spec:
   accessModes:
     - ReadWriteOnce

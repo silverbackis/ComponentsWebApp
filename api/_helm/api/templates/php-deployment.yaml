@@ -23,10 +23,10 @@ spec:
       volumes:
         - name: php-uploads
           persistentVolumeClaim:
-            claimName: {{ include "name" . }}-pvc-uploads
+            claimName: {{ template "fullname" . }}-pvc-uploads
         - name: image-cache
           persistentVolumeClaim:
-            claimName: {{ include "name" . }}-pvc-cache
+            claimName: {{ template "fullname" . }}-pvc-cache
       containers:
         - name: {{ .Chart.Name }}-php
           volumeMounts:
