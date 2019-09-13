@@ -12,5 +12,8 @@
             "config/routes/api_platform.yaml",
             "src/Entity/.gitignore"
         ]
+    },
+    "silverbackis/api-component-bundle": {
+        "version": "1.0.8"
     }
 }

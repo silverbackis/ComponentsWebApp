@@ -16,7 +16,7 @@ export default {
       {
         rel: 'icon',
         type: 'image/png',
-        href: 'icons/icon.png'
+        href: 'icons/logo.png'
       }
     ]
   },
@@ -31,7 +31,7 @@ export default {
   /**
    * Global CSS
    */
-  css: ['~/assets/css/main.sass'],
+  css: ['~/assets/sass/base.sass'],
   /**
    * Plugins
    */
@@ -46,7 +46,9 @@ export default {
       '@cwamodules/bulma',
       {
         pagesDepth: 3,
-        components: {}
+        components: {
+          ContactForm: '~/components/ContactForm'
+        }
       }
     ],
     '@nuxtjs/component-cache',
@@ -68,7 +70,7 @@ export default {
       '@nuxtjs/pwa',
       {
         icon: {
-          iconSrc: '~/static/icons/icon.png'
+          iconSrc: '~/static/icons/logo.png'
         },
         manifest: true,
         meta: false,
@@ -95,11 +97,11 @@ export default {
    */
   manifest: {
     name: 'Components Web App',
-    short_name: 'CWA',
-    description: 'Progressive Web App from Silverback Web Apps',
+    short_name: 'Silverback CWA',
+    description: 'Demo PWA from Silverback Web Apps',
     lang: 'en',
-    background_color: '#FFFFFF',
-    theme_color: '#000000'
+    background_color: '#000000',
+    theme_color: '#48a2a2'
   },
   /**
    * Build configuration

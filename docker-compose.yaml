@@ -102,6 +102,7 @@ services:
             - "80:3000"
         volumes:
             - ./app:/usr/src/app:rw,delegated
+#            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/CWAModules/packages:/usr/src/app/node_modules/@cwamodules:ro,cached
         env_file:
             - ./shared/.env.local
             - ./app/_docker/.env.local

@@ -14,7 +14,7 @@
         "ext-intl": "*",
         "ext-json": "*",
         "doctrine/doctrine-fixtures-bundle": "^3.1",
-        "silverbackis/api-component-bundle": "^1.0",
+        "silverbackis/api-component-bundle": "^1.0.8",
         "symfony/dotenv": "^4.2",
         "symfony/flex": "^1.2",
         "symfony/yaml": "^4.0"

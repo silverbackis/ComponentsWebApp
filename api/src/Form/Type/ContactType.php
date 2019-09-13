@@ -214,12 +214,6 @@ class ContactType extends AbstractType
                         )
                     ]
                 ]
-            )
-            ->add('submit', SubmitType::class, [
-                'attr' => [
-                    'class' => 'is-large is-primary is-fullwidth'
-                ],
-                'label' => 'Send'
-            ]);
+            );
     }
 }

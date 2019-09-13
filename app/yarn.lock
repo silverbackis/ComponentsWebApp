@@ -810,31 +810,31 @@
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
 "@cwamodules/bulma@^0.5.5":
-  version "0.5.13"
-  resolved "https://registry.yarnpkg.com/@cwamodules/bulma/-/bulma-0.5.13.tgz#bcf22586ddccaf721640150199f8be6390df50c0"
-  integrity sha512-kF30V43P1SjqV7eHHqyZ2nuDIHcOpsbVIkeHRHljXoX/XK8X3JfWaQFBCcHsSHbd+ntjm0rjC7Hcuz0w6O0kMw==
+  version "0.5.14"
+  resolved "https://registry.yarnpkg.com/@cwamodules/bulma/-/bulma-0.5.14.tgz#27c662ff0c30719179a5a17ff19a67e3d0515ab2"
+  integrity sha512-wxmwjHNy3QADuaHaJmMI9rL/Dvuk5oFMhMKqp1YBRFkYDBzWWN5Uua8rKD57BAs/82WG+jfLJQJ1chA2ZHARqw==
   dependencies:
-    "@cwamodules/components" "^0.5.13"
-    "@cwamodules/core" "^0.5.13"
+    "@cwamodules/components" "^0.5.14"
+    "@cwamodules/core" "^0.5.14"
     "@cwamodules/server" "^0.5.13"
     bulma "^0.7.1"
     vuedraggable "^2"
     vuejs-dialog "^1.3.0"
 
-"@cwamodules/components@^0.5.13":
-  version "0.5.13"
-  resolved "https://registry.yarnpkg.com/@cwamodules/components/-/components-0.5.13.tgz#63084cfeb305e44d46a0883a53063f295bb7eca4"
-  integrity sha512-Kr8jjjvrKajWoBxRPAELACXSetkV4Q2zc/hTHEwEte9wlm8YKgMxpgneqUfgYn87bX4Qx0IOVsWE/muo1xqhiQ==
+"@cwamodules/components@^0.5.14":
+  version "0.5.14"
+  resolved "https://registry.yarnpkg.com/@cwamodules/components/-/components-0.5.14.tgz#d4d1aedee95bf791944b90f0b17a8665f188b1c5"
+  integrity sha512-5MH+PSMM4vPZTOA5GBWvd9aV886ArqN0S8MQw7zvfZBB1XeaV2I///+X152mxfw+Xdl3RcCBrFtmUpvXj2fpcg==
   dependencies:
-    "@cwamodules/core" "^0.5.13"
+    "@cwamodules/core" "^0.5.14"
     "@cwamodules/server" "^0.5.13"
     flatpickr "^4.5.4"
     quill "^1.3.6"
 
-"@cwamodules/core@^0.5.13":
-  version "0.5.13"
-  resolved "https://registry.yarnpkg.com/@cwamodules/core/-/core-0.5.13.tgz#a2d28effbbc1cb48662e80033d07c28fe9d2aecd"
-  integrity sha512-TKzDtu3N0/fHtYHJclxACI5yPSQoJi63mrn7lfzB2pWDQb9ue8Wvbj4BpfTYNe5uJqT+kbdN22lY1xEg6ZgF/w==
+"@cwamodules/core@^0.5.14":
+  version "0.5.14"
+  resolved "https://registry.yarnpkg.com/@cwamodules/core/-/core-0.5.14.tgz#3494fd32db122c2668e4d61e37a1a569bd506916"
+  integrity sha512-AbN6GyMSKWEGYLrw6zq0W/uDSznmksGeesibstRsL2Rz6zLNbuR8+wNu9DqrWGws6cy55tdHOThVInlu9OFfoA==
   dependencies:
     "@cwamodules/server" "^0.5.13"
     "@nuxtjs/axios" "^5.3.1"
@@ -4045,9 +4045,9 @@ ejs@^2.6.1:
   integrity sha512-kS/gEPzZs3Y1rRsbGX4UOSjtP/CeJP0CxSNZHYxGfVM/VgLcv0ZqM7C45YyTj2DI2g7+P9Dd24C+IMIg6D0nYQ==
 
 electron-to-chromium@^1.3.247:
-  version "1.3.256"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.256.tgz#7f680d5f04df8e2bd9cb9758026d70f5ff1808a9"
-  integrity sha512-GHY1r2mO56BRMng6rkxxJvsWKtqy9k/IlSBrAV/VKwZKpTydVUJnOwajTNnl5uutJpthHgZy+HeofK5K6PqEgQ==
+  version "1.3.257"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.257.tgz#35da0ad5833b27184c8298804c498a4d2f4ed27d"
+  integrity sha512-EcKVmUeHCZelPA0wnIaSmpAN8karKhKBwFb+xLUjSVZ8sGRE1l3fst1zQZ7KJUkyJ7H5edPd4RP94pzC9sG00A==
 
 elliptic@^6.0.0:
   version "6.5.1"
@@ -7137,9 +7137,9 @@ minipass@^2.2.1, minipass@^2.3.5:
     yallist "^3.0.0"
 
 minizlib@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/minizlib/-/minizlib-1.2.1.tgz#dd27ea6136243c7c880684e8672bb3a45fd9b614"
-  integrity sha512-7+4oTUOWKg7AuL3vloEWekXY2/D20cevzsrNT2kGWm+39J9hGTCBv8VI5Pm5lXZ/o3/mdR4f8rflAPhnQb8mPA==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/minizlib/-/minizlib-1.2.2.tgz#6f0ccc82fa53e1bf2ff145f220d2da9fa6e3a166"
+  integrity sha512-hR3At21uSrsjjDTWrbu0IMLTpnkpv8IIMFDFaoz43Tmu4LkmAXfH44vNNzpTnf+OAQQCHrb91y/wc2J4x5XgSQ==
   dependencies:
     minipass "^2.2.1"
 
@@ -9229,9 +9229,9 @@ regexpp@^2.0.1:
   integrity sha512-lv0M6+TkDVniA3aD1Eg0DVpfU/booSu7Eev3TDO/mZKHBfVjgCGTV4t4buppESEYDtkArYFOxTJWv6S5C+iaNw==
 
 regexpu-core@^4.5.4:
-  version "4.5.5"
-  resolved "https://registry.yarnpkg.com/regexpu-core/-/regexpu-core-4.5.5.tgz#aaffe61c2af58269b3e516b61a73790376326411"
-  integrity sha512-FpI67+ky9J+cDizQUJlIlNZFKual/lUkFr1AG6zOCpwZ9cLrg8UUVakyUQJD7fCDIe9Z2nwTQJNPyonatNmDFQ==
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/regexpu-core/-/regexpu-core-4.6.0.tgz#2037c18b327cfce8a6fea2a4ec441f2432afb8b6"
+  integrity sha512-YlVaefl8P5BnFYOITTNzDvan1ulLOiXJzCNZxduTIosN17b87h3bvG9yHMoHaRuo88H4mQ06Aodj5VtYGGGiTg==
   dependencies:
     regenerate "^1.4.0"
     regenerate-unicode-properties "^8.1.0"
@@ -11076,9 +11076,9 @@ webpack-sources@^1.0.1, webpack-sources@^1.1.0, webpack-sources@^1.4.0, webpack-
     source-map "~0.6.1"
 
 webpack@^4.39.3:
-  version "4.39.3"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.39.3.tgz#a02179d1032156b713b6ec2da7e0df9d037def50"
-  integrity sha512-BXSI9M211JyCVc3JxHWDpze85CvjC842EvpRsVTc/d15YJGlox7GIDd38kJgWrb3ZluyvIjgenbLDMBQPDcxYQ==
+  version "4.40.2"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.40.2.tgz#d21433d250f900bf0facbabe8f50d585b2dc30a7"
+  integrity sha512-5nIvteTDCUws2DVvP9Qe+JPla7kWPPIDFZv55To7IycHWZ+Z5qBdaBYPyuXWdhggTufZkQwfIK+5rKQTVovm2A==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
