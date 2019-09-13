@@ -60,5 +60,8 @@
             ".+\\.js$": "babel-jest",
             ".+\\.vue$": "vue-jest"
         }
+    },
+    "resolutions": {
+        "execa": "<=2.0.0"
     }
 }

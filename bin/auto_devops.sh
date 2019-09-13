@@ -8,10 +8,8 @@ export GITLAB_PULL_SECRET_NAME=gitlab-registry
 # Choose the branch for production deploy.
 export DEPLOYMENT_BRANCH=master
 
-# Configure your sub-domains for: api, admin, client.
+# Configure your sub-domains for: api
 export API_SUBDOMAIN=api
-export ADMIN_SUBDOMAIN=admin
-export CLIENT_SUBDOMAIN=www
 
 # Appication versions
 export KUBERNETES_VERSION=1.15.1
@@ -19,10 +17,13 @@ export HELM_VERSION=2.14.3
 
 # Miscellaneous
 if [ -z "$CORS_ALLOW_ORIGIN" ]; then
-  export CORS_ALLOW_ORIGIN='^https?://(.*\\.)?jsavorygolf\\.com$'
+  export CORS_ALLOW_ORIGIN='^https?://(.*\\.)?domain\\.com$'
 fi
 if [ -z "$TRUSTED_HOSTS" ]; then
-  export TRUSTED_HOSTS="^(.*\\.)?jsavorygolf\\.com$"
+  export TRUSTED_HOSTS="^(.*\\.)?domain\\.com$"
+fi
+if [ -z "$LETSENCRYPT_SECRET" ]; then
+  export LETSENCRYPT_SECRET="letsencrypt-prod"
 fi
 
 ## -------------------------------------------------
@@ -37,15 +38,11 @@ export RELEASE="${CI_ENVIRONMENT_SLUG}"
 if [[ "$CI_COMMIT_REF_NAME" == "$DEPLOYMENT_BRANCH" ]]; then
   export TAG=latest
   export API_ENTRYPOINT="${API_SUBDOMAIN}.${DOMAIN}"
-  export ADMIN_BUCKET="${ADMIN_SUBDOMAIN}.${DOMAIN}"
-  export CLIENT_BUCKET="${CLIENT_SUBDOMAIN}.${DOMAIN}"
   # export CLIENT_BUCKET="dons-hub-6cc5c.appspot.com"
 else
   if [[ -z "$RELEASE" ]]; then echo 'RELEASE is not defined in your ci environment variables for non-production releases.'; fi
   export TAG=$RELEASE
   export API_ENTRYPOINT="${API_SUBDOMAIN}-${RELEASE}.${DOMAIN}"
-  export ADMIN_BUCKET="${ADMIN_SUBDOMAIN}-${RELEASE}.${DOMAIN}"
-  export CLIENT_BUCKET="${CLIENT_SUBDOMAIN}-${RELEASE}.${DOMAIN}"
 fi
 
 SP_VERSION=`echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/'`
@@ -152,6 +149,20 @@ code_quality() {
         "registry.gitlab.com/gitlab-org/security-products/codequality:12-0-stable" /code/api
 }
 
+function dependency_scanning() {
+  case "$CI_SERVER_VERSION" in
+    *-ee)
+      docker run --env DEP_SCAN_DISABLE_REMOTE_CHECKS="${DEP_SCAN_DISABLE_REMOTE_CHECKS:-false}" \
+                 --volume "$PWD:/code" \
+                 --volume /var/run/docker.sock:/var/run/docker.sock \
+                 "registry.gitlab.com/gitlab-org/security-products/dependency-scanning:$SP_VERSION" /code
+      ;;
+    *)
+      echo "GitLab EE is required"
+      ;;
+  esac
+}
+
 check_kube_domain() {
   if [ -z ${AUTO_DEVOPS_DOMAIN+x} ]; then
     echo "In order to deploy or use Review Apps, AUTO_DEVOPS_DOMAIN variable must be set"
@@ -225,11 +236,12 @@ deploy_api() {
     --set nginx.repository="$NGINX_REPOSITORY" \
     --set varnish.repository="$VARNISH_REPOSITORY" \
     --set mysql.url="$DATABASE_URL" \
-    --set ingress.hosts.api.host="$API_ENTRYPOINT" \
     --set blackfire.blackfire.enabled="$BLACKFIRE_ENABLED" \
     --set blackfire.blackfire.server_id="$BLACKFIRE_SERVER_ID" \
     --set blackfire.blackfire.server_token="$BLACKFIRE_SERVER_TOKEN" \
-    --set blackfire.fullnameOverride="blackfire"
+    --set blackfire.fullnameOverride="blackfire" \
+    --set ingress.host="$API_ENTRYPOINT" \
+    --set ingress.secretName="$LETSENCRYPT_SECRET"
 }
 
 persist_environment_url() {
