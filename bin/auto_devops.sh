@@ -35,15 +35,16 @@ export DOCKER_REPOSITORY=${CI_REGISTRY_IMAGE}
 export PHP_REPOSITORY="${DOCKER_REPOSITORY}/php"
 export NGINX_REPOSITORY="${DOCKER_REPOSITORY}/nginx"
 export VARNISH_REPOSITORY="${DOCKER_REPOSITORY}/varnish"
-if [ -n "$CI_ENVIRONMENT_SLUG" ] && [ -z "$RELEASE" ]; then
-  export RELEASE="${CI_ENVIRONMENT_SLUG}"
-fi
 
 if [[ "$CI_COMMIT_REF_NAME" == "$DEPLOYMENT_BRANCH" ]]; then
+  export RELEASE="${CI_ENVIRONMENT_SLUG}"
   export TAG=latest
   export API_ENTRYPOINT="${API_SUBDOMAIN}.${DOMAIN}"
   # export CLIENT_BUCKET="dons-hub-6cc5c.appspot.com"
 else
+  if [ -n "$CI_ENVIRONMENT_SLUG" ] && [ -z "$RELEASE" ]; then
+    export RELEASE="${CI_ENVIRONMENT_SLUG}"
+  fi
   if [[ -z "$RELEASE" ]]; then echo 'RELEASE is not defined in your ci environment variables for non-production releases.'; fi
   export TAG=$RELEASE
   export API_ENTRYPOINT="${API_SUBDOMAIN}-${RELEASE}.${DOMAIN}"
