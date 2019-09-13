@@ -30,7 +30,7 @@ fi
 
 ## -------------------------------------------------
 
-export DOMAIN=${AUTO_DEVOPS_DOMAIN}
+export DOMAIN=${KUBE_INGRESS_BASE_DOMAIN}
 export DOCKER_REPOSITORY=${CI_REGISTRY_IMAGE}
 export PHP_REPOSITORY="${DOCKER_REPOSITORY}/php"
 export NGINX_REPOSITORY="${DOCKER_REPOSITORY}/nginx"
@@ -169,8 +169,8 @@ function dependency_scanning() {
 }
 
 check_kube_domain() {
-  if [ -z ${AUTO_DEVOPS_DOMAIN+x} ]; then
-    echo "In order to deploy or use Review Apps, AUTO_DEVOPS_DOMAIN variable must be set"
+  if [ -z ${KUBE_INGRESS_BASE_DOMAIN+x} ]; then
+    echo "In order to deploy or use Review Apps, KUBE_INGRESS_BASE_DOMAIN variable must be set"
     echo "You can do it in Auto DevOps project settings or defining a variable at group or project level"
     echo "You can also manually add it in .gitlab-ci.yml"
     false
