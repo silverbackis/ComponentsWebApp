@@ -245,8 +245,8 @@ deploy_api() {
     --set blackfire.blackfire.server_id="$BLACKFIRE_SERVER_ID" \
     --set blackfire.blackfire.server_token="$BLACKFIRE_SERVER_TOKEN" \
     --set blackfire.fullnameOverride="blackfire" \
-    --set ingress.host="$API_ENTRYPOINT" \
-    --set ingress.secretName="$LETSENCRYPT_SECRET"
+    --set ingress.host="&host $API_ENTRYPOINT" \
+    --set ingress.secretName="&secretName $LETSENCRYPT_SECRET"
 }
 
 persist_environment_url() {
