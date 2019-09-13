@@ -36,7 +36,7 @@
   ],
   "routes": [
     {
-      "src": "/images/(.*)|/favicon\\.ico|/icon\\.(svg|png)",
+      "src": "/images/(.*)|/icons/(.*)|/favicon\\.ico|/icon\\.(svg|png)",
       "headers": { "cache-control": "public, max-age=120, s-maxage=604800" },
       "dest": "/images/$1"
     }

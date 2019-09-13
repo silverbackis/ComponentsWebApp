@@ -69,9 +69,6 @@ export default {
     [
       '@nuxtjs/pwa',
       {
-        icon: {
-          iconSrc: 'static/icons/logo.png'
-        },
         manifest: true,
         meta: false,
         // Causes issues in safari when requesting pages when authentication changes (annonymous/authenticated user)
