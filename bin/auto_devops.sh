@@ -154,20 +154,6 @@ code_quality() {
         "registry.gitlab.com/gitlab-org/security-products/codequality:12-0-stable" /code/api
 }
 
-function dependency_scanning() {
-  case "$CI_SERVER_VERSION" in
-    *-ee)
-      docker run --env DEP_SCAN_DISABLE_REMOTE_CHECKS="${DEP_SCAN_DISABLE_REMOTE_CHECKS:-false}" \
-                 --volume "$PWD:/code" \
-                 --volume /var/run/docker.sock:/var/run/docker.sock \
-                 "registry.gitlab.com/gitlab-org/security-products/dependency-scanning:$SP_VERSION" /code
-      ;;
-    *)
-      echo "GitLab EE is required"
-      ;;
-  esac
-}
-
 check_kube_domain() {
   if [ -z ${KUBE_INGRESS_BASE_DOMAIN+x} ]; then
     echo "In order to deploy or use Review Apps, KUBE_INGRESS_BASE_DOMAIN variable must be set"

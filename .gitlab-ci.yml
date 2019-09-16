@@ -53,26 +53,6 @@ code_quality:
         variables:
             - $CODE_QUALITY_DISABLED
 
-#GitLab EE is required
-#dependency_scanning:
-#    stage: test
-#    image: docker:stable
-#    variables:
-#        DOCKER_DRIVER: overlay2
-#    allow_failure: true
-#    services:
-#        - docker:stable-dind
-#    script:
-#        - setup_docker
-#        - dependency_scanning
-#    artifacts:
-#        paths: [gl-dependency-scanning-report.json]
-#    only:
-#        - branches
-#    except:
-#        variables:
-#            - $DEPENDENCY_SCANNING_DISABLED
-
 production_api:
     stage: production
     script:
