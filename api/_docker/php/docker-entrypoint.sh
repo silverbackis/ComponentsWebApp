@@ -32,6 +32,9 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		sleep 1
 	done
 
+	bin/console d:q:s "CREATE EXTENSION IF NOT EXISTS citext" || EXIT_CODE=$? && true
+	echo ${EXIT_CODE}
+
   if [ "$APP_ENV" != 'prod' ]; then
 		bin/console doctrine:schema:update --force --no-interaction || EXIT_CODE=$? && true
     echo ${EXIT_CODE}

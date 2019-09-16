@@ -7,8 +7,9 @@ import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
 const compression = require('compression')
 
-const mysql = require('mysql')
 const session = require('express-session')
+const Sequelize = require('sequelize')
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
 import BWServerBase from '@cwamodules/server'
 import _omit from 'lodash/omit'
@@ -30,16 +31,17 @@ app.use(compression())
 /**
  * SETUP SESSION STORE
  */
-const MySQLStore = require('express-mysql-session')(session);
-const mysqlOps = {
-  host: process.env.MYSQL_HOST,
-  port: 3306,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE
-}
-const connection = mysql.createConnection(mysqlOps)
-const sessionStore = new MySQLStore({}, connection)
+const sequelize = new Sequelize(process.env.APP_DATABASE_URL, {
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  }
+})
+const store = new SequelizeStore({
+  db: sequelize
+})
 
 /**
  * SETUP SESSION USING THE MYSQL STORE
@@ -57,7 +59,7 @@ let sessOps = {
     maxAge: null,
     path: '/'
   },
-  store: sessionStore
+  store
 }
 app.use(session(sessOps))
 

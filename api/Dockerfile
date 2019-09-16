@@ -56,12 +56,13 @@ RUN set -eux; \
     libpng-dev \
     libjpeg-turbo-dev \
     libssh-dev \
+		postgresql-dev \
 	; \
 	\
 	docker-php-ext-configure zip --with-libzip; \
 	docker-php-ext-install -j$(nproc) \
 		intl \
-		pdo_mysql \
+		pdo_pgsql \
 		zip \
 		xsl \
 		exif \

@@ -76,17 +76,18 @@ services:
             - blackfire
 
     db:
-        # for mysql v8 we would want PR merged here for node https://github.com/mysqljs/mysql/pull/1962 + release
-        image: mysql:5
+        image: postgres:9-alpine
+        environment:
+            - POSTGRES_DB=api
+            - POSTGRES_USER=api-platform
+            # You should definitely change the password in production
+            # Or use a managed external pgsql database instead of this image
+            - POSTGRES_PASSWORD=!ChangeMe!
         networks:
             - api
             - app
         volumes:
-            - mysql-data:/var/lib/mysql:rw,delegated
-        ports:
-            - "4306:3306"
-        env_file:
-            - ./shared/.env.local
+            - sql-data:/var/lib/mysql:rw,delegated
 
     app:
         image: ${CONTAINER_REGISTRY_BASE}/app
@@ -130,4 +131,4 @@ networks:
     smtp:
 
 volumes:
-    mysql-data:
+    sql-data:

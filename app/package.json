@@ -27,6 +27,7 @@
         "body-parser": "^1.18.3",
         "bulma": "^0.7.2",
         "compression": "^1.7.3",
+        "connect-session-sequelize": "^6.0.0",
         "cookie-parser": "^1.4.3",
         "express": "^4.16.3",
         "express-mysql-session": "^2.1.0",
@@ -36,7 +37,9 @@
         "jwt-decode": "^2.2.0",
         "lodash": "^4.17.11",
         "mysql": "^2.16.0",
-        "nuxt": "^2.4.5"
+        "nuxt": "^2.4.5",
+        "pg": "^7.11.0",
+        "sequelize": "^5.9.4"
     },
     "devDependencies": {
         "babel-core": "^7.0.0-bridge.0",

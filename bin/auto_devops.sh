@@ -151,7 +151,7 @@ code_quality() {
         --env SOURCE_CODE="$PWD" \
         --volume "$PWD":/code \
         --volume /var/run/docker.sock:/var/run/docker.sock \
-        "registry.gitlab.com/gitlab-org/security-products/codequality:12-0-stable" /code/api
+        "registry.gitlab.com/gitlab-org/security-products/codequality:${CQ_VERSION:-latest}" /code/api
 }
 
 check_kube_domain() {

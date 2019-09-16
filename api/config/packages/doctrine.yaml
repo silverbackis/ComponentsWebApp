@@ -11,14 +11,14 @@ parameters:
 
 doctrine:
     dbal:
-        driver: 'pdo_mysql'
-        server_version: '5.7'
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
+        driver: 'pdo_pgsql'
+        server_version: '9'
         url: '%env(resolve:DATABASE_URL)%'
         schema_filter: /^(?!sessions)/
+        types:
+            citext: App\DoctrineExtension\DBAL\Types\Citext
+        mapping_types:
+            citext: citext
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
