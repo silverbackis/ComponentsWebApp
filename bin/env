@@ -3,6 +3,7 @@
 RESET=$'\033[0m'
 BOLD=$'\033[1m'
 YELLOW=$'\033[32m'
+ROOT_PATH="$( cd "$(dirname "$0")" ; pwd -P )/.."
 
 function promptUser {
 	local VAR
@@ -14,13 +15,11 @@ CONTINUE=$(promptUser "This will overwrite existing .env files. Are you sure you
 
 case ${CONTINUE:0:1} in
     y|Y )
-      cp ./.env.dist ./.env
-
-      cp ./shared/.env ./shared/.env.local
-      cp ./blackfire/.env ./blackfire/.env.local
-      cp ./api/.env ./api/.env.local
-      cp ./app/_docker/.env ./app/_docker/.env.local
-      cp ./admin/.env ./admin/.env.local
+      cp "${ROOT_PATH}/shared/.env" "${ROOT_PATH}/shared/.env.local"
+      cp "${ROOT_PATH}/api/.env" "${ROOT_PATH}/api/.env.local"
+      cp "${ROOT_PATH}/api/_docker/blackfire/.env" "${ROOT_PATH}/api/_docker/blackfire/.env.local"
+      cp "${ROOT_PATH}/app/_docker/.env" "${ROOT_PATH}/app/_docker/.env.local"
+      cp "${ROOT_PATH}/admin/.env" "${ROOT_PATH}/admin/.env.local"
 
       echo "Copy dist .env files complete"
     ;;
