@@ -147,10 +147,10 @@ build() {
 }
 
 code_quality() {
-  docker run
-        --env SOURCE_CODE="$PWD"
-        --volume "$PWD":/code
-        --volume /var/run/docker.sock:/var/run/docker.sock
+  docker run \
+        --env SOURCE_CODE="$PWD" \
+        --volume "$PWD":/code \
+        --volume /var/run/docker.sock:/var/run/docker.sock \
         "registry.gitlab.com/gitlab-org/security-products/codequality:12-0-stable" /code/api
 }
 
