@@ -1,14 +1,17 @@
 image: alpine:latest
 
+cache:
+    key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+    paths:
+        - api/vendor/
+        - app/node_modules/
+        - admin/node_modules/
+
 stages:
     - build
     - test
     - production
     - performance
-
-cache:
-    paths:
-        - $HOME/google-cloud-sdk
 
 before_script:
     - source ./bin/auto_devops.sh
