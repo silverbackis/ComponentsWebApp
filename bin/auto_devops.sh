@@ -217,24 +217,24 @@ deploy_api() {
   fi
 
   helm upgrade --install --reset-values --force --namespace="$KUBE_NAMESPACE" --recreate-pods "$RELEASE" ./api/_helm/api \
-    --set imagePullSecrets[0].name="$GITLAB_PULL_SECRET_NAME" \
+    --set imagePullSecrets[0].name="${GITLAB_PULL_SECRET_NAME}" \
     --set php.corsAllowOrigin="${CORS_ALLOW_ORIGIN}" \
     --set php.trustedHosts="${TRUSTED_HOSTS}" \
     --set php.repository="${PHP_REPOSITORY}" \
-    --set php.jwt.secretKey="$JWT_SECRET_KEY" \
-    --set php.jwt.publicKey="$JWT_PUBLIC_KEY" \
-    --set php.jwt.passphrase="$JWT_PASSPHRASE" \
+    --set php.jwt.secretKey="${JWT_SECRET_KEY}" \
+    --set php.jwt.publicKey="${JWT_PUBLIC_KEY}" \
+    --set php.jwt.passphrase="${JWT_PASSPHRASE}" \
     --set php.varnishToken="${VARNISH_TOKEN}" \
     --set php.fromEmailAddress="${FROM_EMAIL_ADDRESS}" \
-    --set nginx.repository="$NGINX_REPOSITORY" \
-    --set varnish.repository="$VARNISH_REPOSITORY" \
-    --set mysql.url="$DATABASE_URL" \
-    --set blackfire.blackfire.enabled="$BLACKFIRE_ENABLED" \
+    --set nginx.repository="${NGINX_REPOSITORY}" \
+    --set varnish.repository="${VARNISH_REPOSITORY}" \
+    --set mysql.url="${DATABASE_URL}" \
+    --set blackfire.blackfire.enabled="${BLACKFIRE_ENABLED}" \
     --set blackfire.blackfire.server_id="$BLACKFIRE_SERVER_ID" \
     --set blackfire.blackfire.server_token="$BLACKFIRE_SERVER_TOKEN" \
     --set blackfire.fullnameOverride="blackfire" \
-    --set ingress.host="$API_ENTRYPOINT" \
-    --set ingress.secretName="$LETSENCRYPT_SECRET"
+    --set ingress.host="${API_ENTRYPOINT}" \
+    --set ingress.secretName="${LETSENCRYPT_SECRET}"
 }
 
 persist_environment_url() {
