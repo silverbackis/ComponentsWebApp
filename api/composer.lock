@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "84c74c20511788ef4ce43e9f833030b4",
+    "content-hash": "5687026d0685587e8be306a5db326980",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -2718,6 +2718,61 @@
             "time": "2019-08-10T08:37:15+00:00"
         },
         {
+            "name": "oro/doctrine-extensions",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oroinc/doctrine-extensions.git",
+                "reference": "9373fde3f7d4f6444eb53cad8c90c46e4288317b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oroinc/doctrine-extensions/zipball/9373fde3f7d4f6444eb53cad8c90c46e4288317b",
+                "reference": "9373fde3f7d4f6444eb53cad8c90c46e4288317b",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": ">=2.2.3",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "doctrine/data-fixtures": "^1.0",
+                "doctrine/orm": "<2.5.0",
+                "phpunit/phpunit": "4.*",
+                "squizlabs/php_codesniffer": "2.8.*",
+                "symfony/yaml": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Oro\\DBAL": "src/",
+                    "Oro\\ORM": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oro, Inc",
+                    "homepage": "http://www.orocrm.com"
+                }
+            ],
+            "description": "Doctrine Extensions for MySQL and PostgreSQL.",
+            "homepage": "https://github.com/orocrm/doctrine-extensions/",
+            "keywords": [
+                "database",
+                "doctrine",
+                "dql",
+                "function",
+                "mysql",
+                "postgresql",
+                "type"
+            ],
+            "time": "2019-03-26T10:21:00+00:00"
+        },
+        {
             "name": "paragonie/random_compat",
             "version": "v9.99.99",
             "source": {
@@ -3483,16 +3538,16 @@
         },
         {
             "name": "silverbackis/api-component-bundle",
-            "version": "1.0.8",
+            "version": "1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silverbackis/ApiComponentBundle.git",
-                "reference": "cbccd538f662b39c05ef2a031dd8c7758128b98b"
+                "reference": "e33d08d62bf24c6ce0864a97aa5f3db1cb461c8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/cbccd538f662b39c05ef2a031dd8c7758128b98b",
-                "reference": "cbccd538f662b39c05ef2a031dd8c7758128b98b",
+                "url": "https://api.github.com/repos/silverbackis/ApiComponentBundle/zipball/e33d08d62bf24c6ce0864a97aa5f3db1cb461c8e",
+                "reference": "e33d08d62bf24c6ce0864a97aa5f3db1cb461c8e",
                 "shasum": ""
             },
             "require": {
@@ -3558,7 +3613,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2019-05-23T12:13:13+00:00"
+            "time": "2019-09-16T21:25:09+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -8874,16 +8929,16 @@
         },
         {
             "name": "sebastian/exporter",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "06a9a5947f47b3029d76118eb5c22802e5869687"
+                "reference": "68609e1261d215ea5b21b7987539cbfbe156ec3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/06a9a5947f47b3029d76118eb5c22802e5869687",
-                "reference": "06a9a5947f47b3029d76118eb5c22802e5869687",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/68609e1261d215ea5b21b7987539cbfbe156ec3e",
+                "reference": "68609e1261d215ea5b21b7987539cbfbe156ec3e",
                 "shasum": ""
             },
             "require": {
@@ -8937,7 +8992,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2019-08-11T12:43:14+00:00"
+            "time": "2019-09-14T09:02:43+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -9713,6 +9768,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "oro/doctrine-extensions": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,

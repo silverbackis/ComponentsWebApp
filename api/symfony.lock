@@ -13,6 +13,9 @@
             "src/Entity/.gitignore"
         ]
     },
+    "oro/doctrine-extensions": {
+        "version": "dev-master"
+    },
     "silverbackis/api-component-bundle": {
         "version": "1.0.8"
     }

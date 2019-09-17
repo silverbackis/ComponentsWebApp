@@ -230,8 +230,8 @@ deploy_api() {
     --set varnish.repository="${VARNISH_REPOSITORY}" \
     --set mysql.url="${DATABASE_URL}" \
     --set blackfire.blackfire.enabled="${BLACKFIRE_ENABLED}" \
-    --set blackfire.blackfire.server_id="$BLACKFIRE_SERVER_ID" \
-    --set blackfire.blackfire.server_token="$BLACKFIRE_SERVER_TOKEN" \
+    --set blackfire.blackfire.server_id="${BLACKFIRE_SERVER_ID}" \
+    --set blackfire.blackfire.server_token="${BLACKFIRE_SERVER_TOKEN}" \
     --set blackfire.fullnameOverride="blackfire" \
     --set ingress.host="${API_ENTRYPOINT}" \
     --set ingress.secretName="${LETSENCRYPT_SECRET}"
