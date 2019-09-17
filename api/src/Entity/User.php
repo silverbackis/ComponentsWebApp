@@ -7,6 +7,7 @@ use Silverback\ApiComponentBundle\Entity\User\User as BaseUser;
 
 /**
  * @ORM\Entity()
+ * @ORM\Table(name="`user`")
  */
 class User extends BaseUser
 {}
