@@ -44,8 +44,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import 'assets/sass/utilities'
-
 .section.is-contact
   .page-section-title
     margin-bottom: 1rem
