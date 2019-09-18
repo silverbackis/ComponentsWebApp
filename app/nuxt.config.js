@@ -51,6 +51,7 @@ export default {
         }
       }
     ],
+    '@nuxtjs/style-resources',
     '@nuxtjs/component-cache',
     [
       '@nuxtjs/axios',
@@ -148,5 +149,8 @@ export default {
   serverMiddleware: [
     // API middleware
     '~/server/index.js'
-  ]
+  ],
+  styleResources: {
+    sass: ['~/assets/sass/vars/*.sass']
+  }
 }

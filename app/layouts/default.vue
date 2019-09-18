@@ -70,8 +70,6 @@ export default {
 </script>
 
 <style lang="sass">
-  @import 'assets/sass/utilities'
-
   $nav-bar-height: 4rem
   $nav-bar-height-desktop: 6.5rem
   $nav-bar-padding-vertical: 1rem
