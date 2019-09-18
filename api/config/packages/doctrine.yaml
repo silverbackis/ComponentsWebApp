@@ -10,7 +10,7 @@ doctrine:
         driver: 'pdo_pgsql'
         server_version: '9'
         url: '%env(resolve:DATABASE_URL)%'
-        schema_filter: /^(?!sessions)/
+        schema_filter: /^(?!Sessions)/
         types:
             citext: App\DoctrineExtension\DBAL\Types\Citext
         mapping_types:

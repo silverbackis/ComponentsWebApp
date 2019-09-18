@@ -61,6 +61,7 @@ let sessOps = {
   },
   store
 }
+store.sync()
 app.use(session(sessOps))
 
 /**

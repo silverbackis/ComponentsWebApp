@@ -88,6 +88,8 @@ services:
             - app
         volumes:
             - sql-data:/var/lib/mysql:rw,delegated
+        ports:
+            - "5432:5432"
 
     app:
         image: ${CONTAINER_REGISTRY_BASE}/app
