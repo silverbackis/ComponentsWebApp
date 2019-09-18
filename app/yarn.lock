@@ -805,31 +805,31 @@
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
 "@cwamodules/bulma@^0.5.14":
-  version "0.5.14"
-  resolved "https://registry.yarnpkg.com/@cwamodules/bulma/-/bulma-0.5.14.tgz#27c662ff0c30719179a5a17ff19a67e3d0515ab2"
-  integrity sha512-wxmwjHNy3QADuaHaJmMI9rL/Dvuk5oFMhMKqp1YBRFkYDBzWWN5Uua8rKD57BAs/82WG+jfLJQJ1chA2ZHARqw==
+  version "0.5.15"
+  resolved "https://registry.yarnpkg.com/@cwamodules/bulma/-/bulma-0.5.15.tgz#0d292b091597d2e2b478cc004157009ebdde661e"
+  integrity sha512-tFJKXqZffmmFSViwVQV1iYHByQWEFaTzDW7+oTDZHXqMQ9xgoxVg2vd7McaGYigxz5Iw0xhukvmR7XTn50Z2xw==
   dependencies:
-    "@cwamodules/components" "^0.5.14"
-    "@cwamodules/core" "^0.5.14"
+    "@cwamodules/components" "^0.5.15"
+    "@cwamodules/core" "^0.5.15"
     "@cwamodules/server" "^0.5.13"
     bulma "^0.7.1"
     vuedraggable "^2"
     vuejs-dialog "^1.3.0"
 
-"@cwamodules/components@^0.5.14":
-  version "0.5.14"
-  resolved "https://registry.yarnpkg.com/@cwamodules/components/-/components-0.5.14.tgz#d4d1aedee95bf791944b90f0b17a8665f188b1c5"
-  integrity sha512-5MH+PSMM4vPZTOA5GBWvd9aV886ArqN0S8MQw7zvfZBB1XeaV2I///+X152mxfw+Xdl3RcCBrFtmUpvXj2fpcg==
+"@cwamodules/components@^0.5.15":
+  version "0.5.15"
+  resolved "https://registry.yarnpkg.com/@cwamodules/components/-/components-0.5.15.tgz#2e1b958e246b6e90e6051d1a04b00fc4dc1539af"
+  integrity sha512-A8kPA0RwHP7Xykz8/V4Tp5S9/Z2V+RizYz4TcpRaN9GyFIt1yFUJF6NMMwu1zrSka1B0bXm6CQ1Czi/xQnDAAQ==
   dependencies:
-    "@cwamodules/core" "^0.5.14"
+    "@cwamodules/core" "^0.5.15"
     "@cwamodules/server" "^0.5.13"
     flatpickr "^4.5.4"
     quill "^1.3.6"
 
-"@cwamodules/core@^0.5.14":
-  version "0.5.14"
-  resolved "https://registry.yarnpkg.com/@cwamodules/core/-/core-0.5.14.tgz#3494fd32db122c2668e4d61e37a1a569bd506916"
-  integrity sha512-AbN6GyMSKWEGYLrw6zq0W/uDSznmksGeesibstRsL2Rz6zLNbuR8+wNu9DqrWGws6cy55tdHOThVInlu9OFfoA==
+"@cwamodules/core@^0.5.15":
+  version "0.5.15"
+  resolved "https://registry.yarnpkg.com/@cwamodules/core/-/core-0.5.15.tgz#a577c5225337c5bd978f30065212e418e3ec53b5"
+  integrity sha512-o9qmpNl/kOd9RPamGDmlyFD67tz0RP4O3TXpFO+LceZYlojh4ng/VrHXw/eGEvVvzuIT8fqOJ0if1DNttPLEoQ==
   dependencies:
     "@cwamodules/server" "^0.5.13"
     "@nuxtjs/axios" "^5.3.1"
