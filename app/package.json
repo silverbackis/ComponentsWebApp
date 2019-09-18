@@ -30,13 +30,11 @@
         "connect-session-sequelize": "^6.0.0",
         "cookie-parser": "^1.4.3",
         "express": "^4.16.3",
-        "express-mysql-session": "^2.1.0",
         "express-session": "^1.15.6",
         "flatpickr": "^4.5.4",
         "helmet": "^3.14.0",
         "jwt-decode": "^2.2.0",
         "lodash": "^4.17.11",
-        "mysql": "^2.16.0",
         "nuxt": "^2.4.5",
         "pg": "^7.11.0",
         "sequelize": "^5.9.4"
