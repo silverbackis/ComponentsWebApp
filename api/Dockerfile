@@ -60,6 +60,11 @@ RUN set -eux; \
 	; \
 	\
 	docker-php-ext-configure zip --with-libzip; \
+	docker-php-ext-configure gd \
+    --with-gd \
+    --with-freetype-dir=/usr/include/ \
+    --with-png-dir=/usr/include/ \
+    --with-jpeg-dir=/usr/include/; \
 	docker-php-ext-install -j$(nproc) \
 		intl \
 		pdo_pgsql \
@@ -118,7 +123,6 @@ WORKDIR /srv/api
 
 # build for production
 ARG APP_ENV=prod
-ARG APP_SECRET=UNSET
 
 # prevent the reinstallation of vendors at every changes in the source code
 COPY composer.json *.lock ./

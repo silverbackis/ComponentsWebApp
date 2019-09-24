@@ -13,15 +13,21 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	fi
 	ln -sf "$PHP_INI_RECOMMENDED" "$PHP_INI_DIR/php.ini"
 
-	mkdir -p var/cache var/log config/jwt
+	mkdir -p var/cache var/log
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 
-	# Generate keys for JWT
-	if [ ! -f $JWT_SECRET_KEY ]; then
-    openssl genrsa -out $JWT_SECRET_KEY -aes256 -passout pass:$JWT_PASSPHRASE 4096
-    openssl rsa -passin pass:$JWT_PASSPHRASE -pubout -in $JWT_SECRET_KEY -out $JWT_PUBLIC_KEY
-  fi
+  if [ "$APP_ENV" != 'prod' ]; then
+		jwt_passphrase=$(grep '^JWT_PASSPHRASE=' .env | cut -f 2 -d '=')
+		if [ ! -f config/jwt/private.pem ] || ! echo "$jwt_passphrase" | openssl pkey -in config/jwt/private.pem -passin stdin -noout > /dev/null 2>&1; then
+			echo "Generating public / private keys for JWT"
+			mkdir -p config/jwt
+			echo "$jwt_passphrase" | openssl genpkey -out config/jwt/private.pem -pass stdin -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+			echo "$jwt_passphrase" | openssl pkey -in config/jwt/private.pem -passin stdin -out config/jwt/public.pem -pubout
+			setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
+      setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
+		fi
+	fi
 
 	if [ "$APP_ENV" != 'prod' ]; then
 		composer install --prefer-dist --no-progress --no-suggest --no-interaction
@@ -32,6 +38,8 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		sleep 1
 	done
 
+  # we want this extension for case insensitive column data types in postgresql
+  # it will fail if the user is not a super user, may need to be created manually
 	bin/console d:q:s "CREATE EXTENSION IF NOT EXISTS citext" || EXIT_CODE=$? && true
 	echo ${EXIT_CODE}
 
