@@ -87,7 +87,7 @@ services:
             - api
             - app
         volumes:
-            - sql-data:/var/lib/mysql:rw,delegated
+            - sql-data:/var/lib/postgresql/data:rw,delegated
         ports:
             - "5432:5432"
 
