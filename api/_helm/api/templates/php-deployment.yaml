@@ -24,16 +24,16 @@ spec:
         - name: php-uploads
           persistentVolumeClaim:
             claimName: {{ template "fullname" . }}-pvc-uploads
-        - name: php-public
+        - name: php-media-cache
           persistentVolumeClaim:
-            claimName: {{ template "fullname" . }}-pvc-public
+            claimName: {{ template "fullname" . }}-pvc-media-cache
       containers:
         - name: {{ .Chart.Name }}-php
           volumeMounts:
           - mountPath: /srv/api/var/uploads
             name: php-uploads
-          - mountPath: /srv/api/public
-            name: php-public
+          - mountPath: /srv/api/public/media/cache
+            name: php-media-cache
           image: "{{ .Values.php.repository }}:{{ .Values.php.tag }}"
           imagePullPolicy: {{ .Values.php.pullPolicy }}
           ports:

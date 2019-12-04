@@ -16,7 +16,8 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	mkdir -p var/cache var/log public/media/cache
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var || true
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var || true
-	setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX public/media/cache || true
+	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX public/media || true
+	setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX public/media || true
 
   if [ "$APP_ENV" != 'prod' ]; then
 		jwt_passphrase=$(grep '^JWT_PASSPHRASE=' .env | cut -f 2 -d '=')
