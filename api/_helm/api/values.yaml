@@ -62,10 +62,10 @@ pvc:
     uploads: 4Gi
     cache: 4Gi
 
-resources: {}
-#  limits:
-#    cpu: 100m
-#    memory: 256Mi
-#  requests:
-#    cpu: 100m
-#    memory: 256Mi
+resources:
+  limits:
+    cpu: 100m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
