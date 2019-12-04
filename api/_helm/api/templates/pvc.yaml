@@ -12,7 +12,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ template "fullname" . }}-pvc-public
+  name: {{ template "fullname" . }}-pvc-media-cache
 spec:
   accessModes:
     - ReadWriteOnce
