@@ -1,0 +1,16 @@
+{
+    "name": "components-web-app-admin",
+    "version": 2,
+    "env": {
+        "NODE_ENV": "production",
+        "REACT_APP_API_ENTRYPOINT": "https://api.cwa.silverbackwebapps.com",
+        "REACT_APP_COOKIE_DOMAIN": "cwa.silverbackwebapps.com"
+    },
+    "build": {
+        "env": {
+            "NODE_ENV": "production",
+            "REACT_APP_API_ENTRYPOINT": "https://api.cwa.silverbackwebapps.com",
+            "REACT_APP_COOKIE_DOMAIN": "cwa.silverbackwebapps.com"
+        }
+    }
+}

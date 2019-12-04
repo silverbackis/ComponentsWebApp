@@ -1,43 +1,29 @@
-import React, { Component } from 'react';
-import { ArrayInput, ArrayField, SimpleFormIterator, TextInput } from 'react-admin';
+import React from 'react';
+import { HydraAdmin, ResourceGuesser } from '@api-platform/admin';
+import Cookies from 'js-cookie';
 import parseHydraDocumentation from '@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation';
-import { HydraAdmin, hydraClient, fetchHydra as baseFetchHydra  } from '@api-platform/admin';
-import authProvider from './authProvider';
+import { dataProvider as baseDataProvider, fetchHydra as baseFetchHydra  } from '@api-platform/admin';
+import authProviderFn from './authProvider';
 import { Redirect } from 'react-router-dom';
-import { createMuiTheme } from '@material-ui/core/styles';
-// import Layout from './Component/Layout';
-// import { UserShow } from './Components/User/Show';
-// import { UserEdit } from './Components/User/Edit';
-// import { UserCreate } from './Components/User/Create';
-// import { UserList } from './Components/User/List';
+import { UserEdit, UserList, UserShow, UserCreate } from './resources/Users';
 
-const theme = createMuiTheme({
-  palette: {
-    type: 'light'
-  },
-});
+const entrypoint
+  = process.env.REACT_APP_API_ENTRYPOINT;
+const cookie_domain = process.env.REACT_APP_COOKIE_DOMAIN
 
-const entrypoint = process.env.REACT_APP_API_ENTRYPOINT;
-const fetchHeaders = {'Authorization': `Bearer ${window.localStorage.getItem('token')}`};
+const authProvider = authProviderFn(cookie_domain, entrypoint)
+
+const fetchHeaders = {'Authorization': `Bearer ${Cookies.get('TKN')}`};
 const fetchHydra = (url, options = {}) => baseFetchHydra(url, {
   ...options,
   headers: new Headers(fetchHeaders),
 });
-const dataProvider = api => hydraClient(api, fetchHydra);
-const apiDocumentationParser = entrypoint => parseHydraDocumentation(entrypoint, { headers: new Headers(fetchHeaders) })
+const apiDocumentationParser = (entrypoint) => parseHydraDocumentation(entrypoint, { headers: new Headers(fetchHeaders) })
   .then(
     ({ api }) => {
-      const users = api.resources.find(({ name }) => 'users' === name);
-      const roles = users.fields.find(f => 'roles' === f.name);
-
-      roles.input = props => (
-        <ArrayInput {...props} source="roles">
-          <SimpleFormIterator>
-            <TextInput defaultValue="ROLE_USER" />
-          </SimpleFormIterator>
-        </ArrayInput>
-      );
-
+      api.resources = api.resources.filter(({ name }) => {
+        return 'users' === name
+      });
       return { api };
     },
     (result) => {
@@ -59,25 +45,15 @@ const apiDocumentationParser = entrypoint => parseHydraDocumentation(entrypoint,
     },
   );
 
-export default class extends Component {
-  state = { api: null }
+const dataProvider = baseDataProvider(entrypoint, fetchHydra, apiDocumentationParser);
 
-  componentDidMount() {
-    parseHydraDocumentation(entrypoint).then(({api}) => {
-        console.log('resources', api.resources)
-        this.setState({ api });
-      }
-    )
-  }
-
-  render() {
-    if (null === this.state.api) return <div>Loading...</div>;
-
-    return <HydraAdmin
-      apiDocumentationParser={apiDocumentationParser}
-      authProvider={authProvider}
-      entrypoint={entrypoint}
-      dataProvider={dataProvider}
-    />
-  }
-}
+export default props => (
+  <HydraAdmin
+    apiDocumentationParser={ apiDocumentationParser }
+    dataProvider={ dataProvider }
+    authProvider={ authProvider }
+    entrypoint={ entrypoint }
+  >
+    <ResourceGuesser name="users" edit={UserEdit} list={UserList} show={UserShow} create={UserCreate} />
+  </HydraAdmin>
+);

@@ -23,9 +23,12 @@ services:
             - api
         volumes:
             - ./api:/srv/api:rw,cached
+            - ./api/var/uploads:/srv/api/var/uploads:rw,cached
+            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/ApiComponentBundle:/Volumes/Samsung_T5/GitHub/_ComponentsWebApp/ApiComponentBundle:ro,cached
         env_file:
             - ./shared/.env.local
             - ./api/.env.local
+
     nginx:
         image: ${CONTAINER_REGISTRY_BASE}/nginx
         build:
@@ -81,7 +84,6 @@ services:
             - POSTGRES_DB=api
             - POSTGRES_USER=api-platform
             # You should definitely change the password in production
-            # Or use a managed external pgsql database instead of this image
             - POSTGRES_PASSWORD=!ChangeMe!
         networks:
             - api
@@ -104,27 +106,36 @@ services:
         ports:
             - "80:3000"
         volumes:
-            - ./app:/usr/src/app:rw,delegated
-#            - /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/CWAModules/packages:/usr/src/app/node_modules/@cwamodules:ro,cached
+            - ./app:/usr/src/app:rw,cached
+            #- /Volumes/Samsung_T5/GitHub/_ComponentsWebApp/CWAModules/packages:/usr/src/app/node_modules/@cwamodules:ro,cached
         env_file:
             - ./shared/.env.local
             - ./app/_docker/.env.local
 
-#    admin:
-#        # Use a static website hosting service in production
-#        # See https://facebook.github.io/create-react-app/docs/deployment
-#        image: quay.io/api-platform/admin
-#        build:
-#            context: ./admin
-#            cache_from:
-#                - quay.io/api-platform/admin
-#        volumes:
-#            - ./admin:/usr/src/admin:rw,cached
-#            - /usr/src/admin/node_modules
-#        ports:
-#            - "81:3000"
-#        env_file:
-#            - ./admin/.env.local
+    admin:
+        build:
+            context: ./admin
+            target: api_platform_admin_development
+            cache_from:
+                - ${ADMIN_IMAGE:-quay.io/api-platform/admin}
+        image: ${ADMIN_IMAGE:-quay.io/api-platform/admin}
+        depends_on:
+            - dev-tls
+        volumes:
+            - ./admin:/usr/src/admin:rw,cached
+            - dev-certs:/usr/src/admin/node_modules/webpack-dev-server/ssl:ro
+        ports:
+            -   target: 3000
+                published: 444
+                protocol: tcp
+        env_file:
+            - ./admin/.env.local
+
+    dev-tls:
+        build:
+            context: ./docker/dev-tls
+        volumes:
+            - dev-certs:/certs:rw
 
 networks:
     app:
@@ -133,4 +144,5 @@ networks:
     smtp:
 
 volumes:
-    sql-data:
+    sql-data: ~
+    dev-certs: ~

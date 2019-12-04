@@ -22,14 +22,14 @@ spec:
       imagePullSecrets:
       {{ toYaml .Values.imagePullSecrets | indent 2 }}
       volumes:
-        - name: image-cache
+        - name: php-public
           persistentVolumeClaim:
-            claimName: {{ template "fullname" . }}-pvc-cache
+            claimName: {{ template "fullname" . }}-pvc-public
       containers:
         - name: {{ .Chart.Name }}-nginx
           volumeMounts:
-            - mountPath: /srv/api/public/media/cache
-              name: image-cache
+            - mountPath: /srv/api/public
+              name: php-public
           image: "{{ .Values.nginx.repository }}:{{ .Values.nginx.tag }}"
           imagePullPolicy: {{ .Values.nginx.pullPolicy }}
           ports:

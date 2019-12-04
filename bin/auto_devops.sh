@@ -226,6 +226,7 @@ deploy_api() {
     --set php.jwt.passphrase="${JWT_PASSPHRASE}" \
     --set php.varnishToken="${VARNISH_TOKEN}" \
     --set php.fromEmailAddress="${FROM_EMAIL_ADDRESS}" \
+    --set php.cookieDomain="${COOKIE_DOMAIN}" \
     --set nginx.repository="${NGINX_REPOSITORY}" \
     --set varnish.repository="${VARNISH_REPOSITORY}" \
     --set mysql.url="${DATABASE_URL}" \

@@ -1,9 +1,10 @@
+import Cookies from 'js-cookie'
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK } from 'react-admin';
 
-// Change this to be your own login check route.
-const login_uri = process.env.REACT_APP_API_ENTRYPOINT + '/login_check';
+export default (cookie_domain, entrypoint) => ((type, params) => {
+  // Change this to be your own login check route.
+  const login_uri = entrypoint + '/login_check';
 
-export default (type, params) => {
   switch (type) {
     case AUTH_LOGIN:
       const { username, password } = params;
@@ -20,26 +21,26 @@ export default (type, params) => {
           return response.json();
         })
         .then(({ token }) => {
-          localStorage.setItem('token', token); // The JWT token is stored in the browser's local storage
+          Cookies.set('TKN', token, { secure: true, domain: cookie_domain })
           window.location.replace('/');
         });
 
     case AUTH_LOGOUT:
-      localStorage.removeItem('token');
+      Cookies.remove('TKN', { domain: cookie_domain });
       break;
 
     case AUTH_ERROR:
       if (401 === params.status || 403 === params.status) {
-        localStorage.removeItem('token');
+        Cookies.remove('TKN', { domain: cookie_domain });
 
         return Promise.reject();
       }
       break;
 
     case AUTH_CHECK:
-      return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
+      return Cookies.get('TKN', { domain: cookie_domain }) ? Promise.resolve() : Promise.reject();
 
     default:
       return Promise.resolve();
   }
-}
+})

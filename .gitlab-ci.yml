@@ -33,28 +33,28 @@ build:
         variables:
             - $BUILD_DISABLED
 
-code_quality:
-    stage: test
-    image: docker:stable
-    variables:
-        DOCKER_DRIVER: overlay2
-        DOCKER_TLS_CERTDIR: ""
-    allow_failure: true
-    services:
-        - docker:stable-dind
-    script:
-        - setup_docker
-        - code_quality
-    artifacts:
-        reports:
-            codequality: gl-code-quality-report.json
-        expire_in: 1 week
-    dependencies: []
-    only:
-        - branches
-    except:
-        variables:
-            - $CODE_QUALITY_DISABLED
+#code_quality:
+#    stage: test
+#    image: docker:stable
+#    variables:
+#        DOCKER_DRIVER: overlay2
+#        DOCKER_TLS_CERTDIR: ""
+#    allow_failure: true
+#    services:
+#        - docker:stable-dind
+#    script:
+#        - setup_docker
+#        - code_quality
+#    artifacts:
+#        reports:
+#            codequality: gl-code-quality-report.json
+#        expire_in: 1 week
+#    dependencies: []
+#    only:
+#        - branches
+#    except:
+#        variables:
+#            - $CODE_QUALITY_DISABLED
 
 production_api:
     stage: production
@@ -82,25 +82,25 @@ production_api:
         variables:
             - $PRODUCTION_API_DISABLED          
 
-performance:
-    stage: performance
-    image: docker:stable
-    variables:
-        DOCKER_DRIVER: overlay2
-    allow_failure: true
-    services:
-        - docker:stable-dind
-    script:
-        - setup_docker
-        - performance
-    artifacts:
-        paths:
-            - performance.json
-            - sitespeed-results/
-    only:
-        refs:
-            - branches
-        kubernetes: active
-    except:
-        variables:
-            - $PERFORMANCE_DISABLED
+#performance:
+#    stage: performance
+#    image: docker:stable
+#    variables:
+#        DOCKER_DRIVER: overlay2
+#    allow_failure: true
+#    services:
+#        - docker:stable-dind
+#    script:
+#        - setup_docker
+#        - performance
+#    artifacts:
+#        paths:
+#            - performance.json
+#            - sitespeed-results/
+#    only:
+#        refs:
+#            - branches
+#        kubernetes: active
+#    except:
+#        variables:
+#            - $PERFORMANCE_DISABLED

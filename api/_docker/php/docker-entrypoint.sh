@@ -13,9 +13,10 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	fi
 	ln -sf "$PHP_INI_RECOMMENDED" "$PHP_INI_DIR/php.ini"
 
-	mkdir -p var/cache var/log
-	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
-	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
+	mkdir -p var/cache var/log public/media/cache
+	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var || true
+	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var || true
+	setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX public/media/cache || true
 
   if [ "$APP_ENV" != 'prod' ]; then
 		jwt_passphrase=$(grep '^JWT_PASSPHRASE=' .env | cut -f 2 -d '=')
@@ -24,11 +25,12 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 			mkdir -p config/jwt
 			echo "$jwt_passphrase" | openssl genpkey -out config/jwt/private.pem -pass stdin -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
 			echo "$jwt_passphrase" | openssl pkey -in config/jwt/private.pem -passin stdin -out config/jwt/public.pem -pubout
-			setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt || EXIT_CODE=$? && true
-			echo ${EXIT_CODE}
-      setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt || EXIT_CODE=$? && true
-      echo ${EXIT_CODE}
+			setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt || true
+      setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt || true
 		fi
+	fi
+
+	if [ "$APP_ENV" != 'prod' ]; then
 		composer install --prefer-dist --no-progress --no-suggest --no-interaction
 	fi
 

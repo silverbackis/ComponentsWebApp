@@ -3,5 +3,5 @@ appVersion: 0.1.0
 description: A Helm chart for an API Platform API
 name: api
 version: 0.2.2
-home: https://donshub.com
+home: https://cwa.silverbackwebapps.com
 icon: https://api-platform.com/logo-250x250.png

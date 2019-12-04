@@ -16,7 +16,13 @@
     "oro/doctrine-extensions": {
         "version": "dev-master"
     },
+    "php": {
+        "version": "7.3"
+    },
     "silverbackis/api-component-bundle": {
         "version": "1.0.8"
+    },
+    "symfony/error-handler": {
+        "version": "v4.4.1"
     }
 }

@@ -15,7 +15,7 @@
         "test": "jest --projects --testRegex '_tests/.*\\.spec\\.js$'"
     },
     "dependencies": {
-        "@cwamodules/bulma": "^0.5.14",
+        "@cwamodules/bulma": "^0.7.4",
         "@fortawesome/fontawesome-svg-core": "^1.2.6",
         "@fortawesome/free-brands-svg-icons": "^5.4.1",
         "@fortawesome/free-solid-svg-icons": "^5.4.1",
