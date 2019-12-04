@@ -24,7 +24,7 @@ spec:
       volumes:
         - name: php-media-cache
           persistentVolumeClaim:
-            claimName: {{ template "fullname" . }}-pvc-public
+            claimName: {{ template "fullname" . }}-pvc-media-cache
       containers:
         - name: {{ .Chart.Name }}-nginx
           volumeMounts:
