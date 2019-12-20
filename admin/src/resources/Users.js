@@ -19,8 +19,6 @@ export const UserEdit = props => (
   <EditGuesser {...props}>
     <InputGuesser source="enabled" />
     <InputGuesser source="username" />
-    <InputGuesser source="name" />
-    <InputGuesser source="membershipNumber" />
     <ArrayInput {...props} source="roles">
       <SimpleFormIterator>
         <SelectInput defaultValue="ROLE_USER" choices={userRoles} validate={required()} />
@@ -32,8 +30,6 @@ export const UserEdit = props => (
 
 export const UserList = props => (
   <ListGuesser {...props}>
-    <FieldGuesser source={"name"} />
-    <FieldGuesser source={"membershipNumber"} />
     <FieldGuesser source={"username"} />
     <FieldGuesser source={"enabled"} />
   </ListGuesser>
@@ -43,8 +39,6 @@ export const UserShow = props => (
   <ShowGuesser {...props}>
     <FieldGuesser source={"enabled"} addLabel={true} />
     <FieldGuesser source={"username"} addLabel={true} />
-    <FieldGuesser source={"name"} addLabel={true} />
-    <FieldGuesser source={"membershipNumber"} addLabel={true} />
     <FieldGuesser source={"roles"} addLabel={true} />
   </ShowGuesser>
 );
@@ -53,8 +47,6 @@ export const UserCreate = props => (
   <CreateGuesser {...props}>
     <InputGuesser source="enabled" />
     <InputGuesser source="username" />
-    <InputGuesser source="name" />
-    <InputGuesser source="membershipNumber" />
     <ArrayInput {...props} source="roles">
       <SimpleFormIterator>
         <SelectInput defaultValue="ROLE_USER" choices={userRoles} validate={required()} />
