@@ -30,4 +30,8 @@ return function (ContainerConfigurator $configurator) {
         ->load('App\\DataFixtures\\', '../src/DataFixtures')
         ->tag('doctrine.fixture.orm')
         ->exclude('../src/DataFixtures/Model');
+
+    $services
+        ->load('App\\EventListener\\', '../src/EventListener')
+        ->tag('kernel.event_listener');
 };
