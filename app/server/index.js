@@ -34,10 +34,12 @@ app.use(compression())
 const sequelize = new Sequelize(process.env.APP_DATABASE_URL, {
   pool: {
     max: 5,
-    min: 0,
+    min: 1,
     acquire: 30000,
-    idle: 10000
-  }
+    idle: 20000
+  },
+  connect_timeout: 1000,
+  retry: { max: 3 }
 })
 const store = new SequelizeStore({
   db: sequelize

@@ -37,8 +37,7 @@ spec:
             httpGet:
               path: /healthz
               port: 80
-          resources:
-{{ toYaml .Values.resources | indent 12 }}
+          resources: {}
   {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
