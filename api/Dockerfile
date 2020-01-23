@@ -6,7 +6,7 @@
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 
 # 7.3.9 has issues with environment vars
-ARG PHP_VERSION=7.3.8
+ARG PHP_VERSION=7.4
 ARG NGINX_VERSION=1.17
 ARG VARNISH_VERSION=6.2
 
@@ -59,7 +59,7 @@ RUN set -eux; \
 		postgresql-dev \
 	; \
 	\
-	docker-php-ext-configure zip --with-libzip; \
+	docker-php-ext-configure zip; \
 	docker-php-ext-configure gd \
     --with-gd \
     --with-freetype-dir=/usr/include/ \

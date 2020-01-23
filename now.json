@@ -15,10 +15,7 @@
     "env": {
       "HOST": "0.0.0.0",
       "NODE_ENV": "production",
-      "API_URL": "https://api.cwa.silverbackwebapps.com",
       "API_URL_BROWSER": "https://api.cwa.silverbackwebapps.com",
-      "COOKIE_SECRET": "@cwa-cookie-secret",
-      "APP_DATABASE_URL": "@cwa-db-url",
       "VARNISH_TOKEN": "@cwa-varnish-token",
       "COOKIE_DOMAIN": "cwa.silverbackwebapps.com"
     }
