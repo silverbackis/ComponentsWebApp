@@ -4,7 +4,7 @@ namespace App\DataFixtures\Content;
 
 use App\Form\Handler\ContactHandler;
 use App\Form\Type\ContactType;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Silverback\ApiComponentBundle\Entity\Component\Form\Form;
 use Silverback\ApiComponentBundle\Entity\Component\Hero\Hero;
 

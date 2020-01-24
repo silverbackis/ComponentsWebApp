@@ -3,7 +3,7 @@
 namespace App\DataFixtures\Layout;
 
 use App\DataFixtures\Content\AbstractPageFixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Silverback\ApiComponentBundle\DataFixtures\AbstractFixture;
 use Silverback\ApiComponentBundle\Entity\Layout\Layout;
 

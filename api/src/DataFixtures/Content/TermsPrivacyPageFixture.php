@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures\Content;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Silverback\ApiComponentBundle\Entity\Component\Hero\Hero;
 
 class TermsPrivacyPageFixture extends AbstractPageFixture

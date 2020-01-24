@@ -6,7 +6,7 @@ use App\DataFixtures\Content\AbstractPageFixture;
 use App\DataFixtures\Content\ContactPageFixture;
 use App\DataFixtures\Content\HomePageFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Silverback\ApiComponentBundle\DataFixtures\AbstractFixture;
 use Silverback\ApiComponentBundle\Entity\Component\Navigation\NavBar\NavBar;
 use Silverback\ApiComponentBundle\Entity\Component\Navigation\NavBar\NavBarItem;
