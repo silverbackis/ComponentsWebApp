@@ -27,6 +27,11 @@ spec:
           env:
             - name: RELAY_NETWORKS
               value: ':192.168.1.0/24'
+            - name: MAILNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: mailname
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}

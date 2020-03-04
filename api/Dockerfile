@@ -61,6 +61,8 @@ RUN set -eux; \
 	\
 	docker-php-ext-configure zip; \
 	docker-php-ext-configure gd \
+	  --with-freetype \
+  	--with-jpeg \
 #    --with-gd \
 #    --with-freetype-dir=/usr/include/ \
 #    --with-png-dir=/usr/include/ \

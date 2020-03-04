@@ -20,3 +20,4 @@ data:
   password-request-timeout: {{ .Values.php.passwordRequestTimeout | quote }}
   cookie-domain: {{ .Values.php.cookieDomain | quote }}
   from-email-address: {{ .Values.php.fromEmailAddress | quote }}
+  mailname: {{ .Values.smtp.mailname | quote }}

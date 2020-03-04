@@ -1,18 +1,16 @@
-import config from '../nuxt.config.js'
-config.dev = process.env.NODE_ENV !== 'production'
-
 import express from 'express'
 import bodyParser from 'body-parser'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
+
+import BWServerBase from '@cwamodules/server'
+import _omit from 'lodash/omit'
+const isDev = process.env.NODE_ENV !== 'production'
 const compression = require('compression')
 
 const session = require('express-session')
 const Sequelize = require('sequelize')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
-
-import BWServerBase from '@cwamodules/server'
-import _omit from 'lodash/omit'
 
 const logging = process.env.NODE_ENV === 'development'
 
@@ -21,7 +19,7 @@ const logging = process.env.NODE_ENV === 'development'
  */
 const app = express()
 app.disable('x-powered-by')
-app.set('trust proxy', !!config.dev)
+app.set('trust proxy', !!isDev)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(helmet())
@@ -48,7 +46,7 @@ const store = new SequelizeStore({
 /**
  * SETUP SESSION USING THE MYSQL STORE
  */
-let sessOps = {
+const sessOps = {
   name: 'JS_SESSION',
   key: 'JS_SESSION',
   secret: process.env.COOKIE_SECRET,
@@ -56,7 +54,7 @@ let sessOps = {
   saveUninitialized: false,
   proxy: true,
   cookie: {
-    secure: !config.dev,
+    secure: !isDev,
     httpOnly: true,
     maxAge: null,
     path: '/'
