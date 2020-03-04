@@ -112,7 +112,7 @@ RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN ln -s $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
+# RUN ln -s $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
 COPY _docker/php/conf.d/silverback-web-apps.ini $PHP_INI_DIR/conf.d/silverback-web-apps.ini
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
