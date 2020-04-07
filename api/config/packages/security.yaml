@@ -45,5 +45,8 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/login_check, roles: ROLE_TOKEN_USER }
         - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/password/reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forms/(.*)/submit, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [ GET ] }
+        - { path: ^/, roles: ROLE_ADMIN, methods: [ POST, PUT, PATCH, DELETE ] }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

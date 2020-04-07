@@ -29,3 +29,7 @@ api_platform:
             apiKey:
                 name: Authorization
                 type: header
+    collection:
+        pagination:
+            client_items_per_page: true
+            items_per_page_parameter_name: perPage

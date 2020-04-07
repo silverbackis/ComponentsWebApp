@@ -4,11 +4,11 @@
     "repositories": [
         {
             "type": "path",
-            "url": "/Volumes/LaCie/GitHub/_ComponentsWebApp/ApiComponentBundle//unset"
+            "url": "/Volumes/Samsung_T5/GitHub/_ComponentsWebApp/ApiComponentBundle//unset"
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-intl": "*",
