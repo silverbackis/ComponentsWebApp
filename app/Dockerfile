@@ -1,4 +1,4 @@
-FROM node:alpine AS sbwa_app
+FROM node:alpine AS cwa_app
 
 # Cookie Secret environment required to build nuxt application
 # Other environment variables needed but are fine to include as build args as they would not be secret.

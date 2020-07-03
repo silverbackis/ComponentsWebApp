@@ -5,8 +5,9 @@ framework:
     #http_method_override: true
 
     session:
-        handler_id: ~
-        cookie_domain: '%env(COOKIE_DOMAIN)%'
+        handler_id: null
+        cookie_secure: auto
+        cookie_samesite: lax
 
     #esi: ~
     #fragments: ~

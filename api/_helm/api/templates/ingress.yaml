@@ -1,28 +1,48 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "api.fullname" . -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
 apiVersion: extensions/v1beta1
+{{- end }}
 kind: Ingress
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ $fullName }}
   labels:
-    app.kubernetes.io/name: ingress
-    app.kubernetes.io/part-of: {{ include "name" . }}
-    helm.sh/chart: {{ include "chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-  annotations:
-    certmanager.k8s.io/cluster-issuer:  {{ .Values.ingress.secretName }}
+    {{- include "api.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
+  annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+{{- if .Values.ingress.tls }}
   tls:
+  {{- range .Values.ingress.tls }}
     - hosts:
-      - {{ .Values.ingress.host }}
-      secretName: {{ .Values.ingress.secretName }}
+      {{- range .hosts }}
+        - {{ . | quote }}
+      {{- end }}
+      secretName: {{ .secretName }}
+  {{- end }}
+{{- end }}
   rules:
-    - host: {{ .Values.ingress.host }}
+  {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
       http:
         paths:
-          - path: /
+        {{- range .paths }}
+          - path: {{ . }}
             backend:
-              serviceName: varnish
-              servicePort: 80
+              {{- if $.Values.vulcain.enabled }}
+              serviceName: {{ $fullName }}-vulcain
+              servicePort: {{ $.Values.vulcain.service.port }}
+              {{- else if $.Values.varnish.enabled }}
+              serviceName: {{ $fullName }}-varnish
+              servicePort: {{ $.Values.varnish.service.port }}
+              {{- else }}
+              serviceName: {{ $fullName }}-nginx
+              servicePort: {{ $.Values.nginx.service.port }}
+              {{- end }}
+        {{- end }}
+  {{- end }}
+{{- end }}

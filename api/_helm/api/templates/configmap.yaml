@@ -1,23 +1,19 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ include "api.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}
-    app.kubernetes.io/part-of: {{ include "name" . }}
-    helm.sh/chart: {{ include "chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- include "api.labels" . | nindent 4 }}
 data:
   env: {{ .Values.php.env | quote }}
   debug: {{ .Values.php.debug | quote }}
   cors-allow-origin: {{ .Values.php.corsAllowOrigin | quote }}
-  varnish-url: {{ if .Values.varnish.enabled }}http://varnish{{ else }}{{ .Values.varnish.url | quote }}{{ end }}
+  varnish-url: {{ if .Values.varnish.url }}{{ .Values.varnish.url | quote }}{{ else }}http://{{ include "api.fullname" . }}-varnish{{ end }}
   trusted-hosts: {{ .Values.php.trustedHosts | quote }}
   trusted-proxies: {{ join "," .Values.php.trustedProxies }}
-  mailer-dsn: {{ .Values.php.mailerDsn | quote }}
-  password-manager-token-ttl: {{ .Values.php.passwordManagerTokenTtl | quote }}
-  password-request-timeout: {{ .Values.php.passwordRequestTimeout | quote }}
-  cookie-domain: {{ .Values.php.cookieDomain | quote }}
-  from-email-address: {{ .Values.php.fromEmailAddress | quote }}
-  mailname: {{ .Values.smtp.mailname | quote }}
+  mercure-publish-url: {{ if .Values.php.mercure.publishUrl }}{{ .Values.php.mercure.publishUrl | quote }}{{ else }}http://{{ include "api.fullname" . }}-mercure/.well-known/mercure{{ end }}
+  mercure-subscribe-url: {{ .Values.php.mercure.subscribeUrl | quote }}
+  blackfire-client-id: {{ .Values.php.blackfire.id | quote }}
+  blackfire-server-id: {{ .Values.blackfire.server.id | quote }}
+  jwt-public: {{ .Values.php.jwt.public | quote }}
+  mailer-email: {{ .Values.php.mailer.email | quote }}

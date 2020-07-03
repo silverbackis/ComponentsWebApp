@@ -3,30 +3,36 @@ vcl 4.0;
 import std;
 
 backend default {
-  .host = "nginx";
-  .port = "80";
+  .host = "${UPSTREAM}";
+  .port = "${UPSTREAM_PORT}";
   # Health check
   #.probe = {
   #  .url = "/";
   #  .timeout = 5s;
-  #  .interval = 10s;
+  #  .interval = 30s;
   #  .window = 5;
   #  .threshold = 3;
   #}
 }
 
+acl profile {
+   # Authorized IPs, add your own IPs from which you want to profile.
+   # "x.y.z.w";
+
+   # Add the Blackfire.io IPs when using builds:
+   # Ref https://blackfire.io/docs/reference-guide/faq#how-should-i-configure-my-firewall-to-let-blackfire-access-my-apps
+   "46.51.168.2";
+   "54.75.240.245";
+}
+
 # Hosts allowed to send BAN requests
 acl invalidators {
   "localhost";
-  "php";
+  "${PHP_SERVICE}";
   # local Kubernetes network
   "10.0.0.0"/8;
   "172.16.0.0"/12;
   "192.168.0.0"/16;
-}
-
-acl profile {
-   "88.98.91.88";
 }
 
 sub vcl_recv {
@@ -40,24 +46,7 @@ sub vcl_recv {
     unset req.http.X-Blackfire-Query;
   }
 
-  if (req.http.X-Blackfire-Query && client.ip ~ profile) {
-    return (pass);
-  }
-
   set req.http.Surrogate-Capability = "abc=ESI/1.0";
-
-  if (req.http.Cookie) {
-    set req.http.Cookie = ";" + req.http.Cookie;
-    set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
-    set req.http.Cookie = regsuball(req.http.Cookie, ";(PHPSESSID)=", "; \1=");
-    set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
-    set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
-
-    if (req.http.Cookie == "") {
-      // If there are no more cookies, remove the header to get page cached.
-      unset req.http.Cookie;
-    }
-  }
 
   if (req.restarts > 0) {
     set req.hash_always_miss = true;
@@ -65,6 +54,17 @@ sub vcl_recv {
 
   # Remove the "Forwarded" HTTP header if exists (security)
   unset req.http.forwarded;
+
+  # Remove fields and preload headers used for vulcain
+  # https://github.com/dunglas/vulcain/blob/master/docs/cache.md
+  unset req.http.fields;
+  unset req.http.preload;
+
+  # If it's a Blackfire query and the client is authorized,
+  # just pass directly to the application.
+  if (req.http.X-Blackfire-Query && client.ip ~ profile) {
+    return (pass);
+  }
 
   # To allow API Platform to ban by cache tags
   if (req.method == "BAN") {
@@ -117,24 +117,9 @@ sub vcl_deliver {
   unset resp.http.url;
   # Comment the following line to send the "Cache-Tags" header to the client (e.g. to use CloudFlare cache tags)
   unset resp.http.Cache-Tags;
-
-  if (obj.hits > 0) {
-     set resp.http.X-Cache = "HIT";
-     if (req.http.Origin ~ "$CORS_ALLOW_ORIGIN") {
-       set resp.http.Access-Control-Allow-Origin=req.http.Origin;
-       set resp.http.Access-Control-Allow-Credentials="true";
-     }
-  } else {
-     set resp.http.X-Cache = "MISS";
-  }
 }
 
 sub vcl_backend_response {
-  if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
-    unset beresp.http.Surrogate-Control;
-    set beresp.do_esi = true;
-  }
-
   # Ban lurker friendly header
   set beresp.http.url = bereq.url;
 

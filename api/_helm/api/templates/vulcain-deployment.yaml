@@ -1,17 +1,17 @@
-{{- if .Values.varnish.enabled -}}
-{{- $name := "varnish" -}}
-{{- $data := dict "name" $name "Chart" .Chart "Release" .Release "Values" .Values -}}
+{{- if .Values.vulcain.enabled -}}
 {{- $fullName := include "api.fullname" . -}}
+{{- $name := "vulcain" -}}
+{{- $data := dict "name" $name "Chart" .Chart "Release" .Release "Values" .Values -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ $fullName }}-{{ $name }}
+  name: {{ include "api.fullname" . }}-{{ $name }}
   labels:
     {{- include "api.labels" $data | nindent 4 }}
   annotations:
     {{- include "api.annotations" $data | nindent 4 }}
 spec:
-  replicas: {{ .Values.varnish.replicaCount }}
+  replicas: {{ .Values.vulcain.replicaCount }}
   selector:
     matchLabels:
       {{- include "api.selectorLabels" $data | nindent 6 }}
@@ -20,8 +20,6 @@ spec:
       labels:
         {{- include "api.selectorLabels" $data | nindent 8 }}
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
         {{- include "api.annotations" $data | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -33,27 +31,15 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}-{{ $name }}
-          image: "{{ .Values.varnish.image.repository }}:{{ .Values.varnish.image.tag }}"
-          imagePullPolicy: {{ .Values.varnish.image.pullPolicy }}
+          image: "{{ .Values.vulcain.image.repository }}:{{ .Values.vulcain.image.tag }}"
+          imagePullPolicy: {{ .Values.vulcain.image.pullPolicy }}
           env:
           - name: UPSTREAM
-            value: "{{ $fullName }}-nginx"
-          - name: UPSTREAM_PORT
-            value: "{{ .Values.nginx.service.port }}"
-          - name: PHP_SERVICE
-            value: "{{ $fullName }}-php"
+            value: "{{ if .Values.varnish.enabled }}http://{{ $fullName }}-varnish{{ else }}http://{{ $fullName }}-nginx{{ end }}.{{ .Release.Namespace }}.svc.cluster.local:{{ if .Values.varnish.enabled }}{{ .Values.varnish.service.port }}{{ else }}{{ .Values.nginx.service.port }}{{ end }}"
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 80
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: 80
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}

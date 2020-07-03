@@ -1,7 +1,21 @@
-const pkg = require('./package')
+import fs from 'fs'
+import path from 'path'
+import pkg from './package'
+
+const https =
+  process.env.NODE_ENV === 'production'
+    ? {}
+    : {
+      key: fs.readFileSync(path.resolve('/certs/localhost.key')),
+      cert: fs.readFileSync(path.resolve('/certs/localhost.crt'))
+    }
 
 export default {
   mode: 'universal',
+  server: {
+    host: '0.0.0.0',
+    https
+  },
   /**
    * Headers of the page
    */
@@ -35,7 +49,10 @@ export default {
   /**
    * Plugins
    */
-  plugins: [{ src: '~/plugins/fontawesome', ssr: true }],
+  plugins: [
+    { src: '~/plugins/fontawesome', ssr: true },
+    { src: '~/plugins/axios', mode: 'server' }
+    ],
   /**
    * Modules
    */

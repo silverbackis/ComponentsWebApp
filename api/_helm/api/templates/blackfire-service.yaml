@@ -1,19 +1,20 @@
-{{- if .Values.varnish.enabled -}}
-{{- $name := "varnish" -}}
+{{- if .Values.blackfire.enabled -}}
+{{- $name := "blackfire" -}}
 {{- $data := dict "name" $name "Chart" .Chart "Release" .Release "Values" .Values -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "api.fullname" . }}-{{ $name }}
+  # must use a static name as this is hard-coded into the Dockerfile for the PHP probe. Must be 'blackfire'
+  name: {{ $name }}
   labels:
     {{- include "api.labels" $data | nindent 4 }}
 spec:
-  type: {{ .Values.varnish.service.type }}
+  type: ClusterIP
   ports:
-    - port: {{ .Values.varnish.service.port }}
-      targetPort: http
+    - port: 8707
+      targetPort: agent
       protocol: TCP
-      name: http
+      name: agent
   selector:
     {{- include "api.selectorLabels" $data | nindent 4 }}
 {{- end -}}

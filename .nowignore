@@ -1,9 +1,0 @@
-_now-alias/
-admin/
-api/
-bin/
-app/.nuxt
-app/node_modules
-app/*.log
-app/README.md
-app/yarn.lock
