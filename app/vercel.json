@@ -1,5 +1,17 @@
 {
   "version": 2,
+  "env": {
+    "HOST": "0.0.0.0",
+    "NODE_ENV": "production",
+    "COOKIE_DOMAIN": "addictovocab.org"
+  },
+  "build": {
+    "env": {
+      "HOST": "0.0.0.0",
+      "NODE_ENV": "production",
+      "COOKIE_DOMAIN": "addictovocab.org"
+    }
+  },
   "builds": [
     {
       "src": "nuxt.config.js",
