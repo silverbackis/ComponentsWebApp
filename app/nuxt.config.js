@@ -2,12 +2,16 @@ import fs from 'fs'
 import path from 'path'
 import pkg from './package'
 
+const API_URL_BROWSER = process.env.API_URL_BROWSER || 'https://localhost:8443'
+const API_URL = process.env.API_URL || API_URL_BROWSER
+const CERT_DIR = process.env.CERT_DIR || '/certs'
+
 const https =
-  process.env.NODE_ENV === 'production'
+  process.env.NODE_ENV === 'production' && process.env.LOCAL_TLS !== '1'
     ? {}
     : {
-      key: fs.readFileSync(path.resolve('/certs/localhost.key')),
-      cert: fs.readFileSync(path.resolve('/certs/localhost.crt'))
+      key: fs.readFileSync(path.resolve(CERT_DIR + '/localhost.key')),
+      cert: fs.readFileSync(path.resolve(CERT_DIR + '/localhost.crt'))
     }
 
 export default {
@@ -15,6 +19,10 @@ export default {
   server: {
     host: '0.0.0.0',
     https
+  },
+  publicRuntimeConfig: {
+    API_URL,
+    API_URL_BROWSER,
   },
   /**
    * Headers of the page
