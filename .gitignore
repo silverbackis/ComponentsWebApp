@@ -4,3 +4,5 @@
 !**/.env.dist
 .php_cs.cache
 .env
+
+.vercel
