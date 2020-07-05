@@ -1,20 +1,35 @@
 image: alpine:latest
 
+variables:
+    TEST_DISABLED: "false"
+    CODE_QUALITY_DISABLED: "false"
+    LICENSE_MANAGEMENT_DISABLED: "true"
+    PERFORMANCE_DISABLED: "false"
+    SAST_DISABLED: "true"
+    DEPENDENCY_SCANNING_DISABLED: "true"
+    CONTAINER_SCANNING_DISABLED: "true"
+    DAST_DISABLED: "true"
+    STAGING_ENABLED: "true"
+    CANARY_ENABLED: "true"
+
 cache:
     key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
     paths:
         - api/vendor/
-        - app/node_modules/
-        - admin/node_modules/
 
 stages:
     - build
     - test
+    - review
+    - dast
+    - staging
+    - canary
     - production
     - performance
+    - cleanup
 
 before_script:
-    - source ./bin/auto_devops.sh
+    - source ./bin/auto-devops.sh
 
 build:
     stage: build
@@ -31,48 +46,108 @@ build:
         - branches
     except:
         variables:
-            - $BUILD_DISABLED
+            - $BUILD_DISABLED == "true"
 
-#code_quality:
-#    stage: test
-#    image: docker:stable
-#    variables:
-#        DOCKER_DRIVER: overlay2
-#        DOCKER_TLS_CERTDIR: ""
-#    allow_failure: true
-#    services:
-#        - docker:stable-dind
-#    script:
-#        - setup_docker
-#        - code_quality
-#    artifacts:
-#        reports:
-#            codequality: gl-code-quality-report.json
-#        expire_in: 1 week
-#    dependencies: []
-#    only:
-#        - branches
-#    except:
-#        variables:
-#            - $CODE_QUALITY_DISABLED
+unit tests:
+    image: $CI_REGISTRY_IMAGE/php:$CI_COMMIT_REF_SLUG
+    stage: test
+    script:
+        - run_phpunit
+    artifacts:
+        reports:
+            junit: api/build/logs/phpunit/junit.xml
+    except:
+        variables:
+            - $TEST_DISABLED == "true"
 
-production_api:
+behat tests:
+    stage: test
+    image: $CI_REGISTRY_IMAGE/php:$CI_COMMIT_REF_SLUG
+    variables:
+        COMPOSER_PACKAGIST_TOKEN: 1548c14cbc7ef945787cad19913d10ef73068d7cdc61ff19513bfb4f72ea
+        POSTGRES_USER: runner
+        POSTGRES_PASSWORD: "password"
+        POSTGRES_DB: test
+        POSTGRES_HOST_AUTH_METHOD: trust
+    allow_failure: false
+    services:
+        - postgres:latest
+    script:
+        - setup_test_db
+        - run_behat
+    dependencies: []
+    only:
+        - branches
+    artifacts:
+        reports:
+            junit: api/build/logs/behat/junit/default.xml
+    except:
+        variables:
+            - $TEST_DISABLED == "true"
+
+review:
+    stage: review
+    script:
+        - check_kube_domain
+        - install_dependencies
+        - helm_init
+        - ensure_namespace
+        - create_secret
+        - deploy_api
+        - persist_environment_url
+    environment:
+        name: review/$CI_COMMIT_REF_NAME
+        url: https://$CI_COMMIT_REF_SLUG-review.$KUBE_INGRESS_BASE_DOMAIN
+        on_stop: stop review
+    artifacts:
+        paths: [environment_url.txt]
+    only:
+        refs:
+            - branches
+    except:
+        refs:
+            - master
+        variables:
+            - $REVIEW_DISABLED == "true"
+
+staging:
+    retry: 1
+    stage: staging
+    script:
+        - check_kube_domain
+        - install_dependencies
+        - helm_init
+        - ensure_namespace
+        - create_secret
+        - deploy_api staging
+    environment:
+        name: staging
+        url: https://staging.$KUBE_INGRESS_BASE_DOMAIN
+    only:
+        refs:
+            - master
+        variables:
+            - $STAGING_ENABLED == "true"
+    allow_failure: false
+
+deploy production api:
     stage: production
     script:
         - check_kube_domain
         - install_dependencies
         - helm_init
         - ensure_namespace
-        - initialize_tiller
         - create_secret
         - deploy_api
+        - delete canary
+        - delete rollout
         - persist_environment_url
     environment:
         name: production
-        url: https://$AUTO_DEVOPS_DOMAIN
+        url: https://$KUBE_INGRESS_BASE_DOMAIN
     artifacts:
         paths: [environment_url.txt]
-#    when: manual
+    when: manual
     retry: 1
     allow_failure: false
     only:
@@ -80,27 +155,65 @@ production_api:
             - master
     except:
         variables:
-            - $PRODUCTION_API_DISABLED          
+            - $PRODUCTION_API_DISABLED == "true"
 
-#performance:
-#    stage: performance
-#    image: docker:stable
-#    variables:
-#        DOCKER_DRIVER: overlay2
-#    allow_failure: true
-#    services:
-#        - docker:stable-dind
-#    script:
-#        - setup_docker
-#        - performance
-#    artifacts:
-#        paths:
-#            - performance.json
-#            - sitespeed-results/
-#    only:
-#        refs:
-#            - branches
-#        kubernetes: active
-#    except:
-#        variables:
-#            - $PERFORMANCE_DISABLED
+performance:
+    stage: performance
+    image: docker:stable
+    variables:
+        DOCKER_DRIVER: overlay2
+    allow_failure: true
+    services:
+        - docker:stable-dind
+    script:
+        - setup_docker
+        - performance
+    artifacts:
+        paths:
+            - performance.json
+            - sitespeed-results/
+    only:
+        refs:
+            - branches
+        kubernetes: active
+    except:
+        variables:
+            - $PERFORMANCE_DISABLED == "true"
+
+stop review:
+    stage: cleanup
+    script:
+        - install_dependencies
+        - delete
+    environment:
+        name: review/$CI_COMMIT_REF_NAME
+        action: stop
+    when: manual
+    allow_failure: true
+    only:
+        refs:
+            - branches
+    except:
+        refs:
+            - master
+        variables:
+            - $REVIEW_DISABLED == "true"
+
+canary:
+    stage: canary
+    script:
+        - check_kube_domain
+        - install_dependencies
+        - ensure_namespace
+        - helm_init
+        - create_secret
+        - deploy_api canary
+    environment:
+        name: production
+        url: https://$KUBE_INGRESS_BASE_DOMAIN
+    when: manual
+    only:
+        refs:
+            - master
+        variables:
+            - $CANARY_ENABLED == "true"

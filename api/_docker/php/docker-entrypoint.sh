@@ -7,28 +7,22 @@ if [ "${1#-}" != "$1" ]; then
 fi
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
-  PHP_INI_RECOMMENDED="$PHP_INI_DIR/php.ini-production"
+	PHP_INI_RECOMMENDED="$PHP_INI_DIR/php.ini-production"
+	CWA_PHP_INI="$PHP_INI_DIR/cwa.prod.ini"
 	if [ "$APP_ENV" != 'prod' ]; then
 		PHP_INI_RECOMMENDED="$PHP_INI_DIR/php.ini-development"
+		CWA_PHP_INI="$PHP_INI_DIR/cwa.dev.ini"
 	fi
+	ln -sf "$CWA_PHP_INI" "$PHP_INI_DIR/conf.d/cwa.ini"
 	ln -sf "$PHP_INI_RECOMMENDED" "$PHP_INI_DIR/php.ini"
 
-	mkdir -p var/cache var/log public/media/cache
-	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var || true
-	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var || true
-	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX public/media || true
-	setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX public/media || true
+	mkdir -p var/cache var/log
+	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
+	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 
-  if [ "$APP_ENV" != 'prod' ]; then
-		jwt_passphrase=$(grep '^JWT_PASSPHRASE=' .env.local | cut -f 2 -d '=')
-		if [ ! -f config/jwt/private.pem ] || ! echo "$jwt_passphrase" | openssl pkey -in config/jwt/private.pem -passin stdin -noout > /dev/null 2>&1; then
-			echo "Generating public / private keys for JWT"
-			mkdir -p config/jwt
-			echo "$jwt_passphrase" | openssl genpkey -out config/jwt/private.pem -pass stdin -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
-			echo "$jwt_passphrase" | openssl pkey -in config/jwt/private.pem -passin stdin -out config/jwt/public.pem -pubout
-			setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt || true
-      setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt || true
-		fi
+	if [ "$APP_ENV" != 'prod' ] && [ -f /certs/localCA.crt ]; then
+		ln -sf /certs/localCA.crt /usr/local/share/ca-certificates/localCA.crt
+		update-ca-certificates
 	fi
 
 	if [ "$APP_ENV" != 'prod' ]; then
@@ -40,14 +34,8 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		sleep 1
 	done
 
-  # we want this extension for case insensitive column data types in postgresql
-  # it will fail if the user is not a super user, may need to be created manually
-	bin/console d:q:s "CREATE EXTENSION IF NOT EXISTS citext" || EXIT_CODE=$? && true
-	echo ${EXIT_CODE}
-
-  if [ "$APP_ENV" != 'prod' ]; then
-		bin/console doctrine:schema:update --force --no-interaction || EXIT_CODE=$? && true
-    echo ${EXIT_CODE}
+	if ls -A src/Migrations/*.php > /dev/null 2>&1; then
+		bin/console doctrine:migrations:migrate --no-interaction
 	fi
 fi
 

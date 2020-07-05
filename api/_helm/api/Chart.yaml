@@ -1,7 +1,12 @@
-apiVersion: v1
+apiVersion: v2
 appVersion: 0.1.0
-description: A Helm chart for an API Platform API
+description: A Helm chart for the Components Web App API
 name: api
-version: 0.2.2
-home: https://cwa.silverbackwebapps.com
-icon: https://api-platform.com/logo-250x250.png
+version: 0.1.0
+home: https://github.com/components-web-app/components-web-app
+# icon: https://api-platform.com/logo-250x250.png
+dependencies:
+    -   name: mercure
+        version: ~3.0.0
+        repository: https://kubernetes-charts.storage.googleapis.com/
+        condition: mercure.enabled

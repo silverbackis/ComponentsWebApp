@@ -1,133 +1,160 @@
-apiVersion: extensions/v1beta1
+{{- $fullName := include "api.fullname" . -}}
+{{- $name := "php" -}}
+{{- $data := dict "name" $name "Chart" .Chart "Release" .Release "Values" .Values -}}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}-php
+  name: {{ $fullName }}-{{ $name }}
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}-php
-    app.kubernetes.io/part-of: {{ include "name" . }}
-    helm.sh/chart: {{ include "chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- include "api.labels" $data | nindent 4 }}
+  annotations:
+    {{- include "api.annotations" $data | nindent 4 }}
 spec:
-  replicas: {{ .Values.php.replicaCount }}
+  replicas: {{ .Values.nginx.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "api.selectorLabels" $data | nindent 6 }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "name" . }}-php
-        helm.sh/chart: {{ include "chart" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
-        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        {{- include "api.selectorLabels" $data | nindent 8 }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+        {{- include "api.annotations" $data | nindent 8 }}
     spec:
+    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-      {{ toYaml .Values.imagePullSecrets | indent 2 }}
-      volumes:
-        - name: php-uploads
-          persistentVolumeClaim:
-            claimName: {{ template "fullname" . }}-pvc-uploads
-        - name: php-media-cache
-          persistentVolumeClaim:
-            claimName: {{ template "fullname" . }}-pvc-media-cache
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "api.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}-php
-          volumeMounts:
-          - mountPath: /srv/api/var/uploads
-            name: php-uploads
-          - mountPath: /srv/api/public/media/cache
-            name: php-media-cache
-          image: "{{ .Values.php.repository }}:{{ .Values.php.tag }}"
-          imagePullPolicy: {{ .Values.php.pullPolicy }}
-          ports:
-            - containerPort: 9000
+        - name: {{ .Chart.Name }}-{{ $name }}
+          image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.php.image.pullPolicy }}
           env:
             - name: TRUSTED_HOSTS
               valueFrom:
                 configMapKeyRef:
-                  name: {{ template "fullname" . }}
+                  name: {{ $fullName }}
                   key: trusted-hosts
             - name: TRUSTED_PROXIES
               valueFrom:
                 configMapKeyRef:
-                  name: {{ template "fullname" . }}
+                  name: {{ $fullName }}
                   key: trusted-proxies
             - name: APP_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: {{ template "fullname" . }}
+                  name: {{ $fullName }}
                   key: env
             - name: APP_DEBUG
               valueFrom:
                 configMapKeyRef:
-                  name: {{ template "fullname" . }}
+                  name: {{ $fullName }}
                   key: debug
             - name: CORS_ALLOW_ORIGIN
               valueFrom:
                 configMapKeyRef:
-                  name: {{ template "fullname" . }}
+                  name: {{ $fullName }}
                   key: cors-allow-origin
             - name: VARNISH_URL
               valueFrom:
                 configMapKeyRef:
-                  name: {{ template "fullname" . }}
+                  name: {{ $fullName }}
                   key: varnish-url
             - name: APP_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "fullname" . }}
+                  name: {{ $fullName }}
                   key: secret
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "fullname" . }}
+                  name: {{ $fullName }}
                   key: database-url
+            - name: MERCURE_PUBLISH_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $fullName }}
+                  key: mercure-publish-url
+            - name: MERCURE_SUBSCRIBE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $fullName }}
+                  key: mercure-subscribe-url
+            - name: MERCURE_JWT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullName }}
+                  key: mercure-jwt-token
             - name: JWT_SECRET_KEY
               valueFrom:
-                secretKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: jwt-secret-key
+                  secretKeyRef:
+                      name: {{ $fullName }}
+                      key: jwt-secret
             - name: JWT_PUBLIC_KEY
               valueFrom:
-                secretKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: jwt-public-key
+                  configMapKeyRef:
+                      name: {{ $fullName }}
+                      key: jwt-public
             - name: JWT_PASSPHRASE
               valueFrom:
-                secretKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: jwt-passphrase
-            - name: PASSWORD_MANAGER_TOKEN_TTL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: password-manager-token-ttl
-            - name: PASSWORD_REQUEST_TIMEOUT
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: password-request-timeout
-            - name: MAILER_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: mailer-dsn
+                  secretKeyRef:
+                      name: {{ $fullName }}
+                      key: jwt-passphrase
             - name: VARNISH_TOKEN
               valueFrom:
-                secretKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: varnish-token
-            - name: COOKIE_DOMAIN
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: cookie-domain
+                  secretKeyRef:
+                      name: {{ $fullName }}
+                      key: api-secret-token
             - name: FROM_EMAIL_ADDRESS
               valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: from-email-address
-
+                  configMapKeyRef:
+                      name: {{ $fullName }}
+                      key: mailer-email
+            - name: MAILER_DSN
+              valueFrom:
+                  secretKeyRef:
+                      name: {{ $fullName }}
+                      key: mailer-dsn
+            {{- if .Values.blackfire.enabled -}}
+            - name: BLACKFIRE_CLIENT_ID
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ $fullName }}
+                      key: blackfire-client-id
+            - name: BLACKFIRE_CLIENT_TOKEN
+              valueFrom:
+                  secretKeyRef:
+                      name: {{ $fullName }}
+                      key: blackfire-client-token
+            {{- end }}
+          ports:
+            - containerPort: 9000
+          readinessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 30
+            periodSeconds: 3
+          livenessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 30
+            periodSeconds: 3
           resources:
-{{ toYaml .Values.resources | indent 12 }}
-    {{- if .Values.nodeSelector }}
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
     {{- end }}

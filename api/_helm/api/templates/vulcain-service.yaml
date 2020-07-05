@@ -1,4 +1,5 @@
-{{- $name := "php" -}}
+{{- if .Values.vulcain.enabled -}}
+{{- $name := "vulcain" -}}
 {{- $data := dict "name" $name "Chart" .Chart "Release" .Release "Values" .Values -}}
 apiVersion: v1
 kind: Service
@@ -7,8 +8,12 @@ metadata:
   labels:
     {{- include "api.labels" $data | nindent 4 }}
 spec:
-  type: {{ .Values.php.service.type }}
+  type: {{ .Values.vulcain.service.type }}
   ports:
-    - port: {{ .Values.php.service.port }}
+    - port: {{ .Values.vulcain.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
   selector:
     {{- include "api.selectorLabels" $data | nindent 4 }}
+{{- end -}}
