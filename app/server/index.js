@@ -44,7 +44,7 @@ const store = new SequelizeStore({
 })
 
 /**
- * SETUP SESSION USING THE MYSQL STORE
+ * SETUP SESSION USING THE SQL STORE
  */
 const sessOps = {
   name: 'JS_SESSION',

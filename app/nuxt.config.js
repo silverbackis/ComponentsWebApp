@@ -60,7 +60,7 @@ export default {
   plugins: [
     { src: '~/plugins/fontawesome', ssr: true },
     { src: '~/plugins/axios', mode: 'server' }
-    ],
+  ],
   /**
    * Modules
    */
@@ -72,7 +72,9 @@ export default {
       {
         pagesDepth: 3,
         components: {
-          ContactForm: '~/components/ContactForm'
+          ContactForm: '~/components/ContactForm',
+          CustomHero: '~/components/CustomHero',
+          Hero: '~/components/Hero'
         }
       }
     ],
