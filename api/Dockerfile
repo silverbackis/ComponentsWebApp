@@ -10,8 +10,6 @@ ARG VARNISH_VERSION=6.4
 # "php" stage
 FROM registry.gitlab.com/silverback-web-apps/cwa/docker/php:${PHP_VERSION}-fpm-alpine AS cwa_php
 
-RUN docker-php-ext-install pdo_mysql
-
 RUN ln -s $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
 COPY _docker/php/conf.d $PHP_INI_DIR/
 
