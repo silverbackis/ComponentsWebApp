@@ -85,26 +85,9 @@ install_dependencies() {
   chmod +x /usr/bin/kubectl
   kubectl version --client
 
-  # Generate random passphrase and keys for JWT signing if not set
-	if [[ -z ${JWT_PASSPHRASE} ]]; then
-		JWT_PASSPHRASE="$(rand_str)"
-		export JWT_PASSPHRASE
-	fi
+  setup_jwt_keys
 
-	if [[ -z ${JWT_SECRET_KEY} ]]; then
-		JWT_SECRET_KEY_FILE=/tmp/jwt_secret
-
-		openssl genpkey -pass pass:"${JWT_PASSPHRASE}" -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -out ${JWT_SECRET_KEY_FILE}
-		JWT_SECRET_KEY=$(cat ${JWT_SECRET_KEY_FILE})
-		export JWT_SECRET_KEY
-
-		JWT_PUBLIC_KEY=$(openssl pkey -in "$JWT_SECRET_KEY_FILE" -passin pass:"$JWT_PASSPHRASE" -pubout)
-		export JWT_PUBLIC_KEY
-
-		rm ${JWT_SECRET_KEY_FILE}
-	fi
-
-	echo "Checking/generating \$MERCURE_JWT_KEY"
+  echo "Checking/generating \$MERCURE_JWT_KEY"
   # Generate random key & jwt for Mercure if not set
   if [[ -z ${MERCURE_JWT_SECRET} ]]; then
     MERCURE_JWT_SECRET="$(rand_str)"
@@ -170,6 +153,28 @@ function setup_test_db() {
     DB_HOST=localhost
   fi
   export DATABASE_URL="pgsql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:5432/${POSTGRES_DB}"
+}
+
+function setup_jwt_keys() {
+  echo "Generating public / private keys for JWT"
+  # Generate random passphrase and keys for JWT signing if not set
+  if [[ -z ${JWT_PASSPHRASE} ]]; then
+	JWT_PASSPHRASE="$(rand_str)"
+	export JWT_PASSPHRASE
+  fi
+
+  if [[ -z ${JWT_SECRET_KEY} ]]; then
+	JWT_SECRET_KEY_FILE=/tmp/jwt_secret
+
+	openssl genpkey -pass pass:"${JWT_PASSPHRASE}" -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -out ${JWT_SECRET_KEY_FILE}
+	JWT_SECRET_KEY=$(cat ${JWT_SECRET_KEY_FILE})
+	export JWT_SECRET_KEY
+
+	JWT_PUBLIC_KEY=$(openssl pkey -in "$JWT_SECRET_KEY_FILE" -passin pass:"$JWT_PASSPHRASE" -pubout)
+	export JWT_PUBLIC_KEY
+
+  	rm ${JWT_SECRET_KEY_FILE}
+  fi
 }
 
 function run_phpunit() {

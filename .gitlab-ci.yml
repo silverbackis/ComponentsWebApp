@@ -74,6 +74,7 @@ behat tests:
         - postgres:latest
     script:
         - setup_test_db
+        - setup_jwt_keys
         - run_behat
     dependencies: []
     only:
