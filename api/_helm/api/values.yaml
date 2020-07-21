@@ -99,6 +99,10 @@ blackfire:
         id: ''
         token: ''
 
+pvc:
+  size:
+    uploads: 4Gi
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

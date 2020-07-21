@@ -72,9 +72,7 @@ export default {
       {
         pagesDepth: 3,
         components: {
-          ContactForm: '~/components/ContactForm',
-          CustomHero: '~/components/CustomHero',
-          Hero: '~/components/Hero'
+          ContactForm: '~/components/ContactForm'
         }
       }
     ],

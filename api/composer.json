@@ -1,12 +1,6 @@
 {
     "name": "silverbackis/components-web-app",
     "type": "project",
-    "repositories": [
-        {
-            "type": "path",
-            "url": "/Volumes/Samsung_T5/GitHub/_ComponentsWebApp/ApiComponentBundle//unset"
-        }
-    ],
     "require": {
         "php": "^7.4",
         "ext-ctype": "*",

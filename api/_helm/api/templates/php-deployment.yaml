@@ -30,8 +30,15 @@ spec:
       serviceAccountName: {{ include "api.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: php-uploads
+          persistentVolumeClaim:
+            claimName: {{ $fullName }}-pvc-uploads
       containers:
         - name: {{ .Chart.Name }}-{{ $name }}
+          volumeMounts:
+          - mountPath: /srv/api/var/uploads
+            name: php-uploads
           image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.php.image.pullPolicy }}
           env:

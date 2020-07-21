@@ -3,13 +3,13 @@
   "env": {
     "HOST": "0.0.0.0",
     "NODE_ENV": "production",
-    "COOKIE_DOMAIN": "addictovocab.org"
+    "COOKIE_DOMAIN": "ecigfactcheck.org"
   },
   "build": {
     "env": {
       "HOST": "0.0.0.0",
       "NODE_ENV": "production",
-      "COOKIE_DOMAIN": "addictovocab.org"
+      "COOKIE_DOMAIN": "ecigfactcheck.org"
     }
   },
   "builds": [
