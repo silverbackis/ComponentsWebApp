@@ -71,7 +71,6 @@ final class Version20200721155411 extends AbstractMigration
         $this->addSql('ALTER TABLE dynamic_content ADD CONSTRAINT FK_20B9DEB2AB211837 FOREIGN KEY (parent_route_id) REFERENCES route (id) ON DELETE SET NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE dynamic_content ADD CONSTRAINT FK_20B9DEB28C22AA1A FOREIGN KEY (layout_id) REFERENCES layout (id) ON DELETE SET NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE article_page ADD CONSTRAINT FK_A4483121BF396750 FOREIGN KEY (id) REFERENCES dynamic_content (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('DROP TABLE "Session"');
     }
 
     public function down(Schema $schema) : void
@@ -95,7 +94,6 @@ final class Version20200721155411 extends AbstractMigration
         $this->addSql('ALTER TABLE article_page DROP CONSTRAINT FK_A4483121BF396750');
         $this->addSql('DROP SEQUENCE "user_id_seq" CASCADE');
         $this->addSql('DROP SEQUENCE refresh_tokens_id_seq CASCADE');
-        $this->addSql('CREATE TABLE "Session" (sid VARCHAR(36) NOT NULL, expires TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL, data TEXT DEFAULT NULL, "createdAt" TIMESTAMP(0) WITH TIME ZONE NOT NULL, "updatedAt" TIMESTAMP(0) WITH TIME ZONE NOT NULL, PRIMARY KEY(sid))');
         $this->addSql('DROP TABLE "user"');
         $this->addSql('DROP TABLE route');
         $this->addSql('DROP TABLE layout');
