@@ -22,7 +22,6 @@
         "behatch/contexts": "^3.3",
         "friends-of-behat/mink-browserkit-driver": "^1.4",
         "friends-of-behat/symfony-extension": "^2.0",
-        "phpunit/phpunit": "^6.5",
         "roave/security-advisories": "dev-master",
         "symfony/debug-pack": "^1.0",
         "symfony/maker-bundle": "^1.0",
