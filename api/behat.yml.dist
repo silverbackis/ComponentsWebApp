@@ -1,0 +1,19 @@
+default:
+    suites:
+        default:
+            contexts:
+                - App\Tests\Behat\DoctrineContext
+                - App\Tests\Behat\RestContext
+                - Behat\MinkExtension\Context\MinkContext: ~
+                - Behatch\Context\JsonContext: ~
+                - Behatch\Context\RestContext: ~
+
+    extensions:
+        FriendsOfBehat\SymfonyExtension: null
+        'Behat\MinkExtension':
+            base_url: 'http://example.com/'
+            files_path: 'features/assets/files'
+            sessions:
+                symfony:
+                    symfony: ~
+        'Behatch\Extension': null
