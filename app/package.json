@@ -12,7 +12,9 @@
     "precommit": "npm run lint",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "format": "prettier --no-semi --single-quote --write '{,!(node_modules)/**/}*.{js,json,jsx,md,vue}'",
-    "test": "jest --projects --testRegex '_tests/.*\\.spec\\.js$'"
+    "test": "jest --projects --testRegex '_tests/.*\\.spec\\.js$'",
+    "prepublish": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "dependencies": {
     "@cwamodules/bulma": "^0.7.5",
@@ -35,12 +37,13 @@
     "flatpickr": "^4.5.4",
     "helmet": "^3.14.0",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.20",
     "mysql": "^2.16.0",
     "nuxt": "^2.13.3",
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.3.0"
+    "sequelize": "^6.3.0",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
@@ -78,5 +81,6 @@
   },
   "engines": {
     "node": ">=10.x"
-  }
+  },
+  "snyk": true
 }

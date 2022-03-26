@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.13.3
+version: v1.22.1
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -12,3 +12,80 @@ patch:
         patched: '2019-05-05T23:14:51.518Z'
     - '@cwamodules/bulma > @cwamodules/components > @cwamodules/core > @nuxtjs/axios > axios':
         patched: '2019-05-05T23:14:51.518Z'
+  SNYK-JS-LODASH-567746:
+    - sequelize > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/pwa > @nuxtjs/workbox > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/components > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/axios > @nuxtjs/proxy > http-proxy-middleware > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@cwamodules/bulma > @cwamodules/components > @cwamodules/core > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > @babel/cli > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/webpack > @babel/core > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/webpack > hard-source-webpack-plugin > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/webpack > html-webpack-plugin > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/webpack > webpack-bundle-analyzer > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/telemetry > inquirer > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > @babel/preset-env > @babel/types > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > babel-eslint > @babel/traverse > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > @babel/core > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > hard-source-webpack-plugin > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > html-webpack-plugin > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/webpack > optimize-css-assets-webpack-plugin > last-call-webpack-plugin > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > webpack-bundle-analyzer > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@cwamodules/bulma > @cwamodules/core > @nuxtjs/axios > @nuxtjs/proxy > http-proxy-middleware > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > @babel/preset-env > @babel/plugin-transform-modules-umd > @babel/helper-module-transforms > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > @nuxt/babel-preset-app > @babel/core > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > babel-eslint > @babel/traverse > @babel/types > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > optimize-css-assets-webpack-plugin > last-call-webpack-plugin > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@cwamodules/bulma > @cwamodules/components > @cwamodules/core > @nuxtjs/axios > @nuxtjs/proxy > http-proxy-middleware > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > @babel/preset-env > @babel/plugin-transform-unicode-regex > @babel/helper-create-regexp-features-plugin > @babel/helper-regex > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > @nuxt/babel-preset-app > @babel/core > @babel/helper-module-transforms > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > babel-eslint > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > @nuxt/babel-preset-app > @babel/preset-env > @babel/plugin-transform-modules-umd > @babel/helper-module-transforms > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > @babel/preset-env > @babel/preset-modules > @babel/plugin-transform-dotall-regex > @babel/helper-create-regexp-features-plugin > @babel/helper-regex > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > babel-eslint > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > @nuxt/babel-preset-app > @babel/preset-env > @babel/plugin-transform-unicode-regex > @babel/helper-create-regexp-features-plugin > @babel/helper-regex > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > @babel/preset-env > @babel/plugin-transform-modules-umd > @babel/helper-module-transforms > @babel/helper-replace-supers > @babel/helper-optimise-call-expression > @babel/types > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > @nuxt/babel-preset-app > @babel/preset-env > @babel/preset-modules > @babel/plugin-transform-dotall-regex > @babel/helper-create-regexp-features-plugin > @babel/helper-regex > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > @nuxt/babel-preset-app > @babel/preset-env > @babel/plugin-transform-modules-umd > @babel/helper-module-transforms > @babel/helper-replace-supers > @babel/helper-optimise-call-expression > @babel/types > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - '@nuxtjs/style-resources > sass-resources-loader > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash':
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > @nuxt/babel-preset-app > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
+    - nuxt > @nuxt/builder > @nuxt/webpack > @nuxt/babel-preset-app > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2022-03-26T16:16:46.838Z'
