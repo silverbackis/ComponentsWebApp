@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@api-platform/admin": "^1.0.0",
+    "@api-platform/admin": "^3.4.3",
     "@babel/runtime": "7.0.0-beta.55",
     "js-cookie": "^2.2.1",
     "react": "^16.3.0",
