@@ -69,13 +69,15 @@ services:
       - api
     tmpfs:
       - /usr/local/var/varnish:exec
+    volumes:
+      - ./api/_docker/varnish/conf/default.vcl:/tmp/varnish/conf/default.vcl:rw
 
   vulcain:
     image: dunglas/vulcain
     environment:
       - CERT_FILE=/certs/localhost.crt
       - KEY_FILE=/certs/localhost.key
-      - UPSTREAM=http://cache-proxy
+      - UPSTREAM=http://cache-proxy:8080
     depends_on:
       - cache-proxy
       - dev-tls
@@ -151,6 +153,8 @@ services:
       - dev-certs:/certs:ro
     env_file:
       - ./app/.env
+    environment:
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
     ports:
       - target: 3000
         published: 443

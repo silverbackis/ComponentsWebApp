@@ -10,19 +10,19 @@ const https =
   process.env.NODE_ENV === 'production' && process.env.LOCAL_TLS !== '1'
     ? {}
     : {
-      key: fs.readFileSync(path.resolve(CERT_DIR + '/localhost.key')),
-      cert: fs.readFileSync(path.resolve(CERT_DIR + '/localhost.crt'))
-    }
+        key: fs.readFileSync(path.resolve(CERT_DIR + '/localhost.key')),
+        cert: fs.readFileSync(path.resolve(CERT_DIR + '/localhost.crt'))
+      }
 
 export default {
-  mode: 'universal',
+  target: 'server',
   server: {
     host: '0.0.0.0',
     https
   },
   publicRuntimeConfig: {
     API_URL,
-    API_URL_BROWSER,
+    API_URL_BROWSER
   },
   /**
    * Headers of the page
@@ -64,34 +64,10 @@ export default {
   /**
    * Modules
    */
-  modules: [
-    '@cwamodules/core',
-    '@cwamodules/components',
-    [
-      '@cwamodules/bulma',
-      {
-        pagesDepth: 3,
-        components: {
-          ContactForm: '~/components/ContactForm'
-        }
-      }
-    ],
+  buildModules: [
+    '@nuxtjs/gtm',
     '@nuxtjs/style-resources',
     '@nuxtjs/component-cache',
-    [
-      '@nuxtjs/axios',
-      {
-        credentials: true,
-        debug: false
-      }
-    ],
-    // [
-    //   '@nuxtjs/google-tag-manager',
-    //   {
-    //     id: 'GTM-XXXXXXX',
-    //     pageTracking: true
-    //   }
-    // ],
     [
       '@nuxtjs/pwa',
       {
@@ -115,6 +91,26 @@ export default {
       }
     ]
   ],
+  modules: [
+    '@cwamodules/core',
+    '@cwamodules/components',
+    [
+      '@cwamodules/bulma',
+      {
+        pagesDepth: 3,
+        components: {
+          ContactForm: '~/components/ContactForm'
+        }
+      }
+    ],
+    [
+      '@nuxtjs/axios',
+      {
+        credentials: true,
+        debug: false
+      }
+    ]
+  ],
   /**
    * Manifest for mobile app
    */
@@ -134,19 +130,19 @@ export default {
     postcss: {
       preset: {
         features: {
-          customProperties: false
+          'custom-properties': false
         }
       }
     },
     /*
-    ** Run ESLINT on save
-    */
+     ** Run ESLINT on save
+     */
     extend(config, { isDev }) {
       // cwamodules should pre-compile but this will work for now
-      config.resolve.alias['vue'] = 'vue/dist/vue.common'
+      config.resolve.alias.vue = 'vue/dist/vue.common'
       config.resolve.extensions.push('.sass')
 
-      for (let plugin of config.plugins) {
+      for (const plugin of config.plugins) {
         if (plugin.constructor.name === 'HtmlWebpackPlugin') {
           plugin.options = Object.assign(plugin.options, {
             chunksSortMode: 'none'

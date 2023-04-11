@@ -1,10 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "api.fullname" . -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
@@ -32,16 +28,18 @@ spec:
         paths:
         {{- range .paths }}
           - path: {{ . }}
+            pathType: ImplementationSpecific
             backend:
-              {{- if $.Values.vulcain.enabled }}
-              serviceName: {{ $fullName }}-vulcain
-              servicePort: {{ $.Values.vulcain.service.port }}
-              {{- else if $.Values.varnish.enabled }}
-              serviceName: {{ $fullName }}-varnish
-              servicePort: {{ $.Values.varnish.service.port }}
+              {{- if $.Values.varnish.enabled }}
+              service:
+                name: {{ $fullName }}-varnish
+                port:
+                    number: {{ $.Values.varnish.service.port }}
               {{- else }}
-              serviceName: {{ $fullName }}-nginx
-              servicePort: {{ $.Values.nginx.service.port }}
+              service:
+                name: {{ $fullName }}-php
+                port:
+                    number: {{ $.Values.php.service.port }}
               {{- end }}
         {{- end }}
   {{- end }}

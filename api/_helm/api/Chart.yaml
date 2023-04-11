@@ -7,6 +7,7 @@ home: https://github.com/components-web-app/components-web-app
 # icon: https://api-platform.com/logo-250x250.png
 dependencies:
     -   name: mercure
-        version: ~3.0.0
-        repository: https://kubernetes-charts.storage.googleapis.com/
+        version: ~0.14.1
+        repository: https://charts.mercure.rocks
         condition: mercure.enabled
+

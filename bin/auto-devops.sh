@@ -8,7 +8,7 @@ export CI_APPLICATION_TAG=$CI_COMMIT_SHA
 
 export GITLAB_PULL_SECRET_NAME=gitlab-registry
 export KUBERNETES_VERSION=1.18.2
-export HELM_VERSION=3.2.1
+export HELM_VERSION=3.4.1
 
 # Choose the branch for production deploy.
 if [[ -z "$DEPLOYMENT_BRANCH" ]]; then
@@ -68,11 +68,6 @@ install_dependencies() {
   echo "Adding openssl curl tar gzip ca-certificates git nodejs nodejs-npm"
   # upgrade for curl fix https://github.com/curl/curl/issues/4357
   apk add --update-cache --upgrade --no-cache -U openssl curl tar gzip ca-certificates git nodejs nodejs-npm
-
-  wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-  wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk
-  apk add glibc-2.28-r0.apk
-  rm glibc-2.28-r0.apk
 
   echo "Intalling helm..."
   curl "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" | tar zx
@@ -208,6 +203,7 @@ check_kube_domain() {
 helm_init() {
   rm -rf ~/.helm/repository/cache/*
   helm repo add default https://kubernetes-charts.storage.googleapis.com
+  helm repo add mercure https://charts.mercure.rocks
   helm dependency update api/_helm/api
   helm dependency build api/_helm/api
 }

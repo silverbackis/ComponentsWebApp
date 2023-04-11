@@ -15,7 +15,7 @@
   "builds": [
     {
       "src": "nuxt.config.js",
-      "use": "@nuxtjs/now-builder",
+      "use": "@nuxtjs/vercel-builder@0.23.0",
       "config": {
         "serverFiles": ["server/index.js"]
       }

@@ -57,6 +57,10 @@ varnish:
     service:
         type: ClusterIP
         port: 80
+    resources:
+      limits:
+        memory: 60Mi
+        cpu: 50m
 
 vulcain:
     enabled: true

@@ -37,25 +37,36 @@ spec:
           imagePullPolicy: {{ .Values.varnish.image.pullPolicy }}
           env:
           - name: UPSTREAM
-            value: "{{ $fullName }}-nginx"
+            value: "{{ $fullName }}-php"
           - name: UPSTREAM_PORT
-            value: "{{ .Values.nginx.service.port }}"
+            value: "{{ .Values.php.service.port }}"
           - name: PHP_SERVICE
             value: "{{ $fullName }}-php"
+          - name: CORS_ALLOW_ORIGIN
+            valueFrom:
+                configMapKeyRef:
+                  name: {{ $fullName }}
+                  key: cors-allow-origin
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /healthz
-              port: 80
+              port: http
+              httpHeaders:
+                - name: X-Kubernetes-Liveness
+                  value: {{ $name }}
           readinessProbe:
             httpGet:
               path: /healthz
-              port: 80
+              port: http
+              httpHeaders:
+                - name: X-Kubernetes-Liveness
+                  value: {{ $name }}
           resources:
-{{ toYaml .Values.resources | indent 12 }}
+{{ toYaml .Values.varnish.resources | indent 12 }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
