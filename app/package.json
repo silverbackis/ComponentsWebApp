@@ -40,7 +40,7 @@
     "nuxt": "^2.15",
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.3.0"
+    "sequelize": "^6.28.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
